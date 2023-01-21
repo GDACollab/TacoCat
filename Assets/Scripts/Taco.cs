@@ -12,7 +12,7 @@ public class Taco
     private List<fillingType> s_filling;
     private List<toppingType> s_toppings;
 
-    Taco(shellType shell, List<fillingType> fillings, List<toppingType> toppings)
+    public Taco(shellType shell, List<fillingType> fillings, List<toppingType> toppings)
     {
         s_shell = shell;
         s_filling = fillings;
