@@ -5,7 +5,7 @@ using UnityEngine;
 public class Taco
 {
     public enum shellType { FLOUR, CORN, HARD_SHELL }
-    public enum fillingType { BEEF, CHICKEN, BEANS }
+    public enum fillingType { BEEF, CHICKEN, BEANS, NONE }
     public enum toppingType { SAUCE_CHEESE, SHREDDED_CHEESE, SOUR_CREAM, NONE }
     // Note on NONE topping type: If making a random taco recipe,
     // if NONE is rolled, stop checking for toppings and don't add amymore toppings
