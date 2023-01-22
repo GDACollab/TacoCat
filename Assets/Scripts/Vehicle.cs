@@ -14,14 +14,20 @@ public class Vehicle : MonoBehaviour
     public Vector2 startingVelocity;
     public float gravity;
     public int fuel;
-    public float gravityBoost;
+    public float gravityBoost; //Gravity increase while in air
+    public float horizontalBoost; //Relative forward boost while grounded
     public float stopTollerance;
 
     [HideInInspector]
-    public bool vehicleCollision;
+    public bool grounded;
     Rigidbody2D rb_vehicle;
+
+    private Vector3 startPosition;    
+
+    /* Jump Test */
+    bool jumpPress;
+    private float thurst = 500.0f;
     
-    private Vector3 startPosition;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,9 +40,22 @@ public class Vehicle : MonoBehaviour
     void Update()
     {
         gas = Input.GetKey("right");
+        
+        /* Jump Test */
+        jumpPress = Input.GetKeyDown("space");
+        if(jumpPress) {
+            print("space key pressed: JUMP");
+            rb_vehicle.AddForce(Vector2.up * thurst);
+        }
 
-        if(gas && fuel > 0) { //Increase Gravity
-            print("right key pressed: Gravity Increase");
+        if(gas && grounded) {
+            /* Gas pressed while grounded - Move horizontal */
+            print("Vroom");
+            rb_vehicle.velocity = transform.right * horizontalBoost;
+            fuel--;
+        } else if(gas && fuel > 0 && !grounded) {
+            /* Gas press while air - Increase Gravity */
+            print("Gravity Increase");
             rb_vehicle.AddForce(Vector2.down * gravityBoost * rb_vehicle.mass);
             fuel--;
         } else if (GetVelocity().magnitude < stopTollerance && fuel == 0) {
@@ -48,6 +67,22 @@ public class Vehicle : MonoBehaviour
 
     void FixedUpdate() {
         rb_vehicle.AddForce(Vector2.down * gravity * rb_vehicle.mass);
+    }
+
+    void OnCollisionEnter2D(Collision2D collision) {
+        Debug.Log("funny");
+        if(collision.gameObject.tag == "Terrain") {
+            print("Grounded");
+            grounded = true;
+        }
+
+    }
+
+    void OnCollisionExit2D(Collision2D collision) {
+        if(collision.gameObject.tag == "Terrain") {
+            print("Un-Grounded");
+            grounded = false;
+        }
     }
 
     public int GetFuel() {
