@@ -1,45 +1,62 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-/* 
-    GetFuel()
+
+/* Functions
+    public int GetFuel()
+    public Vector2 GetVelocity()
+    public Vector3 GetPosition()
 */
 public class Vehicle : MonoBehaviour
 {
     bool gas; //Increase Gravity
-    public float gravity = 50.0f;
-    public float gravity_boost = 10.0f;
-    public float starting_velocity = 20.0f;
-    public int fuel = 500;
+    [Header("Initial Settings")]
+    public Vector2 startingVelocity;
+    public float gravity;
+    public int fuel;
+    public float gravityBoost;
+    public float stopTollerance;
+
+    [HideInInspector]
+    public bool vehicleCollision;
     Rigidbody2D rb_vehicle;
     
+    private Vector3 startPosition;
     // Start is called before the first frame update
     void Start()
     {
         rb_vehicle = GetComponent<Rigidbody2D>();
-        rb_vehicle.velocity += new Vector2(starting_velocity,0);
-        
+        rb_vehicle.velocity += startingVelocity;
+        startPosition = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //jumpPress = Input.GetKeyDown("space");
         gas = Input.GetKey("right");
 
-        if(gas) { //Increase Gravity
-            print("right key pressed: VRoom");
-            //rb_vehicle.velocity += new Vector2(0,-gravity_boost);
-            rb_vehicle.AddForce(Vector2.down * gravity_boost * rb_vehicle.mass);
+        if(gas && fuel > 0) { //Increase Gravity
+            print("right key pressed: Gravity Increase");
+            rb_vehicle.AddForce(Vector2.down * gravityBoost * rb_vehicle.mass);
             fuel--;
+        } else if (GetVelocity().magnitude < stopTollerance && fuel == 0) {
+            /* If the vehicle "stops" moving then reset position */
+            transform.position = startPosition;
         }
 
     }
+
     void FixedUpdate() {
         rb_vehicle.AddForce(Vector2.down * gravity * rb_vehicle.mass);
     }
 
     public int GetFuel() {
         return fuel;
+    }
+    public Vector2 GetVelocity() {
+        return rb_vehicle.velocity;
+    }
+    public Vector3 GetPosition() {
+        return transform.position;
     }
 }

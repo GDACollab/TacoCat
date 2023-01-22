@@ -14,6 +14,7 @@ public class Camera : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
+        //Camera shares x,y,z + offset(x,y,z)
         if(vehicle) {
             transform.position = vehicle.position + offset;
         }

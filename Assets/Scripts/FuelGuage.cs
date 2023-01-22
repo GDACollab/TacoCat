@@ -8,7 +8,6 @@ public class FuelGuage : MonoBehaviour
 {
     // Start is called before the first frame update
     public TMP_Text fuelGuage;
-    //private int currentFuel;
     private GameObject vehicle;
     Vehicle vehicle_script;
 
@@ -17,7 +16,6 @@ public class FuelGuage : MonoBehaviour
         fuelGuage = GetComponent<TMP_Text>();
         vehicle = GameObject.Find("Vehicle");
         vehicle_script = vehicle.GetComponent<Vehicle>();
-        
     }
 
     // Update is called once per frame
