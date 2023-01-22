@@ -43,12 +43,13 @@ public class Vehicle : MonoBehaviour
         
         /* Jump Test */
         jumpPress = Input.GetKeyDown("space");
+        
         if(jumpPress) {
             print("space key pressed: JUMP");
             rb_vehicle.AddForce(Vector2.up * thurst);
         }
 
-        if(gas && grounded) {
+        if(gas && fuel > 0 && grounded) {
             /* Gas pressed while grounded - Move horizontal */
             print("Vroom");
             rb_vehicle.velocity = transform.right * horizontalBoost;
@@ -62,7 +63,6 @@ public class Vehicle : MonoBehaviour
             /* If the vehicle "stops" moving then reset position */
             transform.position = startPosition;
         }
-
     }
 
     void FixedUpdate() {
@@ -70,12 +70,10 @@ public class Vehicle : MonoBehaviour
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
-        Debug.Log("funny");
         if(collision.gameObject.tag == "Terrain") {
             print("Grounded");
             grounded = true;
         }
-
     }
 
     void OnCollisionExit2D(Collision2D collision) {

@@ -18,11 +18,6 @@ public class Wheel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*
-        Rotation Based on Velocity
-        Problem: Wheel shouldn't spin faster if the velocty
-        is grained when not in contact with a surface.
-        */
         angle_rotation = findRotation();
         transform.Rotate(0,0,angle_rotation, Space.World);
 
