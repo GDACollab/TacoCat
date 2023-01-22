@@ -46,7 +46,7 @@ public class Taco
     {
         int totalIngredients = 0;
         int matchingIngredients = 0;
-        if (shell == other.shell)
+        if (s_shell == other.s_shell)
         {
             matchingIngredients++;
         }
@@ -54,20 +54,20 @@ public class Taco
 
         int shorterFilling;
         int longerFilling;
-        if (other.filling.Count < filling.Count)
+        if (other.s_filling.Count < s_filling.Count)
         {
-            shorterFilling = other.filling.Count;
-            longerFilling = filling.Count;
+            shorterFilling = other.s_filling.Count;
+            longerFilling = s_filling.Count;
         }
         else
         {
-            shorterFilling = filling.Count;
-            longerFilling = other.filling.Count;
+            shorterFilling = s_filling.Count;
+            longerFilling = other.s_filling.Count;
         }
 
         for (int i = 0; i < shorterFilling; i++)
         {
-            if (filling[i] == other.filling[i])
+            if (s_filling[i] == other.s_filling[i])
             {
                 matchingIngredients++;
             }
@@ -78,20 +78,20 @@ public class Taco
 
         int shorterTopping;
         int longerTopping;
-        if (other.toppings.Count < toppings.Count)
+        if (other.s_toppings.Count < s_toppings.Count)
         {
-            shorterTopping = other.toppings.Count;
-            longerTopping = toppings.Count;
+            shorterTopping = other.s_toppings.Count;
+            longerTopping = s_toppings.Count;
         }
         else
         {
-            shorterTopping = toppings.Count;
-            longerTopping = other.toppings.Count;
+            shorterTopping = s_toppings.Count;
+            longerTopping = other.s_toppings.Count;
         }
 
         for (int i = 0; i < shorterTopping; i++)
         {
-            if (toppings[i] == other.toppings[i])
+            if (s_toppings[i] == other.s_toppings[i])
             {
                 matchingIngredients++;
             }
