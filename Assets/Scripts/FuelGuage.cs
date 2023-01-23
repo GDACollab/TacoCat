@@ -21,6 +21,7 @@ public class FuelGuage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        fuelGuage.text = "Fuel: " + vehicle_script.GetFuel();
+        fuelGuage.text = "Fuel: " + vehicle_script.GetFuel() + "\n";
+        fuelGuage.text += "xVelocity: " + vehicle_script.GetVelocity().x;
     }
 }

@@ -43,20 +43,20 @@ public class Vehicle : MonoBehaviour
         
         /* Jump Test */
         jumpPress = Input.GetKeyDown("space");
-        
         if(jumpPress) {
             print("space key pressed: JUMP");
             rb_vehicle.AddForce(Vector2.up * thurst);
         }
         
-        if(gas && fuel > 0 && grounded) {
-            /* Gas pressed while grounded - Move horizontal */
-            print("Vroom");
-            
-            rb_vehicle.velocity += (Vector2)transform.right * horizontalBoost;
-            fuel--;
-        } else if(gas && fuel > 0 && !grounded) {
-            /* Gas press while air - Increase Gravity */
+        // if(gas && fuel > 0 && grounded) {
+        //     /* Gas pressed while grounded - Move horizontal */
+        //     print("Vroom");
+        //     rb_vehicle.velocity += (Vector2)transform.right * horizontalBoost;
+        //     fuel--;
+        // } else if(gas && fuel > 0 && !grounded) {
+        //     /* Gas press while air - Increase Gravity */
+
+        if(gas && fuel > 0) { //Movement is only from Gravity?
             print("Gravity Increase");
             rb_vehicle.AddForce(Vector2.down * gravityBoost * rb_vehicle.mass);
             fuel--;
