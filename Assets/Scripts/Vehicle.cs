@@ -32,7 +32,7 @@ public class Vehicle : MonoBehaviour
     void Start()
     {
         rb_vehicle = GetComponent<Rigidbody2D>();
-        rb_vehicle.velocity += startingVelocity;
+        rb_vehicle.velocity = startingVelocity;
         startPosition = transform.position;
     }
 
@@ -48,11 +48,12 @@ public class Vehicle : MonoBehaviour
             print("space key pressed: JUMP");
             rb_vehicle.AddForce(Vector2.up * thurst);
         }
-
+        
         if(gas && fuel > 0 && grounded) {
             /* Gas pressed while grounded - Move horizontal */
             print("Vroom");
-            rb_vehicle.velocity = transform.right * horizontalBoost;
+            
+            rb_vehicle.velocity += (Vector2)transform.right * horizontalBoost;
             fuel--;
         } else if(gas && fuel > 0 && !grounded) {
             /* Gas press while air - Increase Gravity */
