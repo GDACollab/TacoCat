@@ -4,37 +4,13 @@ using UnityEngine;
 
 public class Taco
 {
-    public enum shellType { FLOUR, CORN, HARD_SHELL }
-    public enum fillingType { BEEF, CHICKEN, BEANS, NONE }
-    public enum toppingType { SAUCE_CHEESE, SHREDDED_CHEESE, SOUR_CREAM, NONE }
-    // Note on NONE topping type: If making a random taco recipe,
-    // if NONE is rolled, stop checking for toppings and don't add amymore toppings
+    public enum ingredientType {FISH, SOUR_CREAM, PICO_DE_GALLO, CABBAGE, SLICED_JALAPENOS}
+    private List<ingredientType> s_ingredients;
 
-    private shellType s_shell;
-    private List<fillingType> s_filling;
-    private List<toppingType> s_toppings;
 
-    public Taco(shellType shell, List<fillingType> fillings, List<toppingType> toppings)
+    public Taco(List<ingredientType> ingredients)
     {
-        s_shell = shell;
-        s_filling = fillings;
-        s_toppings = toppings;
-    }
-
-    public void AddShell(shellType shell)
-    {
-        // Maybe don't replace the shell if there are already ingredients
-        s_shell = shell;
-    }
-
-    public void AddFilling(fillingType filling)
-    {
-        s_filling.Add(filling);
-    }
-
-    public void AddTopping(toppingType topping)
-    {
-        s_toppings.Add(topping);
+        s_ingredients = ingredients;
     }
 
     /// <summary>
@@ -42,6 +18,24 @@ public class Taco
     /// </summary>
     /// <param name="other"></param>
     /// <returns>A value between 0 and 1, the percentage of taco ingredient match</returns>
+
+    //CHECKING TACO PSUEDO CODE
+    /*
+        for e/a taco
+        go through list subtracting from example taco
+        if curr ingredient doesn't match example ingredient 
+            if topping matches customer type then add dialogue or something
+            denote to "Good Taco" (reset perfect counter)
+            check to make sure ingredients match even if order is wrong
+        if ingredient is in taco, that doesn't match example taco, 
+            denote to "Okay Taco" 
+            add one to ingredientMisMatchCounter
+        if ingredientMisMatchCounter gets increases to 2, denote to "Failed Taco" STOP CHECKING
+        if done iterating through taco, check if exampleTaco has any elements, if it has 1 extra,
+            denote taco to "Okay Taco"
+        if more extra
+            denote taco to "Failed Taco"
+    */
     public float CheckTaco(Taco other)
     {
         int totalIngredients = 0;
