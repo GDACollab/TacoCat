@@ -18,6 +18,10 @@ public class Vehicle : MonoBehaviour
     public float horizontalBoost; //Relative forward boost while grounded
     public float stopTollerance;
 
+    [Header("Debug Settings")]
+    [Range(0.1f, 10)]
+    public float gizmoSize = 1;
+
     [HideInInspector]
     public bool grounded;
     Rigidbody2D rb_vehicle;
@@ -67,6 +71,10 @@ public class Vehicle : MonoBehaviour
     }
 
     void FixedUpdate() {
+
+
+
+        // constant gravity
         rb_vehicle.AddForce(Vector2.down * gravity * rb_vehicle.mass);
     }
 
@@ -92,5 +100,19 @@ public class Vehicle : MonoBehaviour
     }
     public Vector3 GetPosition() {
         return transform.position;
+    }
+
+    private void OnDrawGizmos()
+    {
+
+        // draw ray to show current velocity of rigidbody
+        if (rb_vehicle != null)
+        {
+            Vector3 velocity = rb_vehicle.velocity;
+            Gizmos.color = Color.red;
+            Gizmos.DrawRay(transform.position, velocity.normalized * velocity.magnitude * gizmoSize);
+        }
+
+
     }
 }
