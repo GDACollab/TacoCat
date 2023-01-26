@@ -4,8 +4,7 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - EnvironmentGenerator
-  - collision ground
+  - Terrain
   layers:
   - Default
   - TransparentFX
@@ -13,8 +12,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - Ground
+  - Car Body
+  - Car Wheels
   - 
   - 
   - 
@@ -42,4 +41,19 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Ground
+    uniqueID: 2322967701
+    locked: 0
+  - name: Background
+    uniqueID: 3643169501
+    locked: 0
+  - name: Obstacles
+    uniqueID: 2132478623
+    locked: 0
+  - name: Truck Body
+    uniqueID: 1022283831
+    locked: 0
+  - name: Truck Wheel
+    uniqueID: 1275290299
     locked: 0
