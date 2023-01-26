@@ -255,8 +255,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lineRenderer: {fileID: 4970063209726317980}
-  edit_mode: 0
-  edit_point_scale: 1
+  editMode: 0
+  editPointScale: 1
   showEdgeLines: 0
   showBezierLine: 0
   bezierLineWidth: 0.3
@@ -268,13 +268,14 @@ MonoBehaviour:
   first_generation: 0
   inCameraRange: 0
   cameraRangeOverride: 0
-  positionNoise: 0.1
+  positionNoise: 0.05
   spaceBetweenPoints: 0.03
-  pointsBetweenObjs: 40
-  generated_curve_points: []
-  generated_curve_point_rotations: []
+  pointsBetweenObjs: 5
+  generatedCurvePoints: []
+  generatedCurvePointRotations: []
   groundParent: {fileID: 4970063210425989130}
-  groundObjectPrefabs: []
+  groundObjectPrefabs:
+  - {fileID: 4945462466413566711, guid: d8e061a0907835243b2c5aa92a975e21, type: 3}
   endPointObjectPrefabs: []
   generated_objs: []
   groundObjScale: 1

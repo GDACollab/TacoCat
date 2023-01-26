@@ -29,10 +29,10 @@ public class BezierCurveGeneration : MonoBehaviour
     [Tooltip("Select edit mode to adjust the bezier curve." +
         "If edit mode is turned on when entering Play Mode, the current positions of the edit points will be used." +
         "Otherwise, the line will default to the script edit point positions")]
-    public bool edit_mode = false;
+    public bool editMode = false;
 
     [Range(1, 10), Tooltip("Change the size of the edit point")]
-    public float edit_point_scale = 1f;
+    public float editPointScale = 1f;
 
     [Tooltip("Shows outline of the full chunk")]
     public bool showEdgeLines;
@@ -87,14 +87,17 @@ public class BezierCurveGeneration : MonoBehaviour
     public float spaceBetweenPoints = 0.1f;
 
     [Tooltip("The amount of points between spawned ground objects")]
+    [Range(1, 100)]
     public int pointsBetweenObjs = 40;
 
 
 
 
     [Header("Curve Points ===========================================")]
-    public List<Vector3> generated_curve_points = new List<Vector3>();
-    public List<float> generated_curve_point_rotations = new List<float>();
+    [Tooltip("List of all generated curve points")]
+    public List<Vector3> generatedCurvePoints = new List<Vector3>();
+    [Tooltip("List of all rotations of index corresponding points")]
+    public List<float> generatedCurvePointRotations = new List<float>();
 
     [Header("Ground Objects ===========================================")]
     [Tooltip("Parent of all spawned ground objects")]
@@ -172,7 +175,7 @@ public class BezierCurveGeneration : MonoBehaviour
 
 
         // << EDIT MODE SAVES THE POSITION OF THE TRANSFORMS >>
-        if (edit_mode)
+        if (editMode)
         {
             // sets script values to point positions
             p0_pos = p0.position;
@@ -203,13 +206,13 @@ public class BezierCurveGeneration : MonoBehaviour
 
     public void Update()
     {
-        Main(edit_mode);
+        Main(editMode);
 
         //changes the scale of the edit points
-        p0.transform.localScale = new Vector3(edit_point_scale, edit_point_scale);
-        p1.transform.localScale = new Vector3(edit_point_scale, edit_point_scale);
-        p2.transform.localScale = new Vector3(edit_point_scale, edit_point_scale);
-        p3.transform.localScale = new Vector3(edit_point_scale, edit_point_scale);
+        p0.transform.localScale = new Vector3(editPointScale, editPointScale);
+        p1.transform.localScale = new Vector3(editPointScale, editPointScale);
+        p2.transform.localScale = new Vector3(editPointScale, editPointScale);
+        p3.transform.localScale = new Vector3(editPointScale, editPointScale);
 
     }
 
@@ -227,18 +230,18 @@ public class BezierCurveGeneration : MonoBehaviour
             //if first generation && objs already spawned, deleted previously spawned
             if (first_generation && generated_objs.Count > 0) { DestroyGenObjs(); }
 
-            generated_curve_points = GenerateCurvePointPositions(spaceBetweenPoints); //create list of point positions
-            generated_curve_point_rotations = GenerateCurvePointRotations(spaceBetweenPoints); //createt list of point rotations
-
+            generatedCurvePoints = GenerateCurvePointPositions(spaceBetweenPoints); //create list of point positions
+            generatedCurvePointRotations = GenerateCurvePointRotations(spaceBetweenPoints); //createt list of point rotations
+             
             //create ground at right position && rotation
-            GenerateGroundFromObjects(generated_curve_points, generated_curve_point_rotations);
+            GenerateGroundFromObjects(generatedCurvePoints, generatedCurvePointRotations);
 
             first_generation = false; //not first gen anymore
 
-            CreateUnderground(generated_curve_points, meshDistBetweenPoints, underground_height);
+            CreateUnderground(generatedCurvePoints, meshDistBetweenPoints, underground_height);
             undergroundMeshObj.GetComponent<MeshRenderer>().enabled = false;
 
-            CreateGroundDepth(generated_curve_points, meshDistBetweenPoints, depth_length);
+            CreateGroundDepth(generatedCurvePoints, meshDistBetweenPoints, depth_length);
             depthMeshObj.GetComponent<MeshRenderer>().enabled = false;
 
             generationFinished = true;
@@ -259,10 +262,7 @@ public class BezierCurveGeneration : MonoBehaviour
         // if not in range, destroy all generated objects
         else if (!inCameraRange && !cameraRangeOverride)
         {
-            foreach(GameObject obj in generated_objs)
-            {
-                DestroyImmediate(obj);
-            }
+            DestroyListObjects(generated_objs);
 
             // disable mesh
             undergroundMeshObj.GetComponent<MeshRenderer>().enabled = false;
@@ -624,40 +624,52 @@ public class BezierCurveGeneration : MonoBehaviour
     
     void GenerateGroundFromObjects(List<Vector3> genPoints, List<float> genPointRots)
     {
+        // pointsBetweenObjs can't be 0
+        if (pointsBetweenObjs == 0)
+        {
+            Debug.LogWarning("pointsBetweenObjs cannot be set to 0");
+
+            pointsBetweenObjs = 1;
+        }
+
         int mod_pointsBetweenObjs = pointsBetweenObjs;
 
-        // return if no gameobjects
+        // return if no ground prefabs
         if (groundObjectPrefabs.Count == 0) { 
-            Debug.LogWarning("Generation does not have any ground objects", this.gameObject);
+            Debug.LogWarning("Generation does not have any ground object prefabs", this.gameObject);
             return;
         }
+
+        // notify if no endpoint prefabs
+        if (groundObjectPrefabs.Count == 0)
+        {
+            Debug.LogWarning("Generation does not have any endpoint prefabs", this.gameObject);
+            return;
+        }
+
+        DestroyListObjects(generated_objs);
 
         // for each generation point, spawn object
         for (int i = 0; i < genPoints.Count - 1; i += mod_pointsBetweenObjs)
         {
             GameObject groundObj;
 
-            //get random grass object in list
-            groundObj = groundObjectPrefabs[(int)Random.Range(0, groundObjectPrefabs.Count)];
-
-            mod_pointsBetweenObjs = pointsBetweenObjs;
-
-            /*
+            
             //if either end point, choose from small ground points
-            if (i < pointsBetweenObjs || i >= genPoints.Count - (pointsBetweenObjs * 2))
+            if (endPointObjectPrefabs.Count > 0 && ( i < pointsBetweenObjs || i >= genPoints.Count - (pointsBetweenObjs * 2)))
             {
-                groundObj = endPointGroundObjs[(int)Random.Range(0, endPointGroundObjs.Count)];
+                groundObj = endPointObjectPrefabs[(int)Random.Range(0, endPointObjectPrefabs.Count)];
 
                 mod_pointsBetweenObjs = pointsBetweenObjs / 5;
             }
             else
             {
                 //get random grass object in list
-                groundObj = groundObjs[(int)Random.Range(0, groundObjs.Count)];
+                groundObj = groundObjectPrefabs[(int)Random.Range(0, groundObjectPrefabs.Count)];
 
                 mod_pointsBetweenObjs = pointsBetweenObjs;
 
-            }*/
+            }
 
 
             //TOP GROUND
@@ -730,7 +742,7 @@ public class BezierCurveGeneration : MonoBehaviour
 
         if (enabled)
         {                  
-            DrawBezierCurves(generated_curve_points, bezierLineWidth); //draw line renderer
+            DrawBezierCurves(generatedCurvePoints, bezierLineWidth); //draw line renderer
             DestroyGenObjs(); //destroy previous objs
         }
     }
@@ -831,10 +843,10 @@ public class BezierCurveGeneration : MonoBehaviour
     private void OnDrawGizmos()
     {
         // show start point of curve
-        if (generated_curve_points.Count > 0)
+        if (generatedCurvePoints.Count > 0)
         {
             Handles.color = Color.black;
-            Handles.DrawSolidDisc(generated_curve_points[0], Vector3.forward, 0.1f);
+            Handles.DrawSolidDisc(generatedCurvePoints[0], Vector3.forward, 0.1f);
         }
 
         //show visual math
@@ -913,6 +925,16 @@ public class BezierCurveGeneration : MonoBehaviour
         {
             generationAngleType = "flat";
         }
+    }
+
+    public void DestroyListObjects(List<GameObject> list)
+    {
+        foreach (GameObject obj in list)
+        {
+            Destroy(obj);
+        }
+
+        list.Clear();
     }
     #endregion
 

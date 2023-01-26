@@ -27,9 +27,7 @@ public class GroundGeneration : MonoBehaviour
     public EnvironmentGenerator envGenerator;
 
     [Space(20)]
-    [Tooltip("Select edit mode to play with the chunk generation. " +
-        "These will not change the Play Mode version of the curve, " +
-        " the curve will follow the scripted values when spawned. ")]
+    [Tooltip("Reloads the ground generation every second so you can see how the script will react to the settings you have used.")]
     public bool editMode;
     [Tooltip("Override and show objects and mesh even if not in camera range")]
     public bool inCameraRangeOverride;
@@ -42,22 +40,28 @@ public class GroundGeneration : MonoBehaviour
     [Tooltip("Set the transform of end point of generation")]
     public Transform endGenerationPoint;
     [Tooltip("Set the size of the end point sprites in edit mode")]
+    [Range(0.1f, 10)]
     public float endPointDebugSize = 0.5f;
     [HideInInspector]
     public Vector2 beginningGenPos, endGenPos; // store end positions
     [HideInInspector]
     public float fullGenerationLength, fullGenerationHeight;  // store full generation length and height
+    [Tooltip("Shows if generation is finished")]
     public bool generationFinished;
 
     // get all points and rotations
+    [Tooltip("List of all generated ground points")]
     public List<Vector3> allGroundPoints = new List<Vector3>();
+    [Tooltip("List of all generated rotations")]
     public List<float> allGroundRotations = new List<float>();
 
 
     [Header("Chunk Values ============================")]
     [Tooltip("Set the max length of a chunk")]
+    [Range(1, 100)]
     public int maxChunkLength = 10;
     [Tooltip("Set the max height of a chunk")]
+    [Range(1, 100)]
     public int maxChunkHeight = 5;
     [Tooltip("Choose the style of each chunk")]
     public CHUNK_STYLES chunkStyle = CHUNK_STYLES.random;
@@ -409,15 +413,15 @@ public class GroundGeneration : MonoBehaviour
         //get positions from point lists in each chunk
         foreach (GameObject chunk in chunks)
         {
-            Debug.Log("chunk point count: " + chunk.GetComponent<BezierCurveGeneration>().generated_curve_points.Count);
+            Debug.Log("chunk point count: " + chunk.GetComponent<BezierCurveGeneration>().generatedCurvePoints.Count);
 
             //add points and rotations to main list
-            foreach (Vector3 point in chunk.GetComponent<BezierCurveGeneration>().generated_curve_points)
+            foreach (Vector3 point in chunk.GetComponent<BezierCurveGeneration>().generatedCurvePoints)
             {
                 allGroundPoints.Add(point);
             }
 
-            foreach (float rot in chunk.GetComponent<BezierCurveGeneration>().generated_curve_point_rotations)
+            foreach (float rot in chunk.GetComponent<BezierCurveGeneration>().generatedCurvePointRotations)
             {
                 allGroundRotations.Add(rot);
             }

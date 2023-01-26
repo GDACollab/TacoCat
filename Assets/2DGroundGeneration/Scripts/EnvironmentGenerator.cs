@@ -89,6 +89,18 @@ public class EnvironmentGenerator : MonoBehaviour
         int pointIndex = 10; // index of the point to spawn the object at ,, start at ten to not spawn at direct beginning of generation
         int sortingOrder = 0; // sorting order of the object to be spawned
 
+        // check prefabs
+        if (prefabs.Count < 1) { Debug.LogWarning("No environment prefabs."); return; }
+
+        // check ground points
+        if (groundPoints.Count < 1) { Debug.LogWarning("No ground points."); return; }
+
+        // check ground rotations
+        if (groundPoints.Count < 1) { Debug.LogWarning("No rotation points."); return; }
+
+
+
+
         // << SPAWN OBJECTS >>
         for (int i = 0; i < count; i++)
         {
