@@ -184,11 +184,11 @@ public class GroundGeneration : MonoBehaviour
         for (int i = 0; i < horzChunksNeeded; i++) //for each chunk needed
         {
             // get average height value of chunks between current chunk and end of generation
-            float averageHeightNeeded = heightLeft / (horzChunksNeeded - i); 
+            float averageHeightNeeded = heightLeft / (horzChunksNeeded - i);
             float height; // height of current chunk
 
             // >> first chunk heights are 'random' 
-            if (i < horzChunksNeeded * 0.5f) 
+            if (i < horzChunksNeeded * 0.5f)
             {
                 //set random height values
                 height = Random.Range(averageHeightNeeded / 2, maxChunkHeight);
@@ -237,7 +237,7 @@ public class GroundGeneration : MonoBehaviour
 
     #region SPAWNING ==========================
     // [[ CREATE NEW CHUNK ]] ==== >> style parameter defaults to flat hills generation
-    public BezierGroundGeneration SpawnBezierGroundChunk(Vector2 begPos, Vector2 endPos, CHUNK_STYLES style = CHUNK_STYLES.random )
+    public BezierCurveGeneration SpawnBezierGroundChunk(Vector2 begPos, Vector2 endPos, CHUNK_STYLES style = CHUNK_STYLES.random)
     {
         // get distance between beggining and end then spawn in middle
         float distance = Vector3.Distance(begPos, endPos);
@@ -245,7 +245,7 @@ public class GroundGeneration : MonoBehaviour
 
         // create new bezierCurveGeneration and store reference to script
         GameObject newCurveObject = Instantiate(curveGenerationPrefab, newGenPosParentPos, Quaternion.identity);
-        BezierGroundGeneration bezierGroundGen = newCurveObject.GetComponent<BezierGroundGeneration>();
+        BezierCurveGeneration bezierGroundGen = newCurveObject.GetComponent<BezierCurveGeneration>();
 
         newCurveObject.SetActive(true); // set curve gen as active
         newCurveObject.transform.parent = chunkParent.transform; // set parent
@@ -288,7 +288,7 @@ public class GroundGeneration : MonoBehaviour
     // These are deciding the position of the middle edipt points to create certain types of bezier curves
     // the x position is base on distance, the y on height distance
 
-    public void SetRoundedHillsGeneration(BezierGroundGeneration ground)
+    public void SetRoundedHillsGeneration(BezierCurveGeneration ground)
     {
         // get beg and end pos
         Vector2 begPos = ground.p0_pos;
@@ -310,7 +310,7 @@ public class GroundGeneration : MonoBehaviour
         }
     }
 
-    public void SetStraightHillsGeneration(BezierGroundGeneration ground)
+    public void SetStraightHillsGeneration(BezierCurveGeneration ground)
     {
         // get beg and end pos
         Vector2 begPos = ground.p0_pos;
@@ -332,7 +332,7 @@ public class GroundGeneration : MonoBehaviour
         }
     }
 
-    public void SetFlatHillsGeneration(BezierGroundGeneration ground)
+    public void SetFlatHillsGeneration(BezierCurveGeneration ground)
     {
         // get beg and end pos
         Vector2 begPos = ground.p0_pos;
@@ -409,15 +409,15 @@ public class GroundGeneration : MonoBehaviour
         //get positions from point lists in each chunk
         foreach (GameObject chunk in chunks)
         {
-            Debug.Log("chunk point count: " + chunk.GetComponent<BezierGroundGeneration>().generated_curve_points.Count);
+            Debug.Log("chunk point count: " + chunk.GetComponent<BezierCurveGeneration>().generated_curve_points.Count);
 
             //add points and rotations to main list
-            foreach (Vector3 point in chunk.GetComponent<BezierGroundGeneration>().generated_curve_points)
+            foreach (Vector3 point in chunk.GetComponent<BezierCurveGeneration>().generated_curve_points)
             {
                 allGroundPoints.Add(point);
             }
 
-            foreach (float rot in chunk.GetComponent<BezierGroundGeneration>().generated_curve_point_rotations)
+            foreach (float rot in chunk.GetComponent<BezierCurveGeneration>().generated_curve_point_rotations)
             {
                 allGroundRotations.Add(rot);
             }

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class BezierGroundGeneration : MonoBehaviour
+public class BezierCurveGeneration : MonoBehaviour
 {
     /* ================
      * 
@@ -10,24 +10,25 @@ public class BezierGroundGeneration : MonoBehaviour
      * 
      * This script creates a bezier curve based off of the average of 4 edit points :: p0, p1, p2, p3
      * The bezier curve is made up of a set number of points that move closer together depending on the slope of the curve
+     * 
      * From this list of curves, you can spawn a "groundObject" every set interval of points
      * These groundObjects will spawn with the normal rotation of the point they are spawned at
      * 
      * You can play with the bezier curve by moving the edit points (p0, p1, p2, p3)
-     * However when you start the scene, the points will snap back into their inspector specific positions
+     * If you start the scene in edit mode, the points will stay at their placed transforms
+     * If edit mode is not selected when Play Mode is started, then the edit points will snap back to their scripted positions
      * 
      * To be able to view the underground and depth mesh, select the cameraRangeOverride
      * 
      * =======================================*/
 
-    BoxCollider2D generalCollider; // so that chunk can be found, collider is set to trigger only and held in p2
     public LineRenderer lineRenderer;
 
     [Header("Generation Debug Tools ===========================================")]
-    [Tooltip("Select edit mode to adjust the bezier curve. " +
-        "These will not change the Play Mode version of the curve, " +
-        "the curve will follow the scripted Edit Point positions when spawned. ")]
-    
+
+    [Tooltip("Select edit mode to adjust the bezier curve." +
+        "If edit mode is turned on when entering Play Mode, the current positions of the edit points will be used." +
+        "Otherwise, the line will default to the script edit point positions")]
     public bool edit_mode = false;
 
     [Range(1, 10), Tooltip("Change the size of the edit point")]
@@ -163,18 +164,32 @@ public class BezierGroundGeneration : MonoBehaviour
     {
         lineRenderer = GetComponent<LineRenderer>();
 
-        edit_mode = false;
-
+        // add points to list
         bezierPoints.Add(p0);
         bezierPoints.Add(p1);
         bezierPoints.Add(p2);
         bezierPoints.Add(p3);
 
-        //sets line to script values, which are controlled by manager
-        p0.position = p0_pos;
-        p1.position = p1_pos;
-        p2.position = p2_pos;
-        p3.position = p3_pos;
+
+        // << EDIT MODE SAVES THE POSITION OF THE TRANSFORMS >>
+        if (edit_mode)
+        {
+            // sets script values to point positions
+            p0_pos = p0.position;
+            p1_pos = p1.position;
+            p2_pos = p2.position;
+            p3_pos = p3.position;
+
+        }
+        else
+        {
+            // sets points to script values
+            p0.position = p0_pos;
+            p1.position = p1_pos;
+            p2.position = p2_pos;
+            p3.position = p3_pos;
+        }
+
 
         // set underground mesh
         undergroundMesh = new Mesh();
