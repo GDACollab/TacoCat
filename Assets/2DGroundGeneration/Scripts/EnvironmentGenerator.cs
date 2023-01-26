@@ -105,7 +105,7 @@ public class EnvironmentGenerator : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
 
-            Debug.Log("point index " + pointIndex + "point count " + groundPoints.Count);
+            // Debug.Log("point index " + pointIndex + "point count " + groundPoints.Count);
 
             // create a random environment object at indexed groundPoint and with rotation
             GameObject newEnvObject = Instantiate(prefabs[Random.Range(0, prefabs.Count)], groundPoints[pointIndex], Quaternion.Euler(new Vector3(0, 0, groundRotations[pointIndex])));

@@ -18,8 +18,7 @@ public class GroundGeneration : MonoBehaviour
      * ===================================================================================================
      */
 
-
-    public enum GENERATION_STYLES { consistent, random };
+    public enum GENERATION_STYLES { consistent, sine, random };
     public enum CHUNK_STYLES { random, rounded, straight, flat };
 
     public GameObject curveGenerationPrefab;
@@ -34,7 +33,7 @@ public class GroundGeneration : MonoBehaviour
 
     [Header("Full Generation Values ==============================")]
     [Tooltip("Choose the style of the full generation")]
-    public GENERATION_STYLES generationStyle = GENERATION_STYLES.consistent;
+    public GENERATION_STYLES generationStyle = GENERATION_STYLES.random;
     [Tooltip("Set the transform of beginning point of generation")]
     public Transform begGenerationPoint;
     [Tooltip("Set the transform of end point of generation")]
@@ -141,6 +140,10 @@ public class GroundGeneration : MonoBehaviour
         {
             RandomChunkGenerator();
         }
+        else if (style == GENERATION_STYLES.sine)
+        {
+            SineChunkGenerator();
+        }
     }
 
     public void ConsistentChunkGenerator()
@@ -237,6 +240,49 @@ public class GroundGeneration : MonoBehaviour
             lastChunkEndPosition = newGenEndPos;
         }
     }
+
+    public void SineChunkGenerator()
+    {
+
+        Debug.Log("Sine Generation Style");
+
+        Vector2 lastChunkEndPosition = beginningGenPos; // init last chunk as the current beginning position
+
+        int vertChunksNeeded = GetVerticalChunksNeeded();
+        int horzChunksNeeded = GetHorizontalChunksNeeded();
+
+        float currChunkHeight = maxChunkHeight; // init as max height
+
+        // << SET CHUNK HEIGHT AND LENGTH >>
+        float chunkLength = fullGenerationLength / horzChunksNeeded;
+
+        // iterate through the num of chunks needed
+        for (int i = horzChunksNeeded; i > 0; i--)
+        {
+            // last chunk needs to meet end of generation
+            if (i == 1)
+            {
+                // create new chunk starting at the last chunks end point and ending at the full length of this chunk
+                Vector2 endGenPos = new Vector2(lastChunkEndPosition.x + chunkLength, endGenerationPoint.position.y);
+                SpawnBezierGroundChunk(lastChunkEndPosition, endGenPos, chunkStyle);
+                return;
+            }
+
+
+            // create new chunk starting at the last chunks end point and ending at the full length of this chunk
+            Vector2 newGenEndPos = new Vector2(lastChunkEndPosition.x + chunkLength, lastChunkEndPosition.y + currChunkHeight);
+            SpawnBezierGroundChunk(lastChunkEndPosition, newGenEndPos, chunkStyle);
+
+            // update last chunk end position
+            lastChunkEndPosition = newGenEndPos;
+
+            // invert height
+            currChunkHeight *= -1;
+
+
+        }
+    }
+
     #endregion
 
     #region SPAWNING ==========================

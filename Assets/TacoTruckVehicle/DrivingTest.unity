@@ -1207,50 +1207,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 65322660175870768, guid: 37c880d30b97840878dddf004e105be2, type: 3}
-      propertyPath: m_Mass
-      value: 1000
-      objectReference: {fileID: 0}
-    - target: {fileID: 71804017810547276, guid: 37c880d30b97840878dddf004e105be2, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 71804017810547276, guid: 37c880d30b97840878dddf004e105be2, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 71804017810547276, guid: 37c880d30b97840878dddf004e105be2, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 71804017810547276, guid: 37c880d30b97840878dddf004e105be2, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 71804017810547278, guid: 37c880d30b97840878dddf004e105be2, type: 3}
-      propertyPath: m_Mass
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 71804017810547279, guid: 37c880d30b97840878dddf004e105be2, type: 3}
-      propertyPath: m_UseMotor
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 71804017810547279, guid: 37c880d30b97840878dddf004e105be2, type: 3}
-      propertyPath: m_Motor.m_MotorSpeed
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 71804017810547279, guid: 37c880d30b97840878dddf004e105be2, type: 3}
-      propertyPath: m_Suspension.m_Angle
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 71804017810547279, guid: 37c880d30b97840878dddf004e105be2, type: 3}
-      propertyPath: m_Suspension.m_Frequency
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 71804017810547279, guid: 37c880d30b97840878dddf004e105be2, type: 3}
-      propertyPath: m_Suspension.m_DampingRatio
-      value: 0.9
-      objectReference: {fileID: 0}
     - target: {fileID: 71804017862671070, guid: 37c880d30b97840878dddf004e105be2, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1298,62 +1254,6 @@ PrefabInstance:
     - target: {fileID: 71804017862671071, guid: 37c880d30b97840878dddf004e105be2, type: 3}
       propertyPath: m_Name
       value: TacoTruck
-      objectReference: {fileID: 0}
-    - target: {fileID: 71804017933631092, guid: 37c880d30b97840878dddf004e105be2, type: 3}
-      propertyPath: m_UseMotor
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 71804017933631092, guid: 37c880d30b97840878dddf004e105be2, type: 3}
-      propertyPath: m_Motor.m_MotorSpeed
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 71804017933631092, guid: 37c880d30b97840878dddf004e105be2, type: 3}
-      propertyPath: m_Suspension.m_Angle
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 71804017933631092, guid: 37c880d30b97840878dddf004e105be2, type: 3}
-      propertyPath: m_Suspension.m_Frequency
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 71804017933631092, guid: 37c880d30b97840878dddf004e105be2, type: 3}
-      propertyPath: m_Suspension.m_DampingRatio
-      value: 0.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 71804017933631093, guid: 37c880d30b97840878dddf004e105be2, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 71804017933631093, guid: 37c880d30b97840878dddf004e105be2, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 71804017933631093, guid: 37c880d30b97840878dddf004e105be2, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 71804017933631095, guid: 37c880d30b97840878dddf004e105be2, type: 3}
-      propertyPath: m_Mass
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 5085723185336815416, guid: 37c880d30b97840878dddf004e105be2, type: 3}
-      propertyPath: gravity
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 5085723185336815416, guid: 37c880d30b97840878dddf004e105be2, type: 3}
-      propertyPath: playerGasForce.x
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5085723185336815416, guid: 37c880d30b97840878dddf004e105be2, type: 3}
-      propertyPath: playerGasForce.y
-      value: -10
-      objectReference: {fileID: 0}
-    - target: {fileID: 5085723185336815416, guid: 37c880d30b97840878dddf004e105be2, type: 3}
-      propertyPath: startingVelocity.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7347298716968012695, guid: 37c880d30b97840878dddf004e105be2, type: 3}
-      propertyPath: m_Mass
-      value: 200
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 37c880d30b97840878dddf004e105be2, type: 3}

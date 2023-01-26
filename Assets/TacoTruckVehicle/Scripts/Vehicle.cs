@@ -11,16 +11,22 @@ public class Vehicle : MonoBehaviour
     public Rigidbody2D rb_vehicle;
     public GameObject frontWheel;
     public GameObject backWheel;
-    WheelJoint2D frontMotor;
-    WheelJoint2D backMotor;
+
+    [Header("States")]
+    public bool isGrounded;
+    public bool inAir;
+    public bool gasPressed; // increase gravity force on truck
+    public bool jumpState;
+
+    [Header("Forces")]
+    public Vector2 startingVelocity; // initial velocity
+    public Vector2 gasForce; // input based force on truck
+    public Vector2 jumpForce; // jump force
 
     [Header("Inputs")]
-    public bool gasPressed; // increase gravity force on truck
-
-    [Header("Movement Settings")]
-    public Vector2 startingVelocity;
-
-    public Vector2 playerGasForce; // input based force on truck
+    public KeyCode gas;
+    public KeyCode rotateRight;
+    public KeyCode rotateLeft;
 
     [Header("Values")]
     public int fuelAmount = 100000;
@@ -31,66 +37,56 @@ public class Vehicle : MonoBehaviour
     [Header("Debug Settings")]
     [Range(0.1f, 10)]
     public float gizmoSize = 1;
-
-    [HideInInspector]
-    public bool grounded;
-
-    private Vector3 startPosition;    
-
-    /* Jump Test */
-    bool jumpPress;
-    private float thurst = 500.0f;
     
     // Start is called before the first frame update
     void Start()
     {
         rb_vehicle.velocity = startingVelocity;
-        startPosition = transform.position;
-
-        frontMotor = frontWheel.GetComponent<WheelJoint2D>();
-        frontMotor = frontWheel.GetComponent<WheelJoint2D>();
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        gasPressed = Input.GetKey("right");
-        
-        /* Jump Test */
-        jumpPress = Input.GetKeyDown("space");
-        if(jumpPress) {
-            print("space key pressed: JUMP");
-            rb_vehicle.AddForce(Vector2.up * thurst);
-        }
-       
-        // << PLAYER GAS INPUT >>
-        if( gasPressed && fuelAmount > 0)
-        {
-            rb_vehicle.AddForce(playerGasForce * rb_vehicle.mass);
-
-            fuelAmount--;
-        }
+        Inputs();
     }
 
     void FixedUpdate() {
         // constant gravity
         rb_vehicle.AddForce(Vector2.down * gravity * rb_vehicle.mass);
+
+        // << GAS STATE >>
+        if (gasPressed && fuelAmount > 0)
+        {
+            rb_vehicle.AddForce(gasForce * rb_vehicle.mass);
+
+            fuelAmount--;
+        }
     }
 
+    public void Inputs()
+    {
+        gasPressed = Input.GetKey(gas);
 
+        jumpState = Input.GetKeyUp(KeyCode.Space);
+
+        // << JUMP STATE >>
+        // needs to be in update because input is single-frame based
+        if (jumpState)
+        {
+            Debug.Log("Jump");
+            rb_vehicle.AddForce(jumpForce, ForceMode2D.Impulse);
+        }
+    }
 
     void OnCollisionEnter2D(Collision2D collision) {
         if(collision.gameObject.tag == "Terrain") {
-            print("Grounded");
-            grounded = true;
+            isGrounded = true;
         }
     }
 
     void OnCollisionExit2D(Collision2D collision) {
         if(collision.gameObject.tag == "Terrain") {
-            print("Un-Grounded");
-            grounded = false;
+            isGrounded = false;
         }
     }
 
