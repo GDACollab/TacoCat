@@ -9,14 +9,14 @@ public class Camera : MonoBehaviour
     int vehicle_posy;
     public Transform vehicle;
     public Vector3 offset;
-    public float smooth = 0.2f;
+    public float camSpeed = 0.2f;
    
     // Update is called once per frame
     void LateUpdate()
     {
         //Camera shares x,y,z + offset(x,y,z)
         if(vehicle) {
-            transform.position = vehicle.position + offset;
+            transform.position = Vector3.Lerp(transform.position, vehicle.position + offset, camSpeed * Time.deltaTime);
         }
     }
 }

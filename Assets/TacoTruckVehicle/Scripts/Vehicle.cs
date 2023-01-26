@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 /* Functions
     public int GetFuel()
     public Vector2 GetVelocity()
@@ -9,14 +8,23 @@ using UnityEngine;
 */
 public class Vehicle : MonoBehaviour
 {
-    bool gas; //Increase Gravity
-    [Header("Initial Settings")]
+    public Rigidbody2D rb_vehicle;
+    public GameObject frontWheel;
+    public GameObject backWheel;
+    WheelJoint2D frontMotor;
+    WheelJoint2D backMotor;
+
+    [Header("Inputs")]
+    public bool gasPressed; // increase gravity force on truck
+
+    [Header("Movement Settings")]
     public Vector2 startingVelocity;
-    public float gravity;
-    public int fuel;
-    public float gravityBoost; //Gravity increase while in air
+
+    public Vector2 playerGasForce; // input based force on truck
+
+    [Header("Values")]
+    public int fuelAmount = 100000;
     public float horizontalBoost; //Relative forward boost while grounded
-    public float stopTollerance;
 
     [Header("Debug Settings")]
     [Range(0.1f, 10)]
@@ -24,7 +32,6 @@ public class Vehicle : MonoBehaviour
 
     [HideInInspector]
     public bool grounded;
-    Rigidbody2D rb_vehicle;
 
     private Vector3 startPosition;    
 
@@ -35,15 +42,18 @@ public class Vehicle : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rb_vehicle = GetComponent<Rigidbody2D>();
         rb_vehicle.velocity = startingVelocity;
         startPosition = transform.position;
+
+        frontMotor = frontWheel.GetComponent<WheelJoint2D>();
+        frontMotor = frontWheel.GetComponent<WheelJoint2D>();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        gas = Input.GetKey("right");
+        gasPressed = Input.GetKey("right");
         
         /* Jump Test */
         jumpPress = Input.GetKeyDown("space");
@@ -51,32 +61,22 @@ public class Vehicle : MonoBehaviour
             print("space key pressed: JUMP");
             rb_vehicle.AddForce(Vector2.up * thurst);
         }
-        
-        // if(gas && fuel > 0 && grounded) {
-        //     /* Gas pressed while grounded - Move horizontal */
-        //     print("Vroom");
-        //     rb_vehicle.velocity += (Vector2)transform.right * horizontalBoost;
-        //     fuel--;
-        // } else if(gas && fuel > 0 && !grounded) {
-        //     /* Gas press while air - Increase Gravity */
+       
+        // << PLAYER GAS INPUT >>
+        if( gasPressed && fuelAmount > 0)
+        {
+            rb_vehicle.AddForce(playerGasForce * rb_vehicle.mass);
 
-        if(gas && fuel > 0) { //Movement is only from Gravity?
-            print("Gravity Increase");
-            rb_vehicle.AddForce(Vector2.down * gravityBoost * rb_vehicle.mass);
-            fuel--;
-        } else if (GetVelocity().magnitude < stopTollerance && fuel == 0) {
-            /* If the vehicle "stops" moving then reset position */
-            transform.position = startPosition;
+            fuelAmount--;
         }
     }
 
     void FixedUpdate() {
-
-
-
         // constant gravity
-        rb_vehicle.AddForce(Vector2.down * gravity * rb_vehicle.mass);
+        rb_vehicle.AddForce(Vector2.down * Physics2D.gravity * rb_vehicle.mass);
     }
+
+
 
     void OnCollisionEnter2D(Collision2D collision) {
         if(collision.gameObject.tag == "Terrain") {
@@ -93,7 +93,7 @@ public class Vehicle : MonoBehaviour
     }
 
     public int GetFuel() {
-        return fuel;
+        return fuelAmount;
     }
     public Vector2 GetVelocity() {
         return rb_vehicle.velocity;
