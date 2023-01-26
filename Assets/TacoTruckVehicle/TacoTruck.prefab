@@ -158,9 +158,9 @@ GameObject:
   m_Component:
   - component: {fileID: 71804017862671070}
   - component: {fileID: 5085723185336815416}
+  - component: {fileID: 7347298716968012695}
   - component: {fileID: 7347298716968012693}
   - component: {fileID: 7347298716968012694}
-  - component: {fileID: 7347298716968012695}
   m_Layer: 6
   m_Name: TacoTruck
   m_TagString: Untagged
@@ -182,6 +182,7 @@ Transform:
   m_Children:
   - {fileID: 71804017810547276}
   - {fileID: 71804017933631093}
+  - {fileID: 6452986064158706021}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -202,12 +203,33 @@ MonoBehaviour:
   backWheel: {fileID: 71804017933631090}
   gasPressed: 0
   startingVelocity: {x: 5, y: -10}
-  playerGasForce: {x: 10, y: -5}
-  drivingMotorSpeed: 100
+  playerGasForce: {x: 5, y: -1}
   fuelAmount: 100000
+  gravity: 9.81
   horizontalBoost: 0
   gizmoSize: 1
   grounded: 0
+--- !u!50 &7347298716968012695
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 71804017862671071}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 200
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0
 --- !u!212 &7347298716968012693
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -351,27 +373,6 @@ PolygonCollider2D:
       - {x: 4.2055664, y: -2.3928223}
       - {x: 4.930664, y: -1.9416504}
       - {x: 4.995117, y: -1.861084}
---- !u!50 &7347298716968012695
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 71804017862671071}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 0
 --- !u!1 &71804017933631090
 GameObject:
   m_ObjectHideFlags: 0
@@ -520,3 +521,56 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 5.5
+--- !u!1 &188811218846315628
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6452986064158706021}
+  - component: {fileID: 65322660175870768}
+  m_Layer: 6
+  m_Name: TacoWeight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6452986064158706021
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 188811218846315628}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.69, y: -0.09, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 71804017862671070}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &65322660175870768
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 188811218846315628}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 100
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

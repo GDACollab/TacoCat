@@ -24,6 +24,8 @@ public class Vehicle : MonoBehaviour
 
     [Header("Values")]
     public int fuelAmount = 100000;
+    [Range(0, 100)]
+    public float gravity = 9.81f;
     public float horizontalBoost; //Relative forward boost while grounded
 
     [Header("Debug Settings")]
@@ -73,7 +75,7 @@ public class Vehicle : MonoBehaviour
 
     void FixedUpdate() {
         // constant gravity
-        rb_vehicle.AddForce(Vector2.down * Physics2D.gravity * rb_vehicle.mass);
+        rb_vehicle.AddForce(Vector2.down * gravity * rb_vehicle.mass);
     }
 
 
