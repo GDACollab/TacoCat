@@ -25,6 +25,8 @@ public class GroundGeneration : MonoBehaviour
     public GameObject chunkParent;
     public EnvironmentGenerator envGenerator;
 
+    public GameObject undergroundMeshObj;
+
     [Space(20)]
     [Tooltip("Reloads the ground generation every second so you can see how the script will react to the settings you have used.")]
     public bool editMode;
@@ -57,10 +59,8 @@ public class GroundGeneration : MonoBehaviour
 
     [Header("Chunk Values ============================")]
     [Tooltip("Set the max length of a chunk")]
-    [Range(1, 100)]
     public int maxChunkLength = 10;
     [Tooltip("Set the max height of a chunk")]
-    [Range(1, 100)]
     public int maxChunkHeight = 5;
     [Tooltip("Choose the style of each chunk")]
     public CHUNK_STYLES chunkStyle = CHUNK_STYLES.random;
@@ -108,6 +108,12 @@ public class GroundGeneration : MonoBehaviour
         {
             SetAllGroundPoints();
         }
+
+
+        // create undergound mesh
+        MeshCreator meshCreator = undergroundMeshObj.GetComponent<MeshCreator>();
+
+        // meshCreator.CreateUnderground(allGroundPoints, chunks.Count * 20 , 200);
     }
 
     #region GENERATION ====================================================
@@ -477,5 +483,9 @@ public class GroundGeneration : MonoBehaviour
     }
     #endregion
 
-
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(begGenerationPoint.position, endGenerationPoint.position);
+    }
 }

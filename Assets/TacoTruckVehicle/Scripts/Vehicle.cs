@@ -74,7 +74,7 @@ public class Vehicle : MonoBehaviour
         if (jumpState)
         {
             Debug.Log("Jump");
-            rb_vehicle.AddForce(jumpForce, ForceMode2D.Impulse);
+            rb_vehicle.AddForce(jumpForce * rb_vehicle.mass, ForceMode2D.Impulse);
         }
     }
 

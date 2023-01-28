@@ -30,6 +30,8 @@ public class BezierCurveGeneration : MonoBehaviour
         "If edit mode is turned on when entering Play Mode, the current positions of the edit points will be used." +
         "Otherwise, the line will default to the script edit point positions")]
     public bool editMode = false;
+    [Tooltip("Allows the generation to update every frame to show value changes")]
+    public bool generationEditUpdate;
 
     [Range(1, 10), Tooltip("Change the size of the edit point")]
     public float editPointScale = 1f;
@@ -40,7 +42,7 @@ public class BezierCurveGeneration : MonoBehaviour
     [Tooltip("Shows line renderer")]
     public bool showBezierLine;
 
-    [Range(0.1f, 1), Tooltip("Width of the Bezier Line")]
+    [Range(0.1f, 100), Tooltip("Width of the Bezier Line")]
     public float bezierLineWidth = 0.1f;
 
     [Tooltip("Shows math visuals")]
@@ -221,7 +223,7 @@ public class BezierCurveGeneration : MonoBehaviour
         EditModeEnabled(edit_mode);
 
         // << GENERATION >>
-        if (first_generation || edit_mode)
+        if (first_generation || generationEditUpdate)
         {
             generationFinished = false;
 
