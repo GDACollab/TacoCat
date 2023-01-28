@@ -50,13 +50,18 @@ MonoBehaviour:
   rb_vehicle: {fileID: 5231190167668380749}
   frontWheel: {fileID: 0}
   backWheel: {fileID: 0}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  groundColliderList: []
+  groundColliderSize: 15
   isGrounded: 0
   inAir: 0
   gasPressed: 0
   jumpState: 0
   startingVelocity: {x: 0, y: 0}
-  gasForce: {x: 30, y: -150}
-  jumpForce: {x: 0, y: 0}
+  inAirForce: {x: 30, y: -150}
+  groundedForce: {x: 60, y: 30}
   gas: 32
   rotateRight: 97
   rotateLeft: 100

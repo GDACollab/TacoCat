@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4214132801093261771}
   - component: {fileID: 4524653469442646200}
   - component: {fileID: 2907876403466326206}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: undergroundMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,7 +128,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4970063209424536292}
   - component: {fileID: 4970063209424536291}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: p2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -213,7 +213,7 @@ GameObject:
   - component: {fileID: 4970063209726317979}
   - component: {fileID: 4970063209726317978}
   - component: {fileID: 4970063209726317980}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: BezierCurveGeneration
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -256,6 +256,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lineRenderer: {fileID: 4970063209726317980}
   editMode: 0
+  generationEditUpdate: 0
   editPointScale: 1
   showEdgeLines: 0
   showBezierLine: 0
@@ -442,7 +443,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4970063210425989129}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: groundObjectParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -474,7 +475,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4970063210731561863}
   - component: {fileID: 4970063210731561862}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: p3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -558,7 +559,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4970063211004949265}
   - component: {fileID: 4970063211004949264}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: p1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -642,7 +643,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4970063211036135594}
   - component: {fileID: 4970063211036135593}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: p0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -728,7 +729,7 @@ GameObject:
   - component: {fileID: 3815859017571969988}
   - component: {fileID: 7341450090150699844}
   - component: {fileID: 7651165960889062155}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: depthMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
