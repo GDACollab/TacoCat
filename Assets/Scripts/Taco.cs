@@ -55,6 +55,62 @@ public class Taco
         else increment perfectCounter
         is perfectCounter % 3 display combo message, increment comboCounter.
     */
+
+    /*
+    notes:
+    Perfect - correct ingredients, correct order:
+    Good - ingredientMisMatch=0:
+    Okay - ingredientMisMatch=1:
+    Failed - ingredientMisMatch>=2:
+    */
+
+
+
+    /*
+    Checking Taco Psuedo Code Based on overloaded & operator
+
+    //& operator, "aTaco & bTaco" returns # of matching ingredients in order
+    int ingredientMatch=0;
+    if(aTaco.length()>bTaco.length()){ //setting the smaller list for the for loop
+        smallerTaco=bTaco;
+        largerTaco=aTaco;
+    }else{
+        smallerTaco=aTaco;
+        largerTaco=bTaco;
+    }
+    for(unsigned i=0; i<smallerTaco.length();i++){ //iterate through the smaller list
+        if(smallerTaco[i]==largerTaco[i]){
+            ingredientMatch++;
+        }
+    }
+    return ingredientMatch;
+
+
+    taco grading algo
+
+    if(currTaco.length()==orderTaco.length()){ //if taco lengths are equal
+        if(currTaco & orderTaco == currTaco.length()){ //if # of matching in order ingredients == length of either list
+            currTaco.s_score=PERFECT; //perfect score 
+            perfectCounter++; //increment perfect counter
+            if (perfectCounter % 3) comboCounter++; //display combo stuff
+            exit;
+        }
+    int numMatching=currTaco.sort() & orderTaco.sort(); //number of matching ingredients (ignoring order)
+    //this will need to change depending on how we see duplicates
+    int longerLength= (currTaco.length()>orderTaco.length())? currTaco.length(): orderTaco.length();
+    if(numMatching-longerLength==0){
+        currTaco.s_score=GOOD;
+    }
+    else if(numMatching-longerLength==1){
+        currTaco.s_score=OKAY;
+    }
+    else if(numMatching-longerLength>=2){
+        currTaco.s_score=FAILED;
+    }
+    perfectCounter=0;
+    */
+
+
     public float CheckTaco(Taco currTaco)
     {
         int ingredientMisMatchCounter = 0; // when == 1 -> "Okay Taco", when >=2 -> "Failed Taco"
