@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LocationTracker : MonoBehaviour
+public class PointOfInterest : MonoBehaviour
 {
-    // LocationTracker has all the PointsOfInterests of the current scene
-    public List<PointOfInterest> allPointsOfInterest = new List<PointOfInterest>;
+    //Point of Interests are either 
+    //A) A Landmark
+    //B) A Gas Station
+    //this is the location in the scene of a given Point of Interest
+    public Transform pointOfInterest;
     // Start is called before the first frame update
     void Start()
     {
