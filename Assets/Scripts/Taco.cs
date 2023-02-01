@@ -6,10 +6,10 @@ public class Taco
 {
     public enum scoreType{PERFECT, GOOD, OKAY, FAILED}
     public enum ingredientType {FISH, SOUR_CREAM, PICO_DE_GALLO, CABBAGE, SLICED_JALAPENOS}
-    public enum customerType{CAT, DOG, FISH}
+    //public enum customerType{CAT, DOG, FISH} 
     private List<ingredientType> s_ingredients;
     private scoreType s_score;
-    private customerType s_customer;
+    //private customerType s_customer;
     
 
     public Taco(List<ingredientType> ingredients, customerType customer)
@@ -27,6 +27,12 @@ public class Taco
     /// <param name="currTaco"></param>
     /// <returns>A value between 0 and 1, the percentage of taco ingredient match</returns>
 
+
+
+    /*if no == for lists
+        
+    
+    */
     //CHECKING TACO PSUEDO CODE
     /*
         for e/a taco
@@ -52,62 +58,9 @@ public class Taco
     public float CheckTaco(Taco currTaco)
     {
         int ingredientMisMatchCounter = 0; // when == 1 -> "Okay Taco", when >=2 -> "Failed Taco"
-        if(s_customer=FISH){
+        if(s_customer==FISH){
             currTaco.setScore(FAILED);
             //currTaco.angeredFish = true; ???
-        }else{
-            
-        }
-        totalIngredients++;
-
-        int shorterFilling;
-        int longerFilling;
-        if (currTaco.s_filling.Count < s_filling.Count)
-        {
-            shorterFilling = currTaco.s_filling.Count;
-            longerFilling = s_filling.Count;
-        }
-        else
-        {
-            shorterFilling = s_filling.Count;
-            longerFilling = currTaco.s_filling.Count;
-        }
-
-        for (int i = 0; i < shorterFilling; i++)
-        {
-            if (s_filling[i] == currTaco.s_filling[i])
-            {
-                matchingIngredients++;
-            }
-            totalIngredients++;
-        }
-        // Catch any ingredient mismatch if one list is shorter than the currTaco
-        totalIngredients += longerFilling - shorterFilling;
-
-        int shorterTopping;
-        int longerTopping;
-        if (currTaco.s_toppings.Count < s_toppings.Count)
-        {
-            shorterTopping = currTaco.s_toppings.Count;
-            longerTopping = s_toppings.Count;
-        }
-        else
-        {
-            shorterTopping = s_toppings.Count;
-            longerTopping = currTaco.s_toppings.Count;
-        }
-
-        for (int i = 0; i < shorterTopping; i++)
-        {
-            if (s_toppings[i] == currTaco.s_toppings[i])
-            {
-                matchingIngredients++;
-            }
-            totalIngredients++;
-        }
-        // Catch any ingredient mismatch if one list is shorter than the currTaco
-        totalIngredients += longerTopping - shorterTopping;
-
-        return (float) matchingIngredients / (float) totalIngredients;
+        }else{}
     }
 }
