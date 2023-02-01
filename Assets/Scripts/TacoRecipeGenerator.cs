@@ -8,7 +8,7 @@ public class TacoRecipeGenerator : MonoBehaviour
     
     //fillingTypes: Fish, Shrimp, Salmon
     //toppingTypes: lettuce, diced tomatoes, beans, sour cream, onions
-    public TacoRecipeGenerator(){
+    public List<Taco> TacoRecipeGenerator(){
         //ten customers
         for(unsigned i=0; i<10;i++){
             List<fillingType> fillingOrder;
@@ -17,7 +17,9 @@ public class TacoRecipeGenerator : MonoBehaviour
             fillingOrder.Insert(Enum.GetNames(typeof(fillingType))[Random.Range(0,Enum.GetNames(typeof(fillingType)).Length)]);
 
             for(unsigned i= 0; i<Enum.GetNames(typeof(toppingType)).Length;i++){ //iterate through this algo # of times = to # possibleof toppings
+                
                 if(Random.Range(0,maxPossDifficulty+2-currDifficulty)==0){ //if ur at max difficulty 50% chance that the ith topping will be added to the order
+                    //if customer matches protein type then skip
                     toppingOrder.Insert(Enum.GetNames(typeof(toppingType)[i]));
                 }else{};
             }
@@ -29,8 +31,9 @@ public class TacoRecipeGenerator : MonoBehaviour
                 toppingOrder[newIndex]=tempTopping;
             }
             //add taco to the list of orders.
-            orderList.Insert[Taco(1, fillingOrder, toppingOrder)];
+            orderList.Insert[Taco(fillingOrder, toppingOrder)];
         }
+        return(orderList);
     }
 
     
