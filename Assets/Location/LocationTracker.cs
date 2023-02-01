@@ -5,7 +5,7 @@ using UnityEngine;
 public class LocationTracker : MonoBehaviour
 {
     // LocationTracker has all the PointsOfInterests of the current scene
-    public List<PointOfInterest> allPointsOfInterest = new List<PointOfInterest>;
+    public List<PointOfInterest> allPointsOfInterest = new List<PointOfInterest>();
     // Start is called before the first frame update
     void Start()
     {
