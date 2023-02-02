@@ -1374,11 +1374,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1297085516, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 20000
+      value: 4784
       objectReference: {fileID: 0}
     - target: {fileID: 1297085516, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -811
+      value: -451
       objectReference: {fileID: 0}
     - target: {fileID: 1297085516, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: m_ConstrainProportionsScale
@@ -1536,6 +1536,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BackgroundEnvironment
       objectReference: {fileID: 0}
+    - target: {fileID: 8771345538298886058, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8771345538298886059, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: chunkStyle
       value: 0
@@ -1546,11 +1550,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8771345538298886059, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: maxChunkLength
-      value: 100
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 8771345538298886059, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: generationStyle
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8771345538298886060, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: m_RootOrder
@@ -1566,7 +1570,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8771345538298886060, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1000
+      value: 6465
       objectReference: {fileID: 0}
     - target: {fileID: 8771345538298886060, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1630,7 +1634,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 996258256}
-  offset: {x: 20, y: 20, z: -500}
+  offset: {x: 100, y: 20, z: -500}
   camSpeed: 100
 --- !u!81 &1440028595
 AudioListener:
@@ -1664,7 +1668,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 10000
   field of view: 60
   orthographic: 0
   orthographic size: 5

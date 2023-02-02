@@ -58,7 +58,9 @@ public class MeshCreator : MonoBehaviour
         Vector3 begPos = groundGeneration.begGenerationPoint.position;
         Vector3 endPos = groundGeneration.endGenerationPoint.position;
 
-        if (chunkCount <= 0) { chunkCount = Mathf.FloorToInt(genCurvePoints.Count * 0.99f); } // what the fuck why idk
+        //if (chunkCount <= 0) { chunkCount = Mathf.FloorToInt(genCurvePoints.Count * 0.99f); } // what the fuck why idk
+
+        if (chunkCount <= 0) { chunkCount = genCurvePoints.Count - 1; }
         if (underground_height <= 0) { underground_height = Mathf.Abs((endPos.y - begPos.y)) * 3; }
 
         int triSize = Mathf.FloorToInt(genCurvePoints.Count / chunkCount); //get number of chunks based on chunk size
