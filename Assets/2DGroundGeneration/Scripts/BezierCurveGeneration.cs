@@ -78,47 +78,16 @@ public class BezierCurveGeneration : MonoBehaviour
     [Tooltip("Override and show objects and mesh even if not in camera range")]
     public bool cameraRangeOverride;
 
-
-
-
     [Header("Generation Editing ===========================================")]
-    [Range(0, 0.2f), Tooltip("Makes the ground objects more randomly placed so it looks more natural")]
-    public float positionNoise = 0.1f;
-
     [Space(10)]
     [Range(0.001f, 0.1f), Tooltip("Distance between points in bezier curve")]
     public float spaceBetweenPoints = 0.1f;
-
-    [Tooltip("The amount of points between spawned ground objects")]
-    [Range(1, 100)]
-    public int pointsBetweenObjs = 40;
-
-
-
 
     [Header("Curve Points ===========================================")]
     [Tooltip("List of all generated curve points")]
     public List<Vector3> generatedCurvePoints = new List<Vector3>();
     [Tooltip("List of all rotations of index corresponding points")]
     public List<float> generatedCurvePointRotations = new List<float>();
-
-    [Header("Ground Objects ===========================================")]
-    [Tooltip("Parent of all spawned ground objects")]
-    public GameObject groundParent;
-
-    [Tooltip("Ground object prefabs")]
-    public List<GameObject> groundObjectPrefabs = new List<GameObject>();
-
-    [Tooltip("Special 'connector' object prefabs")]
-    public List<GameObject> endPointObjectPrefabs = new List<GameObject>();
-
-    [Tooltip("active ground objects")]
-    public List<GameObject> generated_objs = new List<GameObject>();
-
-    [Tooltip("Scale of the Ground Objects")]
-    public float groundObjScale = 20;
-
-
 
 
     [Header("Mesh Creation ===========================================")]
@@ -127,21 +96,9 @@ public class BezierCurveGeneration : MonoBehaviour
 
     [Tooltip("Object for underground mesh")]
     public GameObject undergroundMeshObj;
-    Mesh undergroundMesh;
 
     [Tooltip("Object for depth mesh")]
     public GameObject depthMeshObj;
-    Mesh depthMesh;
-
-    [Tooltip("Distance between horizontal points of mesh")]
-    public int meshDistBetweenPoints = 10;
-
-    [Tooltip("Height of the underground mesh")]
-    public float underground_height = 5;
-
-    [Tooltip("Depth of the depth mesh")]
-    public float depth_length = 10;
-
 
     [Header("Edit Points"), Tooltip("Change the Bezier Curve with these points")]
     public Transform p0;
@@ -234,14 +191,8 @@ public class BezierCurveGeneration : MonoBehaviour
 
             SetAngleType(); // sets the angle type
 
-            //if first generation && objs already spawned, deleted previously spawned
-            if (first_generation && generated_objs.Count > 0) { DestroyGenObjs(); }
-
             generatedCurvePoints = GenerateCurvePointPositions(spaceBetweenPoints); //create list of point positions
             generatedCurvePointRotations = GenerateCurvePointRotations(spaceBetweenPoints); //createt list of point rotations
-             
-            //create ground at right position && rotation
-            GenerateGroundFromObjects(generatedCurvePoints, generatedCurvePointRotations);
 
             first_generation = false; //not first gen anymore
 
@@ -257,308 +208,11 @@ public class BezierCurveGeneration : MonoBehaviour
                 */
             }
 
-
             generationFinished = true;
         }
 
-        // << CAMERA RENDERING >>
-        // if within range and generation is not made, make generation
-        if ((inCameraRange || cameraRangeOverride) && !generationFinished) {
-            first_generation = true;
-        }
-        // if in range and generation is made
-        else if (inCameraRange || cameraRangeOverride)
-        {
-            // enable mesh
-            undergroundMeshObj.GetComponent<MeshRenderer>().enabled = true;
-            depthMeshObj.GetComponent<MeshRenderer>().enabled = true;
-        }
-        // if not in range, destroy all generated objects
-        else if (!inCameraRange && !cameraRangeOverride)
-        {
-            DestroyListObjects(generated_objs);
-
-            // disable mesh
-            undergroundMeshObj.GetComponent<MeshRenderer>().enabled = false;
-            depthMeshObj.GetComponent<MeshRenderer>().enabled = false;
-
-            generationFinished = false;
-        }
+        CameraRendering();
     }
-
-    #region MESH GENERATION ================================================================
-    /*
-    void CreateUnderground(List<Vector3> genCurvePoints, int meshPointDistance, float underground_height)
-    {
-        //find distance between end points
-        //divide by set count of meshes to generate
-        //generate new mesh based on chunk points in for loop adding vertices and triangles to 
-
-        /*  
-         * 0____1
-         * |  /| 
-         * | / | 
-         * 2 -- 3
-         * 
-         *  generate triangles , 0 - 1 - 2, 2 - 1 - 3 
-         *                       A   B   C  C   B   D
-         */
-
-        /*
-
-        List<Vector3> verticesList = new List<Vector3>();
-        List<int> trianglesList = new List<int>();
-
-        int chunkSize = (genCurvePoints.Count - 1) / meshPointDistance; //get number of chunks based on chunk size
-                                                                        //print("genCurPoints.Count: " + genCurvePoints.Count + " / chunkCount: " + chunkCount + " = chunkSize: "  + chunkSize);
-
-        //DONT TOUCH THIS OR I WILL CASTRATE YOU
-        //For some reason this fixes positioning problems
-        //undergroundMeshObj.transform.position = new Vector3(undergroundMeshObj.transform.localPosition.x, undergroundMeshObj.transform.localPosition.y);
-        undergroundMeshObj.transform.position = Vector3.zero;
-
-        //move the 0 index x position to the left a tiny bit
-        genCurvePoints[0] = new Vector3(genCurvePoints[0].x - 0.1f, genCurvePoints[0].y);
-
-        //init these variables for use outside of for loop
-        int chunkBegPoint_index = 0;
-        int chunkEndPoint_index = chunkSize;
-
-        //iterate through chunk count
-        for (int i = 0; i < meshPointDistance; i++)
-        {
-
-            chunkBegPoint_index = i * chunkSize;
-            chunkEndPoint_index = (i * chunkSize) + chunkSize;
-
-            //print(genCurvePoints[0] + " // Point Count " + genCurvePoints.Count + "// End Point index " + chunkEndPoint_index + " vertices: " + verticesList.Count);
-
-            //VERTICE POINTS
-            //only need 0 && 2 if its the first mesh
-            if (i == 0)
-            {
-                //                                                              move point to the left a little pit
-                Vector3 pointA = new Vector3(genCurvePoints[chunkBegPoint_index].x, genCurvePoints[chunkBegPoint_index].y + 0.1f, 0); // 0 
-                verticesList.Add(pointA);
-            }
-
-            //move up a little bit
-            Vector3 pointB = new Vector3(genCurvePoints[chunkEndPoint_index].x, genCurvePoints[chunkEndPoint_index].y + 0.025f, 0); // 1
-            verticesList.Add(pointB);
-
-            if (i == 0)
-            {
-                Vector3 pointC = new Vector3(genCurvePoints[chunkBegPoint_index].x, genCurvePoints[chunkBegPoint_index].y - underground_height); // 2
-                verticesList.Add(pointC);
-            }
-
-            Vector3 pointD = new Vector3(genCurvePoints[chunkEndPoint_index].x, genCurvePoints[chunkEndPoint_index].y - underground_height); // 3
-            verticesList.Add(pointD);
-
-
-            //TRIANGLE POINTS
-            if (i == 0)
-            {
-                trianglesList.Add(0);
-                trianglesList.Add(1);
-                trianglesList.Add(2);
-                trianglesList.Add(2);
-                trianglesList.Add(1);
-                trianglesList.Add(3);
-            }
-            else if ( i == 1)
-            {
-                trianglesList.Add(1);
-                trianglesList.Add(4);
-                trianglesList.Add(3);
-                trianglesList.Add(3);
-                trianglesList.Add(4);
-                trianglesList.Add(5);
-            }
-            else if (i > 1)
-            {
-                trianglesList.Add(i * 2);
-                trianglesList.Add((i * 2) + 2);
-                trianglesList.Add((i * 2) + 1);
-                trianglesList.Add((i * 2) + 1);
-                trianglesList.Add((i * 2) + 2);
-                trianglesList.Add((i * 2) + 3);
-            }
-        }
-
-
-
-        //FILL IN LAST EXTRA BIT OF MESH
-        //if last endpoint isn't last point
-
-        if (chunkEndPoint_index < (genCurvePoints.Count - 1))
-        {
-            //Get Vertices
-            Vector3 pointB = new Vector3(genCurvePoints[genCurvePoints.Count - 1].x + 0.1f, genCurvePoints[genCurvePoints.Count - 1].y + 0.05f); // 1
-            verticesList.Add(pointB);
-
-            //                                                              add a little extra just to cover
-            Vector3 pointD = new Vector3(genCurvePoints[genCurvePoints.Count - 1].x + 0.1f, genCurvePoints[genCurvePoints.Count - 1].y - underground_height); // 3
-            verticesList.Add(pointD);
-
-            //Get Triangle points
-            int i = meshPointDistance;
-            trianglesList.Add(i * 2);
-            trianglesList.Add((i * 2) + 2);
-            trianglesList.Add((i * 2) + 1);
-            trianglesList.Add((i * 2) + 1);
-            trianglesList.Add((i * 2) + 2);
-            trianglesList.Add((i * 2) + 3);
-
-        }
-
-        undergroundMesh.Clear();
-        undergroundMesh.vertices = verticesList.ToArray();
-        undergroundMesh.triangles = trianglesList.ToArray();
-
-
-        undergroundMesh.RecalculateNormals(); //fixes lighting
-
-
-        // << SET EDGE COLLIDER >>
-
-        // create Vector 2 list of points
-        // i dont know why I didnt start with this but we're too far in now
-        List<Vector2> edgePoints = new List<Vector2>();
-        foreach (Vector3 v in genCurvePoints)
-        {
-            edgePoints.Add(new Vector2(v.x, v.y));
-        }
-
-        undergroundMeshObj.GetComponent<EdgeCollider2D>().SetPoints(edgePoints);
-    }
-    */
-
-    void CreateGroundDepth(List<Vector3> genCurvePoints, int chunkCount, float ground_depth)
-    {
-        List<Vector3> verticesList = new List<Vector3>();
-        List<int> trianglesList = new List<int>();
-
-        int chunkSize = (genCurvePoints.Count - 1) / chunkCount; //get number of chunks based on chunk size
-
-        //DONT TOUCH THIS OR I WILL CASTRATE YOU
-        //For some reason this fixes positioning problems
-        depthMeshObj.transform.position = new Vector3(depthMeshObj.transform.localPosition.x, depthMeshObj.transform.localPosition.y);
-
-        //move the 0 index x position to the left a tiny bit
-        genCurvePoints[0] = new Vector3(genCurvePoints[0].x - 0.1f, genCurvePoints[0].y);
-
-        //init these variables for use outside of for loop
-        int chunkBegPoint_index = 0;
-        int chunkEndPoint_index = chunkSize;
-
-        //iterate through chunk count
-        for (int i = 0; i < chunkCount; i++)
-        {
-
-            chunkBegPoint_index = i * chunkSize;
-            chunkEndPoint_index = (i * chunkSize) + chunkSize;
-
-            //print(genCurvePoints[0] + " // Point Count " + genCurvePoints.Count + "// End Point index " + chunkEndPoint_index + " vertices: " + verticesList.Count);
-
-            //VERTICE POINTS
-            //only need 0 && 2 if its the first mesh
-            if (i == 0)
-            {
-                Vector3 pointA = new Vector3(genCurvePoints[chunkBegPoint_index].x, genCurvePoints[chunkBegPoint_index].y - 1f, 0); // 0 
-                verticesList.Add(pointA);
-            }
-
-            Vector3 pointB = new Vector3(genCurvePoints[chunkEndPoint_index].x, genCurvePoints[chunkEndPoint_index].y - 1f, 0); // 1
-            verticesList.Add(pointB);
-
-            if (i == 0)
-            {
-                Vector3 pointC = new Vector3(genCurvePoints[chunkBegPoint_index].x, genCurvePoints[chunkBegPoint_index].y, depth_length); // 2
-                verticesList.Add(pointC);
-            }
-
-            Vector3 pointD = new Vector3(genCurvePoints[chunkEndPoint_index].x, genCurvePoints[chunkEndPoint_index].y, depth_length); // 3
-            verticesList.Add(pointD);
-
-
-            //TRIANGLE POINTS
-            if (i == 0)
-            {
-                trianglesList.Add(0);
-                trianglesList.Add(2);
-                trianglesList.Add(1);
-
-                trianglesList.Add(1);
-                trianglesList.Add(2);
-                trianglesList.Add(3);
-            }
-            else if (i == 1)
-            {
-                trianglesList.Add(1);
-                trianglesList.Add(3);
-                trianglesList.Add(4);
-
-                trianglesList.Add(4);
-                trianglesList.Add(3);
-                trianglesList.Add(5);
-            }
-            else if (i > 1)
-            {
-
-                //if i == 2:  4 5 6 6 5 7
-
-                trianglesList.Add(i * 2);
-                trianglesList.Add((i * 2) + 1);
-                trianglesList.Add((i * 2) + 2);
-                trianglesList.Add((i * 2) + 2);
-                trianglesList.Add((i * 2) + 1);
-                trianglesList.Add((i * 2) + 3);
-            }
-        }
-
-        //FILL IN LAST EXTRA BIT OF MESH
-        //if last endpoint isn't last point
-
-        if (chunkEndPoint_index < (genCurvePoints.Count - 1))
-        {
-            //Get Vertices
-            Vector3 pointB = new Vector3(genCurvePoints[genCurvePoints.Count - 1].x, genCurvePoints[genCurvePoints.Count - 1].y); // 1
-            verticesList.Add(pointB);
-
-            //                                                              add a little extra just to cover
-            Vector3 pointD = new Vector3(genCurvePoints[genCurvePoints.Count - 1].x, genCurvePoints[genCurvePoints.Count - 1].y, depth_length); // 3
-            verticesList.Add(pointD);
-
-            //Get Triangle points
-            int i = chunkCount;
-            trianglesList.Add(i * 2);
-            trianglesList.Add((i * 2) + 1);
-            trianglesList.Add((i * 2) + 2);
-            trianglesList.Add((i * 2) + 2);
-            trianglesList.Add((i * 2) + 1);
-            trianglesList.Add((i * 2) + 3);
-
-        }
-
-        depthMesh.Clear();
-        depthMesh.vertices = verticesList.ToArray();
-        depthMesh.triangles = trianglesList.ToArray();
-
-        /*
-        
-        // DEBUG TRIANGLES ARRAY
-        string trianglesArray = "Triangles: ";
-        foreach (int triangle in trianglesList)
-        {
-            trianglesArray += triangle.ToString() + ", ";
-        }
-        Debug.Log(trianglesArray);
-        */
-
-        depthMesh.RecalculateNormals(); //fixes lighting
-    }
-    #endregion
 
     #region POINT GENERATION =================================================================================
     public Vector3 GetPointOnCurve(float t)
@@ -588,7 +242,7 @@ public class BezierCurveGeneration : MonoBehaviour
         for (float x = 0; x <= 1f; x += adjustedSpacing)
         {
             // get the updated spacing for the next point
-            adjustedSpacing = GetSpaceBetweenObjs(x);
+            adjustedSpacing = SetSpaceBetweenObjs(x);
 
             // save current point position
             point_positions.Add(GetPointOnCurve(x)); //add position to list
@@ -607,7 +261,7 @@ public class BezierCurveGeneration : MonoBehaviour
         for (float x = 0; x < 1; x += adjustedSpacing)
         {
             // get the updated spacing for the next point
-            adjustedSpacing = GetSpaceBetweenObjs(x);
+            adjustedSpacing = SetSpaceBetweenObjs(x);
 
             // save current point rotation ( the curve's normal at the given point )
             point_rotations.Add(GetNormalRotationAngle(x, p0.position, p1.position, p2.position, p3.position));
@@ -617,8 +271,8 @@ public class BezierCurveGeneration : MonoBehaviour
     }
     #endregion
 
-    #region GROUND OBJECT GENERATION ===================================================================
-    public float GetSpaceBetweenObjs(float t)
+    #region BEZIER MATH ====================================================================
+    public float SetSpaceBetweenObjs(float t)
     {
         float pointYTangent = ComputeBezierDerivative(t, p0.position.y, p1.position.y, p2.position.y, p3.position.y);
         float objSpace = spaceBetweenPoints;
@@ -631,95 +285,12 @@ public class BezierCurveGeneration : MonoBehaviour
             objSpace = spaceBetweenPoints - (spaceBetweenPoints / pointYTangent);
         }
         */
-        
-       
+
+
         return objSpace;
     }
-    
-    void GenerateGroundFromObjects(List<Vector3> genPoints, List<float> genPointRots)
-    {
-        // pointsBetweenObjs can't be 0
-        if (pointsBetweenObjs == 0)
-        {
-            Debug.LogWarning("pointsBetweenObjs cannot be set to 0");
-
-            pointsBetweenObjs = 1;
-        }
-
-        int mod_pointsBetweenObjs = pointsBetweenObjs;
-
-        // return if no ground prefabs
-        if (groundObjectPrefabs.Count == 0) { 
-            Debug.LogWarning("Generation does not have any ground object prefabs", this.gameObject);
-            return;
-        }
-
-        // notify if no endpoint prefabs
-        if (groundObjectPrefabs.Count == 0)
-        {
-            Debug.LogWarning("Generation does not have any endpoint prefabs", this.gameObject);
-            return;
-        }
-
-        DestroyListObjects(generated_objs);
-
-        // for each generation point, spawn object
-        for (int i = 0; i < genPoints.Count - 1; i += mod_pointsBetweenObjs)
-        {
-            GameObject groundObj;
-
-            
-            //if either end point, choose from small ground points
-            if (endPointObjectPrefabs.Count > 0 && ( i < pointsBetweenObjs || i >= genPoints.Count - (pointsBetweenObjs * 2)))
-            {
-                groundObj = endPointObjectPrefabs[(int)Random.Range(0, endPointObjectPrefabs.Count)];
-
-                mod_pointsBetweenObjs = pointsBetweenObjs / 5;
-            }
-            else
-            {
-                //get random grass object in list
-                groundObj = groundObjectPrefabs[(int)Random.Range(0, groundObjectPrefabs.Count)];
-
-                mod_pointsBetweenObjs = pointsBetweenObjs;
-
-            }
 
 
-            //TOP GROUND
-            SpawnNewGround(groundObj, genPoints[i] + new Vector3(0, 0.5f, 0f), genPointRots[i]);
-        }
-    }
-
-    void SpawnNewGround(GameObject obj, Vector3 position, float rotation)
-    {
-        //print("ground spawned at : " + position);
-        float randomYPos = Random.Range(-positionNoise * 0.9f, positionNoise * 0.9f) + position.y; //set randomY
-
-        obj = Instantiate(obj, new Vector3(position.x, randomYPos, position.z), Quaternion.identity); 
-
-        //obj = Instantiate(obj, position, Quaternion.identity); //just in case you dont want the random y pos
-        obj.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, rotation));
-
-        //add to generated objects list
-        generated_objs.Add(obj);
-
-        //get the width and height of the obj collider
-        //topGroundCollider = obj.GetComponent<BoxCollider2D>();
-        obj.transform.parent = groundParent.transform;
-        obj.transform.localScale = new Vector2(groundObjScale, groundObjScale);
-    }
-
-    void DestroyGenObjs()
-    {
-        foreach (GameObject o in generated_objs)
-        {
-            DestroyImmediate(o);
-        }
-    }
-    #endregion
-
-    #region BEZIER MATH ====================================================================
     // finds the derivative
     public float ComputeBezierDerivative(float t, float a, float b, float c, float d)
     {
@@ -757,7 +328,6 @@ public class BezierCurveGeneration : MonoBehaviour
         if (enabled)
         {                  
             DrawBezierCurves(generatedCurvePoints, bezierLineWidth); //draw line renderer
-            DestroyGenObjs(); //destroy previous objs
         }
     }
 
@@ -938,6 +508,32 @@ public class BezierCurveGeneration : MonoBehaviour
         else
         {
             generationAngleType = "flat";
+        }
+    }
+
+    public void CameraRendering()
+    {
+        // << CAMERA RENDERING >>
+        // if within range and generation is not made, make generation
+        if ((inCameraRange || cameraRangeOverride) && !generationFinished)
+        {
+            first_generation = true;
+        }
+        // if in range and generation is made
+        else if (inCameraRange || cameraRangeOverride)
+        {
+            // enable mesh
+            undergroundMeshObj.GetComponent<MeshRenderer>().enabled = true;
+            depthMeshObj.GetComponent<MeshRenderer>().enabled = true;
+        }
+        // if not in range, destroy all generated objects
+        else if (!inCameraRange && !cameraRangeOverride)
+        {
+            // disable mesh
+            undergroundMeshObj.GetComponent<MeshRenderer>().enabled = false;
+            depthMeshObj.GetComponent<MeshRenderer>().enabled = false;
+
+            generationFinished = false;
         }
     }
 

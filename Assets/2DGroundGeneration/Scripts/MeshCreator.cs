@@ -7,7 +7,6 @@ public class MeshCreator : MonoBehaviour
     private Mesh undergroundMesh;
 
     public GroundGeneration groundGeneration;
-    public GameObject groundTextureObj;
 
     [Header("Debug")]
     public GameObject debugMarker;
@@ -40,11 +39,6 @@ public class MeshCreator : MonoBehaviour
         Vector3 scaleOfGeneration = new Vector2(endPos.x - begPos.x, (endPos.y - begPos.y) * 3); // shows how tall and deep hills can get
         Vector3 safeGenTextureScale = scaleOfGeneration * 1.25f; // add additional safety margins
 
-        // setup ground texture object
-        groundTextureObj.transform.localPosition = middleOfMesh - Vector3.forward;
-        
-        // dynamically scale object - this line doesn't work but the feature might be worth it
-        //groundTextureObj.transform.localScale = new Vector3(safeGenTextureScale.x, 1, safeGenTextureScale.y);
     }
 
     public void DestroyUndergroundMesh()
@@ -55,9 +49,7 @@ public class MeshCreator : MonoBehaviour
         meshCreated = false;
     }
 
-    /*
-     *         
-     */
+    #region UNDERGROUND MESH ======================================================
     public void CreateUnderground(List<Vector3> genCurvePoints, int chunkCount = -1, float underground_height = -1)
     {
         //find distance between end points
@@ -82,7 +74,7 @@ public class MeshCreator : MonoBehaviour
 
         // create vertices, triangles, uvs
         undergroundMesh.Clear();
-        undergroundMesh.vertices = GetVertices(genCurvePoints, underground_height, triSize, chunkCount);
+        undergroundMesh.vertices = GetUndergroundVertices(genCurvePoints, underground_height, triSize, chunkCount);
         undergroundMesh.triangles = GetTriangles(chunkCount);
         undergroundMesh.uv = GetQuadUVs();
 
@@ -110,7 +102,7 @@ public class MeshCreator : MonoBehaviour
         meshCreated = true;
     }
 
-    public Vector3[] GetVertices(List<Vector3> genCurvePoints, float underground_height, int triSize, int chunkCount)
+    public Vector3[] GetUndergroundVertices(List<Vector3> genCurvePoints, float underground_height, int triSize, int chunkCount)
     {
         List<Vector3> verticesList = new List<Vector3>();
 
@@ -166,6 +158,136 @@ public class MeshCreator : MonoBehaviour
 
         return verticesList.ToArray();
     }
+    #endregion
+
+    #region DEPTH MESH ============================================================
+    /*
+    void CreateGroundDepth(List<Vector3> genCurvePoints, int chunkCount, float ground_depth)
+    {
+        List<Vector3> verticesList = new List<Vector3>();
+        List<int> trianglesList = new List<int>();
+
+        int chunkSize = (genCurvePoints.Count - 1) / chunkCount; //get number of chunks based on chunk size
+
+        //DONT TOUCH THIS OR I WILL CASTRATE YOU
+        //For some reason this fixes positioning problems
+        depthMeshObj.transform.position = new Vector3(depthMeshObj.transform.localPosition.x, depthMeshObj.transform.localPosition.y);
+
+        //move the 0 index x position to the left a tiny bit
+        genCurvePoints[0] = new Vector3(genCurvePoints[0].x - 0.1f, genCurvePoints[0].y);
+
+        //init these variables for use outside of for loop
+        int chunkBegPoint_index = 0;
+        int chunkEndPoint_index = chunkSize;
+
+        //iterate through chunk count
+        for (int i = 0; i < chunkCount; i++)
+        {
+
+            chunkBegPoint_index = i * chunkSize;
+            chunkEndPoint_index = (i * chunkSize) + chunkSize;
+
+            //print(genCurvePoints[0] + " // Point Count " + genCurvePoints.Count + "// End Point index " + chunkEndPoint_index + " vertices: " + verticesList.Count);
+
+            //VERTICE POINTS
+            //only need 0 && 2 if its the first mesh
+            if (i == 0)
+            {
+                Vector3 pointA = new Vector3(genCurvePoints[chunkBegPoint_index].x, genCurvePoints[chunkBegPoint_index].y - 1f, 0); // 0 
+                verticesList.Add(pointA);
+            }
+
+            Vector3 pointB = new Vector3(genCurvePoints[chunkEndPoint_index].x, genCurvePoints[chunkEndPoint_index].y - 1f, 0); // 1
+            verticesList.Add(pointB);
+
+            if (i == 0)
+            {
+                Vector3 pointC = new Vector3(genCurvePoints[chunkBegPoint_index].x, genCurvePoints[chunkBegPoint_index].y, depth_length); // 2
+                verticesList.Add(pointC);
+            }
+
+            Vector3 pointD = new Vector3(genCurvePoints[chunkEndPoint_index].x, genCurvePoints[chunkEndPoint_index].y, depth_length); // 3
+            verticesList.Add(pointD);
+
+
+            //TRIANGLE POINTS
+            if (i == 0)
+            {
+                trianglesList.Add(0);
+                trianglesList.Add(2);
+                trianglesList.Add(1);
+
+                trianglesList.Add(1);
+                trianglesList.Add(2);
+                trianglesList.Add(3);
+            }
+            else if (i == 1)
+            {
+                trianglesList.Add(1);
+                trianglesList.Add(3);
+                trianglesList.Add(4);
+
+                trianglesList.Add(4);
+                trianglesList.Add(3);
+                trianglesList.Add(5);
+            }
+            else if (i > 1)
+            {
+
+                //if i == 2:  4 5 6 6 5 7
+
+                trianglesList.Add(i * 2);
+                trianglesList.Add((i * 2) + 1);
+                trianglesList.Add((i * 2) + 2);
+                trianglesList.Add((i * 2) + 2);
+                trianglesList.Add((i * 2) + 1);
+                trianglesList.Add((i * 2) + 3);
+            }
+        }
+
+        //FILL IN LAST EXTRA BIT OF MESH
+        //if last endpoint isn't last point
+
+        if (chunkEndPoint_index < (genCurvePoints.Count - 1))
+        {
+            //Get Vertices
+            Vector3 pointB = new Vector3(genCurvePoints[genCurvePoints.Count - 1].x, genCurvePoints[genCurvePoints.Count - 1].y); // 1
+            verticesList.Add(pointB);
+
+            //                                                              add a little extra just to cover
+            Vector3 pointD = new Vector3(genCurvePoints[genCurvePoints.Count - 1].x, genCurvePoints[genCurvePoints.Count - 1].y, depth_length); // 3
+            verticesList.Add(pointD);
+
+            //Get Triangle points
+            int i = chunkCount;
+            trianglesList.Add(i * 2);
+            trianglesList.Add((i * 2) + 1);
+            trianglesList.Add((i * 2) + 2);
+            trianglesList.Add((i * 2) + 2);
+            trianglesList.Add((i * 2) + 1);
+            trianglesList.Add((i * 2) + 3);
+
+        }
+
+        depthMesh.Clear();
+        depthMesh.vertices = verticesList.ToArray();
+        depthMesh.triangles = trianglesList.ToArray();
+
+        /*
+        
+        // DEBUG TRIANGLES ARRAY
+        string trianglesArray = "Triangles: ";
+        foreach (int triangle in trianglesList)
+        {
+            trianglesArray += triangle.ToString() + ", ";
+        }
+        Debug.Log(trianglesArray);
+        */
+
+        //depthMesh.RecalculateNormals(); //fixes lighting
+    //}
+    #endregion
+
 
     public int[] GetTriangles(int chunkCount)
     {

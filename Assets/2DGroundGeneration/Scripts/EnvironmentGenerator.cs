@@ -19,8 +19,10 @@ public class EnvironmentGenerator : MonoBehaviour
     public List<Vector3> groundPoints = new List<Vector3>();
     [HideInInspector]
     public List<float> groundRotations = new List<float>();
+    [HideInInspector]
+    public List<GameObject> allSpawnedObjects = new List<GameObject>(); // stores all spawned env objects
 
-    [Header("Generation Values")]
+    [Header("Environment Generation Values ===========================")]
     [Tooltip("Minimum space between environment objects")]
     [Range(1, 100)]
     public int minSpaceBetweenObjects = 10;
@@ -28,16 +30,39 @@ public class EnvironmentGenerator : MonoBehaviour
     [Range(1, 100)]
     public int maxSpaceBetweenObjects = 40;
 
-    [HideInInspector]
-    public List<GameObject> allSpawnedObjects = new List<GameObject>(); // stores all spawned env objects
-
-
-    [Header("Trees")]
+    [Header("<< Trees >>")]
     [Tooltip("Parent for the spawned trees")]
     public Transform treeGenParent;
     [Tooltip("List of tree prefabs to spawn")]
     public List<GameObject> treePrefabs = new List<GameObject>();
-    [HideInInspector]
+
+
+
+    [Header("Ground Objects ===========================================")]
+    [Tooltip("Parent of all spawned ground objects")]
+    public GameObject groundParent;
+
+    [Tooltip("Ground object prefabs")]
+    public List<GameObject> groundObjectPrefabs = new List<GameObject>();
+
+    [Tooltip("Special 'connector' object prefabs")]
+    public List<GameObject> endPointObjectPrefabs = new List<GameObject>();
+
+    [Tooltip("active ground objects")]
+    public List<GameObject> genGroundObjs = new List<GameObject>();
+
+    [Tooltip("Scale of the Ground Objects")]
+    public float groundObjScale = 20;
+
+    [Tooltip("The amount of points between spawned ground objects")]
+    [Range(1, 100)]
+    public int pointsBetweenGroundObjs = 40;
+
+    [Range(0, 0.2f), Tooltip("Makes the ground objects more randomly placed so it looks more natural")]
+    public float positionNoise = 0.1f;
+
+
+
 
 
     // Start is called before the first frame update
@@ -47,11 +72,13 @@ public class EnvironmentGenerator : MonoBehaviour
         if (groundGeneration.generationFinished && !environmentSpawned)
         {
             SpawnAllEnvironmentObjects();
+            SpawnGroundObjects(groundGeneration.allGroundPoints, groundGeneration.allGroundRotations, pointsBetweenGroundObjs);
         }
 
         else if (!groundGeneration.generationFinished && environmentSpawned)
         {
             DeleteAllEnvironmentObejcts();
+            DestroyAllGroundObjs();
         }
 
     }
@@ -97,9 +124,6 @@ public class EnvironmentGenerator : MonoBehaviour
 
         // check ground rotations
         if (groundPoints.Count < 1) { Debug.LogWarning("No rotation points."); return; }
-
-
-
 
         // << SPAWN OBJECTS >>
         for (int i = 0; i < count; i++)
@@ -148,6 +172,111 @@ public class EnvironmentGenerator : MonoBehaviour
             else { break; }
         }
     }
+
+    #region GROUND OBJECT GENERATION ===================================================================
+
+    void SpawnGroundObjects(List<Vector3> genPoints, List<float> genPointRots, int pointsBetweenObjs)
+    {
+        // pointsBetweenObjs can't be 0
+        if (pointsBetweenObjs == 0)
+        {
+            Debug.LogWarning("pointsBetweenObjs cannot be set to 0");
+
+            pointsBetweenObjs = 1;
+        }
+
+        int mod_pointsBetweenObjs = pointsBetweenObjs;
+
+        // return if no ground prefabs
+        if (groundObjectPrefabs.Count == 0)
+        {
+            Debug.LogWarning("Generation does not have any ground object prefabs", this.gameObject);
+            return;
+        }
+
+        // notify if no endpoint prefabs
+        if (groundObjectPrefabs.Count == 0)
+        {
+            Debug.LogWarning("Generation does not have any endpoint prefabs", this.gameObject);
+            return;
+        }
+
+        DestroyListObjects(genGroundObjs);
+
+        // for each generation point, spawn object
+        for (int i = 0; i < genPoints.Count - 1; i += mod_pointsBetweenObjs)
+        {
+            GameObject groundObj;
+
+
+            //if either end point, choose from small ground points
+            if (endPointObjectPrefabs.Count > 0 && (i < pointsBetweenObjs || i >= genPoints.Count - (pointsBetweenObjs * 2)))
+            {
+                groundObj = endPointObjectPrefabs[(int)Random.Range(0, endPointObjectPrefabs.Count)];
+
+                // mod_pointsBetweenObjs = pointsBetweenObjs / 5;
+            }
+            else
+            {
+                //get random grass object in list
+                groundObj = groundObjectPrefabs[(int)Random.Range(0, groundObjectPrefabs.Count)];
+
+                mod_pointsBetweenObjs = pointsBetweenObjs;
+
+            }
+
+
+            //TOP GROUND
+            SpawnNewGround(groundObj, genPoints[i] + new Vector3(0, 0.5f, 0f), genPointRots[i]);
+        }
+    }
+
+    void SpawnNewGround(GameObject obj, Vector3 position, float rotation)
+    {
+        //print("ground spawned at : " + position);
+        float randomYPos = Random.Range(-positionNoise * 0.9f, positionNoise * 0.9f) + position.y; //set randomY
+
+        obj = Instantiate(obj, new Vector3(position.x, randomYPos, 0), Quaternion.identity);
+
+        //obj = Instantiate(obj, position, Quaternion.identity); //just in case you dont want the random y pos
+        obj.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, rotation));
+
+        //add to generated objects list
+        genGroundObjs.Add(obj);
+
+        obj.transform.parent = groundParent.transform;
+        obj.transform.localScale = new Vector2(groundObjScale, groundObjScale);
+
+        obj.transform.localPosition = SetZ(obj.transform.localPosition, -1); // set z position to -1 
+    }
+
+    void DestroyAllGroundObjs()
+    {
+        foreach (GameObject o in genGroundObjs)
+        {
+            DestroyImmediate(o);
+        }
+        genGroundObjs.Clear();
+    }
+    #endregion
+
+    #region HELPER FUNCTIONS =================================================================
+    public void DestroyListObjects(List<GameObject> list)
+    {
+        foreach (GameObject obj in list)
+        {
+            Destroy(obj);
+        }
+
+        list.Clear();
+    }
+
+    Vector3 SetZ(Vector3 vector, float z)
+    {
+        vector.z = z;
+        return vector;
+    }
+    #endregion
 
 
 
