@@ -54,15 +54,15 @@ public class EnvironmentGenerator : MonoBehaviour
     [Tooltip("Scale of the Ground Objects")]
     public float groundObjScale = 20;
 
+    [Tooltip("Z offset of the ground")]
+    public int groundZOffest = -10;
+
     [Tooltip("The amount of points between spawned ground objects")]
     [Range(1, 100)]
     public int pointsBetweenGroundObjs = 40;
 
     [Range(0, 0.2f), Tooltip("Makes the ground objects more randomly placed so it looks more natural")]
     public float positionNoise = 0.1f;
-
-
-
 
 
     // Start is called before the first frame update
@@ -195,7 +195,7 @@ public class EnvironmentGenerator : MonoBehaviour
         }
 
         // notify if no endpoint prefabs
-        if (groundObjectPrefabs.Count == 0)
+        if (endPointObjectPrefabs.Count == 0)
         {
             Debug.LogWarning("Generation does not have any endpoint prefabs", this.gameObject);
             return;
@@ -204,25 +204,20 @@ public class EnvironmentGenerator : MonoBehaviour
         DestroyListObjects(genGroundObjs);
 
         // for each generation point, spawn object
-        for (int i = 0; i < genPoints.Count - 1; i += mod_pointsBetweenObjs)
+        for (int i = 0; i < genPoints.Count - 1; i += pointsBetweenObjs)
         {
             GameObject groundObj;
 
 
             //if either end point, choose from small ground points
-            if (endPointObjectPrefabs.Count > 0 && (i < pointsBetweenObjs || i >= genPoints.Count - (pointsBetweenObjs * 2)))
+            if (endPointObjectPrefabs.Count > 0 && (i < genPoints.Count && i >= genPoints.Count * 0.8f))
             {
                 groundObj = endPointObjectPrefabs[(int)Random.Range(0, endPointObjectPrefabs.Count)];
-
-                // mod_pointsBetweenObjs = pointsBetweenObjs / 5;
             }
             else
             {
                 //get random grass object in list
                 groundObj = groundObjectPrefabs[(int)Random.Range(0, groundObjectPrefabs.Count)];
-
-                mod_pointsBetweenObjs = pointsBetweenObjs;
-
             }
 
 
@@ -247,7 +242,7 @@ public class EnvironmentGenerator : MonoBehaviour
         obj.transform.parent = groundParent.transform;
         obj.transform.localScale = new Vector2(groundObjScale, groundObjScale);
 
-        obj.transform.localPosition = SetZ(obj.transform.localPosition, -1); // set z position to -1 
+        obj.transform.localPosition = SetZ(obj.transform.localPosition, groundZOffest); // set z position to -1 
     }
 
     void DestroyAllGroundObjs()

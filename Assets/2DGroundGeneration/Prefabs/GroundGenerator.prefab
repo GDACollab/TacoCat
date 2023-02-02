@@ -243,6 +243,7 @@ GameObject:
   - component: {fileID: 5528933269245839926}
   - component: {fileID: 4413080804883077300}
   - component: {fileID: 3549629311325113513}
+  - component: {fileID: 559096271319292200}
   m_Layer: 8
   m_Name: undergroundMesh
   m_TagString: Untagged
@@ -356,6 +357,17 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
+--- !u!210 &559096271319292200
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 861253198387667648}
+  m_Enabled: 1
+  m_SortingLayerID: 2132478623
+  m_SortingLayer: 2
+  m_SortingOrder: 0
 --- !u!1 &3742885630959358602
 GameObject:
   m_ObjectHideFlags: 0
@@ -477,16 +489,16 @@ MonoBehaviour:
   environmentSpawned: 0
   groundPoints: []
   groundRotations: []
+  allSpawnedObjects: []
   minSpaceBetweenObjects: 10
   maxSpaceBetweenObjects: 40
-  allSpawnedObjects: []
-  groundParent: {fileID: 817150490819281037}
-  groundObjectPrefabs: []
-  endPointObjectPrefabs: []
-  generated_objs: []
-  groundObjScale: 20
-  pointsBetweenGroundObjs: 40
-  positionNoise: 0.1
   treeGenParent: {fileID: 5343893833967477908}
   treePrefabs:
   - {fileID: 7067189267099552049, guid: 93396d3051094374bb81d6de67f3613e, type: 3}
+  groundParent: {fileID: 817150490819281037}
+  groundObjectPrefabs: []
+  endPointObjectPrefabs: []
+  genGroundObjs: []
+  groundObjScale: 20
+  pointsBetweenGroundObjs: 40
+  positionNoise: 0.1
