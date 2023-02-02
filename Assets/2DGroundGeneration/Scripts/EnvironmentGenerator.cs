@@ -33,6 +33,8 @@ public class EnvironmentGenerator : MonoBehaviour
     [Header("<< Trees >>")]
     [Tooltip("Parent for the spawned trees")]
     public Transform treeGenParent;
+    [Tooltip("Scale of the Tree Objects")]
+    public float treeScale = 20;
     [Tooltip("List of tree prefabs to spawn")]
     public List<GameObject> treePrefabs = new List<GameObject>();
 
@@ -92,7 +94,7 @@ public class EnvironmentGenerator : MonoBehaviour
         DeleteAllEnvironmentObejcts();
 
         // spawn tree objects
-        SpawnEnvironmentObjects(treePrefabs, 20);
+        SpawnEnvironmentObjects(treePrefabs, 20, treeScale);
 
         environmentSpawned = true;
     }
@@ -111,7 +113,7 @@ public class EnvironmentGenerator : MonoBehaviour
         environmentSpawned = false;
     }
 
-    public void SpawnEnvironmentObjects(List<GameObject> prefabs, int count)
+    public void SpawnEnvironmentObjects(List<GameObject> prefabs, int count, float scale)
     {
         int pointIndex = 10; // index of the point to spawn the object at ,, start at ten to not spawn at direct beginning of generation
         int sortingOrder = 0; // sorting order of the object to be spawned
@@ -140,13 +142,22 @@ public class EnvironmentGenerator : MonoBehaviour
 
             // randomly face left or right
             int randomFacing = Random.Range(0, 2) * 2 - 1;
-            newEnvObject.transform.localScale = new Vector3(randomFacing, 1);
+            newEnvObject.transform.localScale = new Vector3(randomFacing, 1) * scale;
 
-            // set sorting layer
-            newEnvObject.GetComponentInChildren<SortingGroup>().sortingLayerName = "Environment";
 
-            //SORTING ORDER 4 / 5, very front
-            newEnvObject.GetComponentInChildren<SortingGroup>().sortingOrder = sortingOrder;
+
+
+            // << SET SORTING ORDER >>
+            if (!newEnvObject.GetComponent<SortingGroup>()) { Debug.LogError("Env Object doesn't have SortingGroup component", newEnvObject); }
+            else
+            {
+                // set sorting layer
+                //newEnvObject.GetComponentInChildren<SortingGroup>().sortingLayerName = "Environment";
+
+                //SORTING ORDER 4 / 5, very front
+                newEnvObject.GetComponentInChildren<SortingGroup>().sortingOrder = sortingOrder;
+            }
+
 
 
             /* ===============================
