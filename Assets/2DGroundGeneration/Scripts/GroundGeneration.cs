@@ -25,7 +25,10 @@ public class GroundGeneration : MonoBehaviour
     public GameObject chunkParent;
     public EnvironmentGenerator envGenerator;
 
+    [Space(10)]
     public GameObject undergroundMeshObj;
+    [HideInInspector]
+    public MeshCreator meshCreator;
 
     [Space(20)]
     [Tooltip("Reloads the ground generation every second so you can see how the script will react to the settings you have used.")]
@@ -49,6 +52,7 @@ public class GroundGeneration : MonoBehaviour
     public float fullGenerationLength, fullGenerationHeight;  // store full generation length and height
     [Tooltip("Shows if generation is finished")]
     public bool generationFinished;
+    public bool newGenerationStarted;
 
     // get all points and rotations
     [Tooltip("List of all generated ground points")]
@@ -70,6 +74,8 @@ public class GroundGeneration : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        meshCreator = undergroundMeshObj.GetComponent<MeshCreator>();
+
         // disable end point sprites
         begGenerationPoint.GetComponent<SpriteRenderer>().enabled = false;
         endGenerationPoint.GetComponent<SpriteRenderer>().enabled = false;
@@ -82,6 +88,20 @@ public class GroundGeneration : MonoBehaviour
 
     public void StaggeredUpdate()
     {
+        // set all ground points if generation not already finished
+        if (!generationFinished && allGroundPoints.Count == 0 && chunks.Count == GetHorizontalChunksNeeded())
+        {
+            SetAllGroundPoints();
+        }
+
+
+        // create mesh if generation finished && mesh not created
+        if (generationFinished && !meshCreator.meshCreated && allGroundPoints.Count > 0)
+        {
+            // create undergound mesh
+            meshCreator.CreateUnderground(allGroundPoints);
+        }
+
         if (editMode)
         {
             // update size of sprites
@@ -92,7 +112,23 @@ public class GroundGeneration : MonoBehaviour
             begGenerationPoint.GetComponent<SpriteRenderer>().enabled = true;
             endGenerationPoint.GetComponent<SpriteRenderer>().enabled = true;
 
-            NewGeneration(generationStyle);
+            // if points found and mesh created
+            if (generationFinished && meshCreator.meshCreated && !newGenerationStarted)
+            {
+                newGenerationStarted = true; // manage generation resets
+
+                // destroy all generation and start again
+                generationFinished = false;
+                allGroundPoints.Clear();
+                allGroundRotations.Clear();
+                meshCreator.DestroyUndergroundMesh();
+
+                NewGeneration(generationStyle);
+            }
+            else if (generationFinished && meshCreator.meshCreated)
+            {
+                newGenerationStarted = false;
+            }
         }
         else
         {
@@ -102,18 +138,8 @@ public class GroundGeneration : MonoBehaviour
         }
 
 
-        // set all ground points
-        int horzChunksNeeded = GetHorizontalChunksNeeded();
-        if (allGroundPoints.Count == 0)
-        {
-            SetAllGroundPoints();
-        }
 
-
-        // create undergound mesh
-        MeshCreator meshCreator = undergroundMeshObj.GetComponent<MeshCreator>();
-
-        // meshCreator.CreateUnderground(allGroundPoints, chunks.Count * 20 , 200);
+        
     }
 
     #region GENERATION ====================================================
@@ -465,7 +491,7 @@ public class GroundGeneration : MonoBehaviour
         //get positions from point lists in each chunk
         foreach (GameObject chunk in chunks)
         {
-            Debug.Log("chunk point count: " + chunk.GetComponent<BezierCurveGeneration>().generatedCurvePoints.Count);
+            //Debug.Log("chunk point count: " + chunk.GetComponent<BezierCurveGeneration>().generatedCurvePoints.Count);
 
             //add points and rotations to main list
             foreach (Vector3 point in chunk.GetComponent<BezierCurveGeneration>().generatedCurvePoints)
@@ -484,8 +510,9 @@ public class GroundGeneration : MonoBehaviour
     #endregion
 
     private void OnDrawGizmos()
+
     {
-        Gizmos.color = Color.red;
+        Gizmos.color = Color.white;
         Gizmos.DrawLine(begGenerationPoint.position, endGenerationPoint.position);
     }
 }
