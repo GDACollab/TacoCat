@@ -631,6 +631,7 @@ public class BezierCurveGeneration : MonoBehaviour
             objSpace = spaceBetweenPoints - (spaceBetweenPoints / pointYTangent);
         }
         */
+        
        
         return objSpace;
     }
