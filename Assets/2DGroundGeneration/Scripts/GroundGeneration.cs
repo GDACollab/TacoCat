@@ -89,7 +89,7 @@ public class GroundGeneration : MonoBehaviour
     public void StaggeredUpdate()
     {
         // set all ground points if generation not already finished
-        if (!generationFinished && allGroundPoints.Count == 0)
+        if (!generationFinished && allGroundPoints.Count == 0 && chunks.Count == GetHorizontalChunksNeeded())
         {
             SetAllGroundPoints();
         }

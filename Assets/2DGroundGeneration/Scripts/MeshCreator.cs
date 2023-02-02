@@ -41,7 +41,7 @@ public class MeshCreator : MonoBehaviour
         Vector3 safeGenTextureScale = scaleOfGeneration * 1.25f; // add additional safety margins
 
         // setup ground texture object
-        groundTextureObj.transform.localPosition = middleOfMesh + Vector3.forward;
+        groundTextureObj.transform.localPosition = middleOfMesh - Vector3.forward;
         
         // dynamically scale object - this line doesn't work but the feature might be worth it
         //groundTextureObj.transform.localScale = new Vector3(safeGenTextureScale.x, 1, safeGenTextureScale.y);
@@ -68,7 +68,7 @@ public class MeshCreator : MonoBehaviour
         Vector3 endPos = groundGeneration.endGenerationPoint.position;
 
         if (chunkCount <= 0) { chunkCount = Mathf.FloorToInt(genCurvePoints.Count * meshQuality); }
-        if (underground_height <= 0) { underground_height = Mathf.Abs((endPos.y - begPos.y)) * 2; }
+        if (underground_height <= 0) { underground_height = Mathf.Abs((endPos.y - begPos.y)) * 3; }
 
         int triSize = Mathf.FloorToInt(genCurvePoints.Count / chunkCount); //get number of chunks based on chunk size
 
