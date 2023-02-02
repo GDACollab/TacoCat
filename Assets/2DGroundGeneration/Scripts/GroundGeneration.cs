@@ -510,8 +510,9 @@ public class GroundGeneration : MonoBehaviour
     #endregion
 
     private void OnDrawGizmos()
+
     {
-        Gizmos.color = Color.red;
+        Gizmos.color = Color.white;
         Gizmos.DrawLine(begGenerationPoint.position, endGenerationPoint.position);
     }
 }

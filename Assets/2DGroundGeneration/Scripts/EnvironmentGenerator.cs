@@ -94,7 +94,7 @@ public class EnvironmentGenerator : MonoBehaviour
         DeleteAllEnvironmentObejcts();
 
         // spawn tree objects
-        SpawnEnvironmentObjects(treePrefabs, 20, treeScale);
+        SpawnEnvironmentObjects(treePrefabs, 20, treeScale, 1);
 
         environmentSpawned = true;
     }
@@ -113,11 +113,8 @@ public class EnvironmentGenerator : MonoBehaviour
         environmentSpawned = false;
     }
 
-    public void SpawnEnvironmentObjects(List<GameObject> prefabs, int count, float scale)
+    public void SpawnEnvironmentObjects(List<GameObject> prefabs, int count, float scale, int zposition)
     {
-        int pointIndex = 10; // index of the point to spawn the object at ,, start at ten to not spawn at direct beginning of generation
-        int sortingOrder = 0; // sorting order of the object to be spawned
-
         // check prefabs
         if (prefabs.Count < 1) { Debug.LogWarning("No environment prefabs."); return; }
 
@@ -125,46 +122,23 @@ public class EnvironmentGenerator : MonoBehaviour
         if (groundPoints.Count < 1) { Debug.LogWarning("No ground points."); return; }
 
         // check ground rotations
-        if (groundPoints.Count < 1) { Debug.LogWarning("No rotation points."); return; }
+        if (groundRotations.Count < 1) { Debug.LogWarning("No rotation points."); return; }
+
+        int sortingOrder = 0; // sorting order of the object to be spawned
+        int spacing = minSpaceBetweenObjects; // spacing between objects
 
         // << SPAWN OBJECTS >>
-        for (int i = 0; i < count; i++)
+        for (int currPointIndex = 10; currPointIndex < groundPoints.Count - 1; currPointIndex += spacing)
         {
-
-            // Debug.Log("point index " + pointIndex + "point count " + groundPoints.Count);
-
-            // create a random environment object at indexed groundPoint and with rotation
-            GameObject newEnvObject = Instantiate(prefabs[Random.Range(0, prefabs.Count)], groundPoints[pointIndex], Quaternion.Euler(new Vector3(0, 0, groundRotations[pointIndex])));
-
-            //set parent
-            newEnvObject.transform.parent = treeGenParent;
-            allSpawnedObjects.Add(newEnvObject);
-
-            // randomly face left or right
-            int randomFacing = Random.Range(0, 2) * 2 - 1;
-            newEnvObject.transform.localScale = new Vector3(randomFacing, 1) * scale;
-
-
-
-
-            // << SET SORTING ORDER >>
-            if (!newEnvObject.GetComponent<SortingGroup>()) { Debug.LogError("Env Object doesn't have SortingGroup component", newEnvObject); }
-            else
-            {
-                // set sorting layer
-                //newEnvObject.GetComponentInChildren<SortingGroup>().sortingLayerName = "Environment";
-
-                //SORTING ORDER 4 / 5, very front
-                newEnvObject.GetComponentInChildren<SortingGroup>().sortingOrder = sortingOrder;
-            }
-
-
+            // spawn new environment object
+            SpawnEnvObj(prefabs[Random.Range(0, prefabs.Count)], currPointIndex, scale, sortingOrder);
 
             /* ===============================
              *  << SET UP FOR NEXT ENVIRONMENT OBJECT >>
              * ============================== */
 
-            // toggle sorting order so that trees on this layer dont overlap
+            // << SORTING ORDER >>
+            // toggle sorting order so that objects on this layer dont overlap
             if (sortingOrder == 0) 
             { 
                 sortingOrder = 1; 
@@ -172,16 +146,48 @@ public class EnvironmentGenerator : MonoBehaviour
             else if (sortingOrder == 1) 
             { 
                 sortingOrder = 0; 
-            } 
-
-            // if index + max space between objects < end of groundPoints, give random index amount
-            if (pointIndex + maxSpaceBetweenObjects < groundPoints.Count)
-            {
-                pointIndex += Random.Range(minSpaceBetweenObjects, maxSpaceBetweenObjects + 1);
             }
-            //else break
-            else { break; }
+
+            // << OBJECT SPACING >>
+            // Determine the number of points to skip before instantiating the next prefab
+            spacing = Random.Range(minSpaceBetweenObjects, maxSpaceBetweenObjects + 1);
+
+            // Make sure we don't go past the end of the line
+            if (currPointIndex + spacing >= groundPoints.Count - 1)
+            {
+                break;
+            }
         }
+    }
+
+    public GameObject SpawnEnvObj(GameObject prefab, int pointIndex, float scale, int sortingOrder, int zposition = 0)
+    {
+        // create a random environment object at indexed groundPoint and with rotation
+        GameObject newEnvObject = Instantiate(prefab, groundPoints[pointIndex], Quaternion.Euler(new Vector3(0, 0, groundRotations[pointIndex])));
+
+        //set parent
+        newEnvObject.transform.parent = treeGenParent;
+        allSpawnedObjects.Add(newEnvObject);
+
+        // randomly face left or right
+        int randomFacing = Random.Range(0, 2) * 2 - 1;
+        newEnvObject.transform.localScale = new Vector3(randomFacing, 1) * scale;
+
+        // set z position
+        newEnvObject.transform.position = SetZ(newEnvObject.transform.position, zposition);
+
+        // << SET SORTING ORDER >>
+        if (!newEnvObject.GetComponentInChildren<SpriteRenderer>())
+        {
+            Debug.LogError("Env Object doesn't have SpriteRenderer component", newEnvObject);
+        }
+        else
+        {
+            // set sorting order of sprite renderer
+            newEnvObject.GetComponentInChildren<SpriteRenderer>().sortingOrder = sortingOrder;
+        }
+
+        return newEnvObject;
     }
 
     #region GROUND OBJECT GENERATION ===================================================================

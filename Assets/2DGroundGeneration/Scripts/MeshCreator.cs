@@ -7,19 +7,18 @@ public class MeshCreator : MonoBehaviour
     private Mesh undergroundMesh;
 
     public GroundGeneration groundGeneration;
+    public bool meshCreated;
+
+    [Header("Mesh Values")]
+    public bool collisionMesh = true;
+    public Material groundMaterial;
+
 
     [Header("Debug")]
     public GameObject debugMarker;
     public List<GameObject> debugMarkerList = new List<GameObject>();
 
-    public bool meshCreated;
 
-    [Tooltip("Defines how well the mesh follows the given point list")]
-    [Range(0.1f, 1f)]
-    public float meshQuality = 0.5f;
-    public int undergroundHeight = 20;
-
-    public Material groundMaterial;
 
     private void Start()
     {
@@ -59,7 +58,7 @@ public class MeshCreator : MonoBehaviour
         Vector3 begPos = groundGeneration.begGenerationPoint.position;
         Vector3 endPos = groundGeneration.endGenerationPoint.position;
 
-        if (chunkCount <= 0) { chunkCount = Mathf.FloorToInt(genCurvePoints.Count * meshQuality); }
+        if (chunkCount <= 0) { chunkCount = Mathf.FloorToInt(genCurvePoints.Count * 0.99f); } // what the fuck why idk
         if (underground_height <= 0) { underground_height = Mathf.Abs((endPos.y - begPos.y)) * 3; }
 
         int triSize = Mathf.FloorToInt(genCurvePoints.Count / chunkCount); //get number of chunks based on chunk size
@@ -87,16 +86,25 @@ public class MeshCreator : MonoBehaviour
         undergroundMeshObj.GetComponent<MeshFilter>().sharedMesh = undergroundMesh;
 
         // << SET EDGE COLLIDER >>
-
-        // create Vector 2 list of points
-        // i dont know why I didnt start with this but we're too far in now
-        List<Vector2> edgePoints = new List<Vector2>();
-        foreach (Vector3 v in genCurvePoints)
+        if (collisionMesh)
         {
-            edgePoints.Add(new Vector2(v.x, v.y));
+            undergroundMeshObj.GetComponent<EdgeCollider2D>().enabled = true;
+
+            // create Vector 2 list of points
+            // i dont know why I didnt start with this but we're too far in now
+            List<Vector2> edgePoints = new List<Vector2>();
+            foreach (Vector3 v in genCurvePoints)
+            {
+                edgePoints.Add(new Vector2(v.x, v.y));
+            }
+
+            undergroundMeshObj.GetComponent<EdgeCollider2D>().SetPoints(edgePoints);
+        }
+        else
+        {
+            undergroundMeshObj.GetComponent<EdgeCollider2D>().enabled = false;
         }
 
-        undergroundMeshObj.GetComponent<EdgeCollider2D>().SetPoints(edgePoints);
 
         Debug.Log("Underground Mesh Created", gameObject);
         meshCreated = true;
