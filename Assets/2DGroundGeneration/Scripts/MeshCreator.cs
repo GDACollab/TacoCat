@@ -6,6 +6,9 @@ public class MeshCreator : MonoBehaviour
     private GameObject undergroundMeshObj;
     private Mesh undergroundMesh;
 
+    public GroundGeneration groundGeneration;
+    public GameObject groundTextureObj;
+
     [Header("Debug")]
     public GameObject debugMarker;
     public List<GameObject> debugMarkerList = new List<GameObject>();
@@ -21,10 +24,27 @@ public class MeshCreator : MonoBehaviour
 
     private void Start()
     {
+        groundGeneration = GetComponentInParent<GroundGeneration>();
+
+        // setup underground mesh
         undergroundMeshObj = this.gameObject;
         undergroundMesh = new Mesh();
         undergroundMeshObj.GetComponent<MeshFilter>().mesh = undergroundMesh;
         undergroundMeshObj.GetComponent<MeshRenderer>().material = groundMaterial;
+
+        // get mesh values
+        Vector3 begPos = groundGeneration.begGenerationPoint.position;
+        Vector3 endPos = groundGeneration.endGenerationPoint.position;
+
+        Vector3 middleOfMesh = begPos + (endPos - begPos) / 2;
+        Vector3 scaleOfGeneration = new Vector2(endPos.x - begPos.x, (endPos.y - begPos.y) * 3); // shows how tall and deep hills can get
+        Vector3 safeGenTextureScale = scaleOfGeneration * 1.25f; // add additional safety margins
+
+        // setup ground texture object
+        groundTextureObj.transform.localPosition = middleOfMesh + Vector3.forward;
+        
+        // dynamically scale object - this line doesn't work but the feature might be worth it
+        //groundTextureObj.transform.localScale = new Vector3(safeGenTextureScale.x, 1, safeGenTextureScale.y);
     }
 
     public void DestroyUndergroundMesh()
@@ -38,14 +58,17 @@ public class MeshCreator : MonoBehaviour
     /*
      *         
      */
-    public void CreateUnderground(List<Vector3> genCurvePoints, int chunkCount = -1, int underground_height = -1)
+    public void CreateUnderground(List<Vector3> genCurvePoints, int chunkCount = -1, float underground_height = -1)
     {
         //find distance between end points
         //divide by set count of meshes to generate
         //generate new mesh based on chunk points in for loop adding vertices and triangles to 
 
+        Vector3 begPos = groundGeneration.begGenerationPoint.position;
+        Vector3 endPos = groundGeneration.endGenerationPoint.position;
+
         if (chunkCount <= 0) { chunkCount = Mathf.FloorToInt(genCurvePoints.Count * meshQuality); }
-        if (underground_height <= 0) { underground_height = undergroundHeight; }
+        if (underground_height <= 0) { underground_height = Mathf.Abs((endPos.y - begPos.y)) * 2; }
 
         int triSize = Mathf.FloorToInt(genCurvePoints.Count / chunkCount); //get number of chunks based on chunk size
 
@@ -64,7 +87,7 @@ public class MeshCreator : MonoBehaviour
         undergroundMesh.uv = GetQuadUVs();
 
         // Debug Vertice Points
-        DebugVertices(undergroundMesh.vertices);
+        //DebugVertices(undergroundMesh.vertices);
 
 
         undergroundMesh.RecalculateBounds();
@@ -87,7 +110,7 @@ public class MeshCreator : MonoBehaviour
         meshCreated = true;
     }
 
-    public Vector3[] GetVertices(List<Vector3> genCurvePoints, int underground_height, int triSize, int chunkCount)
+    public Vector3[] GetVertices(List<Vector3> genCurvePoints, float underground_height, int triSize, int chunkCount)
     {
         List<Vector3> verticesList = new List<Vector3>();
 
@@ -225,5 +248,23 @@ public class MeshCreator : MonoBehaviour
             newMark.transform.name = "V" + i;
             debugMarkerList.Add(newMark);
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+
+        Vector3 begPos = groundGeneration.begGenerationPoint.position;
+        Vector3 endPos = groundGeneration.endGenerationPoint.position;
+
+        Vector3 middleOfMesh = begPos + (endPos - begPos) / 2;
+        Vector3 scaleOfGeneration = new Vector2(endPos.x-begPos.x, (endPos.y-begPos.y) * 3); // shows how tall and deep hills can get
+        Vector3 safeGenTextureScale = scaleOfGeneration * 1.25f; // add additional safety margins
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireCube(middleOfMesh, scaleOfGeneration);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(middleOfMesh, safeGenTextureScale);
+
     }
 }

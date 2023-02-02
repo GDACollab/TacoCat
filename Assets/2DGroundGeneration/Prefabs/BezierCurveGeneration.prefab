@@ -20,7 +20,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1511771526
 Transform:
   m_ObjectHideFlags: 0
@@ -48,6 +48,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00777910455374e159fccfe0704149b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groundGeneration: {fileID: 0}
+  groundTextureObj: {fileID: 0}
+  debugMarker: {fileID: 0}
+  debugMarkerList: []
   meshCreated: 0
   meshQuality: 0.5
   undergroundHeight: 20
@@ -272,6 +276,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lineRenderer: {fileID: 4970063209726317980}
+  meshCreator: {fileID: 0}
   editMode: 0
   generationEditUpdate: 0
   editPointScale: 1
@@ -753,7 +758,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3517092134944965883
 Transform:
   m_ObjectHideFlags: 0
