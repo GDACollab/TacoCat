@@ -23,6 +23,7 @@ public class BezierCurveGeneration : MonoBehaviour
      * =======================================*/
 
     public LineRenderer lineRenderer;
+    public MeshCreator meshCreator;
 
     [Header("Generation Debug Tools ===========================================")]
 
@@ -121,6 +122,9 @@ public class BezierCurveGeneration : MonoBehaviour
 
 
     [Header("Mesh Creation ===========================================")]
+    [Tooltip("Determine if mesh gets generated")]
+    public bool generateMesh;
+
     [Tooltip("Object for underground mesh")]
     public GameObject undergroundMeshObj;
     Mesh undergroundMesh;
@@ -168,6 +172,7 @@ public class BezierCurveGeneration : MonoBehaviour
     public void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
+        meshCreator = undergroundMeshObj.GetComponent<MeshCreator>();
 
         // add points to list
         bezierPoints.Add(p0);
@@ -197,12 +202,12 @@ public class BezierCurveGeneration : MonoBehaviour
 
 
         // set underground mesh
-        undergroundMesh = new Mesh();
-        undergroundMeshObj.GetComponent<MeshFilter>().mesh = undergroundMesh;
+        //undergroundMesh = new Mesh();
+        //undergroundMeshObj.GetComponent<MeshFilter>().mesh = undergroundMesh;
 
         // set depth mesh
-        depthMesh = new Mesh();
-        depthMeshObj.GetComponent<MeshFilter>().mesh = depthMesh;
+        //depthMesh = new Mesh();
+        //depthMeshObj.GetComponent<MeshFilter>().mesh = depthMesh;
 
     }
 
@@ -240,11 +245,18 @@ public class BezierCurveGeneration : MonoBehaviour
 
             first_generation = false; //not first gen anymore
 
-            CreateUnderground(generatedCurvePoints, meshDistBetweenPoints, underground_height);
-            undergroundMeshObj.GetComponent<MeshRenderer>().enabled = false;
+            if (generateMesh)
+            {
+                // create undergound mesh
+                meshCreator.CreateUnderground(generatedCurvePoints);
+                //undergroundMeshObj.GetComponent<MeshRenderer>().enabled = false;
 
-            CreateGroundDepth(generatedCurvePoints, meshDistBetweenPoints, depth_length);
-            depthMeshObj.GetComponent<MeshRenderer>().enabled = false;
+                /*
+                CreateGroundDepth(generatedCurvePoints, meshDistBetweenPoints, depth_length);
+                depthMeshObj.GetComponent<MeshRenderer>().enabled = false;
+                */
+            }
+
 
             generationFinished = true;
         }
@@ -275,7 +287,8 @@ public class BezierCurveGeneration : MonoBehaviour
     }
 
     #region MESH GENERATION ================================================================
-    void CreateUnderground(List<Vector3> genCurvePoints, int chunkCount, float underground_height)
+    /*
+    void CreateUnderground(List<Vector3> genCurvePoints, int meshPointDistance, float underground_height)
     {
         //find distance between end points
         //divide by set count of meshes to generate
@@ -291,15 +304,18 @@ public class BezierCurveGeneration : MonoBehaviour
          *                       A   B   C  C   B   D
          */
 
+        /*
+
         List<Vector3> verticesList = new List<Vector3>();
         List<int> trianglesList = new List<int>();
 
-        int chunkSize = (genCurvePoints.Count - 1) / chunkCount; //get number of chunks based on chunk size
-        //print("genCurPoints.Count: " + genCurvePoints.Count + " / chunkCount: " + chunkCount + " = chunkSize: "  + chunkSize);
+        int chunkSize = (genCurvePoints.Count - 1) / meshPointDistance; //get number of chunks based on chunk size
+                                                                        //print("genCurPoints.Count: " + genCurvePoints.Count + " / chunkCount: " + chunkCount + " = chunkSize: "  + chunkSize);
 
         //DONT TOUCH THIS OR I WILL CASTRATE YOU
         //For some reason this fixes positioning problems
-        undergroundMeshObj.transform.position = new Vector3(undergroundMeshObj.transform.localPosition.x, undergroundMeshObj.transform.localPosition.y);
+        //undergroundMeshObj.transform.position = new Vector3(undergroundMeshObj.transform.localPosition.x, undergroundMeshObj.transform.localPosition.y);
+        undergroundMeshObj.transform.position = Vector3.zero;
 
         //move the 0 index x position to the left a tiny bit
         genCurvePoints[0] = new Vector3(genCurvePoints[0].x - 0.1f, genCurvePoints[0].y);
@@ -309,7 +325,7 @@ public class BezierCurveGeneration : MonoBehaviour
         int chunkEndPoint_index = chunkSize;
 
         //iterate through chunk count
-        for (int i = 0; i < chunkCount; i++)
+        for (int i = 0; i < meshPointDistance; i++)
         {
 
             chunkBegPoint_index = i * chunkSize;
@@ -386,7 +402,7 @@ public class BezierCurveGeneration : MonoBehaviour
             verticesList.Add(pointD);
 
             //Get Triangle points
-            int i = chunkCount;
+            int i = meshPointDistance;
             trianglesList.Add(i * 2);
             trianglesList.Add((i * 2) + 2);
             trianglesList.Add((i * 2) + 1);
@@ -400,14 +416,6 @@ public class BezierCurveGeneration : MonoBehaviour
         undergroundMesh.vertices = verticesList.ToArray();
         undergroundMesh.triangles = trianglesList.ToArray();
 
-        /*
-        string trianglesArray = "Triangles: ";
-        foreach (int triangle in trianglesList)
-        {
-            trianglesArray += triangle.ToString() + ", ";
-        }
-        Debug.Log(trianglesArray);
-        */
 
         undergroundMesh.RecalculateNormals(); //fixes lighting
 
@@ -424,6 +432,7 @@ public class BezierCurveGeneration : MonoBehaviour
 
         undergroundMeshObj.GetComponent<EdgeCollider2D>().SetPoints(edgePoints);
     }
+    */
 
     void CreateGroundDepth(List<Vector3> genCurvePoints, int chunkCount, float ground_depth)
     {
@@ -614,12 +623,14 @@ public class BezierCurveGeneration : MonoBehaviour
         float pointYTangent = ComputeBezierDerivative(t, p0.position.y, p1.position.y, p2.position.y, p3.position.y);
         float objSpace = spaceBetweenPoints;
 
+        /*
         // if ground slope is steep then make space between smaller based on how steep
         if (Mathf.Abs(pointYTangent) >= 6f) 
         {
             // subtracts a percentage from spaceBetween so that steep slopes spawn thier objects closer together
             objSpace = spaceBetweenPoints - (spaceBetweenPoints / pointYTangent);
         }
+        */
        
         return objSpace;
     }
