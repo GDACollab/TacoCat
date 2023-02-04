@@ -6,7 +6,7 @@ using UnityEngine;
     public Vector2 GetVelocity()
     public Vector3 GetPosition()
 */
-public class Vehicle : MonoBehaviour
+public class VehicleEY : MonoBehaviour
 {
     public Rigidbody2D rb_vehicle;
     public GameObject frontWheel;
@@ -22,24 +22,20 @@ public class Vehicle : MonoBehaviour
     public bool isGrounded;
     public bool inAir;
     public bool gasPressed; // increase gravity force on truck
-    public bool boostPressed;
     public bool jumpState;
 
     [Header("Forces")]
     public Vector2 startingVelocity; // initial velocity
     public Vector2 inAirForce; // input based force on truck
     public Vector2 groundedForce; // input based force on truck
-    public Vector2 boostForce; 
 
     [Header("Inputs")]
     public KeyCode gas;
-    public KeyCode boost;
     public KeyCode rotateRight;
     public KeyCode rotateLeft;
 
     [Header("Values")]
     public int fuelAmount = 100000;
-    public int nitroAmount = 100000;
     [Range(0, 100)]
     public float gravity = 9.81f;
     public float horizontalBoost; //Relative forward boost while grounded
@@ -93,19 +89,12 @@ public class Vehicle : MonoBehaviour
 
             fuelAmount--;
         }
-        
-        if (boostPressed && nitroAmount > 0)
-        {
-            rb_vehicle.AddForce(boostForce * rb_vehicle.mass);
-            nitroAmount--;
-        }
 
     }
 
     public void Inputs()
     {
         gasPressed = Input.GetKey(gas);
-        boostPressed = Input.GetKey(boost);
 
     }
 
@@ -113,9 +102,6 @@ public class Vehicle : MonoBehaviour
 
     public int GetFuel() {
         return fuelAmount;
-    }
-    public int GetNitro() {
-        return nitroAmount;
     }
     public Vector2 GetVelocity() {
         return rb_vehicle.velocity;
