@@ -28,16 +28,16 @@ public class Customer : MonoBehaviour
         newTaco.transform.position = tacoHolder.position;
 
         // create list of ingredients (( randomize here ))
-        List<ingredientType> newIngredients = new List<ingredientType>();
-        newIngredients.Add(ingredientType.LETTUCE);
-        newIngredients.Add(ingredientType.TOMATO);
-        newIngredients.Add(ingredientType.LETTUCE);
+        List<INGREDIENT_TYPE> newIngredients = new List<INGREDIENT_TYPE>();
+        newIngredients.Add(INGREDIENT_TYPE.LETTUCE);
+        newIngredients.Add(INGREDIENT_TYPE.TOMATO);
+        newIngredients.Add(INGREDIENT_TYPE.LETTUCE);
 
         // set ingredients
-        tacoScript.s_ingredients = newIngredients;
+        tacoScript.currIngredients = newIngredients;
 
         // spawn all ingredients
-        foreach (ingredientType ingr in tacoScript.s_ingredients)
+        foreach (INGREDIENT_TYPE ingr in tacoScript.currIngredients)
         {
             GameObject newIngrObj = Instantiate(GetTacoIngredientObject(ingr), tacoHolder.position, Quaternion.identity);
             newIngrObj.transform.parent = newTaco.transform;
@@ -47,13 +47,13 @@ public class Customer : MonoBehaviour
         return newTaco;
     }
 
-    public GameObject GetTacoIngredientObject(ingredientType ingredient)
+    public GameObject GetTacoIngredientObject(INGREDIENT_TYPE ingredient)
     {
-        if (ingredient == ingredientType.LETTUCE)
+        if (ingredient == INGREDIENT_TYPE.LETTUCE)
         {
             return ingredientsPrefabs[0];
         }
-        else if (ingredient == ingredientType.TOMATO)
+        else if (ingredient == INGREDIENT_TYPE.TOMATO)
         {
             return ingredientsPrefabs[1];
         }

@@ -3,16 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public enum scoreType { PERFECT, GOOD, OKAY, FAILED }
-public enum ingredientType { FISH, SOUR_CREAM, PICO_DE_GALLO, CABBAGE, SLICED_JALAPENOS, LETTUCE, TOMATO }
-public enum customerType { CAT, DOG, FISH }
+public enum SCORE_TYPE { PERFECT, GOOD, OKAY, FAILED }
+public enum INGREDIENT_TYPE { NONE, FISH, SOUR_CREAM, PICO_DE_GALLO, CABBAGE, SLICED_JALAPENOS, LETTUCE, TOMATO }
+public enum CUSTOMER_TYPE { CAT, DOG, FISH }
 
 public class Taco : MonoBehaviour
 {
-    // list of curr ingredients
-    public List<ingredientType> s_ingredients;
+    // max amount of ingredients
+    public int maxIngredients = 3;
 
-    public List<GameObject> currIngredients = new List<GameObject>();
+    // list of curr ingredients
+    public List<INGREDIENT_TYPE> currIngredients;
+
+    // list of gameobject ingredients
+    public List<GameObject> ingredientObjects = new List<GameObject>();
+
+
+
+    
+
+
 }
 
 
