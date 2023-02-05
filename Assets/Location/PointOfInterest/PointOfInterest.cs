@@ -1,7 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/*
+ * Funcitions: 
+ * GetLocation()
+ * GetType()
+ */
 public class PointOfInterest : MonoBehaviour
 {
     //Point of Interests are either 
@@ -20,4 +24,5 @@ public class PointOfInterest : MonoBehaviour
     {
         
     }
+    public Vector3 GetLocation() { return location; }
 }
