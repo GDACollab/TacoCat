@@ -11,20 +11,20 @@ public class LocationTracker : MonoBehaviour
     public List<PointOfInterest> allPointsOfInterest = new List<PointOfInterest>();
 
     [Header("Vehicle Location")]
-    private Vehicle vehicle = null;
+    private Vehicle s_vehicle = null;
     public Vector3 vehiclePosition;
     // Start is called before the first frame update
     void Start()
     {
-        vehicle = playerVehicle.GetComponent<Vehicle>();//makes LocationTracker able to call Vehicle.GetPosition()
-        vehiclePosition = vehicle.GetPosition();
+        s_vehicle = playerVehicle.GetComponent<Vehicle>();//makes LocationTracker able to call Vehicle.GetPosition()
+        vehiclePosition = s_vehicle.GetPosition();
         Debug.Log(vehiclePosition);
     }
 
     // Update is called once per frame
     void Update()
     {
-        vehiclePosition = vehicle.GetPosition();
+        vehiclePosition = s_vehicle.GetPosition();
         //Debug.Log(vehiclePosition);
     }
 }
