@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Taco
+public class Taco : MonoBehaviour
 {
     public enum scoreType{PERFECT, GOOD, OKAY, FAILED}
     public enum ingredientType {FISH, SOUR_CREAM, PICO_DE_GALLO, CABBAGE, SLICED_JALAPENOS}
@@ -12,7 +12,7 @@ public class Taco
     //private customerType s_customer;
     
 
-    public Taco(List<ingredientType> ingredients, customerType customer)
+    public Taco(List<ingredientType> ingredients)
     {
         s_ingredients = ingredients;
         s_customer= customer;
@@ -95,12 +95,4 @@ public class Taco
     
     
     */
-    public float CheckTaco(Taco currTaco)
-    {
-        int ingredientMisMatchCounter = 0; // when == 1 -> "Okay Taco", when >=2 -> "Failed Taco"
-        if(s_customer==FISH){
-            currTaco.setScore(FAILED);
-            //currTaco.angeredFish = true; ???
-        }else{}
-    }
 }
