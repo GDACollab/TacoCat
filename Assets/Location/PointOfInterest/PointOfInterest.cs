@@ -4,7 +4,7 @@ using UnityEngine;
 /*
  * Funcitions: 
  * GetLocation()
- * GetType()
+ * 
  */
 public class PointOfInterest : MonoBehaviour
 {
