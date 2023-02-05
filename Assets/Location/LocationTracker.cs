@@ -16,7 +16,7 @@ public class LocationTracker : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        vehicle = playerVehicle.GetComponent<Vehicle>();
+        vehicle = playerVehicle.GetComponent<Vehicle>();//makes LocationTracker able to call Vehicle.GetPosition()
         vehiclePosition = vehicle.GetPosition();
         Debug.Log(vehiclePosition);
     }
