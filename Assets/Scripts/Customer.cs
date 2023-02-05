@@ -4,21 +4,57 @@ using UnityEngine;
 
 public class Customer : MonoBehaviour
 {
+    /*
     public GameObject tacoPrefab; // clone of taco to use for later
     public GameObject currTaco; // curr gameobject 
 
     public Transform tacoHolder; // hand position
 
     public List<GameObject> ingredientsPrefabs = new List<GameObject>();
+    */
+
+    public CustomerManager customerManager;
+
+    public List<INGREDIENT_TYPE> customerOrder;
 
     // Start is called before the first frame update
     void Start()
     {
-        currTaco = CreateRandomTaco();
-        currTaco.transform.parent = tacoHolder;
+        //currTaco.transform.parent = tacoHolder;
+
+        customerManager = GetComponentInParent<CustomerManager>();
+
+        //customerOrder = CreateCustomerOrder();
     }
 
-    public GameObject CreateRandomTaco()
+
+    /*
+    public List<INGREDIENT_TYPE> CreateCustomerOrder()
+    {
+
+    // get menu from parent
+
+    // max amt of ingredients
+
+    // choose ingredients randomly
+
+    // return list of ingredients
+
+    }
+    */
+
+
+
+
+
+
+
+
+
+
+
+    /*
+    public GameObject CreateCustomerOrder()
     {
         // create taco
         GameObject newTaco = Instantiate(tacoPrefab);
@@ -41,7 +77,7 @@ public class Customer : MonoBehaviour
         {
             GameObject newIngrObj = Instantiate(GetTacoIngredientObject(ingr), tacoHolder.position, Quaternion.identity);
             newIngrObj.transform.parent = newTaco.transform;
-            tacoScript.currIngredients.Add(newIngrObj);
+            //tacoScript.currIngredients.Add(newIngrObj);
         }
 
         return newTaco;
@@ -60,5 +96,7 @@ public class Customer : MonoBehaviour
 
         return null;
     }
+
+    */
 
 }
