@@ -54,5 +54,6 @@ public class IngredientBenchManager : MonoBehaviour
             Gizmos.DrawWireCube(cubeCenter, new Vector2(cubeSize, cubeSize));
         }
         */
+
     }
 }

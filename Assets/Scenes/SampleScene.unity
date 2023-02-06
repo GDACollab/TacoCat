@@ -395,7 +395,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 65.4
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -405,7 +405,7 @@ Camera:
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
-  m_TargetEye: 0
+  m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
@@ -539,7 +539,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerHand: {fileID: 1826139010}
-  mousePos: {x: 0, y: 0}
+  cam: {fileID: 519420031}
+  mousePos: {x: 0, y: 0, z: 0}
 --- !u!212 &1826139009
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -601,7 +602,7 @@ Transform:
   m_GameObject: {fileID: 1826139007}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -11.73, y: 3.73, z: 0}
-  m_LocalScale: {x: 1, y: 3, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -616,11 +617,23 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2139693415845884912, guid: ea53f59488a55435da1700889268e836, type: 3}
       propertyPath: m_Name
-      value: IngredientSpot
+      value: IngredientHolder
       objectReference: {fileID: 0}
     - target: {fileID: 7480355755182173303, guid: ea53f59488a55435da1700889268e836, type: 3}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7480355755182173303, guid: ea53f59488a55435da1700889268e836, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7480355755182173303, guid: ea53f59488a55435da1700889268e836, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7480355755182173303, guid: ea53f59488a55435da1700889268e836, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7480355755182173303, guid: ea53f59488a55435da1700889268e836, type: 3}
       propertyPath: m_LocalPosition.x
@@ -660,6 +673,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7480355755182173303, guid: ea53f59488a55435da1700889268e836, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7480355755182173303, guid: ea53f59488a55435da1700889268e836, type: 3}
+      propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
