@@ -22,7 +22,7 @@ public class Vehicle : MonoBehaviour
     public bool isGrounded;
     public bool inAir;
     public bool gasPressed; // increase gravity force on truck
-    public bool jumpState;
+    public int rotationDir;
 
     [Header("Forces")]
     public Vector2 startingVelocity; // initial velocity
@@ -37,7 +37,6 @@ public class Vehicle : MonoBehaviour
 
     [Header("Values")]
     public int fuelAmount = 100000;
-    [Range(0, 100)]
     public float gravity = 9.81f;
     public float horizontalBoost; //Relative forward boost while grounded
 
@@ -61,7 +60,7 @@ public class Vehicle : MonoBehaviour
 
 
         // << CONSTANT GRAVITY >>
-        rb_vehicle.AddForce(Vector2.down * gravity * rb_vehicle.mass);
+        rb_vehicle.AddForce(Vector2.down * gravity * rb_vehicle.mass * Time.deltaTime);
 
         // << CHECK GROUND >>
         Collider2D[] groundColliders = Physics2D.OverlapCircleAll(transform.position, groundColliderSize, groundLayer);
@@ -91,20 +90,18 @@ public class Vehicle : MonoBehaviour
             fuelAmount--;
         }
 
+        rb_vehicle.angularVelocity = Mathf.Lerp(rb_vehicle.angularVelocity, rotationDir * rotationSpeed, Time.deltaTime);
+
+
     }
 
     public void Inputs()
     {
         gasPressed = Input.GetKey(gas);
 
-        if (Input.GetKey(rotateLeft))
-        {
-            rb_vehicle.angularVelocity = Mathf.Lerp(rb_vehicle.angularVelocity, -rotationSpeed, Time.deltaTime);
-        }
-        else if (Input.GetKey(rotateRight))
-        {
-            rb_vehicle.angularVelocity = Mathf.Lerp(rb_vehicle.angularVelocity, rotationSpeed, Time.deltaTime);
-        }
+        if (Input.GetKey(rotateLeft)) { rotationDir = -1; }
+        else if (Input.GetKey(rotateRight)) { rotationDir = 1; }
+        else { rotationDir = 0; }
 
     }
 

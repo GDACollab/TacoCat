@@ -12,7 +12,7 @@ public class FollowTarget : MonoBehaviour
     public float camSpeed = 0.2f;
    
     // Update is called once per frame
-    void LateUpdate()
+    void FixedUpdate()
     {
         
         //Camera shares x,y,z + offset(x,y,z)

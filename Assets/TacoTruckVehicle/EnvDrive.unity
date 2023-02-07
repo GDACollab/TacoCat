@@ -1167,6 +1167,10 @@ PrefabInstance:
       propertyPath: meshQuality
       value: 0.99
       objectReference: {fileID: 0}
+    - target: {fileID: 3549629311325113513, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: 2c3db7d76249d44788ad1fef54974be9, type: 2}
     - target: {fileID: 8616841525699024415, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: drawLine
       value: 1
@@ -1177,7 +1181,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8616841525699024415, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: treeScale
-      value: 50
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8616841525699024415, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: lineMaterial
@@ -1975,6 +1979,10 @@ PrefabInstance:
       propertyPath: m_Mass
       value: 400
       objectReference: {fileID: 0}
+    - target: {fileID: 5231190167668380749, guid: aad9dd5e0dc8547b388ccec1d0309294, type: 3}
+      propertyPath: m_Interpolate
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5231190167668380750, guid: aad9dd5e0dc8547b388ccec1d0309294, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -1990,6 +1998,14 @@ PrefabInstance:
     - target: {fileID: 5231190167668380750, guid: aad9dd5e0dc8547b388ccec1d0309294, type: 3}
       propertyPath: m_SortingLayerID
       value: 2132478623
+      objectReference: {fileID: 0}
+    - target: {fileID: 5231190167668380751, guid: aad9dd5e0dc8547b388ccec1d0309294, type: 3}
+      propertyPath: gravity
+      value: 4000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5231190167668380751, guid: aad9dd5e0dc8547b388ccec1d0309294, type: 3}
+      propertyPath: inAirForce.y
+      value: -300
       objectReference: {fileID: 0}
     - target: {fileID: 5231190167668380751, guid: aad9dd5e0dc8547b388ccec1d0309294, type: 3}
       propertyPath: rotationSpeed
