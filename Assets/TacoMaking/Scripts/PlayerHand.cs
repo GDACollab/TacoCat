@@ -10,6 +10,9 @@ public class PlayerHand : MonoBehaviour
     public Camera cam;
     public Vector3 mousePos;
 
+    public Collider2D[] activeColliders;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +29,7 @@ public class PlayerHand : MonoBehaviour
         playerHand.position = worldPos;
 
 
+        activeColliders = Physics2D.OverlapBoxAll(transform.position, transform.localScale, 0);
     }
 
 
