@@ -8,7 +8,6 @@ public class IngredientBenchManager : MonoBehaviour
 
     public List<GameObject> ingredientSpots;
 
-    public List<INGREDIENTS> benchIngredients;
 
     // determines the scale of ingredient spot && positions of the spots
     public Transform ingrBound_botLeft;
