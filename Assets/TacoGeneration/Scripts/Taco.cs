@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using ingredientType=CustomerManager.ingredientType;
 
+/*
 public class IngredientList: List<ingredientType>{
     public IngredientList(){
     }
@@ -24,14 +25,15 @@ public class IngredientList: List<ingredientType>{
         return ingredientMatch;
     }
 }
+*/
 
 public class Taco : CustomerManager
 {
     public enum scoreType{PERFECT, GOOD, OKAY, FAILED}
     
-    public IngredientList s_ingredients = new IngredientList();
+    public List<ingredientType> s_ingredients;
 
-    public Taco(IngredientList ingredients)
+    public Taco(List<ingredientType> ingredients)
     {
         s_ingredients = ingredients;
     }

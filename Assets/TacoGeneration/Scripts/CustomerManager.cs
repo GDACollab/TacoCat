@@ -5,7 +5,7 @@ using UnityEngine;
 public class CustomerManager : MonoBehaviour
 {
     public enum ingredientType {FISH, SOUR_CREAM, PICO_DE_GALLO, CABBAGE, SLICED_JALAPENOS}
-    public IngredientList s_menu;//what items are on the menu
+    //public IngredientList s_menu;//what items are on the menu
     public int s_perfectCounter;
     public int s_comboCounter;    
     public int customersLeftToGenerate;
@@ -21,15 +21,17 @@ public class CustomerManager : MonoBehaviour
         //checks if a new customer needs to be generated
         //runs all things that come along with a new customer (i.e. taco order generation, moving the customer etc.)
         customerGenerator();//generates the customer prefab??
-        Customer.s_order=orderGenerator();//generates the customer's order
+        //Customer.s_order=orderGenerator();//generates the customer's order
         //^gets the customer just generated and generates their order (the line of code above is probably wrong)                           
     }
     void customerGenerator(){//member that generates a customer
     }
+    /*
     public IngredientList orderGenerator(){ //member that generates a list of the ingredientType and sends it to Customer
         IngredientList order = new IngredientList();
         return order;
     }
+    */
     void Start()
     {
         //Customer=GetComponentInChildren<Customer>();

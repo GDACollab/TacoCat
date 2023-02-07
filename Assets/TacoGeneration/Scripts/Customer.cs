@@ -6,7 +6,7 @@ using ingredientType=CustomerManager.ingredientType;
 using scoreType=Taco.scoreType;
 public class Customer: MonoBehaviour
 {   
-
+    /*
     static public IngredientList s_order; //ingredients in the order
 
     public scoreType tacoGrading(Taco currTaco){
@@ -34,7 +34,10 @@ public class Customer: MonoBehaviour
             return scoreType.OKAY;
         }
         else return scoreType.FAILED;
+        
     }
+    */
+
     // Start is called before the first frame update
     private CustomerManager _CustomerManager;
     void Start()

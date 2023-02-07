@@ -16,9 +16,16 @@ public class TacoMakingGameManager : MonoBehaviour
 
     public void Start()
     {
+        benchManager = GetComponentInChildren<IngredientBenchManager>();
+
         GameObject taco = Instantiate(tacoPrefab, GetComponentInChildren<IngredientBenchManager>().tacoSpawnPoint.position, Quaternion.identity);
         submissionTaco = taco.GetComponent<Taco>();
         taco.transform.parent = transform;
+    }
+
+    public IngredientBin GetIngredientBin(int index)
+    {
+        return benchManager.ingredientBins[index];
     }
 
     public void AddIngredientToTaco(ingredientType type)

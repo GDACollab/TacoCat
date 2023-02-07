@@ -17,13 +17,24 @@ public class InputManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        int bin = 0;
         if (Input.GetKeyDown(KeyCode.A))
         {
-            tacoGameManager.AddIngredientToTaco(ingredientType.PICO_DE_GALLO);
+            PickFromBin(0);
+        }
+        else if (Input.GetKeyDown(KeyCode.S))
+        {
+            PickFromBin(1);
         }
         else if (Input.GetKeyDown(KeyCode.D))
         {
-            tacoGameManager.AddIngredientToTaco(ingredientType.SOUR_CREAM);
+            PickFromBin(2);
         }
+    }
+
+
+    public void PickFromBin(int bin_index)
+    {
+        tacoGameManager.AddIngredientToTaco(tacoGameManager.GetIngredientBin(bin_index).ingredientType);
     }
 }
