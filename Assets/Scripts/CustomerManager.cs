@@ -6,14 +6,11 @@ public class CustomerManager : MonoBehaviour
 {
     public enum ingredientType {FISH, SOUR_CREAM, PICO_DE_GALLO, CABBAGE, SLICED_JALAPENOS}
     public IngredientList s_menu;//what items are on the menu
-    static public int s_perfectCounter;
-    static public int s_comboCounter;
-   
+    public int s_perfectCounter;
+    public int s_comboCounter;    
     public int customersLeftToGenerate;
     //private Customer Customer; //just some unity stuff testing ignore.
-    //public GameObject prefab;
-
-    
+    //public GameObject prefab; 
    
     // Start is called before the first frame update 
 
@@ -21,7 +18,6 @@ public class CustomerManager : MonoBehaviour
 
     void customerUpdate(){
         //is called once a taco is turned in (collision in a different game object/button key press) or when the previous taco is done being graded
-
         //checks if a new customer needs to be generated
         //runs all things that come along with a new customer (i.e. taco order generation, moving the customer etc.)
         customerGenerator();//generates the customer prefab??
@@ -46,6 +42,4 @@ public class CustomerManager : MonoBehaviour
     void Update()
     {
     }
-
-
 }

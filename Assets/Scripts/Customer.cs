@@ -13,10 +13,9 @@ public class Customer: MonoBehaviour
         //compares the list of ingredients in the taco submitted and the list of ingredients in the customer's order.
         if(currTaco.s_ingredients.Count==s_order.Count){ //if taco lengths are equal
             if((currTaco.s_ingredients & s_order) == currTaco.s_ingredients.Count){ //if # of matching in order ingredients == length of either list
-                currTaco.s_score=scoreType.PERFECT; //perfect score 
-                CustomerManager.s_perfectCounter++; //increment perfect counter
-                if (CustomerManager.s_perfectCounter % 3 ==0) CustomerManager.s_comboCounter++; //display combo stuff
-                goto exit;
+                _CustomerManager.s_perfectCounter++; //increment perfect counter
+                if (_CustomerManager.s_perfectCounter % 3 ==0) _CustomerManager.s_comboCounter++; //display combo stuff //maybe move elsewhere
+                return scoreType.PERFECT; //perfect score 
             }
         }
         IngredientList currTacoSorted= new IngredientList(currTaco.s_ingredients);
@@ -27,25 +26,20 @@ public class Customer: MonoBehaviour
         //this will need to change depending on how we see duplicates
         int longerLength= (currTaco.s_ingredients.Count>s_order.Count)? currTaco.s_ingredients.Count: s_order.Count;
         //definitely a better way to do this next section lmao
+        _CustomerManager.s_perfectCounter=0;
         if(numMatching-longerLength==0){
-            currTaco.s_score=scoreType.GOOD;
+            return scoreType.GOOD;
         }
         else if(numMatching-longerLength==1){
-            currTaco.s_score=scoreType.OKAY;
+            return scoreType.OKAY;
         }
-        else if(numMatching-longerLength>=2){
-            currTaco.s_score=scoreType.FAILED;
-        }
-        CustomerManager.s_perfectCounter=0;
-        exit:{}
-        return currTaco.s_score;
+        else return scoreType.FAILED;
     }
-
-
     // Start is called before the first frame update
+    private CustomerManager _CustomerManager;
     void Start()
     {
-        
+        _CustomerManager=GetComponentInParent<CustomerManager>();   
     }
 
     // Update is called once per frame
