@@ -1,60 +1,52 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ingredientType = CustomerManager.ingredientType;
+
 
 public class IngredientBenchManager : MonoBehaviour
 {
-    public GameObject ingredientSpotPrefab;
+    TacoMakingGameManager gameManager;
 
-    public List<GameObject> ingredientSpots;
+    public List<IngredientBin> ingredientBins; 
 
+    public List<ingredientType> menu;
 
-    // determines the scale of ingredient spot && positions of the spots
-    public Transform ingrBound_botLeft;
-    public Transform ingrBound_topRight;
+    [Header("Taco")]
+    public Transform tacoSpawnPoint;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        gameManager = GetComponentInParent<TacoMakingGameManager>();
+
+        // go through menu and spawn ingredients in bin
+        SetBinIngredients();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetBinIngredients()
     {
-        
-    }
-
-    public void OnDrawGizmos()
-    {
-        /*
-        Vector2 botLeft = ingrBound_botLeft.position;
-        Vector2 topRight = ingrBound_topRight.position;
-
-
-        // show the ingredient spot bounding box
-        Vector2 size = topRight - botLeft;
-        Vector2 center = botLeft + size / 2;
-
-        Gizmos.color = Color.black;
-        Gizmos.DrawWireCube(center, size);
-        */
-
-
-        /*
-        // evenly space cubes inside bounding box
-        int numCubes = 4;
-        float margin = 1;
-        float cubeSize = size.x / numCubes;
-
-        for (int i = 0; i < numCubes; i++)
+        // << MATCH PREFABS AND ENUMS >>
+        // first get all objects that == ingredientType in menu
+        List<GameObject> ingrObjs = new List<GameObject>(); // store prefabs needed
+        foreach(ingredientType ingr in menu)
         {
-            Vector2 offset = new Vector2((i * cubeSize) + margin, 0);
-            Vector2 cubeCenter = new Vector2(botLeft.x + cubeSize/2, center.y) + offset;
-            Gizmos.DrawWireCube(cubeCenter, new Vector2(cubeSize, cubeSize));
+            GameObject ingr_obj = gameManager.GetIngredientObject(ingr);
+            ingrObjs.Add(ingr_obj);
         }
-        */
+
+        // << INSTANTIATE PREFABS IN BIN >>
+        // for each bin, set ingredient and spawn
+        for (int i = 0; i < ingredientBins.Count; i++)
+        {
+            // check if ingr objs exist
+            if (i < ingrObjs.Count)
+            {
+                ingredientBins[i].SetIngredient(ingrObjs[i]);
+            }
+        }
 
     }
+
 }
