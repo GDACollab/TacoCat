@@ -28,6 +28,7 @@ public class Vehicle : MonoBehaviour
     public Vector2 startingVelocity; // initial velocity
     public Vector2 inAirForce; // input based force on truck
     public Vector2 groundedForce; // input based force on truck
+    public float rotationSpeed = 50f;
 
     [Header("Inputs")]
     public KeyCode gas;
@@ -96,6 +97,15 @@ public class Vehicle : MonoBehaviour
     {
         gasPressed = Input.GetKey(gas);
 
+        if (Input.GetKey(rotateLeft))
+        {
+            rb_vehicle.angularVelocity = Mathf.Lerp(rb_vehicle.angularVelocity, -rotationSpeed, Time.deltaTime);
+        }
+        else if (Input.GetKey(rotateRight))
+        {
+            rb_vehicle.angularVelocity = Mathf.Lerp(rb_vehicle.angularVelocity, rotationSpeed, Time.deltaTime);
+        }
+
     }
 
 
@@ -113,7 +123,7 @@ public class Vehicle : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.white;
-        Gizmos.DrawSphere(transform.position, groundColliderSize);
+        //Gizmos.DrawSphere(transform.position, groundColliderSize);
 
         // draw ray to show current velocity of rigidbody
         if (rb_vehicle != null)
