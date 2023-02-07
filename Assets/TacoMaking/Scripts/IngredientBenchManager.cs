@@ -28,6 +28,7 @@ public class IngredientBenchManager : MonoBehaviour
 
     public void OnDrawGizmos()
     {
+        /*
         Vector2 botLeft = ingrBound_botLeft.position;
         Vector2 topRight = ingrBound_topRight.position;
 
@@ -38,6 +39,7 @@ public class IngredientBenchManager : MonoBehaviour
 
         Gizmos.color = Color.black;
         Gizmos.DrawWireCube(center, size);
+        */
 
 
         /*
