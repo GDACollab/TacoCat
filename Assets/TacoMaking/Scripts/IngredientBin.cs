@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class IngredientBin : MonoBehaviour
 {
+    // current ingredient object && type in bin
     public GameObject currIngredient;
     public CustomerManager.ingredientType ingredientType;
 
+    // << SET INGREDIENT >>
     public void SetIngredient(GameObject ingr)
     {
         // instantiate version of object

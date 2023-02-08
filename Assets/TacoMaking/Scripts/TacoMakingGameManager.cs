@@ -8,6 +8,7 @@ public class TacoMakingGameManager : MonoBehaviour
 {
     IngredientBenchManager benchManager;
     
+    [Header("Prefabs")]
     public GameObject tacoPrefab;
     public List<GameObject> allIngredientPrefabs;
 
@@ -18,16 +19,21 @@ public class TacoMakingGameManager : MonoBehaviour
     {
         benchManager = GetComponentInChildren<IngredientBenchManager>();
 
+        // create init submission taco
         GameObject taco = Instantiate(tacoPrefab, GetComponentInChildren<IngredientBenchManager>().tacoSpawnPoint.position, Quaternion.identity);
         submissionTaco = taco.GetComponent<Taco>();
         taco.transform.parent = transform;
     }
 
+    #region HELPER FUNCTIONS ==============================================================
+
+    // << GET CURRENT INGREDIENT IN BIN >>
     public IngredientBin GetIngredientBin(int index)
     {
         return benchManager.ingredientBins[index];
     }
 
+    // << ADD INGREDIENT TO SUBMISSION TACO >>
     public void AddIngredientToTaco(ingredientType type)
     {
         submissionTaco.addIngredient(type);
@@ -35,7 +41,6 @@ public class TacoMakingGameManager : MonoBehaviour
     }
 
 
-    #region HELPER FUNCTIONS ==============================================================
     // return prefab that is related to the input enum type
     public GameObject GetIngredientObject(CustomerManager.ingredientType ingrType)
     {
@@ -51,5 +56,6 @@ public class TacoMakingGameManager : MonoBehaviour
 
         return null;
     }
+
     #endregion
 }

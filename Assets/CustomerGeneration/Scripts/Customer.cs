@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using ingredientType=CustomerManager.ingredientType;
-
 using scoreType=Taco.scoreType;
 public class Customer: MonoBehaviour
 {   

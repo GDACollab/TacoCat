@@ -8,8 +8,10 @@ public class IngredientBenchManager : MonoBehaviour
 {
     TacoMakingGameManager gameManager;
 
-    public List<IngredientBin> ingredientBins; 
+    [Tooltip("List of references to each ingredient bin")]
+    public List<IngredientBin> ingredientBins;
 
+    [Tooltip("Current menu of ingredients to choose from")]
     public List<ingredientType> menu;
 
     [Header("Taco")]
@@ -25,6 +27,7 @@ public class IngredientBenchManager : MonoBehaviour
         SetBinIngredients();
     }
 
+    // << PLACE INGREDIENTS IN BINS >>
     public void SetBinIngredients()
     {
         // << MATCH PREFABS AND ENUMS >>
@@ -32,6 +35,7 @@ public class IngredientBenchManager : MonoBehaviour
         List<GameObject> ingrObjs = new List<GameObject>(); // store prefabs needed
         foreach(ingredientType ingr in menu)
         {
+            // get matching object in gamemanager
             GameObject ingr_obj = gameManager.GetIngredientObject(ingr);
             ingrObjs.Add(ingr_obj);
         }
@@ -43,6 +47,7 @@ public class IngredientBenchManager : MonoBehaviour
             // check if ingr objs exist
             if (i < ingrObjs.Count)
             {
+                // set ingredient
                 ingredientBins[i].SetIngredient(ingrObjs[i]);
             }
         }
