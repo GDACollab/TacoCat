@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.56158954, g: 0.7218083, b: 0.8178571, a: 1}
+  m_IndirectSpecularColor: {r: 0.56158954, g: 0.7218089, b: 0.817857, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -164,7 +164,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 539486809993813054, guid: 29d7d86e8d4a45a46906308a6c45b78c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 539486809993813054, guid: 29d7d86e8d4a45a46906308a6c45b78c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1085,11 +1085,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -6651196037830437296, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: m_SortingLayer
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -6651196037830437296, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: m_SortingLayerID
-      value: 2132478623
+      value: -1971999595
       objectReference: {fileID: 0}
     - target: {fileID: 39365123, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: m_LocalScale.x
@@ -1189,11 +1189,11 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 6e68244da446649c092bb2d6d6ff0bcd, type: 2}
     - target: {fileID: 8616841525699024415, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: lineOffset.y
-      value: -22
+      value: -21
       objectReference: {fileID: 0}
     - target: {fileID: 8616841525699024415, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: lineOffset.z
-      value: -2
+      value: -0.1
       objectReference: {fileID: 0}
     - target: {fileID: 8616841525699024415, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: line_y_offset
@@ -1710,7 +1710,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 996258256}
-  offset: {x: 100, y: 75, z: -50}
+  offset: {x: 100, y: 25, z: -10}
   camSpeed: 100
 --- !u!81 &1440028595
 AudioListener:
@@ -1747,7 +1747,7 @@ Camera:
   far clip plane: 10000
   field of view: 120
   orthographic: 1
-  orthographic size: 200
+  orthographic size: 100
   m_Depth: -100
   m_CullingMask:
     serializedVersion: 2
