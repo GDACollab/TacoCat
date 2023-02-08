@@ -23,7 +23,7 @@ public class InputManager : MonoBehaviour
             PickFromBin(0);
         }
         else if (Input.GetKeyDown(KeyCode.S))
-        {
+        {     
             PickFromBin(1);
         }
         else if (Input.GetKeyDown(KeyCode.D))
