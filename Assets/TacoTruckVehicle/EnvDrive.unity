@@ -168,7 +168,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 539486809993813054, guid: 29d7d86e8d4a45a46906308a6c45b78c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10
+      value: -0.1
       objectReference: {fileID: 0}
     - target: {fileID: 539486809993813054, guid: 29d7d86e8d4a45a46906308a6c45b78c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -622,6 +622,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -310
       objectReference: {fileID: 0}
+    - target: {fileID: 6773071218402838433, guid: 7dcb0448930b99844b5c535ab28cc8f2, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6773071218402838462, guid: 7dcb0448930b99844b5c535ab28cc8f2, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -310
@@ -633,6 +637,14 @@ PrefabInstance:
     - target: {fileID: 6773071218696624857, guid: 7dcb0448930b99844b5c535ab28cc8f2, type: 3}
       propertyPath: m_Name
       value: Gas System UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773071218696624858, guid: 7dcb0448930b99844b5c535ab28cc8f2, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1440028596}
+    - target: {fileID: 6773071218696624858, guid: 7dcb0448930b99844b5c535ab28cc8f2, type: 3}
+      propertyPath: m_RenderMode
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6773071218696624861, guid: 7dcb0448930b99844b5c535ab28cc8f2, type: 3}
       propertyPath: m_Pivot.x
@@ -1314,11 +1326,11 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 6e68244da446649c092bb2d6d6ff0bcd, type: 2}
     - target: {fileID: 8616841525699024415, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: lineOffset.y
-      value: -21
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 8616841525699024415, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: lineOffset.z
-      value: -0.1
+      value: -0.15
       objectReference: {fileID: 0}
     - target: {fileID: 8616841525699024415, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: line_y_offset
@@ -2226,7 +2238,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5231190167668380752, guid: aad9dd5e0dc8547b388ccec1d0309294, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.2
       objectReference: {fileID: 0}
     - target: {fileID: 5231190167668380752, guid: aad9dd5e0dc8547b388ccec1d0309294, type: 3}
       propertyPath: m_LocalRotation.w
