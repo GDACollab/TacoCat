@@ -6,12 +6,7 @@ using ingredientType=CustomerManager.ingredientType;
 using scoreType=Taco.scoreType;
 public class Customer: MonoBehaviour
 {   
-
-<<<<<<< Updated upstream
-    static public IngredientList s_order; //ingredients in the order
-=======
     static public List<ingredientType> s_order; //ingredients in the order
->>>>>>> Stashed changes
 
     public scoreType tacoGrading(Taco currTaco){
         //compares the list of ingredients in the taco submitted and the list of ingredients in the customer's order.
@@ -39,10 +34,7 @@ public class Customer: MonoBehaviour
         }
         else return scoreType.FAILED;
     }
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
     // Start is called before the first frame update
     private CustomerManager _CustomerManager;
     void Start()
