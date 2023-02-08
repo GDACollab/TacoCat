@@ -7,22 +7,26 @@ using scoreType=Taco.scoreType;
 public class Customer: MonoBehaviour
 {   
 
+<<<<<<< Updated upstream
     static public IngredientList s_order; //ingredients in the order
+=======
+    static public List<ingredientType> s_order; //ingredients in the order
+>>>>>>> Stashed changes
 
     public scoreType tacoGrading(Taco currTaco){
         //compares the list of ingredients in the taco submitted and the list of ingredients in the customer's order.
         if(currTaco.s_ingredients.Count==s_order.Count){ //if taco lengths are equal
-            if((currTaco.s_ingredients & s_order) == currTaco.s_ingredients.Count){ //if # of matching in order ingredients == length of either list
+            if(Taco.ingredientCompare(currTaco.s_ingredients, s_order) == currTaco.s_ingredients.Count){ //if # of matching in order ingredients == length of either list
                 _CustomerManager.s_perfectCounter++; //increment perfect counter
                 if (_CustomerManager.s_perfectCounter % 3 ==0) _CustomerManager.s_comboCounter++; //display combo stuff //maybe move elsewhere
                 return scoreType.PERFECT; //perfect score 
             }
         }
-        IngredientList currTacoSorted= new IngredientList(currTaco.s_ingredients);
-        IngredientList s_orderSorted= new IngredientList(s_order);
+        List<ingredientType> currTacoSorted= new List<ingredientType> (currTaco.s_ingredients);
+        List<ingredientType> s_orderSorted= new List<ingredientType>(s_order);
         currTacoSorted.Sort();
         s_orderSorted.Sort();
-        int numMatching=currTacoSorted & s_orderSorted; //number of matching ingredients (ignoring order)
+        int numMatching=Taco.ingredientCompare(currTacoSorted, s_orderSorted); //number of matching ingredients (ignoring order)
         //this will need to change depending on how we see duplicates
         int longerLength= (currTaco.s_ingredients.Count>s_order.Count)? currTaco.s_ingredients.Count: s_order.Count;
         //definitely a better way to do this next section lmao
@@ -35,6 +39,10 @@ public class Customer: MonoBehaviour
         }
         else return scoreType.FAILED;
     }
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
     // Start is called before the first frame update
     private CustomerManager _CustomerManager;
     void Start()
