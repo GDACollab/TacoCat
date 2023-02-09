@@ -25,4 +25,9 @@ public class PointOfInterest : MonoBehaviour
         
     }
     public Vector2 GetLocation() { return _location; }
+
+    public void SetLocation(Vector2 location)
+    {
+        _location = location;
+    }
 }

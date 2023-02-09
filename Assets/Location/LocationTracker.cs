@@ -14,14 +14,18 @@ public class LocationTracker : MonoBehaviour
 
     [Header("Vehicle Location")]
     private Vehicle s_vehicle = null;
-    public Vector3 vehiclePosition;
+    public Vector2 vehiclePosition;
+    private float totalDistance = 0;
+    private float remainingDistance = 0;
     // Start is called before the first frame update
     void Start()
     {
         allPointsOfInterest.Add(StartingLocation);
         allPointsOfInterest.Add(Destination);
         s_vehicle = playerVehicle.GetComponent<Vehicle>();//makes LocationTracker able to call Vehicle.GetPosition()
-        vehiclePosition = s_vehicle.GetPosition();
+        Vector3 vehiclePositon3D = s_vehicle.GetPosition();
+        vehiclePosition = new Vector2(vehiclePositon3D.x, vehiclePositon3D.y);
+        StartingLocation.SetLocation(vehiclePosition);
         Debug.Log(vehiclePosition);
     }
 
@@ -29,19 +33,27 @@ public class LocationTracker : MonoBehaviour
     void Update()
     {
         vehiclePosition = s_vehicle.GetPosition();
-        Debug.Log( "Distance to Destination from start:"+ CalculateDistanceFromStart(StartingLocation, Destination));
-        Debug.Log("Distance to Destination:" + CalculateDistanceToDestination(s_vehicle, Destination));
+        totalDistance = CalculateDistanceFromStart(StartingLocation, Destination);
+        remainingDistance = CalculateDistanceToDestination(s_vehicle, Destination);
+        Debug.Log( "Distance to Destination from start:"+ totalDistance);
+        Debug.Log("Distance to Destination:" + remainingDistance);
+        Debug.Log("Distance in Percent:" + ConvertToPercent(remainingDistance, totalDistance));
     }
 
-    private Vector2 CalculateDistanceToDestination(Vehicle vehicle, PointOfInterest end)
+    private float CalculateDistanceToDestination(Vehicle vehicle, PointOfInterest end)
     {
         Vector3 vehiclePosition3D= vehicle.GetPosition();
         Vector2 vehiclePosition2D = new Vector2(vehiclePosition3D.x,vehiclePosition3D.y );
 
-        return end.GetLocation() - vehiclePosition2D;  
+        return Vector2.Distance(vehiclePosition2D, end.GetLocation());  
     }
-    private Vector2 CalculateDistanceFromStart(PointOfInterest start, PointOfInterest end)
+    private float CalculateDistanceFromStart(PointOfInterest start, PointOfInterest end)
     {
-        return end.GetLocation()- start.GetLocation();
+        return Vector2.Distance(start.GetLocation(), end.GetLocation());
+    }
+
+    private float ConvertToPercent(float numerator, float denominator) 
+    {
+        return (numerator/denominator)*100;
     }
 }
