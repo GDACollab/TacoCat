@@ -12,7 +12,7 @@ public class PointOfInterest : MonoBehaviour
     //A) A Landmark
     //B) A Gas Station
     //this is the location in the scene of a given Point of Interest
-    public Vector3 _location;
+    public Vector2 _location;
     // Start is called before the first frame update
     void Start()
     {

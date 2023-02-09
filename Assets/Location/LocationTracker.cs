@@ -31,4 +31,9 @@ public class LocationTracker : MonoBehaviour
         vehiclePosition = s_vehicle.GetPosition();
         //Debug.Log(vehiclePosition);
     }
+
+    private Vector2 CalculateDistance(PointOfInterest A, PointOfInterest B)
+    {
+
+    }
 }
