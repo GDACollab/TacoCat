@@ -29,11 +29,19 @@ public class LocationTracker : MonoBehaviour
     void Update()
     {
         vehiclePosition = s_vehicle.GetPosition();
-        //Debug.Log(vehiclePosition);
+        Debug.Log( "Distance to Destination from start:"+ CalculateDistanceFromStart(StartingLocation, Destination));
+        Debug.Log("Distance to Destination:" + CalculateDistanceToDestination(s_vehicle, Destination));
     }
 
-    private Vector2 CalculateDistance(PointOfInterest A, PointOfInterest B)
+    private Vector2 CalculateDistanceToDestination(Vehicle vehicle, PointOfInterest end)
     {
+        Vector3 vehiclePosition3D= vehicle.GetPosition();
+        Vector2 vehiclePosition2D = new Vector2(vehiclePosition3D.x,vehiclePosition3D.y );
 
+        return end.GetLocation() - vehiclePosition2D;  
+    }
+    private Vector2 CalculateDistanceFromStart(PointOfInterest start, PointOfInterest end)
+    {
+        return end.GetLocation()- start.GetLocation();
     }
 }

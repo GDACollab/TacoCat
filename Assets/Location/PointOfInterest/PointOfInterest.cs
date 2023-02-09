@@ -24,5 +24,5 @@ public class PointOfInterest : MonoBehaviour
     {
         
     }
-    public Vector3 GetLocation() { return _location; }
+    public Vector2 GetLocation() { return _location; }
 }
