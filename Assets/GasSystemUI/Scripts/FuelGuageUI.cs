@@ -17,7 +17,10 @@ public class FuelGuageUI : MonoBehaviour
     [Header("Circle-style UI objects")]
     public Image fuelSlider;
     public Image nitroSlider;
-    
+
+    [Header("Debugging UI objects")]
+    public TMP_Text velocityText;
+
     [Header("UI Types")]
     // Change the type of fuel gauge UI. 0: Bar-style fuel gauge, 1: Circle-style fuel guage
     [Tooltip("The type of fuel gauge UI. \n 0: Bar, 1: Gauge")]
@@ -28,7 +31,7 @@ public class FuelGuageUI : MonoBehaviour
     public int colorType = 0;
     
     // Private variables 
-    private GameObject vehicle; 
+    public GameObject vehicle; 
     Vehicle vehicle_script;
     private float initFuel = 0; // Initial fuel
     private float initNitro = 0; // Initial nitro
@@ -42,9 +45,11 @@ public class FuelGuageUI : MonoBehaviour
         vehicle_script = vehicle.GetComponent<Vehicle>();
         initFuel = vehicle_script.GetFuel();
         initNitro = vehicle_script.GetNitro();
-        
+
+
+
         // Change the UI based on type
-        switch(gaugeType) 
+        switch (gaugeType) 
         {
             case 1:
                 initCircle();
@@ -53,12 +58,16 @@ public class FuelGuageUI : MonoBehaviour
                 initBar();
                 break;
         }
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        switch(gaugeType) 
+        velocityText.text = "velocity: " + vehicle.GetComponent<Rigidbody2D>().velocity.x;
+
+        switch (gaugeType) 
         {
             case 1:
                 fuelCircle();

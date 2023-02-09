@@ -38,8 +38,7 @@ public class Vehicle : MonoBehaviour
     [Header("Values")]
     public int fuelAmount = 100000;
     public int nitroAmount = 100000;
-    [Range(0, 100)]
-    public float gravity = 9.81f;
+    public float gravity = 200f;
     public float horizontalBoost; //Relative forward boost while grounded
 
     [Header("Debug Settings")]
