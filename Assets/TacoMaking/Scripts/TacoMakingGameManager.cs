@@ -36,7 +36,7 @@ public class TacoMakingGameManager : MonoBehaviour
     // << ADD INGREDIENT TO SUBMISSION TACO >>
     public void AddIngredientToTaco(ingredientType type)
     {
-        submissionTaco.addIngredient(type);
+        submissionTaco.addIngredient(type); 
         submissionTaco.addingredientObject(GetIngredientObject(type));
     }
 

@@ -5,14 +5,12 @@ using UnityEngine;
 public class CustomerManager : MonoBehaviour
 {
     public enum ingredientType {FISH, SOUR_CREAM, PICO_DE_GALLO, CABBAGE, SLICED_JALAPENOS}
-    //public IngredientList s_menu;//what items are on the menu
-    public int s_perfectCounter;
-    public int s_comboCounter;    
-    public int customersLeftToGenerate;
-    //private Customer Customer; //just some unity stuff testing ignore.
-    //public GameObject prefab; 
-   
-    // Start is called before the first frame update 
+
+    public enum scoreType{PERFECT, GOOD, OKAY, FAILED} // possible scores a taco can get.
+    public List<ingredientType> s_menu;//what items are on the menu
+    public int s_perfectCounter; //counts the number of perfect tacos in a row, resets when a !perfect taco is submitted
+    public int s_comboCounter;   //counts the number for 3 combos in total throughout the whole minigame
+    public int customersLeftToGenerate; //the number of customers left to generate in the scene
 
     //before calling check if customers left to generate == 0
 
@@ -26,20 +24,7 @@ public class CustomerManager : MonoBehaviour
     }
     void customerGenerator(){//member that generates a customer
     }
-    /*
-    public IngredientList orderGenerator(){ //member that generates a list of the ingredientType and sends it to Customer
-        IngredientList order = new IngredientList();
-        return order;
-    }
-    */
-    void Start()
-    {
-        //Customer=GetComponentInChildren<Customer>();
-        //GameObject newCustomer= Instantiate(prefab,this.transform);
-        //Customer.tacoGrading();
-        //call generateACustomer or function that calls that
-    }
-
+    
     // Update is called once per frame
     void Update()
     {
