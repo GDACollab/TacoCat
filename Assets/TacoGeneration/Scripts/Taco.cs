@@ -8,12 +8,10 @@ public class Taco : MonoBehaviour
     public enum scoreType{PERFECT, GOOD, OKAY, FAILED}
     
     public List<ingredientType> s_ingredients;//= new IngredientList();
-
     public void addIngredient(ingredientType newIngredient){
         //called when key has been inputed for ingredient in taco making
         s_ingredients.Add(newIngredient);
     }
-
     public void addingredientObject(GameObject obj)
     {
         GameObject ingr = Instantiate(obj, transform);

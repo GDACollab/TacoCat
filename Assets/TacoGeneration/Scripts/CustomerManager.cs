@@ -5,7 +5,7 @@ using UnityEngine;
 public class CustomerManager : MonoBehaviour
 {
     public enum ingredientType {FISH, SOUR_CREAM, PICO_DE_GALLO, CABBAGE, SLICED_JALAPENOS}
-    //public IngredientList s_menu;//what items are on the menu
+    public List<ingredientType> s_menu;//what items are on the menu
     public int s_perfectCounter;
     public int s_comboCounter;    
     public int customersLeftToGenerate;
@@ -29,17 +29,13 @@ public class CustomerManager : MonoBehaviour
     /*
     public IngredientList orderGenerator(){ //member that generates a list of the ingredientType and sends it to Customer
         IngredientList order = new IngredientList();
-        return order;
     }
     */
-    void Start()
-    {
         //Customer=GetComponentInChildren<Customer>();
         //GameObject newCustomer= Instantiate(prefab,this.transform);
         //Customer.tacoGrading();
         //call generateACustomer or function that calls that
-    }
-
+    
     // Update is called once per frame
     void Update()
     {
