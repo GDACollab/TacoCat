@@ -23,14 +23,14 @@ public class TacoMakingGameManager : MonoBehaviour
         taco.transform.parent = transform;
     }
 
-    public IngredientBin GetIngredientBin(int index)
+    public IngredientBin GetIngredientBin(int index) 
     {
         return benchManager.ingredientBins[index];
     }
 
-    public void AddIngredientToTaco(ingredientType type)
+    public void AddIngredientToTaco(ingredientType type) //adds ingredient to taco and to list
     {
-        submissionTaco.addIngredient(type);
+        submissionTaco.addIngredient(type); 
         submissionTaco.addingredientObject(GetIngredientObject(type));
     }
 

@@ -17,7 +17,7 @@ public class InputManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        int bin = 0;
+        //int bin = 0;
         if (Input.GetKeyDown(KeyCode.A))
         {
             PickFromBin(0);

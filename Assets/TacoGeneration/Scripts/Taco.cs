@@ -5,10 +5,8 @@ using ingredientType=CustomerManager.ingredientType;
 
 public class Taco : MonoBehaviour
 {
-    public enum scoreType{PERFECT, GOOD, OKAY, FAILED}
-    
-    public List<ingredientType> s_ingredients;//= new IngredientList();
-    public void addIngredient(ingredientType newIngredient){
+    public List<ingredientType> s_ingredients; //ingredients currently on the taco
+    public void addIngredient(ingredientType newIngredient){ 
         //called when key has been inputed for ingredient in taco making
         s_ingredients.Add(newIngredient);
     }
@@ -17,7 +15,7 @@ public class Taco : MonoBehaviour
         GameObject ingr = Instantiate(obj, transform);
     }
 
-    public static int ingredientCompare(List<ingredientType> a, List<ingredientType> b){
+    public static int ingredientCompare(List<ingredientType> a, List<ingredientType> b){ //returns the number of matching ingredients in a row from the [0]th element
         int ingredientMatch=0;
         int smallerLength=0;
         smallerLength=(a.Count>b.Count)? b.Count : a.Count;
@@ -25,6 +23,9 @@ public class Taco : MonoBehaviour
         for(int i=0; i<smallerLength;i++){ //iterate through the smaller list
             if(a[i]==b[i]){
                 ingredientMatch++;
+            }
+            else{
+                break;
             }
         }
         return ingredientMatch;
