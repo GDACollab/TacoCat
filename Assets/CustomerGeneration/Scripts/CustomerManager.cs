@@ -25,6 +25,11 @@ public class CustomerManager : MonoBehaviour
     void customerGenerator(){//member that generates a customer
     }
     
+    public List<ingredientType> orderGenerator(){
+        List<ingredientType> order = new List<ingredientType>();
+        //PUT ORDER GENERATION ALGORITHM HERE
+        return order;
+    }
     // Update is called once per frame
     void Update()
     {
