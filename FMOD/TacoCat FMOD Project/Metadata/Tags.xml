@@ -17,6 +17,10 @@
 			<destination>{f94207a8-65a7-4f6a-95fb-d2da9c8e723e}</destination>
 			<destination>{4a6ce9b8-7815-41f9-90d3-08b44a507b84}</destination>
 			<destination>{b81fb5b7-10aa-4650-97fe-8be5dc311d4c}</destination>
+			<destination>{e903c594-146b-486e-84ec-0cec885e12ba}</destination>
+			<destination>{aa188cbc-0cd6-4890-a310-dc55c4709f16}</destination>
+			<destination>{6ca134e8-c35d-4f22-a482-0b0e0fb4e972}</destination>
+			<destination>{7f9a5ba6-dc93-49dc-aaf4-638f897cce30}</destination>
 		</relationship>
 	</object>
 	<object class="Tag" id="{ec31492e-eea9-43ed-870e-b33b2e3ac798}">
@@ -77,6 +81,26 @@
 	<object class="Tag" id="{b81fb5b7-10aa-4650-97fe-8be5dc311d4c}">
 		<property name="name">
 			<value>spatializer</value>
+		</property>
+	</object>
+	<object class="Tag" id="{e903c594-146b-486e-84ec-0cec885e12ba}">
+		<property name="name">
+			<value>ahdsr-modulator</value>
+		</property>
+	</object>
+	<object class="Tag" id="{aa188cbc-0cd6-4890-a310-dc55c4709f16}">
+		<property name="name">
+			<value>built-in-parameter</value>
+		</property>
+	</object>
+	<object class="Tag" id="{6ca134e8-c35d-4f22-a482-0b0e0fb4e972}">
+		<property name="name">
+			<value>scatterer-instrument</value>
+		</property>
+	</object>
+	<object class="Tag" id="{7f9a5ba6-dc93-49dc-aaf4-638f897cce30}">
+		<property name="name">
+			<value>seek-speed</value>
 		</property>
 	</object>
 </objects>
