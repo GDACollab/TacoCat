@@ -3,12 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Terrain
-  - EnvironmentGenerator
-  - Vehicle
-  - FuelUIBar
-  - FuelUIGauge
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -17,8 +12,8 @@ TagManager:
   - Water
   - UI
   - 
-  - Environment
-  - Ground
+  - 
+  - 
   - 
   - 
   - 
@@ -45,13 +40,4 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: Background
-    uniqueID: 3643169501
-    locked: 0
-  - name: PlayArea
-    uniqueID: 2132478623
-    locked: 0
-  - name: Foreground
-    uniqueID: 2322967701
     locked: 0
