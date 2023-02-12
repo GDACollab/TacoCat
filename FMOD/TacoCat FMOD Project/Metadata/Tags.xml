@@ -7,6 +7,16 @@
 		<relationship name="items">
 			<destination>{ec31492e-eea9-43ed-870e-b33b2e3ac798}</destination>
 			<destination>{270da343-a40e-49f1-bc95-1580a238d7b2}</destination>
+			<destination>{82356178-4e13-4bb0-8e5d-b20ab1540883}</destination>
+			<destination>{82692e4f-30c0-4fdd-a3a3-a335e1093f20}</destination>
+			<destination>{435ada13-3bf8-456b-891f-2841482b8b80}</destination>
+			<destination>{b54649b2-fd11-49f5-ad75-8ba88a0186b1}</destination>
+			<destination>{97f2360b-bf99-4b9b-9ca2-1d67f530a42e}</destination>
+			<destination>{1ac0d493-b288-4a48-b10c-a0bc2ecc782c}</destination>
+			<destination>{903e35ff-1221-43f1-b8c3-2749740f8d91}</destination>
+			<destination>{f94207a8-65a7-4f6a-95fb-d2da9c8e723e}</destination>
+			<destination>{4a6ce9b8-7815-41f9-90d3-08b44a507b84}</destination>
+			<destination>{b81fb5b7-10aa-4650-97fe-8be5dc311d4c}</destination>
 		</relationship>
 	</object>
 	<object class="Tag" id="{ec31492e-eea9-43ed-870e-b33b2e3ac798}">
@@ -17,6 +27,56 @@
 	<object class="Tag" id="{270da343-a40e-49f1-bc95-1580a238d7b2}">
 		<property name="name">
 			<value>Music</value>
+		</property>
+	</object>
+	<object class="Tag" id="{82356178-4e13-4bb0-8e5d-b20ab1540883}">
+		<property name="name">
+			<value>async</value>
+		</property>
+	</object>
+	<object class="Tag" id="{82692e4f-30c0-4fdd-a3a3-a335e1093f20}">
+		<property name="name">
+			<value>automation</value>
+		</property>
+	</object>
+	<object class="Tag" id="{435ada13-3bf8-456b-891f-2841482b8b80}">
+		<property name="name">
+			<value>autopitch-modulator</value>
+		</property>
+	</object>
+	<object class="Tag" id="{b54649b2-fd11-49f5-ad75-8ba88a0186b1}">
+		<property name="name">
+			<value>fade</value>
+		</property>
+	</object>
+	<object class="Tag" id="{97f2360b-bf99-4b9b-9ca2-1d67f530a42e}">
+		<property name="name">
+			<value>loop-instrument</value>
+		</property>
+	</object>
+	<object class="Tag" id="{1ac0d493-b288-4a48-b10c-a0bc2ecc782c}">
+		<property name="name">
+			<value>parameter</value>
+		</property>
+	</object>
+	<object class="Tag" id="{903e35ff-1221-43f1-b8c3-2749740f8d91}">
+		<property name="name">
+			<value>persistent</value>
+		</property>
+	</object>
+	<object class="Tag" id="{f94207a8-65a7-4f6a-95fb-d2da9c8e723e}">
+		<property name="name">
+			<value>send</value>
+		</property>
+	</object>
+	<object class="Tag" id="{4a6ce9b8-7815-41f9-90d3-08b44a507b84}">
+		<property name="name">
+			<value>single-instrument</value>
+		</property>
+	</object>
+	<object class="Tag" id="{b81fb5b7-10aa-4650-97fe-8be5dc311d4c}">
+		<property name="name">
+			<value>spatializer</value>
 		</property>
 	</object>
 </objects>
