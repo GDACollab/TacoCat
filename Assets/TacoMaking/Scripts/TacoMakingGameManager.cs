@@ -21,6 +21,7 @@ public class TacoMakingGameManager : MonoBehaviour
 
     [Header("Customers")]
     public Customer currCustomer;
+    public CustomerManager customerManager;
     public int perfectCounter; //counts the number of perfect tacos in a row, resets when a !perfect taco is submitted
     public int comboCounter;   //counts the number for 3 combos in total throughout the whole minigame
     public int customersLeftToGenerate; //the number of customers left to generate in the scene
@@ -49,6 +50,13 @@ public class TacoMakingGameManager : MonoBehaviour
         // if curr customer is null, and more customers remaining
             // create a new cutsomer from customer manager
             // store new customer in curr cutsomer
+        
+        //Creates and stores a new customer whenever the current one is deleted
+        if (customersLeftToGenerate > 0 && currCustomer == null)
+        {
+            currCustomer = customerManager.CreateNewCustomer(0).GetComponent<Customer>();
+            customersLeftToGenerate--;
+        }    
     }
 
     // submit taco to customer to be graded
