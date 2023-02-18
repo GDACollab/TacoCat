@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class LocationTracker : MonoBehaviour
 {
+    public EnvironmentGenerator EnvGen;
+
     [Header("Player Vehicle")]
     public GameObject playerVehicle;
     public PointOfInterest StartingLocation;
@@ -55,5 +57,14 @@ public class LocationTracker : MonoBehaviour
     private float ConvertToPercent(float numerator, float denominator) 
     {
         return (numerator/denominator)*100;
+    }
+
+    public Vector3 GetPointAtPercentage(float Percentage) {
+        List<Vector3> Points = EnvGen.groundPoints; //Gets groundpoints from EnvironmentGenerator.cs
+        int PointCount = EnvGen.groundPoints.Count; //Get the amount of groundpoints
+
+        int GroundPointIndex = Mathf.FloorToInt(PointCount * Percentage);
+
+        return Points[GroundPointIndex];
     }
 }
