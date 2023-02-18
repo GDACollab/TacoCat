@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using ingredientType=CustomerManager.ingredientType;
-
 using scoreType=CustomerManager.scoreType;
+
 public class Customer: MonoBehaviour
 {
 
     public TacoMakingGameManager tacoGameManager;
 
-    static public List<ingredientType> s_order; //ingredients in the order
+    [Header("Order UI")]
+    public OrderBubble orderUI;
+
+    public List<ingredientType> s_order; //ingredients in the order
 
     public scoreType tacoGrading(Taco currTaco){
         //compares the list of ingredients in the taco submitted and the list of ingredients in the customer's order returns the taco's score
@@ -44,12 +47,21 @@ public class Customer: MonoBehaviour
 
     // Start is called before the first frame update
     private CustomerManager _CustomerManager;
+
+    private void Awake()
+    {
+        tacoGameManager = GetComponentInParent<TacoMakingGameManager>();
+
+    }
+
     void Start()
     {
         _CustomerManager=GetComponentInParent<CustomerManager>();
 
-        tacoGameManager = GameObject.FindGameObjectWithTag("TacoGameManager").GetComponent<TacoMakingGameManager>();
 
+        orderUI.gameObject.SetActive(false);
+
+        PlaceOrder(s_order);
     }
 
     public void CreateCustomerOrder()
@@ -58,5 +70,18 @@ public class Customer: MonoBehaviour
 
         // have fun :))
 
+    }
+
+
+    // << SPAWN ORDER UI BOX >>
+    public GameObject PlaceOrder(List<ingredientType> order)
+    {
+        orderUI.gameObject.SetActive(true);
+
+        orderUI.order = order;
+
+        orderUI.ShowOrder();
+
+        return null;
     }
 }

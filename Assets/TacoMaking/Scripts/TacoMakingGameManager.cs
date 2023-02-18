@@ -6,6 +6,7 @@ using ingredientType = CustomerManager.ingredientType;
 
 public class TacoMakingGameManager : MonoBehaviour
 {
+    [HideInInspector]
     public IngredientBenchManager benchManager;
     
     [Header("Prefabs")]
@@ -42,17 +43,21 @@ public class TacoMakingGameManager : MonoBehaviour
 
 
     // return prefab that is related to the input enum type
-    public GameObject GetIngredientObject(CustomerManager.ingredientType ingrType)
+    public GameObject GetIngredientObject(ingredientType ingrType)
     {
+        Debug.Log("Get " + ingrType + " prefab");
+
         // for each object in prefab list
         foreach(GameObject obj in allIngredientPrefabs)
         {
             // look at the ingredient script inside prefab
-            if (obj.GetComponent<Ingredient>().type  == ingrType)
+            if (obj.GetComponent<Ingredient>().type == ingrType)
             {
                 return obj;
             }
         }
+
+        Debug.Log("Could not find " + ingrType + " prefab");
 
         return null;
     }

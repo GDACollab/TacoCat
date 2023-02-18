@@ -17,6 +17,8 @@ public class IngredientBenchManager : MonoBehaviour
     [Header("Taco")]
     public Transform tacoSpawnPoint;
 
+    public float ingredientScale = 0.1f;
+
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +39,9 @@ public class IngredientBenchManager : MonoBehaviour
         {
             // get matching object in gamemanager
             GameObject ingr_obj = gameManager.GetIngredientObject(ingr);
+            ingr_obj.transform.localScale = Vector3.one * ingredientScale;
+
+
             ingrObjs.Add(ingr_obj);
         }
 

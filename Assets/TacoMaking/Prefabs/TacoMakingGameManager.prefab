@@ -129,6 +129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currIngredient: {fileID: 0}
+  ingredientType: 0
 --- !u!1 &2340649468238910323
 GameObject:
   m_ObjectHideFlags: 0
@@ -227,6 +228,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currIngredient: {fileID: 0}
+  ingredientType: 0
 --- !u!1 &2340649468902494721
 GameObject:
   m_ObjectHideFlags: 0
@@ -325,6 +327,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currIngredient: {fileID: 0}
+  ingredientType: 0
 --- !u!1 &2692750160608926303
 GameObject:
   m_ObjectHideFlags: 0
@@ -421,7 +424,7 @@ GameObject:
   - component: {fileID: 4452405924312791587}
   m_Layer: 0
   m_Name: TacoMakingGameManager
-  m_TagString: Untagged
+  m_TagString: TacoGameManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -439,6 +442,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8617861519370296867}
+  - {fileID: 6136930388966450500}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -454,6 +458,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bab324d6be6ea47538aeb7f61d617012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  benchManager: {fileID: 0}
   tacoPrefab: {fileID: 7059686471766786423, guid: a29f0c6dead9f744f90b23c8fd5fa56e, type: 3}
   allIngredientPrefabs:
   - {fileID: 5291081972430352552, guid: 1ff6300ecfb84e449a25526590fc0c09, type: 3}
@@ -515,5 +520,55 @@ MonoBehaviour:
   - {fileID: 8975661138161918435}
   - {fileID: 4834297653279234236}
   - {fileID: 4834297652596382158}
-  menu: 0400000000000000
+  menu: 04000000000000000100000003000000
   tacoSpawnPoint: {fileID: 4939774579859701452}
+--- !u!1 &6820801635277858728
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6136930388966450500}
+  - component: {fileID: 2043782244719006703}
+  m_Layer: 0
+  m_Name: CustomerParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6136930388966450500
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6820801635277858728}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4452405924312791584}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2043782244719006703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6820801635277858728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dc56ecd9712b0247a80858f75a7a3a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  s_menu: 
+  s_perfectCounter: 0
+  s_comboCounter: 0
+  customersLeftToGenerate: 0
+  customerPrefab: {fileID: 0}
+  currentCustomers: []

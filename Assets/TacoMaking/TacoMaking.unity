@@ -270,18 +270,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1513446947888327215, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
-      propertyPath: menu.Array.size
-      value: 4
+    - target: {fileID: 2043782244719006703, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
+      propertyPath: customerCount
+      value: 12
       objectReference: {fileID: 0}
-    - target: {fileID: 1513446947888327215, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
-      propertyPath: menu.Array.data[2]
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1513446947888327215, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
-      propertyPath: menu.Array.data[3]
-      value: 3
-      objectReference: {fileID: 0}
+    - target: {fileID: 2043782244719006703, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
+      propertyPath: customerPrefab
+      value: 
+      objectReference: {fileID: 4784761311512434799, guid: 0944c8b0746db6448b0eeae4e32351bf, type: 3}
     - target: {fileID: 4452405924312791584, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -330,9 +326,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: TacoMakingGameManager
       objectReference: {fileID: 0}
-    - target: {fileID: 4452405924312791586, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
-      propertyPath: m_TagString
-      value: TacoGameManager
+    - target: {fileID: 6136930388966450500, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -5.15
       objectReference: {fileID: 0}
+    - target: {fileID: 6136930388966450500, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6820801635277858728, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 4162164826716764455, guid: 0000000000000000d000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
