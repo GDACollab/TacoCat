@@ -45,6 +45,14 @@ public class PlayerHand : MonoBehaviour
     public Taco submissionTaco; // this is the taco the hand is submitting to
 
 
+    // >>>> NOTE:
+        // I used this framework to add onto what you were achieving with the old code.
+        // But now, the hand only moves to the target that it's given through input!
+        // We need the hand to pick up the ingredient and move back to the home before placing the ingredient onf the taco
+        // I placed the framework for you , but it's up to you to figure out how to finish it :)
+
+
+
     public void Update()
     {
         // << MOVE HAND TOWARDS TARGET >>
