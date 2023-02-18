@@ -13,16 +13,27 @@ public class CustomerManager : MonoBehaviour
     public int customersLeftToGenerate; //the number of customers left to generate in the scene
 
     //before calling check if customers left to generate == 0
+    private void Start()
+    {
+        
+    }
+
 
     void customerUpdate(){
         //is called once a taco is turned in (collision in a different game object/button key press) or when the previous taco is done being graded
         //checks if a new customer needs to be generated
         //runs all things that come along with a new customer (i.e. taco order generation, moving the customer etc.)
-        customerGenerator();//generates the customer prefab??
+        CreateNewCustomer();//generates the customer prefab??
         //Customer.s_order=orderGenerator();//generates the customer's order
         //^gets the customer just generated and generates their order (the line of code above is probably wrong)                           
     }
-    void customerGenerator(){//member that generates a customer
+
+
+    void CreateNewCustomer(){//member that generates a customer
+
+       
+
+
     }
     
     public List<ingredientType> orderGenerator(){

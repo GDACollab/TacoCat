@@ -6,7 +6,7 @@ using ingredientType = CustomerManager.ingredientType;
 
 public class TacoMakingGameManager : MonoBehaviour
 {
-    IngredientBenchManager benchManager;
+    public IngredientBenchManager benchManager;
     
     [Header("Prefabs")]
     public GameObject tacoPrefab;

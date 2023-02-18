@@ -5,7 +5,9 @@ using ingredientType=CustomerManager.ingredientType;
 
 using scoreType=CustomerManager.scoreType;
 public class Customer: MonoBehaviour
-{   
+{
+
+    public TacoMakingGameManager tacoGameManager;
 
     static public List<ingredientType> s_order; //ingredients in the order
 
@@ -38,16 +40,23 @@ public class Customer: MonoBehaviour
         }
         else return scoreType.FAILED;
     }
+
+
     // Start is called before the first frame update
     private CustomerManager _CustomerManager;
     void Start()
     {
-        _CustomerManager=GetComponentInParent<CustomerManager>();   
+        _CustomerManager=GetComponentInParent<CustomerManager>();
+
+        tacoGameManager = GameObject.FindGameObjectWithTag("TacoGameManager").GetComponent<TacoMakingGameManager>();
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public void CreateCustomerOrder()
     {
-        
+        List<ingredientType> menu = tacoGameManager.benchManager.menu;
+
+        // have fun :))
+
     }
 }
