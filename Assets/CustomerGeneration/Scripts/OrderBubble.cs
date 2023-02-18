@@ -41,12 +41,5 @@ public class OrderBubble : MonoBehaviour
 
             orderIngredientObjects.Add(newIngredient);
         }
-
-
-
-
-
     }
-
-    
 }

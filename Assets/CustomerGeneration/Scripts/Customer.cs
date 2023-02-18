@@ -4,27 +4,22 @@ using UnityEngine;
 
 public class Customer: MonoBehaviour
 {
-
-    public TacoMakingGameManager tacoGameManager;
+    CustomerManager customerManager;
+    TacoMakingGameManager tacoGameManager;
 
     [Header("Order UI")]
     public OrderBubble orderUI;
 
     public List<ingredientType> order; //ingredients in the order
 
-
-
-    // Start is called before the first frame update
-    private CustomerManager customerManager;
-
     private void Awake()
     {
         tacoGameManager = GetComponentInParent<TacoMakingGameManager>();
+        customerManager = GetComponentInParent<CustomerManager>();
     }
 
     void Start()
     {
-        customerManager=GetComponentInParent<CustomerManager>();
 
         orderUI.gameObject.SetActive(false);
 
@@ -75,8 +70,6 @@ public class Customer: MonoBehaviour
         // << PERFECT >> ingredients are the same and order is perfect
         if (numSameIngredients == order.Count && correctPlacementCount == order.Count)
         {
-            customerManager.perfectCounter++; //increment perfect counter
-            if (customerManager.perfectCounter % 3 == 0) customerManager.comboCounter++; //display combo stuff //maybe move elsewhere
             return scoreType.PERFECT; //perfect score 
         }
 

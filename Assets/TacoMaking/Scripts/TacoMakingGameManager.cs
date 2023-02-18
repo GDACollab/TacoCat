@@ -16,6 +16,15 @@ public class TacoMakingGameManager : MonoBehaviour
     [Header("Submission Taco")]
     public Taco submissionTaco;
 
+    [Header("Customers")]
+    public Customer currCustomer;
+    public int perfectCounter; //counts the number of perfect tacos in a row, resets when a !perfect taco is submitted
+    public int comboCounter;   //counts the number for 3 combos in total throughout the whole minigame
+    public int customersLeftToGenerate; //the number of customers left to generate in the scene
+
+    [Header("Score")]
+    public int gameScore = 0; // max score is 3 * numOfCustomers served
+
     public void Start()
     {
         benchManager = GetComponentInChildren<IngredientBenchManager>();
@@ -26,6 +35,20 @@ public class TacoMakingGameManager : MonoBehaviour
         taco.transform.parent = transform;
     }
 
+    public void Update()
+    {
+        CustomerRotation();
+    }
+
+    // continue through remaining customers
+    public void CustomerRotation()
+    {
+        // if curr customer is null, and more customers remaining
+            // create a new cutsomer from customer manager
+            // store new customer in curr cutsomer
+    }
+
+    // submit taco to customer to be graded
     public void SubmitTaco(Taco submissionTaco, Customer currentCustomer)
     {
         // send the submission taco to current customer to be graded
@@ -37,6 +60,24 @@ public class TacoMakingGameManager : MonoBehaviour
         // delete the submission taco gameobject
     }
 
+
+    // update game score variable
+    public void NewTacoScore(scoreType score)
+    {
+        // if score == PERFECT -> gameScore += 3
+
+             // << UPDATE PERFECT SCORE COUNTER >>
+             // perfectCounter++; //increment perfect counter
+             // if (perfectCounter % 3 == 0) comboCounter++; //display combo stuff //maybe move elsewhere
+
+        // if score == GOOD -> gameScore += 2
+
+        // if
+
+        // if
+
+        // read the Taco Making Design Doc for the rest of the score amounts
+    }
 
     #region HELPER FUNCTIONS ==============================================================
 
