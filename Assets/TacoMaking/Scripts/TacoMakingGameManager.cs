@@ -36,6 +36,7 @@ public class TacoMakingGameManager : MonoBehaviour
         GameObject taco = Instantiate(tacoPrefab, GetComponentInChildren<IngredientBenchManager>().tacoSpawnPoint.position, Quaternion.identity);
         submissionTaco = taco.GetComponent<Taco>();
         taco.transform.parent = transform;
+
     }
 
     public void Update()
@@ -64,22 +65,37 @@ public class TacoMakingGameManager : MonoBehaviour
     }
 
 
-    // update game score variable
+    // Parameter: score from completed Taco
+    // Updates gameScore, perfectCounter and comboCounter as necessary
     public void NewTacoScore(scoreType score)
     {
-        // if score == PERFECT -> gameScore += 3
+        if (score == scoreType.PERFECT)
+        {
+            gameScore += 3;
+            perfectCounter++;
+            if (perfectCounter % 3 == 0 && perfectCounter != 0)
+            {
+                comboCounter++; //display combo stuff //maybe move elsewhere
+            }
+        } else
+        {
+            perfectCounter = 0;
+        }
 
-             // << UPDATE PERFECT SCORE COUNTER >>
-             // perfectCounter++; //increment perfect counter
-             // if (perfectCounter % 3 == 0) comboCounter++; //display combo stuff //maybe move elsewhere
+        if (score == scoreType.GOOD)
+        {
+            gameScore += 2;
+        }
 
-        // if score == GOOD -> gameScore += 2
+        if (score == scoreType.OKAY)
+        {
+            gameScore += 1;
+        }
 
-        // if
-
-        // if
-
-        // read the Taco Making Design Doc for the rest of the score amounts
+        if (score == scoreType.FAILED)
+        {
+            gameScore += 0;
+        }
     }
 
     #region HELPER FUNCTIONS ==============================================================
