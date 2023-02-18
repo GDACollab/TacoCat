@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using ingredientType=CustomerManager.ingredientType;
-using scoreType=CustomerManager.scoreType;
 
 public class Customer: MonoBehaviour
 {
@@ -51,25 +49,36 @@ public class Customer: MonoBehaviour
     private void Awake()
     {
         tacoGameManager = GetComponentInParent<TacoMakingGameManager>();
-
     }
 
     void Start()
     {
         _CustomerManager=GetComponentInParent<CustomerManager>();
 
-
         orderUI.gameObject.SetActive(false);
+
+        s_order = CreateCustomerOrder(1, 5);
 
         PlaceOrder(s_order);
     }
 
-    public void CreateCustomerOrder()
+    public List<ingredientType> CreateCustomerOrder(int minOrderLength, int maxOrderLength) 
     {
-        List<ingredientType> menu = tacoGameManager.benchManager.menu;
 
-        // have fun :))
+        // get menu from bench manager
+        List<ingredientType> menu = tacoGameManager.benchManager.menu;        
+        int orderLength = Random.Range(minOrderLength, maxOrderLength + 1); // randomize order length
 
+        // To be returned
+        List<ingredientType> s_order = new List<ingredientType>(orderLength);
+
+        // Fill list with random items from menu
+        for (int i = 0; i < orderLength; i++)
+        {
+            s_order.Add(menu[Random.Range(0, menu.Count)]);
+        }
+
+        return s_order;
     }
 
 
