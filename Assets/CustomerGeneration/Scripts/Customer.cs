@@ -9,7 +9,7 @@ public class Customer: MonoBehaviour
 
     public TacoMakingGameManager tacoGameManager;
 
-    static public List<ingredientType> s_order; //ingredients in the order
+    public List<ingredientType> s_order; //ingredients in the order
 
     public scoreType tacoGrading(Taco currTaco){
         //compares the list of ingredients in the taco submitted and the list of ingredients in the customer's order returns the taco's score
@@ -49,14 +49,25 @@ public class Customer: MonoBehaviour
         _CustomerManager=GetComponentInParent<CustomerManager>();
 
         tacoGameManager = GameObject.FindGameObjectWithTag("TacoGameManager").GetComponent<TacoMakingGameManager>();
-
     }
 
-    public void CreateCustomerOrder()
+    public List<ingredientType> CreateCustomerOrder(int minOrderLength, int maxOrderLength) 
     {
         List<ingredientType> menu = tacoGameManager.benchManager.menu;
+        var values = System.Enum.GetValues(typeof(ingredientType));
+        
+        int orderLength = Random.Range(minOrderLength, maxOrderLength + 1);
+        int menuLength = System.Enum.GetValues(typeof(ingredientType)).Length;
 
-        // have fun :))
+        // To be returned
+        List<ingredientType> s_order = new List<ingredientType>(orderLength);
 
+        // Fill list with random items
+        for (int i = 0; i < orderLength; i++)
+        {
+            s_order.Add((ingredientType)values.GetValue(Random.Range(0, menuLength)));
+        }
+
+        return s_order;
     }
 }

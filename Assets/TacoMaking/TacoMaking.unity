@@ -134,6 +134,62 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bab324d6be6ea47538aeb7f61d617012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &766733868 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1513446947888327215, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
+  m_PrefabInstance: {fileID: 4452405924561553218}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6325981fb8ecd4ccdb7825e137a18a85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1146321509
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1146321511}
+  - component: {fileID: 1146321510}
+  m_Layer: 0
+  m_Name: Customer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1146321510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1146321509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf7694643ee790241b262796cb7dc214, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tacoGameManager: {fileID: 0}
+--- !u!4 &1146321511
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1146321509}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1884928305
 GameObject:
   m_ObjectHideFlags: 0
@@ -334,5 +390,9 @@ PrefabInstance:
       propertyPath: m_TagString
       value: TacoGameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 4452405924312791587, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
+      propertyPath: benchManager
+      value: 
+      objectReference: {fileID: 766733868}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
