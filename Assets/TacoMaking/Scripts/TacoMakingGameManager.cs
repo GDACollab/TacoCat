@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using ingredientType = CustomerManager.ingredientType;
-
+public enum ingredientType { FISH, SOUR_CREAM, PICO_DE_GALLO, CABBAGE, SLICED_JALAPENOS }
+public enum scoreType { PERFECT, GOOD, OKAY, FAILED } // possible scores a taco can get.
 
 public class TacoMakingGameManager : MonoBehaviour
 {
@@ -45,8 +45,6 @@ public class TacoMakingGameManager : MonoBehaviour
     // return prefab that is related to the input enum type
     public GameObject GetIngredientObject(ingredientType ingrType)
     {
-        Debug.Log("Get " + ingrType + " prefab");
-
         // for each object in prefab list
         foreach(GameObject obj in allIngredientPrefabs)
         {

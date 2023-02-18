@@ -4,9 +4,6 @@ using UnityEngine;
 [System.Serializable]
 public class CustomerManager : MonoBehaviour
 {
-    public enum ingredientType {FISH, SOUR_CREAM, PICO_DE_GALLO, CABBAGE, SLICED_JALAPENOS}
-    public enum scoreType{PERFECT, GOOD, OKAY, FAILED} // possible scores a taco can get.
-
     public int s_perfectCounter; //counts the number of perfect tacos in a row, resets when a !perfect taco is submitted
     public int s_comboCounter;   //counts the number for 3 combos in total throughout the whole minigame
     public int customersLeftToGenerate; //the number of customers left to generate in the scene

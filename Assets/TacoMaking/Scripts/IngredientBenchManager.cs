@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using ingredientType = CustomerManager.ingredientType;
-
 
 public class IngredientBenchManager : MonoBehaviour
 {
