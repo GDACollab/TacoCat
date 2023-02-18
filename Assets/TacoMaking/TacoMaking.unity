@@ -164,6 +164,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tacoGameManager: {fileID: 332676449}
+  bin1: 97
+  bin2: 115
+  bin3: 100
+  submit: 32
 --- !u!4 &1884928307
 Transform:
   m_ObjectHideFlags: 0
@@ -178,6 +182,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1985941893
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1985941894}
+  m_Layer: 0
+  m_Name: HandHome
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1985941894
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1985941893}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 4.28, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2119436390
 GameObject:
@@ -330,6 +365,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6585792532250544982, guid: b75fe25cc9aaded4b8efe0158ef3a504, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 9104847307487860406, guid: b75fe25cc9aaded4b8efe0158ef3a504, type: 3}
       propertyPath: m_Name
       value: hand
@@ -401,11 +440,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6136930388966450500, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.15
+      value: -5.94
       objectReference: {fileID: 0}
     - target: {fileID: 6136930388966450500, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.15
+      value: -3.7
       objectReference: {fileID: 0}
     - target: {fileID: 6820801635277858728, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
       propertyPath: m_Icon

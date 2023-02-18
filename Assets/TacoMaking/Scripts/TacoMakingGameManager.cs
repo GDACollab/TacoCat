@@ -16,6 +16,9 @@ public class TacoMakingGameManager : MonoBehaviour
     [Header("Submission Taco")]
     public Taco submissionTaco;
 
+    [Header("Hand")]
+    public PlayerHand hand;
+
     [Header("Customers")]
     public Customer currCustomer;
     public int perfectCounter; //counts the number of perfect tacos in a row, resets when a !perfect taco is submitted

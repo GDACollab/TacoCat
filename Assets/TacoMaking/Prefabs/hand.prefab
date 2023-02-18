@@ -97,6 +97,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 697a2f4de57684d859bad05ba59515c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  handHome: {fileID: 0}
+  speed: 5
+  currHeldIngredient: {fileID: 0}
+  isHome: 1
+  isPickingFromBin: 0
+  pickBin: {fileID: 0}
+  isPlacingIngredient: 0
+  submissionTaco: {fileID: 0}
   Ingredient0: {fileID: 0}
   Ingredient1: {fileID: 0}
   Ingredient2: {fileID: 0}
+  Taco: {fileID: 0}
