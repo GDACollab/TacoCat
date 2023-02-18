@@ -26,6 +26,18 @@ public class TacoMakingGameManager : MonoBehaviour
         taco.transform.parent = transform;
     }
 
+    public void SubmitTaco(Taco submissionTaco, Customer currentCustomer)
+    {
+        // send the submission taco to current customer to be graded
+
+        // print to console the result of the taco
+
+        // delete the customer game object
+
+        // delete the submission taco gameobject
+    }
+
+
     #region HELPER FUNCTIONS ==============================================================
 
     // << GET CURRENT INGREDIENT IN BIN >>
