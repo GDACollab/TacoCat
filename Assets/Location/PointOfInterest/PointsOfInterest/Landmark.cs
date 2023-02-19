@@ -17,11 +17,11 @@ public class Landmark : PointOfInterest
     }
 
     //EX For GetPercentagesNeeded: if 5 landmarks wanted then youll get 0,20,40,60,80,100 added to list PecentagesNeeded
-    public List<int> GetPercentagesNeeded(int LandmarkNum)
+    public List<float> GetPercentagesNeeded(int LandmarkNum)
     {
-        List<int> PercentagesNeeded = new List<int>();
+        List<float> PercentagesNeeded = new List<float>();
         LandmarkNum = LandmarkNum-1;
-        int percent = 0;
+        float percent = 0.0F;
         PercentagesNeeded.Add(percent); // add start to the list 
         for (int i = 1; i <= LandmarkNum; i++)
         {
