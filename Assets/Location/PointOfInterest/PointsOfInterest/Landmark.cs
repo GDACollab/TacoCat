@@ -25,7 +25,7 @@ public class Landmark : PointOfInterest
         PercentagesNeeded.Add(percent); // add start to the list 
         for (int i = 1; i <= LandmarkNum; i++)
         {
-            percent = Mathf.FloorToInt( i/ LandmarkNum);
+            percent = Mathf.FloorToInt( (i/ LandmarkNum)*100);
             PercentagesNeeded.Add(percent);
         }
         return PercentagesNeeded;
