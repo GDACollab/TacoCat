@@ -5,6 +5,7 @@ using UnityEngine;
 public class LocationTracker : MonoBehaviour
 {
     public EnvironmentGenerator EnvGen;
+    public Landmark Landmark;
 
     [Header("Player Vehicle")]
     public GameObject playerVehicle;
@@ -37,9 +38,9 @@ public class LocationTracker : MonoBehaviour
         vehiclePosition = s_vehicle.GetPosition();
         totalDistance = CalculateDistanceFromStart(StartingLocation, Destination);
         remainingDistance = CalculateDistanceToDestination(s_vehicle, Destination);
-        Debug.Log( "Distance to Destination from start:"+ totalDistance);
-        Debug.Log("Distance to Destination:" + remainingDistance);
-        Debug.Log("Distance in Percent:" + ConvertToPercent(remainingDistance, totalDistance));
+        //Debug.Log( "Distance to Destination from start:"+ totalDistance);
+        /*Debug.Log("Distance to Destination:" + remainingDistance);
+        Debug.Log("Distance in Percent:" + ConvertToPercent(remainingDistance, totalDistance));*/
     }
 
     private float CalculateDistanceToDestination(Vehicle vehicle, PointOfInterest end)
