@@ -123,6 +123,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &30282760 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 567059905770462073, guid: b75fe25cc9aaded4b8efe0158ef3a504, type: 3}
+  m_PrefabInstance: {fileID: 1390395743094321314}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 697a2f4de57684d859bad05ba59515c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &332676449 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4452405924312791587, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
@@ -325,6 +336,14 @@ PrefabInstance:
       propertyPath: Ingredient2
       value: 
       objectReference: {fileID: 4452405924561553220}
+    - target: {fileID: 567059905770462073, guid: b75fe25cc9aaded4b8efe0158ef3a504, type: 3}
+      propertyPath: approximateProximity.x
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 567059905770462073, guid: b75fe25cc9aaded4b8efe0158ef3a504, type: 3}
+      propertyPath: approximateProximity.y
+      value: 0.08
+      objectReference: {fileID: 0}
     - target: {fileID: 3354342240746308266, guid: b75fe25cc9aaded4b8efe0158ef3a504, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -442,6 +461,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TacoMakingGameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 4452405924312791587, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
+      propertyPath: hand
+      value: 
+      objectReference: {fileID: 30282760}
     - target: {fileID: 6136930388966450500, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.94

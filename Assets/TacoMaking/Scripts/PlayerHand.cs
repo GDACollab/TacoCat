@@ -23,10 +23,13 @@ public class PlayerHand : MonoBehaviour
     // this is going to be the speed of the hand
     public float speed = 5;
 
+    //How close the hand must be to the position to be 'touching'
+    public Vector3 approximateProximity = new Vector3(0.02f, 0.02f, 0f);
+
     // >>> BEFORE CONTINUING :: 
-        // Go to the Unity Editor and try dragging different gameobjects into the target variable in the inspector!
-        // When the game is playing, the hand will move to the position of the target object
-        // You can change the target object during runtime and watch the hand move back and forth
+    // Go to the Unity Editor and try dragging different gameobjects into the target variable in the inspector!
+    // When the game is playing, the hand will move to the position of the target object
+    // You can change the target object during runtime and watch the hand move back and forth
 
 
     public Ingredient currHeldIngredient; // this holds the current ingredient in player hand
@@ -80,6 +83,15 @@ public class PlayerHand : MonoBehaviour
                 // isPickingFromBin = false
                 // isPlacingIngredient = false
                 // isHome = true
+
+            //Unneeded code
+            //if(transform.position == target.position)
+            //{
+            //    // curr ingredient = bin ingredient type
+            //    isPickingFromBin = false;
+            //    isPlacingIngredient = true;
+            //    isHome = false;
+            //}
         }
 
         else if (isPlacingIngredient)
@@ -87,16 +99,38 @@ public class PlayerHand : MonoBehaviour
             // target -> submissionTaco.transform
 
             // once hand position == taco.transform.position, 
-                // taco.AddIngredient(/*ingredient*/);
+            // taco.AddIngredient(/*ingredient*/);
 
-                // change states and set target, just like before
+            // change states and set target, just like before
+
+            
+            //target = submissionTaco.transform;
+            if (TransformProximity())
+            {
+                // taco.AddIngredient(/*ingredient*/);
+                isPickingFromBin = false;
+                isPlacingIngredient = false;
+                isHome = true;
+            }
         }
 
         else if (isHome)
         {
             // target -> home
             // all other states are not true
+
+            target = handHome.transform;
+            isPickingFromBin = false;
+            isPlacingIngredient = false;
         }
+    }
+
+    //Checks if the two positions are close enough to be considered equal
+    //(Checking if they're actually equal will return false because lerp's speed decreases over distance)
+    public bool TransformProximity()
+    {
+        return (((target.position.x - approximateProximity.x <= transform.position.x) && (transform.position.x <= target.position.x + approximateProximity.x)) && 
+            ((target.position.y - approximateProximity.y <= transform.position.y) && (transform.position.y <= target.position.y + approximateProximity.y)));
     }
 
     /* =================================================================
@@ -107,17 +141,26 @@ public class PlayerHand : MonoBehaviour
     public void PickUpIngredient(IngredientBin bin)
     {
         // set target to bin.transform
-        target = bin.transform;
-
-        isHome = false;
-        isPickingFromBin = true;
-        pickBin = bin;
+        if (isHome == true)
+        {
+            target = bin.transform;
+            isHome = false;
+            isPickingFromBin = true;
+            pickBin = bin;
+        }
     }
 
     // << START PLACE INGREDIENT INTO TACO >>
     public void PlaceIngredient(Taco submissionTaco)
     {
         // set proper states && current submission taco
+        if (isPickingFromBin == true && TransformProximity())
+        {
+            target = submissionTaco.transform;
+            isPickingFromBin = false;
+            isPlacingIngredient = true;
+            isHome = false;
+        }
     }
 
 
