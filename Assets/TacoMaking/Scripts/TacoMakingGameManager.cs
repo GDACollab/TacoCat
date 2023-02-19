@@ -24,6 +24,7 @@ public class TacoMakingGameManager : MonoBehaviour
     public CustomerManager customerManager;
     public int perfectCounter; //counts the number of perfect tacos in a row, resets when a !perfect taco is submitted
     public int comboCounter;   //counts the number for 3 combos in total throughout the whole minigame
+    public int totalCustomers; //Total number of customers that will appear
     public int customersLeftToGenerate; //the number of customers left to generate in the scene
 
     [Header("Score")]
@@ -37,11 +38,13 @@ public class TacoMakingGameManager : MonoBehaviour
         GameObject taco = Instantiate(tacoPrefab, GetComponentInChildren<IngredientBenchManager>().tacoSpawnPoint.position, Quaternion.identity);
         submissionTaco = taco.GetComponent<Taco>();
         taco.transform.parent = transform;
+
+        customersLeftToGenerate = totalCustomers;
     }
 
     public void Update()
     {
-        CustomerRotation();
+        CustomerRotation();     
     }
 
     // continue through remaining customers
@@ -54,8 +57,9 @@ public class TacoMakingGameManager : MonoBehaviour
         //Creates and stores a new customer whenever the current one is deleted
         if (customersLeftToGenerate > 0 && currCustomer == null)
         {
-            currCustomer = customerManager.CreateNewCustomer(0).GetComponent<Customer>();
             customersLeftToGenerate--;
+            //The ID passed in for each customer starts at 1 and counts up to totalCustomers
+            currCustomer = customerManager.CreateNewCustomer(totalCustomers - customersLeftToGenerate).GetComponent<Customer>();           
         }    
     }
 

@@ -15,7 +15,7 @@ public class CustomerManager : MonoBehaviour
     {
         tacoGameManager = GetComponentInParent<TacoMakingGameManager>();
 
-        DebugSpawnCustomers(10);
+        //DebugSpawnCustomers(10);
     }
 
     public GameObject CreateNewCustomer(int customer_number)
