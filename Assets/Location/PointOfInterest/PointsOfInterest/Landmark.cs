@@ -11,8 +11,12 @@ public class Landmark : PointOfInterest
     public int LandmarkNum;
 
     public List<Vector3> Landmarks = new List<Vector3>();
-    public void AddLandmarkCoordToList()
+    public void AddLandmarkCoordToList( List<float> PercentList)
     {
+        for (int i = 0; i < PercentList.Count-1; i++)
+        {
+            Landmarks.Add(LocTracker.GetPointAtPercentage(PercentList[i]));
+        }
         return;
     }
 
