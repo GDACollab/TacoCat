@@ -45,6 +45,16 @@ public class TacoMakingGameManager : MonoBehaviour
     public void Update()
     {
         CustomerRotation();     
+
+        //TEMP, for testing customer rotation
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            //Doesn't remove the current customer if it is currently sliding in/out of frame
+            if (!customerManager.movingIn && !customerManager.movingOut)
+            {
+                customerManager.RemoveCurrentCustomer();
+            }            
+        }
     }
 
     // continue through remaining customers
