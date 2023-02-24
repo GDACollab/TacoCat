@@ -26,6 +26,7 @@ public class TacoMakingGameManager : MonoBehaviour
     public int comboCounter;   //counts the number for 3 combos in total throughout the whole minigame
     public int totalCustomers; //Total number of customers that will appear
     public int customersLeftToGenerate; //the number of customers left to generate in the scene
+    public int lineSize;
 
     [Header("Score")]
     public int gameScore = 0; // max score is 3 * numOfCustomers served
@@ -50,7 +51,7 @@ public class TacoMakingGameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             //Doesn't remove the current customer if it is currently sliding in/out of frame
-            if (!customerManager.movingIn && !customerManager.movingOut)
+            if (true)
             {
                 customerManager.RemoveCurrentCustomer();
             }            
@@ -61,15 +62,15 @@ public class TacoMakingGameManager : MonoBehaviour
     public void CustomerRotation()
     {
         // if curr customer is null, and more customers remaining
-            // create a new cutsomer from customer manager
-            // store new customer in curr cutsomer
-        
-        //Creates and stores a new customer whenever the current one is deleted
-        if (customersLeftToGenerate > 0 && currCustomer == null)
+        // create a new cutsomer from customer manager
+        // store new customer in curr cutsomer
+
+        //Calls to create a new customer as long as there are more customers to generate up to max number of customers in line at once
+        if (customersLeftToGenerate > 0 && customerManager.customerList.Count < lineSize)
         {
             customersLeftToGenerate--;
             //The ID passed in for each customer starts at 1 and counts up to totalCustomers
-            currCustomer = customerManager.CreateNewCustomer(totalCustomers - customersLeftToGenerate).GetComponent<Customer>();           
+            currCustomer = customerManager.CreateNewCustomer(totalCustomers - customersLeftToGenerate).GetComponent<Customer>();
         }    
     }
 
