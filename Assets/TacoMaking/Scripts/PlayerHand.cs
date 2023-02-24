@@ -9,9 +9,13 @@ public class PlayerHand : MonoBehaviour
     // instead of one big function that takes care of the entire movement,
     // I'm going to split the task into smaller bits...
 
+    //We need the tacoGameManager so as to place the ingredient on the taco later
+    public TacoMakingGameManager tacoGameManager;
+
     // what's the main thing that I want the hand to do? move from one position to another
     // so I'm going to make a "target" object for the hand to move towards
     public Transform target; // i use a transform here because i'm only worried about the position of the object
+    public Transform tacoTarget; // stores taco transform location, so that the hand can move to it when needed
 
     // the next thing i'm going to worry about is saving the positions of the "home"
     // in this case we can use the Unity Editor to create a gameobject that holds the home position of the hand
@@ -32,7 +36,7 @@ public class PlayerHand : MonoBehaviour
     // You can change the target object during runtime and watch the hand move back and forth
 
 
-    public Ingredient currHeldIngredient; // this holds the current ingredient in player hand
+    public ingredientType currHeldIngredient; // this holds the current ingredient in player hand
 
     // << STATE MACHINE >>
     // because this hand is going to need to do specific things once it reaches its target,
@@ -79,10 +83,10 @@ public class PlayerHand : MonoBehaviour
         if (isPickingFromBin)
         {
             // once hand position == pickBin.transform.position, 
-                // curr ingredient = bin ingredient type
-                // isPickingFromBin = false
-                // isPlacingIngredient = false
-                // isHome = true
+            // curr ingredient = bin ingredient type
+            // isPickingFromBin = false
+            // isPlacingIngredient = false
+            // isHome = true
 
             //Unneeded code
             //if(transform.position == target.position)
@@ -92,6 +96,12 @@ public class PlayerHand : MonoBehaviour
             //    isPlacingIngredient = true;
             //    isHome = false;
             //}
+            if (TransformProximity())
+            {
+                isPickingFromBin = false;
+                isPlacingIngredient = true;
+                isHome = false;
+            }
         }
 
         else if (isPlacingIngredient)
@@ -103,11 +113,14 @@ public class PlayerHand : MonoBehaviour
 
             // change states and set target, just like before
 
-            
+
             //target = submissionTaco.transform;
+            target = tacoTarget;
             if (TransformProximity())
             {
                 // taco.AddIngredient(/*ingredient*/);
+                tacoGameManager.AddIngredientToTaco(currHeldIngredient);
+                currHeldIngredient = new ingredientType();
                 isPickingFromBin = false;
                 isPlacingIngredient = false;
                 isHome = true;
@@ -138,12 +151,15 @@ public class PlayerHand : MonoBehaviour
      * =========================================================== */
 
     // << START PICK UP INGREDIENT FROM BIN >>
-    public void PickUpIngredient(IngredientBin bin)
+    public void PickUpIngredient(IngredientBin bin, Taco submissionTaco)
     {
-        // set target to bin.transform
+        // sets target to bin.transform, and tacotarget to whatever the taco location is.
+        // Also sets up variables that control status
         if (isHome == true)
         {
             target = bin.transform;
+            tacoTarget = submissionTaco.transform;
+            currHeldIngredient = bin.ingredientType;
             isHome = false;
             isPickingFromBin = true;
             pickBin = bin;
@@ -151,6 +167,7 @@ public class PlayerHand : MonoBehaviour
     }
 
     // << START PLACE INGREDIENT INTO TACO >>
+    // Function is unneeded, currently inaccessible ingame. Feature is performed automatically by rest of code
     public void PlaceIngredient(Taco submissionTaco)
     {
         // set proper states && current submission taco

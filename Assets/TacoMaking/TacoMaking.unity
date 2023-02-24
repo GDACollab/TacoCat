@@ -321,6 +321,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4452405924561553219}
     - target: {fileID: 567059905770462073, guid: b75fe25cc9aaded4b8efe0158ef3a504, type: 3}
+      propertyPath: speed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 567059905770462073, guid: b75fe25cc9aaded4b8efe0158ef3a504, type: 3}
       propertyPath: handHome
       value: 
       objectReference: {fileID: 1985941894}
@@ -337,12 +341,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4452405924561553220}
     - target: {fileID: 567059905770462073, guid: b75fe25cc9aaded4b8efe0158ef3a504, type: 3}
+      propertyPath: tacoGameManager
+      value: 
+      objectReference: {fileID: 332676449}
+    - target: {fileID: 567059905770462073, guid: b75fe25cc9aaded4b8efe0158ef3a504, type: 3}
       propertyPath: approximateProximity.x
-      value: 0.08
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 567059905770462073, guid: b75fe25cc9aaded4b8efe0158ef3a504, type: 3}
       propertyPath: approximateProximity.y
-      value: 0.08
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 3354342240746308266, guid: b75fe25cc9aaded4b8efe0158ef3a504, type: 3}
       propertyPath: m_RootOrder

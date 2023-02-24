@@ -32,19 +32,21 @@ public class InputManager : MonoBehaviour
         else if (Input.GetKeyDown(bin3))
         {
             PickFromBin(2);
-        }
-        else if (Input.GetKeyDown(submit))
-        {
-            tacoGameManager.hand.PlaceIngredient(tacoGameManager.submissionTaco);
-        }
+        }//Below statement is unneeded for playerhand, could be removed, but may need to be used for taco submittal
+        //else if (Input.GetKeyDown(submit))
+        //{
+        //    tacoGameManager.hand.PlaceIngredient(tacoGameManager.submissionTaco);
+        //}
     }
 
 
     public void PickFromBin(int bin_index)
     {
-        tacoGameManager.hand.PickUpIngredient(tacoGameManager.GetIngredientBin(bin_index));
+        //Sends message to playerHand to pickup/place ingredient, sends the location info (bin+taco) it needs as well
+        tacoGameManager.hand.PickUpIngredient(tacoGameManager.GetIngredientBin(bin_index), tacoGameManager.submissionTaco);
 
-        tacoGameManager.AddIngredientToTaco(tacoGameManager.GetIngredientBin(bin_index).ingredientType);
+        // Following function is now performed in PlayerHand.cs upon hand reaching taco
+        //tacoGameManager.AddIngredientToTaco(tacoGameManager.GetIngredientBin(bin_index).ingredientType);
 
 
     }
