@@ -32,11 +32,11 @@ public class InputManager : MonoBehaviour
         else if (Input.GetKeyDown(bin3))
         {
             PickFromBin(2);
-        }//Below statement is unneeded for playerhand, could be removed, but may need to be used for taco submittal
-        //else if (Input.GetKeyDown(submit))
-        //{
-        //    tacoGameManager.hand.PlaceIngredient(tacoGameManager.submissionTaco);
-        //}
+        }
+        else if (Input.GetKeyDown(submit))
+        {
+            tacoGameManager.SubmitTaco();
+        }
     }
 
 

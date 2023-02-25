@@ -30,6 +30,8 @@ public class TacoMakingGameManager : MonoBehaviour
 
     [Header("Score")]
     public int gameScore = 0; // max score is 3 * numOfCustomers served
+    public int gasAmount = 0;
+    public int nitroCount = 0;
 
     public void Start()
     {
@@ -44,16 +46,6 @@ public class TacoMakingGameManager : MonoBehaviour
     {
         CustomerRotation();     
 
-        //TEMP, for testing customer rotation
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            scoreType score = customerManager.currCustomerObject.GetComponent<Customer>().ScoreTaco(submissionTaco);
-
-            Debug.Log("Submitted Taco! Customer Score " + score);
-
-            CreateNewSubmissionTaco();
-            customerManager.RemoveCurrentCustomer();          
-        }
     }
 
     public void CreateNewSubmissionTaco()
@@ -85,34 +77,52 @@ public class TacoMakingGameManager : MonoBehaviour
     }
 
     // submit taco to customer to be graded
-    public void SubmitTaco(Taco submissionTaco, Customer currentCustomer)
+    public void SubmitTaco()
     {
-        // send the submission taco to current customer to be graded
+        scoreType score = currCustomer.ScoreTaco(submissionTaco);
+        NewTacoScore(score);
 
-        // print to console the result of the taco
+        Debug.Log("Submitted Taco! Customer Score " + score);
 
-        // delete the customer game object
+        CreateNewSubmissionTaco();
 
-        // delete the submission taco gameobject
+        customerManager.RemoveCurrentCustomer();
     }
 
 
-    // update game score variable
+
+    // Parameter: score from completed Taco
+    // Updates gameScore, perfectCounter and comboCounter as necessary
     public void NewTacoScore(scoreType score)
     {
-        // if score == PERFECT -> gameScore += 3
+        if (score == scoreType.PERFECT)
+        {
+            gameScore += 3;
+            perfectCounter++;
+            if (perfectCounter % 3 == 0 && perfectCounter != 0)
+            {
+                comboCounter++; //display combo stuff //maybe move elsewhere
+            }
+        }
+        else
+        {
+            perfectCounter = 0;
+        }
 
-             // << UPDATE PERFECT SCORE COUNTER >>
-             // perfectCounter++; //increment perfect counter
-             // if (perfectCounter % 3 == 0) comboCounter++; //display combo stuff //maybe move elsewhere
+        if (score == scoreType.GOOD)
+        {
+            gameScore += 2;
+        }
 
-        // if score == GOOD -> gameScore += 2
+        if (score == scoreType.OKAY)
+        {
+            gameScore += 1;
+        }
 
-        // if
-
-        // if
-
-        // read the Taco Making Design Doc for the rest of the score amounts
+        if (score == scoreType.FAILED)
+        {
+            gameScore += 0;
+        }
     }
 
     #region HELPER FUNCTIONS ==============================================================

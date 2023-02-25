@@ -146,6 +146,11 @@ public class Customer: MonoBehaviour
     {
         int correctPlacementCount = 0;
 
+
+
+
+
+
         // iterate through taco and check order placement
         for (int i = 0; i < taco.ingredients.Count; i++)
         {
