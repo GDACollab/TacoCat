@@ -30,8 +30,7 @@ public class TacoMakingGameManager : MonoBehaviour
 
     [Header("Score")]
     public int gameScore = 0; // max score is 3 * numOfCustomers served
-    public int gasAmount = 0;
-    public int nitroCount = 0;
+    public float gasAmount = 0;
 
     public void Start()
     {
@@ -50,7 +49,6 @@ public class TacoMakingGameManager : MonoBehaviour
 
     public void CreateNewSubmissionTaco()
     {
-
         if (submissionTaco != null) { Destroy(submissionTaco.gameObject); }
 
         // create init submission taco
@@ -89,8 +87,6 @@ public class TacoMakingGameManager : MonoBehaviour
         customerManager.RemoveCurrentCustomer();
     }
 
-
-
     // Parameter: score from completed Taco
     // Updates gameScore, perfectCounter and comboCounter as necessary
     public void NewTacoScore(scoreType score)
@@ -124,6 +120,14 @@ public class TacoMakingGameManager : MonoBehaviour
             gameScore += 0;
         }
     }
+
+
+    // << SET GAS AMOUNT FROM CURRENT SCORE >>
+    public void SetGasAmount()
+    {
+        // gas amount == correct tacos / max game score (( need to create new variables ))
+    }
+
 
     #region HELPER FUNCTIONS ==============================================================
 
