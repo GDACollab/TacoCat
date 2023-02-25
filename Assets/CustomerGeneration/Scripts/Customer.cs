@@ -7,6 +7,8 @@ public class Customer: MonoBehaviour
     CustomerManager customerManager;
     TacoMakingGameManager tacoGameManager;
 
+    public Taco submittedTaco;
+
     [Header("Order UI")]
     public OrderBubble orderUI;
 

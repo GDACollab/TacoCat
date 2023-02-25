@@ -35,10 +35,7 @@ public class TacoMakingGameManager : MonoBehaviour
     {
         benchManager = GetComponentInChildren<IngredientBenchManager>();
 
-        // create init submission taco
-        GameObject taco = Instantiate(tacoPrefab, GetComponentInChildren<IngredientBenchManager>().tacoSpawnPoint.position, Quaternion.identity);
-        submissionTaco = taco.GetComponent<Taco>();
-        taco.transform.parent = transform;
+        CreateNewSubmissionTaco();
 
         customersLeftToGenerate = totalCustomers;
     }
@@ -50,13 +47,26 @@ public class TacoMakingGameManager : MonoBehaviour
         //TEMP, for testing customer rotation
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            //Doesn't remove the current customer if it is currently sliding in/out of frame
-            if (true)
-            {
-                customerManager.RemoveCurrentCustomer();
-            }            
+            scoreType score = customerManager.currCustomerObject.GetComponent<Customer>().ScoreTaco(submissionTaco);
+
+            Debug.Log("Submitted Taco! Customer Score " + score);
+
+            CreateNewSubmissionTaco();
+            customerManager.RemoveCurrentCustomer();          
         }
     }
+
+    public void CreateNewSubmissionTaco()
+    {
+
+        if (submissionTaco != null) { Destroy(submissionTaco.gameObject); }
+
+        // create init submission taco
+        GameObject taco = Instantiate(tacoPrefab, GetComponentInChildren<IngredientBenchManager>().tacoSpawnPoint.position, Quaternion.identity);
+        submissionTaco = taco.GetComponent<Taco>();
+        taco.transform.parent = transform;
+    }
+
 
     // continue through remaining customers
     public void CustomerRotation()

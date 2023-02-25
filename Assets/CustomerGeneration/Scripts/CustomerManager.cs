@@ -7,7 +7,7 @@ public class CustomerManager : MonoBehaviour
     [HideInInspector]
     public TacoMakingGameManager tacoGameManager;
     public GameObject customerPrefab;
-    public GameObject currCustomer;
+    public GameObject currCustomerObject;
 
     public Transform startPos, thirdLinePos, secondLinePos, firstLinePos, orderingPos, endPos; //Used as the points the customer transitions to/from
     [HideInInspector] public bool movingIn, movingOut; //Used for keeping track of if the current customer is transitioning in or out
@@ -81,18 +81,19 @@ public class CustomerManager : MonoBehaviour
         customerList.Add(newCustomer);
         UpdateCustomers();
 
-        return currCustomer;
+        return newCustomer;
     }
 
     //Member used to remove the current customer
     public void RemoveCurrentCustomer()
     {
         //If there is a current customer, then starts its transition out of frame
-        if (currCustomer != null)
+        if (currCustomerObject != null)
         {
             movingOut = true;
             currTransitionTime = 0;
-            Destroy(currCustomer);
+
+            Destroy(currCustomerObject);
         }
     }
 
@@ -100,9 +101,9 @@ public class CustomerManager : MonoBehaviour
     private void UpdateCustomers()
     {
         //If there is no current customer, moves the customer first in line into currCustomer
-        if (currCustomer == null && customerList.Count > 0)
+        if (currCustomerObject == null && customerList.Count > 0)
         {
-            currCustomer = customerList[0];
+            currCustomerObject = customerList[0];
             customerList.RemoveAt(0);
             currTransitionTime = 0;
             movingIn = true;
@@ -121,9 +122,9 @@ public class CustomerManager : MonoBehaviour
         {
             customerList[0].transform.position = firstLinePos.position;
         }
-        if (currCustomer != null)
+        if (currCustomerObject != null)
         {
-            currCustomer.transform.position = orderingPos.position;
+            currCustomerObject.transform.position = orderingPos.position;
         }
 
     }
