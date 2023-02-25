@@ -21,9 +21,12 @@ public class TacoMakingGameManager : MonoBehaviour
 
     [Header("Customers")]
     public Customer currCustomer;
+    public CustomerManager customerManager;
     public int perfectCounter; //counts the number of perfect tacos in a row, resets when a !perfect taco is submitted
     public int comboCounter;   //counts the number for 3 combos in total throughout the whole minigame
+    public int totalCustomers; //Total number of customers that will appear
     public int customersLeftToGenerate; //the number of customers left to generate in the scene
+    public int lineSize;
 
     [Header("Score")]
     public int gameScore = 0; // max score is 3 * numOfCustomers served
@@ -36,19 +39,39 @@ public class TacoMakingGameManager : MonoBehaviour
         GameObject taco = Instantiate(tacoPrefab, GetComponentInChildren<IngredientBenchManager>().tacoSpawnPoint.position, Quaternion.identity);
         submissionTaco = taco.GetComponent<Taco>();
         taco.transform.parent = transform;
+
+        customersLeftToGenerate = totalCustomers;
     }
 
     public void Update()
     {
-        CustomerRotation();
+        CustomerRotation();     
+
+        //TEMP, for testing customer rotation
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            //Doesn't remove the current customer if it is currently sliding in/out of frame
+            if (true)
+            {
+                customerManager.RemoveCurrentCustomer();
+            }            
+        }
     }
 
     // continue through remaining customers
     public void CustomerRotation()
     {
         // if curr customer is null, and more customers remaining
-            // create a new cutsomer from customer manager
-            // store new customer in curr cutsomer
+        // create a new cutsomer from customer manager
+        // store new customer in curr cutsomer
+
+        //Calls to create a new customer as long as there are more customers to generate up to max number of customers in line at once
+        if (customersLeftToGenerate > 0 && customerManager.customerList.Count < lineSize)
+        {
+            customersLeftToGenerate--;
+            //The ID passed in for each customer starts at 1 and counts up to totalCustomers
+            currCustomer = customerManager.CreateNewCustomer(totalCustomers - customersLeftToGenerate).GetComponent<Customer>();
+        }    
     }
 
     // submit taco to customer to be graded
