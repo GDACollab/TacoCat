@@ -14,6 +14,12 @@ public class Customer: MonoBehaviour
 
     public List<ingredientType> order; //ingredients in the order
 
+    [HideInInspector] public Vector3 prevPos;
+    [HideInInspector] public Vector3 targetPos;
+    [HideInInspector] public float interpolater;
+    [HideInInspector] public float transitionTime;     //How long it takes in seconds for the customer to move between positions
+    [HideInInspector] public float currTransitionTime; //Used for keeping track of time during transitions
+
     private void Awake()
     {
         tacoGameManager = GetComponentInParent<TacoMakingGameManager>();
@@ -28,6 +34,12 @@ public class Customer: MonoBehaviour
         order = CreateCustomerOrder(1, 5);
 
         PlaceOrder(order);
+    }
+
+    private void LateUpdate()
+    {
+        //Update customers position every frame
+        MoveCustomer();
     }
 
     public List<ingredientType> CreateCustomerOrder(int minOrderLength, int maxOrderLength) 
@@ -159,6 +171,19 @@ public class Customer: MonoBehaviour
         }
 
         return correctPlacementCount;
+    }
+
+    //Moves the customer from their previous position to their new position in line
+    public void MoveCustomer()
+    {
+        //Stops moving customer once they are at their new position
+        if (interpolater < 1)
+        {
+            interpolater = currTransitionTime / transitionTime;
+            interpolater = 1 - Mathf.Cos(interpolater * Mathf.PI * 0.5f);
+            transform.position = Vector3.Lerp(prevPos, targetPos, interpolater);
+            currTransitionTime += Time.deltaTime;
+        }
     }
 
 

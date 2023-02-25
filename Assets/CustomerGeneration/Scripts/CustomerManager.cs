@@ -7,93 +7,53 @@ public class CustomerManager : MonoBehaviour
     [HideInInspector]
     public TacoMakingGameManager tacoGameManager;
     public GameObject customerPrefab;
-    public GameObject currCustomerObject;
+    public Customer currCustomer;
 
     public Transform startPos, thirdLinePos, secondLinePos, firstLinePos, orderingPos, endPos; //Used as the points the customer transitions to/from
-    [HideInInspector] public bool movingIn, movingOut; //Used for keeping track of if the current customer is transitioning in or out
     public float transitionTime;       //How long it takes in seconds for the customer to transition in/out of frame
-    private float currTransitionTime;  //Used for keeping track of time during transitions
-    public List<GameObject> customerList = new List<GameObject>();
+    public List<Customer> customerList = new List<Customer>();
 
 
     //before calling check if customers left to generate == 0
     private void Start()
     {
         tacoGameManager = GetComponentInParent<TacoMakingGameManager>();
-        movingIn  = false;
-        movingOut = false;
         //DebugSpawnCustomers(10);
     }
 
     private void FixedUpdate()
     {
-        UpdateCustomers();
-        /*
-
-        //Moves the customer into frame
-        if (movingIn)
+        //Updates the customer positions when the current customer gets removed
+        if (currCustomer == null && customerList.Count > 0)
         {
-            if (currTransitionTime >= transitionTime)
-            {
-                movingIn = false;
-            }
-            else
-            {
-                //Uses Sin to have the Lerp slow down near the end
-                float interpolater = currTransitionTime / transitionTime;
-                interpolater = Mathf.Sin(interpolater * Mathf.PI * 0.5f);
-
-                currCustomer.transform.position = Vector3.Lerp(startPos.position, orderingPos.position, interpolater);
-                currTransitionTime += Time.deltaTime;
-                
-            }           
+            UpdateCustomers();
         }
-        
-
-        //Moves the customer out of frame and then destroys them
-        if (movingOut)
-        {
-            if (currTransitionTime >= transitionTime)
-            {                
-                movingOut = false;
-                Destroy(currCustomer);
-            }
-            else
-            {
-                //Uses Cos to have the Lerp start slow in  the beginning
-                float interpolater = currTransitionTime / transitionTime;
-                interpolater = 1 - Mathf.Cos(interpolater * Mathf.PI * 0.5f);
-
-                currCustomer.transform.position = Vector3.Lerp(orderingPos.position, endPos.position, interpolater);
-                currTransitionTime += Time.deltaTime;
-            }           
-        }
-        */
-
     }
 
     public GameObject CreateNewCustomer(int customer_number)
     {
-        //member that generates a customer
+       //Creates a new customer and sets all of its vars
 
-        GameObject newCustomer = Instantiate(customerPrefab, transform);
-        newCustomer.transform.position = startPos.position;
-        customerList.Add(newCustomer);
+        Customer customerScript   = Instantiate(customerPrefab, transform).GetComponent<Customer>();
+        customerScript.prevPos    = startPos.position;
+        customerScript.targetPos  = startPos.position;
+        customerScript.transform.position = startPos.position;
+        customerScript.transitionTime = transitionTime;
+        customerList.Add(customerScript);
         UpdateCustomers();
 
-        return newCustomer;
+        return currCustomer.gameObject;
     }
 
     //Member used to remove the current customer
     public void RemoveCurrentCustomer()
     {
         //If there is a current customer, then starts its transition out of frame
-        if (currCustomerObject != null)
+        if (currCustomer != null)
         {
-            movingOut = true;
-            currTransitionTime = 0;
-
-            Destroy(currCustomerObject);
+            UpdateCustomerPos(currCustomer, endPos.position);           
+            Destroy(currCustomer, transitionTime);
+            currCustomer = null;
         }
     }
 
@@ -101,32 +61,38 @@ public class CustomerManager : MonoBehaviour
     private void UpdateCustomers()
     {
         //If there is no current customer, moves the customer first in line into currCustomer
-        if (currCustomerObject == null && customerList.Count > 0)
+        if (currCustomer == null && customerList.Count > 0)
         {
-            currCustomerObject = customerList[0];
+            currCustomer = customerList[0];
             customerList.RemoveAt(0);
-            currTransitionTime = 0;
-            movingIn = true;
-        }
-        customerList.TrimExcess();
-
-        if (customerList.Count == 3)
-        {
-            customerList[2].transform.position = thirdLinePos.position;
-        }
-        if (customerList.Count == 2)
-        {
-            customerList[1].transform.position = secondLinePos.position;
-        }
-        if (customerList.Count == 1)
-        {
-            customerList[0].transform.position = firstLinePos.position;
-        }
-        if (currCustomerObject != null)
-        {
-            currCustomerObject.transform.position = orderingPos.position;
         }
 
+        //Update all the customers positions in the line
+        if (customerList.Count >= 3)
+        {
+            UpdateCustomerPos(customerList[2], thirdLinePos.position);
+        }
+        if (customerList.Count >= 2)
+        {
+            UpdateCustomerPos(customerList[1], secondLinePos.position);
+        }
+        if (customerList.Count >= 1)
+        {
+            UpdateCustomerPos(customerList[0], firstLinePos.position);
+        }
+        if (currCustomer != null)
+        {
+            UpdateCustomerPos(currCustomer, orderingPos.position);
+        }
+    }
+
+    //Helper function for setting the vars for transitioning to a new spot in line
+    private void UpdateCustomerPos(Customer customer, Vector3 newPosition)
+    {
+        customer.prevPos = customer.transform.position;
+        customer.targetPos = newPosition;
+        customer.interpolater = 0;
+        customer.currTransitionTime = 0;
     }
 
     // spawn a bunch of customers at once to debug order generation
