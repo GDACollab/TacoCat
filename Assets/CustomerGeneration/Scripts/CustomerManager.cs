@@ -8,9 +8,9 @@ public class CustomerManager : MonoBehaviour
     public TacoMakingGameManager tacoGameManager;
     public GameObject customerPrefab;
     public Customer currCustomer;
-
-    public Transform startPos, thirdLinePos, secondLinePos, firstLinePos, orderingPos, endPos; //Used as the points the customer transitions to/from
-    public float transitionTime;       //How long it takes in seconds for the customer to transition in/out of frame
+  
+    public float transitionTime;       //How long it takes in seconds for the customer to transition between positions
+    public List<Transform> positionList = new List<Transform>(); //Used as the points the customer transitions to/from 
     public List<Customer> customerList = new List<Customer>();
 
 
@@ -35,10 +35,11 @@ public class CustomerManager : MonoBehaviour
        //Creates a new customer and sets all of its vars
 
         Customer customerScript   = Instantiate(customerPrefab, transform).GetComponent<Customer>();
-        customerScript.prevPos    = startPos.position;
-        customerScript.targetPos  = startPos.position;
-        customerScript.transform.position = startPos.position;
+        customerScript.prevPos    = positionList[5].position;
+        customerScript.targetPos  = positionList[5].position;
+        customerScript.transform.position = positionList[5].position;
         customerScript.transitionTime = transitionTime;
+        customerScript.currPosition = -1;
         customerList.Add(customerScript);
         UpdateCustomers();
 
@@ -51,8 +52,10 @@ public class CustomerManager : MonoBehaviour
         //If there is a current customer, then starts its transition out of frame
         if (currCustomer != null)
         {
-            UpdateCustomerPos(currCustomer, endPos.position);           
-            Destroy(currCustomer, transitionTime);
+            //Delays the destruction of the customer so that they have time to move offscreen
+            UpdateCustomerPos(currCustomer, positionList[0].position);
+            Destroy(currCustomer.gameObject, transitionTime);
+            customerList.RemoveAt(0);          
             currCustomer = null;
         }
     }
@@ -60,29 +63,18 @@ public class CustomerManager : MonoBehaviour
     //Member to update the positions of all the customers in line
     private void UpdateCustomers()
     {
-        //If there is no current customer, moves the customer first in line into currCustomer
         if (currCustomer == null && customerList.Count > 0)
         {
             currCustomer = customerList[0];
-            customerList.RemoveAt(0);
         }
 
-        //Update all the customers positions in the line
-        if (customerList.Count >= 3)
+        for (int i = 0; i < customerList.Count; i++)
         {
-            UpdateCustomerPos(customerList[2], thirdLinePos.position);
-        }
-        if (customerList.Count >= 2)
-        {
-            UpdateCustomerPos(customerList[1], secondLinePos.position);
-        }
-        if (customerList.Count >= 1)
-        {
-            UpdateCustomerPos(customerList[0], firstLinePos.position);
-        }
-        if (currCustomer != null)
-        {
-            UpdateCustomerPos(currCustomer, orderingPos.position);
+            if (customerList[i].currPosition != i)
+            {
+                customerList[i].currPosition = i;
+                UpdateCustomerPos(customerList[i], positionList[i + 1].position);
+            }
         }
     }
 

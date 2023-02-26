@@ -19,6 +19,7 @@ public class Customer: MonoBehaviour
     [HideInInspector] public float interpolater;
     [HideInInspector] public float transitionTime;     //How long it takes in seconds for the customer to move between positions
     [HideInInspector] public float currTransitionTime; //Used for keeping track of time during transitions
+    [HideInInspector] public int currPosition;
 
     private void Awake()
     {
@@ -28,7 +29,6 @@ public class Customer: MonoBehaviour
 
     void Start()
     {
-
         orderUI.gameObject.SetActive(false);
 
         order = CreateCustomerOrder(1, 5);
@@ -177,10 +177,11 @@ public class Customer: MonoBehaviour
     public void MoveCustomer()
     {
         //Stops moving customer once they are at their new position
-        if (interpolater < 1)
+        if (currTransitionTime < transitionTime)
         {
+            //Math to make the transition ease in and out
             interpolater = currTransitionTime / transitionTime;
-            interpolater = 1 - Mathf.Cos(interpolater * Mathf.PI * 0.5f);
+            interpolater = interpolater * interpolater * (3f - 2f * interpolater);
             transform.position = Vector3.Lerp(prevPos, targetPos, interpolater);
             currTransitionTime += Time.deltaTime;
         }
