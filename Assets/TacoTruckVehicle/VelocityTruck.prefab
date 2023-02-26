@@ -144,9 +144,9 @@ MonoBehaviour:
   boostPressed: 0
   startingVelocity: {x: 0, y: 0}
   inAirForce: {x: 30, y: -300}
-  groundedForce: {x: 60, y: 30}
-  rotationSpeed: 300
-  boostForce: {x: 0, y: 0}
+  groundedForce: {x: 100, y: 30}
+  rotationSpeed: 750
+  boostForce: {x: 100, y: 10}
   gas: 32
   boost: 99
   rotateRight: 97
