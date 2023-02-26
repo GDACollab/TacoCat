@@ -75,13 +75,14 @@ public class TacoUIManager : MonoBehaviour
     
     public void DisplayScore(scoreType score){
         clearDisplayScore();
+        float starSpacing = 1.2f;
         // Display 3 stars and "Perfect Taco!" text
         if(score == scoreType.PERFECT){
             scoreText.text = "Perfect Taco!";
             List<Image> starImg = new List<Image>(5);
             starImg.Add(Instantiate(star, starPosition.position, transform.rotation));
-            starImg.Add(Instantiate(star, new Vector3(starPosition.position.x+star.rectTransform.lossyScale.x*1.4f, starPosition.position.y, starPosition.position.z), transform.rotation));
-            starImg.Add(Instantiate(star, new Vector3(starPosition.position.x-star.rectTransform.lossyScale.x*1.4f, starPosition.position.y, starPosition.position.z), transform.rotation));
+            starImg.Add(Instantiate(star, new Vector3(starPosition.position.x+star.rectTransform.lossyScale.x*starSpacing, starPosition.position.y, starPosition.position.z), transform.rotation));
+            starImg.Add(Instantiate(star, new Vector3(starPosition.position.x-star.rectTransform.lossyScale.x*starSpacing, starPosition.position.y, starPosition.position.z), transform.rotation));
             foreach(Image img in starImg){
                 img.rectTransform.SetParent(starPosition);
                 img.transform.localScale = Vector3.one*starScale;
@@ -92,8 +93,8 @@ public class TacoUIManager : MonoBehaviour
         else if(score == scoreType.GOOD){
             scoreText.text = "Good Taco!";
             List<Image> starImg = new List<Image>(5);
-            starImg.Add(Instantiate(star, new Vector3(starPosition.position.x+star.rectTransform.lossyScale.x*1.4f/2, starPosition.position.y, starPosition.position.z), transform.rotation));
-            starImg.Add(Instantiate(star, new Vector3(starPosition.position.x-star.rectTransform.lossyScale.x*1.4f/2, starPosition.position.y, starPosition.position.z), transform.rotation));
+            starImg.Add(Instantiate(star, new Vector3(starPosition.position.x+star.rectTransform.lossyScale.x*starSpacing/2, starPosition.position.y, starPosition.position.z), transform.rotation));
+            starImg.Add(Instantiate(star, new Vector3(starPosition.position.x-star.rectTransform.lossyScale.x*starSpacing/2, starPosition.position.y, starPosition.position.z), transform.rotation));
             foreach(Image img in starImg){
                 img.rectTransform.SetParent(starPosition);
                 img.transform.localScale = Vector3.one*starScale;
@@ -113,8 +114,8 @@ public class TacoUIManager : MonoBehaviour
             scoreText.text = "Failed Taco...";
             List<Image> starImg = new List<Image>(5);
             starImg.Add(Instantiate(star, starPosition.position, transform.rotation));
-            starImg.Add(Instantiate(star, new Vector3(starPosition.position.x+star.rectTransform.lossyScale.x*1.4f, starPosition.position.y, starPosition.position.z), transform.rotation));
-            starImg.Add(Instantiate(star, new Vector3(starPosition.position.x-star.rectTransform.lossyScale.x*1.4f, starPosition.position.y, starPosition.position.z), transform.rotation));
+            starImg.Add(Instantiate(star, new Vector3(starPosition.position.x+star.rectTransform.lossyScale.x*starSpacing, starPosition.position.y, starPosition.position.z), transform.rotation));
+            starImg.Add(Instantiate(star, new Vector3(starPosition.position.x-star.rectTransform.lossyScale.x*starSpacing, starPosition.position.y, starPosition.position.z), transform.rotation));
             foreach(Image img in starImg){
                 img.rectTransform.SetParent(starPosition);
                 img.transform.localScale = Vector3.one*starScale;
