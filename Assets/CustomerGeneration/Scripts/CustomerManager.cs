@@ -33,10 +33,7 @@ public class CustomerManager : MonoBehaviour
     public GameObject CreateNewCustomer(int customer_number)
     {
        //Creates a new customer and sets all of its vars
-
         Customer customerScript   = Instantiate(customerPrefab, transform).GetComponent<Customer>();
-        customerScript.prevPos    = positionList[5].position;
-        customerScript.targetPos  = positionList[5].position;
         customerScript.transform.position = positionList[5].position;
         customerScript.transitionTime = transitionTime;
         customerScript.currPosition = -1;
@@ -63,13 +60,16 @@ public class CustomerManager : MonoBehaviour
     //Member to update the positions of all the customers in line
     private void UpdateCustomers()
     {
+        //Sets a new current customer if the current one gets removed
         if (currCustomer == null && customerList.Count > 0)
         {
             currCustomer = customerList[0];
         }
 
+        //Iterates through all the customers and checks if their position needs to be updates
         for (int i = 0; i < customerList.Count; i++)
         {
+            //Checks if the current stored position of the customer is different from what it should be
             if (customerList[i].currPosition != i)
             {
                 customerList[i].currPosition = i;
