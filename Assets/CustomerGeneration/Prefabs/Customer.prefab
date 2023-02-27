@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 4784761311512434799}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2859851384726279933}
@@ -98,9 +98,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf7694643ee790241b262796cb7dc214, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tacoGameManager: {fileID: 0}
+  submittedTaco: {fileID: 0}
   orderUI: {fileID: 8441591478171991896}
-  s_order: 000000000100000002000000
+  order: 
+  prevPos: {x: 0, y: 0, z: 0}
+  targetPos: {x: 0, y: 0, z: 0}
+  interpolater: 0
+  transitionTime: 0
+  currTransitionTime: 0
+  currPosition: 0
 --- !u!1001 &4969516153737546221
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -130,23 +136,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7153826386096119568, guid: 5e3c1cfbd1189194b8bfe03e5d680cf7, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 7153826386096119568, guid: 5e3c1cfbd1189194b8bfe03e5d680cf7, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 7153826386096119568, guid: 5e3c1cfbd1189194b8bfe03e5d680cf7, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 7153826386096119568, guid: 5e3c1cfbd1189194b8bfe03e5d680cf7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.682
+      value: 0.273
       objectReference: {fileID: 0}
     - target: {fileID: 7153826386096119568, guid: 5e3c1cfbd1189194b8bfe03e5d680cf7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.905
+      value: 0.328
       objectReference: {fileID: 0}
     - target: {fileID: 7153826386096119568, guid: 5e3c1cfbd1189194b8bfe03e5d680cf7, type: 3}
       propertyPath: m_LocalPosition.z
