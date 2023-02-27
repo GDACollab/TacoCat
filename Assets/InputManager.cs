@@ -10,6 +10,8 @@ public class InputManager : MonoBehaviour
     public KeyCode bin1 = KeyCode.A;
     public KeyCode bin2 = KeyCode.S;
     public KeyCode bin3 = KeyCode.D;
+    public KeyCode bin4 = KeyCode.F;
+    public KeyCode bin5 = KeyCode.G;
     public KeyCode submit = KeyCode.Space;
 
     // Start is called before the first frame update
@@ -32,6 +34,14 @@ public class InputManager : MonoBehaviour
         else if (Input.GetKeyDown(bin3))
         {
             PickFromBin(2);
+        }
+        else if (Input.GetKeyDown(bin4))
+        {
+            PickFromBin(3);
+        }
+        else if (Input.GetKeyDown(bin5))
+        {
+            PickFromBin(4);
         }
         else if (Input.GetKeyDown(submit))
         {
