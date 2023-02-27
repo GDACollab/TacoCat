@@ -43,6 +43,8 @@ public class TacoUIManager : MonoBehaviour
         ingredient_pos.Add(inPos2);
         ingredient_pos.Add(inPos3);
         ingredient_pos.Add(inPos4);
+        
+        DisplayFuel(0, 100, 0);
     }
 
     // Update is called once per frame
