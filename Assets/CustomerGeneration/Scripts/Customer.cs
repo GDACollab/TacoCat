@@ -158,16 +158,21 @@ public class Customer: MonoBehaviour
     {
         int correctPlacementCount = 0;
 
-
-
-
-
+        if (taco.ingredients.Count > order.Count) { Debug.Log("Submitted More Ingredients than order"); }
 
         // iterate through taco and check order placement
-        for (int i = 0; i < taco.ingredients.Count; i++)
+        for (int i = 0; i < order.Count; i++)
         {
-            // if taco ingredient is in the same index of customer order, add to count
-            if (taco.ingredients[i] == order[i]) { correctPlacementCount++; }
+            // if taco ingredient is valid
+            if (i < taco.ingredients.Count)
+            {
+                // if taco ingredient is in the same index of customer order, add to count
+                if (taco.ingredients[i] == order[i]) { correctPlacementCount++; }
+            }
+            else
+            {
+                Debug.Log("Less Ingredients than order");
+            }
         }
 
         return correctPlacementCount;
