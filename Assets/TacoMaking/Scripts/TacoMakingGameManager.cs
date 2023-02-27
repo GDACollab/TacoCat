@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public enum ingredientType { FISH, SOUR_CREAM, PICO_DE_GALLO, CABBAGE, SLICED_JALAPENOS }
-public enum scoreType { PERFECT, GOOD, OKAY, FAILED } // possible scores a taco can get.
+public enum ingredientType { NONE, FISH, SOUR_CREAM, PICO_DE_GALLO, CABBAGE, SLICED_JALAPENOS }
+public enum scoreType { NONE, PERFECT, GOOD, OKAY, FAILED } // possible scores a taco can get.
 
 public class TacoMakingGameManager : MonoBehaviour
 {
+    public TacoUIManager uiManager;
     [HideInInspector]
     public IngredientBenchManager benchManager;
     
@@ -94,6 +95,8 @@ public class TacoMakingGameManager : MonoBehaviour
     // Updates gameScore, perfectCounter and comboCounter as necessary
     public void NewTacoScore(scoreType score)
     {
+        uiManager.DisplayScore(score);
+
         if (score == scoreType.PERFECT)
         {
             gameScore += 3;

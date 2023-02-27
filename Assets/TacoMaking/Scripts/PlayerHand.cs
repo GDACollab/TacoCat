@@ -72,6 +72,7 @@ public class PlayerHand : MonoBehaviour
             //             Lerp interpolates between point a^ and point b^ at a set speed^
             //                                                                 Time.delta time is based on frame rate
         }
+        else { target = handHome.transform; }
 
         // << RUN STATE MACHINE >>
         StateMachine();
@@ -142,6 +143,8 @@ public class PlayerHand : MonoBehaviour
     //(Checking if they're actually equal will return false because lerp's speed decreases over distance)
     public bool TransformProximity()
     {
+        if (target == null) { target = handHome.transform; return false; }
+
         return (((target.position.x - approximateProximity.x <= transform.position.x) && (transform.position.x <= target.position.x + approximateProximity.x)) && 
             ((target.position.y - approximateProximity.y <= transform.position.y) && (transform.position.y <= target.position.y + approximateProximity.y)));
     }

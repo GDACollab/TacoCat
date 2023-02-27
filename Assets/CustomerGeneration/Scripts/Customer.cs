@@ -33,7 +33,7 @@ public class Customer: MonoBehaviour
 
         order = CreateCustomerOrder(1, 5);
 
-        PlaceOrder(order);
+        // ShowBubbleOrder(order);
     }
 
     private void LateUpdate()
@@ -63,7 +63,7 @@ public class Customer: MonoBehaviour
 
 
     // << SPAWN ORDER UI BOX >>
-    public GameObject PlaceOrder(List<ingredientType> order)
+    public GameObject ShowBubbleOrder(List<ingredientType> order)
     {
         orderUI.gameObject.SetActive(true);
 
@@ -81,12 +81,14 @@ public class Customer: MonoBehaviour
         int numSameIngredients = compareIngredients(tacoToScore);
         int correctPlacementCount = compareIngredientOrder(tacoToScore);
 
+        if (tacoToScore.ingredients.Count == 0) { return scoreType.FAILED; }
+
+
         // << PERFECT >> ingredients are the same and order is perfect
         if (numSameIngredients == order.Count && correctPlacementCount == order.Count)
         {
             return scoreType.PERFECT; //perfect score 
         }
-
         // << GOOD >> ingredients are the same, but order is wrong
         else if (numSameIngredients == order.Count && correctPlacementCount != order.Count)
         {

@@ -6,18 +6,18 @@ using TMPro;
 
 public class TacoUIManager : MonoBehaviour
 {
+    public TacoMakingGameManager tacoGameManager;
+
     [Header("Score UI")]
     public Image star;
     public float starScale = 1;
     public Transform starPosition;
     public TMP_Text scoreText;
-    [Header("Test the score. 0: Failed, 1: Okay, 2: Good, 3: Perfect.")]
-    public int testScore = 3;
     
     [Header("Order Window UI")]
-    public TacoMakingGameManager tacoGameManager;
     public float ingredientScale = 0.1f;
-    public Transform inPos1, inPos2, inPos3, inPos4;
+    public float ingredientSpacing = 2f;
+    public Transform ingredientPointParent;
     [Header("Test Order Window UI")]
     public List<ingredientType> testIngredients = new List<ingredientType>(4);
     
@@ -30,49 +30,38 @@ public class TacoUIManager : MonoBehaviour
     public int numNitroCharges = 0;
     
     
-    private List<Image> starTracker = new List<Image>();
-    private List<Transform> ingredient_pos;
+    public List<Image> starTracker = new List<Image>();
     private List<GameObject> orderIngredientObjects = new List<GameObject>();
     
     // Start is called before the first frame update
     void Start()
-    {
-        ingredient_pos = new List<Transform>(5);
-        
-        ingredient_pos.Add(inPos1);
-        ingredient_pos.Add(inPos2);
-        ingredient_pos.Add(inPos3);
-        ingredient_pos.Add(inPos4);
-        
+    {   
         DisplayFuel(0, 100, 0);
+
+        DisplayScore(scoreType.FAILED);
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        // REMOVE ALL CODE IN HERE BEFORE IMPLEMENTATION
-        switch(testScore){
-            case 0:
-                DisplayScore(scoreType.FAILED);
-                break;
-            case 1:
-                DisplayScore(scoreType.OKAY);
-                break;
-            case 2: 
-                DisplayScore(scoreType.GOOD);
-                break;
-            case 3: 
-                DisplayScore(scoreType.PERFECT);
-                break;
+        // Score gets updated in Game Manager
+
+        // Update Order
+        if (tacoGameManager.currCustomer != null)
+        {
+            DisplayOrder(tacoGameManager.currCustomer.order, ingredientSpacing);
         }
-        
-        DisplayOrder(testIngredients);
+
+        // Update Gas Amount
         DisplayFuel(fuelAmount, maxFuelAmount, numNitroCharges);
     }
     
     // Call this function to display the score. Takes in the score.
     public void DisplayScore(scoreType score){
-        clearDisplayScore();
+
+        ClearDisplayScore();
+
         float starSpacing = 1.2f;
         // Display 3 stars and "Perfect Taco!" text
         if(score == scoreType.PERFECT){
@@ -124,29 +113,40 @@ public class TacoUIManager : MonoBehaviour
     }
     
     // Clears the displayed score
-    public void clearDisplayScore(){
+    public void ClearDisplayScore(){
         if(starTracker.Count>0){
             foreach(Image img in starTracker){
-                Destroy(img);
+                Destroy(img.gameObject);
             }
+
+            starTracker.Clear();
         }
     }
     
     // Call this to display the order. Takes in the order as a list of ingredients. 
-    public void DisplayOrder(List<ingredientType> order){
+    public void DisplayOrder(List<ingredientType> order, float spacing)
+    {
         ClearDisplayOrder();
-        
-        for (int i = 0; i < order.Count; i++){
+
+        // Calculate the starting y position
+        float startY = ingredientPointParent.position.y - ((order.Count - 1) * spacing) / 2;
+
+        // Spawn each object at the appropriate position
+        for (int i = 0; i < order.Count; i++)
+        {
+            Vector3 position = new Vector3(ingredientPointParent.position.x, startY + i * spacing, ingredientPointParent.position.z);
+
             GameObject ingredient = tacoGameManager.GetIngredientObject(order[i]);
 
-            GameObject newIngredient = Instantiate(ingredient, ingredient_pos[i].position, Quaternion.identity);
-            newIngredient.transform.parent = ingredient_pos[i];
+            GameObject newIngredient = Instantiate(ingredient, position, Quaternion.identity);
+            newIngredient.transform.parent = ingredientPointParent;
             newIngredient.transform.localScale = Vector3.one * ingredientScale;
+
 
             orderIngredientObjects.Add(newIngredient);
         }
     }
-    
+
     // Clears the displayed order
     public void ClearDisplayOrder(){
         if(orderIngredientObjects.Count>=0){
