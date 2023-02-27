@@ -15,9 +15,9 @@ public class TacoUIManager : MonoBehaviour
     public int testScore = 3;
     
     [Header("Order Window UI")]
+    public TacoMakingGameManager tacoGameManager;
     public float ingredientScale = 0.1f;
-    public Transform tacoPos, inPos1, inPos2, inPos3, inPos4;
-    public GameObject tacoShell;
+    public Transform inPos1, inPos2, inPos3, inPos4;
     [Header("Test Order Window UI")]
     public List<ingredientType> testIngredients = new List<ingredientType>(4);
     
@@ -29,7 +29,6 @@ public class TacoUIManager : MonoBehaviour
     public float maxFuelAmount = 100;
     public int numNitroCharges = 0;
     
-    TacoMakingGameManager tacoGameManager;
     
     private List<Image> starTracker = new List<Image>();
     private List<Transform> ingredient_pos;
@@ -38,21 +37,18 @@ public class TacoUIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        tacoGameManager = GetComponentInParent<TacoMakingGameManager>();
-        
         ingredient_pos = new List<Transform>(5);
         
         ingredient_pos.Add(inPos1);
         ingredient_pos.Add(inPos2);
         ingredient_pos.Add(inPos3);
         ingredient_pos.Add(inPos4);
-        
-        
     }
 
     // Update is called once per frame
     void Update()
     {
+        // REMOVE ALL CODE IN HERE BEFORE IMPLEMENTATION
         switch(testScore){
             case 0:
                 DisplayScore(scoreType.FAILED);
@@ -69,10 +65,10 @@ public class TacoUIManager : MonoBehaviour
         }
         
         DisplayOrder(testIngredients);
-        
         DisplayFuel(fuelAmount, maxFuelAmount, numNitroCharges);
     }
     
+    // Call this function to display the score. Takes in the score.
     public void DisplayScore(scoreType score){
         clearDisplayScore();
         float starSpacing = 1.2f;
@@ -125,6 +121,7 @@ public class TacoUIManager : MonoBehaviour
         }
     }
     
+    // Clears the displayed score
     public void clearDisplayScore(){
         if(starTracker.Count>0){
             foreach(Image img in starTracker){
@@ -133,12 +130,9 @@ public class TacoUIManager : MonoBehaviour
         }
     }
     
+    // Call this to display the order. Takes in the order as a list of ingredients. 
     public void DisplayOrder(List<ingredientType> order){
         ClearDisplayOrder();
-        GameObject newTacoShell = Instantiate(tacoShell, tacoPos.position, Quaternion.identity);
-        newTacoShell.transform.parent = tacoPos;
-        // newTacoShell.transform.localScale = new Vector3(2f, 1.5f, 1f);
-        orderIngredientObjects.Add(newTacoShell);
         
         for (int i = 0; i < order.Count; i++){
             GameObject ingredient = tacoGameManager.GetIngredientObject(order[i]);
@@ -151,6 +145,7 @@ public class TacoUIManager : MonoBehaviour
         }
     }
     
+    // Clears the displayed order
     public void ClearDisplayOrder(){
         if(orderIngredientObjects.Count>=0){
             foreach(GameObject obj in orderIngredientObjects){
@@ -160,8 +155,11 @@ public class TacoUIManager : MonoBehaviour
         orderIngredientObjects.Clear();
     }
     
+    // Call this to display the fuel and nitro amounts. 
+    // It takes in the fuel amount, the maximum amount of fuel, and the number of nitro charges
     public void DisplayFuel(float fuel, float maxFuel, int nitro){
-        fuelBar.fillAmount = Mathf.Clamp(fuel/maxFuel, 0, 1f);
+        fuelBar.fillAmount = Mathf.Clamp(fuel/maxFuel, 0, 1f); // Fill the bar according to the given fuel amount
+        // Switch between the 4 possible states of nitro charges
         switch(nitro){
             case 1:
                 nCharge1.color = Color.HSVToRGB(236f/360, 0.71f, 0.96f, true);
