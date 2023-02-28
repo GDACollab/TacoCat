@@ -81,7 +81,14 @@ public class Customer: MonoBehaviour
         int numSameIngredients = compareIngredients(tacoToScore);
         int correctPlacementCount = compareIngredientOrder(tacoToScore);
 
+
+        // [[ BASE CASES ]]
+
+        // if no ingredients in taco, fail
         if (tacoToScore.ingredients.Count == 0) { return scoreType.FAILED; }
+
+        // if more ingredients in taco than order, fail
+        if (tacoToScore.ingredients.Count > order.Count) { return scoreType.FAILED; }
 
 
         // << PERFECT >> ingredients are the same and order is perfect

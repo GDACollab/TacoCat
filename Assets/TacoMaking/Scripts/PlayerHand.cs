@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerHand : MonoBehaviour
 {
+    public enum handState { HOME, PICK_FROM_BIN, PLACE_INGR }
+
     // << MOVE HAND TOWARDS TARGET >>
     // instead of one big function that takes care of the entire movement,
     // I'm going to split the task into smaller bits...
@@ -42,13 +44,9 @@ public class PlayerHand : MonoBehaviour
     // because this hand is going to need to do specific things once it reaches its target,
     // we should use a state machine to set different "states of being"
     [Header("States")]
+    public handState state = handState.HOME;
 
-    public bool isHome = true; // State #0 -> this is when the hand is in its resting place
-
-    public bool isPickingFromBin; // State #1 -> this is when the hand is moving towards the bin, with no ingredient in hand
     public IngredientBin pickBin; // this is the bin the hand is picking from
-
-    public bool isPlacingIngredient; // State #2 -> this is when the hand is moving towards the taco, with ingredient in hand
     public Taco submissionTaco; // this is the taco the hand is submitting to
 
 
@@ -81,61 +79,33 @@ public class PlayerHand : MonoBehaviour
     // << STATE MACHINE >> runs every frame in the update function
     public void StateMachine()
     {
-        if (isPickingFromBin)
+        if (state == handState.PICK_FROM_BIN)
         {
-            // once hand position == pickBin.transform.position, 
-            // curr ingredient = bin ingredient type
-            // isPickingFromBin = false
-            // isPlacingIngredient = false
-            // isHome = true
-
-            //Unneeded code
-            //if(transform.position == target.position)
-            //{
-            //    // curr ingredient = bin ingredient type
-            //    isPickingFromBin = false;
-            //    isPlacingIngredient = true;
-            //    isHome = false;
-            //}
             if (TransformProximity())
             {
-                isPickingFromBin = false;
-                isPlacingIngredient = true;
-                isHome = false;
+                state = handState.PLACE_INGR;
             }
         }
 
-        else if (isPlacingIngredient)
+        if (state == handState.PLACE_INGR)
         {
-            // target -> submissionTaco.transform
 
-            // once hand position == taco.transform.position, 
-            // taco.AddIngredient(/*ingredient*/);
-
-            // change states and set target, just like before
-
-
-            //target = submissionTaco.transform;
             target = tacoTarget;
             if (TransformProximity())
             {
                 // taco.AddIngredient(/*ingredient*/);
                 tacoGameManager.AddIngredientToTaco(currHeldIngredient);
                 currHeldIngredient = new ingredientType();
-                isPickingFromBin = false;
-                isPlacingIngredient = false;
-                isHome = true;
+                state = handState.HOME;
             }
         }
 
-        else if (isHome)
+        if (state == handState.HOME)
         {
             // target -> home
             // all other states are not true
 
             target = handHome.transform;
-            isPickingFromBin = false;
-            isPlacingIngredient = false;
         }
     }
 
@@ -143,7 +113,7 @@ public class PlayerHand : MonoBehaviour
     //(Checking if they're actually equal will return false because lerp's speed decreases over distance)
     public bool TransformProximity()
     {
-        if (target == null) { target = handHome.transform; return false; }
+        if (target == null) { state = handState.HOME; return false; }
 
         return (((target.position.x - approximateProximity.x <= transform.position.x) && (transform.position.x <= target.position.x + approximateProximity.x)) && 
             ((target.position.y - approximateProximity.y <= transform.position.y) && (transform.position.y <= target.position.y + approximateProximity.y)));
@@ -158,13 +128,14 @@ public class PlayerHand : MonoBehaviour
     {
         // sets target to bin.transform, and tacotarget to whatever the taco location is.
         // Also sets up variables that control status
-        if (isHome == true)
+        if (state == handState.HOME)
         {
             target = bin.transform;
             tacoTarget = submissionTaco.transform;
             currHeldIngredient = bin.ingredientType;
-            isHome = false;
-            isPickingFromBin = true;
+
+            state = handState.PICK_FROM_BIN;
+
             pickBin = bin;
         }
     }
@@ -174,88 +145,10 @@ public class PlayerHand : MonoBehaviour
     public void PlaceIngredient(Taco submissionTaco)
     {
         // set proper states && current submission taco
-        if (isPickingFromBin == true && TransformProximity())
+        if (state == handState.PICK_FROM_BIN && TransformProximity())
         {
             target = submissionTaco.transform;
-            isPickingFromBin = false;
-            isPlacingIngredient = true;
-            isHome = false;
-        }
-    }
-
-
-    /* ======================================= OLD CODE ============================================ */
-
-    [Space(30)]
-    [Header("Old Code Variables")]
-    public GameObject Ingredient0;
-    public GameObject Ingredient1;
-    public GameObject Ingredient2;
-    public GameObject Taco;
-    Vector3 home = new Vector3(0, 4, 0); //I tried to make this become whatever the object's starting position is but Unity yelled at me so you need to do it manually
-    int moving = 0; //frames 12-9 moving to ingredient, 8-5 moving above taco, 4-1 returning to position
-    float xMovement = 0.0f;
-    float yMovement = 0.0f;
-
-    public void AshtonHandMovement()
-    {
-        //Only will grab new ingredient when done with current
-        if (moving <= 0)
-        {
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                //marks that it's moving, and sets how it will move
-                moving = 12;
-                xMovement = (Ingredient0.transform.position.x - transform.position.x) / 4;
-                yMovement = (Ingredient0.transform.position.y - transform.position.y) / 4;
-            }
-            else if (Input.GetKeyDown(KeyCode.S))
-            {
-                moving = 12;
-                xMovement = (Ingredient0.transform.position.x - transform.position.x) / 4;
-                yMovement = (Ingredient0.transform.position.y - transform.position.y) / 4;
-            }
-            else if (Input.GetKeyDown(KeyCode.D))
-            {
-                moving = 12;
-                xMovement = (Ingredient0.transform.position.x - transform.position.x) / 4;
-                yMovement = (Ingredient0.transform.position.y - transform.position.y) / 4;
-            }
-        }
-        if ((12 >= moving) && (moving >= 9))
-        {
-            transform.Translate(new Vector3(xMovement, yMovement, 0));
-            moving -= 1;
-            if (moving == 8)
-            {
-                xMovement = (Taco.transform.position.x - transform.position.x) / 4;
-                yMovement = (Taco.transform.position.y - transform.position.y) / 4;
-            }
-        }
-        else if ((8 >= moving) && (moving >= 5))
-        {
-            transform.Translate(new Vector3(xMovement, yMovement, 0));
-            moving -= 1;
-            if (moving == 8)
-            {
-                xMovement = (Taco.transform.position.x - transform.position.x) / 4;
-                yMovement = (Taco.transform.position.y - transform.position.y) / 4;
-            }
-        }
-        else if (moving == 4)
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                xMovement = (home.x - transform.position.x) / 4;
-                yMovement = (home.y - transform.position.y) / 4;
-                transform.Translate(new Vector3(xMovement, yMovement, 0));
-                moving -= 1;
-            }
-        }
-        else if ((0 < moving) && (moving < 4))
-        {
-            transform.Translate(new Vector3(xMovement, yMovement, 0));
-            moving -= 1;
+            state = handState.PLACE_INGR;
         }
     }
 }
