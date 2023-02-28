@@ -31,7 +31,7 @@ public class Customer: MonoBehaviour
     {
         orderUI.gameObject.SetActive(false);
 
-        order = CreateCustomerOrder(1, 5);
+        order = CreateCustomerOrder(3, 4);
 
         // ShowBubbleOrder(order);
     }
@@ -44,6 +44,8 @@ public class Customer: MonoBehaviour
 
     public List<ingredientType> CreateCustomerOrder(int minOrderLength, int maxOrderLength) 
     {
+
+        Debug.Log("Created Customer Order");
 
         // get menu from bench manager
         List<ingredientType> menu = tacoGameManager.benchManager.menu;        
@@ -88,7 +90,7 @@ public class Customer: MonoBehaviour
         if (tacoToScore.ingredients.Count == 0) { return scoreType.FAILED; }
 
         // if more ingredients in taco than order, fail
-        if (tacoToScore.ingredients.Count > order.Count) { return scoreType.FAILED; }
+        if (tacoToScore.ingredients.Count > order.Count + 1) { return scoreType.FAILED; }
 
 
         // << PERFECT >> ingredients are the same and order is perfect

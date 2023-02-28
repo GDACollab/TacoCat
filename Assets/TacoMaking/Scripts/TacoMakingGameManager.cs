@@ -21,7 +21,6 @@ public class TacoMakingGameManager : MonoBehaviour
     public PlayerHand hand;
 
     [Header("Customers")]
-    public Customer currCustomer;
     public CustomerManager customerManager;
     public int perfectCounter; //counts the number of perfect tacos in a row, resets when a !perfect taco is submitted
     public int comboCounter;   //counts the number for 3 combos in total throughout the whole minigame
@@ -72,7 +71,8 @@ public class TacoMakingGameManager : MonoBehaviour
                 customerCreationTimer = 0;
                 customersLeftToGenerate--;
                 //The ID passed in for each customer starts at 1 and counts up to totalCustomers
-                currCustomer = customerManager.CreateNewCustomer(totalCustomers - customersLeftToGenerate).GetComponent<Customer>();
+                customerManager.CreateNewCustomer(totalCustomers - customersLeftToGenerate).GetComponent<Customer>();
+
             }
         }
         customerCreationTimer += Time.deltaTime;
@@ -81,7 +81,7 @@ public class TacoMakingGameManager : MonoBehaviour
     // submit taco to customer to be graded
     public void SubmitTaco()
     {
-        scoreType score = currCustomer.ScoreTaco(submissionTaco);
+        scoreType score = customerManager.currCustomer.ScoreTaco(submissionTaco);
         NewTacoScore(score);
 
         Debug.Log("Submitted Taco! Customer Score " + score);

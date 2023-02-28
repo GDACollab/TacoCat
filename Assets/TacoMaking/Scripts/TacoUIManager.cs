@@ -7,6 +7,7 @@ using TMPro;
 public class TacoUIManager : MonoBehaviour
 {
     public TacoMakingGameManager tacoGameManager;
+    CustomerManager customerManager;
 
     [Header("Score UI")]
     public Image star;
@@ -35,7 +36,9 @@ public class TacoUIManager : MonoBehaviour
     
     // Start is called before the first frame update
     void Start()
-    {   
+    {
+        customerManager = tacoGameManager.customerManager;
+
         DisplayFuel(0, 100, 0);
 
         DisplayScore(scoreType.FAILED);
@@ -48,9 +51,9 @@ public class TacoUIManager : MonoBehaviour
         // Score gets updated in Game Manager
 
         // Update Order
-        if (tacoGameManager.currCustomer != null)
+        if (customerManager.currCustomer != null)
         {
-            DisplayOrder(tacoGameManager.currCustomer.order, ingredientSpacing);
+            DisplayOrder(customerManager.currCustomer.order, ingredientSpacing);
         }
 
         // Update Gas Amount

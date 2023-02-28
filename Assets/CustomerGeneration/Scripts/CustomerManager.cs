@@ -32,6 +32,8 @@ public class CustomerManager : MonoBehaviour
 
     public GameObject CreateNewCustomer(int customer_number)
     {
+        Debug.Log("Created Customer");
+
        //Creates a new customer and sets all of its vars
         Customer customerScript  = Instantiate(customerPrefab, transform).GetComponent<Customer>();
         customerScript.transform.position = positionList[5].position;
