@@ -80,23 +80,27 @@ public class Customer: MonoBehaviour
     // compares the list of ingredients in the taco submitted and the list of ingredients in the customer's order returns the taco's score
     public scoreType ScoreTaco(Taco tacoToScore)
     {
-        int numSameIngredients = compareIngredients(tacoToScore);
-        int correctPlacementCount = compareIngredientOrder(tacoToScore);
-
-
-        // [[ BASE CASES ]]
+        // [[ INGREDIENT COUNT]] =========================================================
+        int ingredientCountDifference = tacoToScore.ingredients.Count - order.Count;
+        Debug.Log("Ingredient Count Difference : " + ingredientCountDifference);
 
         // if no ingredients in taco, fail
         if (tacoToScore.ingredients.Count == 0) { return scoreType.FAILED; }
 
-        // if more ingredients in taco than order, fail
-        if (tacoToScore.ingredients.Count > order.Count + 1) { return scoreType.FAILED; }
+        // if +-2 ingredients in taco than order, fail
+        else if (Mathf.Abs(ingredientCountDifference) >= 2) { return scoreType.FAILED; }
 
+        // if +-1 ingredients in taco than order, then okay
+        else if (Mathf.Abs(ingredientCountDifference) == 1) { return scoreType.OKAY; }
+
+        // [[ SAME INGREDIENTS // INGREDIENT ORDER ]] ====================================
+        int numSameIngredients = compareIngredients(tacoToScore);
+        int correctPlacementCount = compareIngredientOrder(tacoToScore);
 
         // << PERFECT >> ingredients are the same and order is perfect
         if (numSameIngredients == order.Count && correctPlacementCount == order.Count)
         {
-            return scoreType.PERFECT; //perfect score 
+            return scoreType.PERFECT;
         }
         // << GOOD >> ingredients are the same, but order is wrong
         else if (numSameIngredients == order.Count && correctPlacementCount != order.Count)
@@ -104,49 +108,15 @@ public class Customer: MonoBehaviour
             return scoreType.GOOD;
         }
         // << OKAY TACO >>  1 missing/extra ingredients, incorrect order
-        else if ((numSameIngredients == order.Count - 1 || tacoToScore.ingredients.Count > order.Count) && correctPlacementCount != order.Count)
+        else if ((numSameIngredients == order.Count - 1) && correctPlacementCount != order.Count)
         {
             return scoreType.OKAY;
         }
+        // << FAILED TACO >>
         else
         {
             return scoreType.FAILED;
         }
-
-
-        /*
-        //compares the list of ingredients in the taco submitted and the list of ingredients in the customer's order returns the taco's score
-        if (currTaco.ingredients.Count == order.Count)
-        { //if taco lengths are equal
-            if (Taco.ingredientCompare(currTaco.ingredients, order) == currTaco.ingredients.Count)
-            { //if # of matching in order ingredients == length of either list
-                customerManager.perfectCounter++; //increment perfect counter
-                if (customerManager.perfectCounter % 3 == 0) customerManager.s_comboCounter++; //display combo stuff //maybe move elsewhere
-                return scoreType.PERFECT; //perfect score 
-            }
-        }
-        List<ingredientType> currTacoSorted = new List<ingredientType>(currTaco.ingredients);
-        List<ingredientType> s_orderSorted = new List<ingredientType>(order);
-        currTacoSorted.Sort();
-        s_orderSorted.Sort();
-
-        //an algorithm to remove duplicates from the submitted / current taco NEEDS TO BE PUT HERE FOR THIS TO WORK
-
-        int numMatching = Taco.ingredientCompare(currTacoSorted, s_orderSorted); //number of matching ingredients (ignoring order)
-        //this will need to change depending on how we see duplicates
-        int longerLength = (currTaco.ingredients.Count > order.Count) ? currTaco.ingredients.Count : order.Count;
-        //definitely a better way to do this next section lmao
-        customerManager.perfectCounter = 0;
-        if (numMatching - longerLength == 0)
-        {
-            return scoreType.GOOD;
-        }
-        else if (numMatching - longerLength == 1)
-        {
-            return scoreType.OKAY;
-        }
-        else return scoreType.FAILED;
-        */
     }
 
 
@@ -169,7 +139,7 @@ public class Customer: MonoBehaviour
     {
         int correctPlacementCount = 0;
 
-        if (taco.ingredients.Count > order.Count) { Debug.Log("Submitted More Ingredients than order"); }
+        if (taco.ingredients.Count > order.Count) { Debug.Log("Submitted " + (taco.ingredients.Count - order.Count) + " more Ingredients than order"); }
 
         // iterate through taco and check order placement
         for (int i = 0; i < order.Count; i++)
