@@ -66,8 +66,10 @@ public class GroundGeneration : MonoBehaviour
     public int maxChunkLength = 10;
     [Tooltip("Set the max height of a chunk")]
     public int maxChunkHeight = 5;
+    [Tooltip("Set the height of the underground mesh")]
+    public float undergroundMeshHeight = 100;
     [Tooltip("Choose the style of each chunk")]
-    public CHUNK_STYLES chunkStyle = CHUNK_STYLES.random;
+    public List<CHUNK_STYLES> chunkStyles = new List<CHUNK_STYLES>(); 
     [Tooltip("List of chunks")]
     public List<GameObject> chunks = new List<GameObject>();
 
@@ -99,7 +101,7 @@ public class GroundGeneration : MonoBehaviour
         if (generationFinished && !meshCreator.meshCreated && allGroundPoints.Count > 0)
         {
             // create undergound mesh
-            meshCreator.CreateUnderground(allGroundPoints);
+            meshCreator.CreateUnderground(allGroundPoints, undergroundMeshHeight);
         }
 
         if (editMode)
@@ -196,7 +198,7 @@ public class GroundGeneration : MonoBehaviour
         {
             // create new chunk starting at the last chunks end point and ending at the full length of this chunk
             Vector2 newGenEndPos = new Vector2(lastChunkEndPosition.x + chunkLength, lastChunkEndPosition.y + chunkHeight);
-            SpawnBezierGroundChunk(lastChunkEndPosition, newGenEndPos, chunkStyle);
+            SpawnBezierGroundChunk(lastChunkEndPosition, newGenEndPos, chunkStyles[Random.Range(0, chunkStyles.Count)]); // use random chunk style from list
 
             // update last chunk end position
             lastChunkEndPosition = newGenEndPos;
@@ -266,7 +268,7 @@ public class GroundGeneration : MonoBehaviour
             randomChunkHeights.Remove(randomChunkHeights[randomHeightIndex]);
 
             // spawn ground with values
-            SpawnBezierGroundChunk(lastChunkEndPosition, newGenEndPos, chunkStyle);
+            SpawnBezierGroundChunk(lastChunkEndPosition, newGenEndPos, chunkStyles[Random.Range(0, chunkStyles.Count)]); // use random chunk style from list
 
             // set last chunk pos to current end
             lastChunkEndPosition = newGenEndPos;
@@ -296,14 +298,14 @@ public class GroundGeneration : MonoBehaviour
             {
                 // create new chunk starting at the last chunks end point and ending at the full length of this chunk
                 Vector2 endGenPos = new Vector2(lastChunkEndPosition.x + chunkLength, endGenerationPoint.position.y);
-                SpawnBezierGroundChunk(lastChunkEndPosition, endGenPos, chunkStyle);
+                SpawnBezierGroundChunk(lastChunkEndPosition, endGenPos, chunkStyles[Random.Range(0, chunkStyles.Count)]); // use random chunk style from list
                 return;
             }
 
 
             // create new chunk starting at the last chunks end point and ending at the full length of this chunk
             Vector2 newGenEndPos = new Vector2(lastChunkEndPosition.x + chunkLength, lastChunkEndPosition.y + currChunkHeight);
-            SpawnBezierGroundChunk(lastChunkEndPosition, newGenEndPos, chunkStyle);
+            SpawnBezierGroundChunk(lastChunkEndPosition, newGenEndPos, chunkStyles[Random.Range(0, chunkStyles.Count)]); // use random chunk style from list
 
             // update last chunk end position
             lastChunkEndPosition = newGenEndPos;

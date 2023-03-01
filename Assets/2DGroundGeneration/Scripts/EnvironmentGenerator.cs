@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -30,17 +31,33 @@ public class EnvironmentGenerator : MonoBehaviour
     [Range(1, 100)]
     public int maxSpaceBetweenObjects = 40;
 
+    [Header("Line")]
+    public bool drawLine;
+    LineRenderer lineRenderer;
+    [Range(1, 100)]
+    public float lineWidth = 20;
+    public Vector3 lineOffset;
+    public Material lineMaterial;
+
+
     [Header("<< Trees >>")]
     [Tooltip("Parent for the spawned trees")]
     public Transform treeGenParent;
     [Tooltip("Scale of the Tree Objects")]
     public float treeScale = 20;
+
+    public int treeZPosition = -1;
+
     [Tooltip("List of tree prefabs to spawn")]
     public List<GameObject> treePrefabs = new List<GameObject>();
 
 
 
     [Header("Ground Objects ===========================================")]
+
+    [Tooltip("Toggle ground object spawning")]
+    public bool spawnGroundObjects;
+
     [Tooltip("Parent of all spawned ground objects")]
     public GameObject groundParent;
 
@@ -66,6 +83,10 @@ public class EnvironmentGenerator : MonoBehaviour
     [Range(0, 0.2f), Tooltip("Makes the ground objects more randomly placed so it looks more natural")]
     public float positionNoise = 0.1f;
 
+    private void Start()
+    {
+        lineRenderer = GetComponent<LineRenderer>();
+    }
 
     // Start is called before the first frame update
     void Update()
@@ -75,6 +96,8 @@ public class EnvironmentGenerator : MonoBehaviour
         {
             SpawnAllEnvironmentObjects();
             SpawnGroundObjects(groundGeneration.allGroundPoints, groundGeneration.allGroundRotations, pointsBetweenGroundObjs);
+
+            if (drawLine) { DrawCurveLine(groundPoints, lineWidth, lineOffset, lineMaterial); }
         }
 
         else if (!groundGeneration.generationFinished && environmentSpawned)
@@ -94,7 +117,7 @@ public class EnvironmentGenerator : MonoBehaviour
         DeleteAllEnvironmentObejcts();
 
         // spawn tree objects
-        SpawnEnvironmentObjects(treePrefabs, 20, treeScale, 1);
+        SpawnEnvironmentObjects(treePrefabs, treeScale, treeZPosition);
 
         environmentSpawned = true;
     }
@@ -113,7 +136,7 @@ public class EnvironmentGenerator : MonoBehaviour
         environmentSpawned = false;
     }
 
-    public void SpawnEnvironmentObjects(List<GameObject> prefabs, int count, float scale, int zposition)
+    public void SpawnEnvironmentObjects(List<GameObject> prefabs, float scale, int zposition)
     {
         // check prefabs
         if (prefabs.Count < 1) { Debug.LogWarning("No environment prefabs."); return; }
@@ -131,7 +154,7 @@ public class EnvironmentGenerator : MonoBehaviour
         for (int currPointIndex = 10; currPointIndex < groundPoints.Count - 1; currPointIndex += spacing)
         {
             // spawn new environment object
-            SpawnEnvObj(prefabs[Random.Range(0, prefabs.Count)], currPointIndex, scale, sortingOrder);
+            SpawnEnvObj(prefabs[Random.Range(0, prefabs.Count)], currPointIndex, scale, sortingOrder, zposition);
 
             /* ===============================
              *  << SET UP FOR NEXT ENVIRONMENT OBJECT >>
@@ -194,6 +217,8 @@ public class EnvironmentGenerator : MonoBehaviour
 
     void SpawnGroundObjects(List<Vector3> genPoints, List<float> genPointRots, int pointsBetweenObjs)
     {
+        if (!spawnGroundObjects) { return; }
+
         // pointsBetweenObjs can't be 0
         if (pointsBetweenObjs == 0)
         {
@@ -202,12 +227,10 @@ public class EnvironmentGenerator : MonoBehaviour
             pointsBetweenObjs = 1;
         }
 
-        int mod_pointsBetweenObjs = pointsBetweenObjs;
-
         // return if no ground prefabs
         if (groundObjectPrefabs.Count == 0)
         {
-            Debug.LogWarning("Generation does not have any ground object prefabs", this.gameObject);
+            Debug.LogError("Generation does not have any ground object prefabs", this.gameObject);
             return;
         }
 
@@ -215,10 +238,12 @@ public class EnvironmentGenerator : MonoBehaviour
         if (endPointObjectPrefabs.Count == 0)
         {
             Debug.LogWarning("Generation does not have any endpoint prefabs", this.gameObject);
-            return;
         }
 
         DestroyListObjects(genGroundObjs);
+
+
+        int sortingOrder = 0; // sorting order of the object to be spawned
 
         // for each generation point, spawn object
         for (int i = 0; i < genPoints.Count - 1; i += pointsBetweenObjs)
@@ -227,9 +252,14 @@ public class EnvironmentGenerator : MonoBehaviour
 
 
             //if either end point, choose from small ground points
-            if (endPointObjectPrefabs.Count > 0 && (i < genPoints.Count && i >= genPoints.Count * 0.8f))
+            if ((i < genPoints.Count && i >= genPoints.Count * 0.8f))
             {
-                groundObj = endPointObjectPrefabs[(int)Random.Range(0, endPointObjectPrefabs.Count)];
+                // make sure end points exist
+                if (endPointObjectPrefabs.Count > 0)
+                {
+                    groundObj = endPointObjectPrefabs[(int)Random.Range(0, endPointObjectPrefabs.Count)];
+                }
+                else { continue; }
             }
             else
             {
@@ -237,13 +267,23 @@ public class EnvironmentGenerator : MonoBehaviour
                 groundObj = groundObjectPrefabs[(int)Random.Range(0, groundObjectPrefabs.Count)];
             }
 
+            // << SORTING ORDER >>
+            // toggle sorting order so that objects on this layer dont overlap
+            if (sortingOrder == 0)
+            {
+                sortingOrder = 1;
+            }
+            else if (sortingOrder == 1)
+            {
+                sortingOrder = 0;
+            }
 
             //TOP GROUND
-            SpawnNewGround(groundObj, genPoints[i] + new Vector3(0, 0.5f, 0f), genPointRots[i]);
+            SpawnNewGround(groundObj, genPoints[i] + new Vector3(0, 0.5f, 0f), genPointRots[i], sortingOrder);
         }
     }
 
-    void SpawnNewGround(GameObject obj, Vector3 position, float rotation)
+    void SpawnNewGround(GameObject obj, Vector3 position, float rotation, int sortingOrder)
     {
         //print("ground spawned at : " + position);
         float randomYPos = Random.Range(-positionNoise * 0.9f, positionNoise * 0.9f) + position.y; //set randomY
@@ -259,7 +299,18 @@ public class EnvironmentGenerator : MonoBehaviour
         obj.transform.parent = groundParent.transform;
         obj.transform.localScale = new Vector2(groundObjScale, groundObjScale);
 
-        obj.transform.localPosition = SetZ(obj.transform.localPosition, groundZOffest); // set z position to -1 
+        obj.transform.localPosition = SetZ(obj.transform.localPosition, groundZOffest); // set z position
+
+        // << SET SORTING ORDER >>
+        if (!obj.GetComponentInChildren<SpriteRenderer>())
+        {
+            Debug.LogError("Env Object doesn't have SpriteRenderer component", obj);
+        }
+        else
+        {
+            // set sorting order of sprite renderer
+            obj.GetComponentInChildren<SpriteRenderer>().sortingOrder = sortingOrder;
+        }
     }
 
     void DestroyAllGroundObjs()
@@ -288,6 +339,28 @@ public class EnvironmentGenerator : MonoBehaviour
         vector.z = z;
         return vector;
     }
+
+    void DrawCurveLine(List<Vector3> points, float width, Vector3 y_offset,  Material material)
+    {
+        lineRenderer.startWidth = width;
+        lineRenderer.endWidth = width;
+        //lineRenderer.loop = true;
+        lineRenderer.positionCount = points.Count;
+
+
+        // add offset to points
+        for (int i = 0; i < points.Count; i++)
+        {
+            points[i] += lineOffset;
+        }
+
+        // set points
+        lineRenderer.SetPositions(points.ToArray());
+
+        // set material
+        lineRenderer.material = material;
+    }
+
     #endregion
 
 

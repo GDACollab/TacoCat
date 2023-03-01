@@ -49,7 +49,7 @@ public class MeshCreator : MonoBehaviour
     }
 
     #region UNDERGROUND MESH ======================================================
-    public void CreateUnderground(List<Vector3> genCurvePoints, int chunkCount = -1, float underground_height = -1)
+    public void CreateUnderground(List<Vector3> genCurvePoints, float underground_height = -1)
     {
         //find distance between end points
         //divide by set count of meshes to generate
@@ -60,7 +60,7 @@ public class MeshCreator : MonoBehaviour
 
         //if (chunkCount <= 0) { chunkCount = Mathf.FloorToInt(genCurvePoints.Count * 0.99f); } // what the fuck why idk
 
-        if (chunkCount <= 0) { chunkCount = genCurvePoints.Count - 1; }
+        int chunkCount = genCurvePoints.Count - 1;
         if (underground_height <= 0) { underground_height = Mathf.Abs((endPos.y - begPos.y)) * 3; }
 
         int triSize = Mathf.FloorToInt(genCurvePoints.Count / chunkCount); //get number of chunks based on chunk size

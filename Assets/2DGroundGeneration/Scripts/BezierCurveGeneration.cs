@@ -343,7 +343,8 @@ public class BezierCurveGeneration : MonoBehaviour
     private void DisplayBezierMath()
     {
         Vector3 pointOnCurve = GetPointOnCurve(t);
-
+        
+        /*
         //first set of lines
         Handles.color = Color.black;
         Handles.DrawLine(p0.position, p1.position, 3f);
@@ -362,6 +363,7 @@ public class BezierCurveGeneration : MonoBehaviour
         //point
         Handles.color = Color.black;
         Handles.DrawSolidDisc(pointOnCurve, Vector3.forward, 0.05f);
+        */
 
     }
 
@@ -369,14 +371,18 @@ public class BezierCurveGeneration : MonoBehaviour
     {
         Vector3 pointOnCurve = GetPointOnCurve(t);
 
+        /*
         Handles.color = Color.white;
         Vector3 tangent = new Vector3(ComputeBezierDerivative(t, p0.position.x, p1.position.x, p2.position.x, p3.position.x), ComputeBezierDerivative(t, p0.position.y, p1.position.y, p2.position.y, p3.position.y));
         Handles.DrawSolidDisc(tangent, Vector3.forward, 0.05f);
+        
 
         Debug.DrawRay(pointOnCurve, new Vector3(tangent.x, tangent.y, 0)); //tangent
         Debug.DrawRay(pointOnCurve, new Vector3(-tangent.y * 0.2f, tangent.x * 0.2f, 0)); //normal
 
         print("Tangent at point t: " + tangent.x + "/" + tangent.y);
+
+    */
     }
 
     private void DisplayEdgeLines()
@@ -408,6 +414,7 @@ public class BezierCurveGeneration : MonoBehaviour
 
         //print("Lowest Y point: " + lowestYpoint);
 
+        /*
         //draw line to lowest point y
         Handles.color = Color.blue;
 
@@ -421,7 +428,7 @@ public class BezierCurveGeneration : MonoBehaviour
 
         //draw horizontal line across
         Handles.DrawLine(p0_base_position, p3_base_position);
-
+        */
     }
 
     private void OnDrawGizmos()
@@ -429,8 +436,10 @@ public class BezierCurveGeneration : MonoBehaviour
         // show start point of curve
         if (generatedCurvePoints.Count > 0)
         {
+            /*
             Handles.color = Color.black;
             Handles.DrawSolidDisc(generatedCurvePoints[0], Vector3.forward, 0.1f);
+            */
         }
 
         //show visual math
