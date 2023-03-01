@@ -246,7 +246,7 @@ GameObject:
   - component: {fileID: 559096271319292200}
   m_Layer: 8
   m_Name: undergroundMesh
-  m_TagString: Untagged
+  m_TagString: CollisionTerrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -471,7 +471,8 @@ MonoBehaviour:
   allGroundRotations: []
   maxChunkLength: 20
   maxChunkHeight: 5
-  chunkStyle: 3
+  undergroundMeshHeight: 100
+  chunkStyles: 
   chunks: []
 --- !u!114 &8616841525699024415
 MonoBehaviour:
@@ -486,15 +487,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundGeneration: {fileID: 8771345538298886059}
-  lineRenderer: {fileID: 0}
   environmentSpawned: 0
   groundPoints: []
   groundRotations: []
   allSpawnedObjects: []
   minSpaceBetweenObjects: 10
   maxSpaceBetweenObjects: 40
+  drawLine: 0
+  lineWidth: 20
+  lineOffset: {x: 0, y: 0, z: 0}
+  lineMaterial: {fileID: 0}
   treeGenParent: {fileID: 5343893833967477908}
   treeScale: 20
+  treeZPosition: -1
   treePrefabs:
   - {fileID: 7067189267099552049, guid: 93396d3051094374bb81d6de67f3613e, type: 3}
   spawnGroundObjects: 0
