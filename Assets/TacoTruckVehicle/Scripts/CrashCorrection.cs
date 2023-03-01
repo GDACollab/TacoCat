@@ -9,7 +9,6 @@ public class CrashCorrection : MonoBehaviour
 
     public float resetAngle = 0;
     public float rotationSpeed = 2;
-    public GameObject collisionEffect;
 
     public bool isCorrecting;
 
@@ -29,33 +28,36 @@ public class CrashCorrection : MonoBehaviour
         if (collision.gameObject.CompareTag("CollisionTerrain"))
         {
             Debug.Log("Truck Crash with " + collision.name);
-
             StartCoroutine(CorrectCrash());
         }
     }
 
+    // correct crash coroutine
     public IEnumerator CorrectCrash()
     {
+        vehicle.state = driveState.CRASH; // set state
+
+        // stop velocity ,, disable trigger
         rb.velocity = Vector3.zero;
         rb.constraints = RigidbodyConstraints2D.FreezePosition;
-
         collisionTrigger.enabled = false;
 
+        // move truck up from ground to flip
         vehicle.transform.position += Vector3.up * 10;
-
         isCorrecting = true;
 
+        // wait until truck is flipped
         yield return new WaitUntil(() => IsTruckUpright(0.2f));
 
-
+        // reset constraints,  trigger and bool
         rb.constraints = RigidbodyConstraints2D.None;
-
         collisionTrigger.enabled = true;
-
         isCorrecting = false;
 
+        vehicle.state = driveState.GROUNDED;
     }
 
+    // constantly rotate the truck to reset angle
     public void RotateToResetAngle()
     {
         // Get the current rotation of the object
@@ -68,6 +70,7 @@ public class CrashCorrection : MonoBehaviour
         transform.rotation = Quaternion.Euler(currentRotation);
     }
 
+    // check to see is truck is within reset angle buffer
     public bool IsTruckUpright(float buffer)
     {
         // Get the current rotation of the object
