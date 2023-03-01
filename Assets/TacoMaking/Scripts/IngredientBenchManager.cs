@@ -36,7 +36,7 @@ public class IngredientBenchManager : MonoBehaviour
         foreach(ingredientType ingr in menu)
         {
             // get matching object in gamemanager
-            GameObject ingr_obj = gameManager.GetIngredientObject(ingr);
+            GameObject ingr_obj = gameManager.GetIngredientBinSprite(ingr);
             ingr_obj.transform.localScale = Vector3.one * ingredientScale;
 
 
@@ -51,7 +51,7 @@ public class IngredientBenchManager : MonoBehaviour
             if (i < ingrObjs.Count)
             {
                 // set ingredient
-                ingredientBins[i].SetIngredient(ingrObjs[i]);
+                ingredientBins[i].SetIngredientBin(ingrObjs[i]);
             }
         }
 

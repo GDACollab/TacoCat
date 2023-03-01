@@ -10,10 +10,6 @@ public class TacoMakingGameManager : MonoBehaviour
     [HideInInspector]
     public IngredientBenchManager benchManager;
     
-    [Header("Prefabs")]
-    public GameObject tacoPrefab;
-    public List<GameObject> allIngredientPrefabs;
-
     [Header("Submission Taco")]
     public Taco submissionTaco;
 
@@ -32,6 +28,12 @@ public class TacoMakingGameManager : MonoBehaviour
     [Header("Score")]
     public int gameScore = 0; // max score is 3 * numOfCustomers served
     public float gasAmount = 0;
+
+    [Header("Prefabs")]
+    public GameObject tacoPrefab;
+    public List<GameObject> allIngredientPrefabs;
+    public List<GameObject> allIngredientBinPrefabs;
+
 
     public void Start()
     {
@@ -165,6 +167,25 @@ public class TacoMakingGameManager : MonoBehaviour
         }
 
         Debug.Log("Could not find " + ingrType + " prefab");
+
+        return null;
+    }
+
+
+    // return prefab that is related to the input enum type
+    public GameObject GetIngredientBinSprite(ingredientType ingrType)
+    {
+        // for each object in prefab list
+        foreach (GameObject obj in allIngredientBinPrefabs)
+        {
+            // look at the ingredient script inside prefab
+            if (obj.GetComponent<Ingredient>().type == ingrType)
+            {
+                return obj;
+            }
+        }
+
+        Debug.Log("Could not find " + ingrType + " bin prefab");
 
         return null;
     }

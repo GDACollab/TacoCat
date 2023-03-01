@@ -9,7 +9,7 @@ public class IngredientBin : MonoBehaviour
     public ingredientType ingredientType;
 
     // << SET INGREDIENT >>
-    public void SetIngredient(GameObject ingr)
+    public void SetIngredientBin(GameObject ingr)
     {
         // instantiate version of object
         currIngredient = Instantiate(ingr, transform.position, Quaternion.identity);
