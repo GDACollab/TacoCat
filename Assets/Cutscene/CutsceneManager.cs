@@ -9,24 +9,25 @@ public class CutsceneManager : MonoBehaviour
 
     public List<string> phone_texts;
 
-    public string first_line = "This should print first.";
-    public string second_line = "This should print second.";
-
+    public string first_message = "This should print first.";
+    public string second_message = "This should print second.";
+    
     
 
     // Start is called before the first frame update
     void Start()
     {
-        phone_texts.Add(first_line);
-        phone_texts.Add(second_line);
+        phone_texts.Add(first_message);
+        phone_texts.Add(second_message);
 
-        // clear phoneText
+        // clear text in phoneText.text
         phoneText.text = string.Empty;
-
+        
         //Add each element from phone_texts to phoneText
         foreach (string line in phone_texts) {
             phoneText.text += line + "\n";
         }
+
         
     }
 
