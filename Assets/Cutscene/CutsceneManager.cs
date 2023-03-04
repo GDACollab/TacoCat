@@ -9,27 +9,38 @@ public class CutsceneManager : MonoBehaviour
 
     public List<string> phone_texts;
 
-    public string first_message = "This should print first.";
-    public string second_message = "This should print second.";
+    [Range(0.0f, 5.0f)]
+    public float messageDelay;
+
     
-    
+
+
 
     // Start is called before the first frame update
     void Start()
     {
-        phone_texts.Add(first_message);
-        phone_texts.Add(second_message);
 
         // clear text in phoneText.text
         phoneText.text = string.Empty;
-        
-        //Add each element from phone_texts to phoneText
-        foreach (string line in phone_texts) {
-            phoneText.text += line + "\n";
+
+        StartCoroutine(Type());
+    }
+
+        IEnumerator Type() {
+
+            //Add each element from phone_texts to phoneText
+            foreach (string line in phone_texts)
+            {
+                phoneText.text += line + "\n";
+
+                yield return new WaitForSeconds(messageDelay);
+            }
+
         }
+        
 
         
-    }
+    
 
     // Update is called once per frame
     void Update()
