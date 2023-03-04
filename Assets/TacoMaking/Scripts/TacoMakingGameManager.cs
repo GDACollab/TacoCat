@@ -26,15 +26,14 @@ public class TacoMakingGameManager : MonoBehaviour
     private float customerCreationTimer; //Used to space out the creation of customers
 
     [Header("Score")]
-    public int gameScore = 0; // max score is 3 * numOfCustomers served
-    public int maxGameScore;
+    public float gameScore = 0; // max score is 3 * numOfCustomers served
+    public float maxGameScore;
     public float gasAmount = 0;
 
     [Header("Prefabs")]
     public GameObject tacoPrefab;
     public List<GameObject> allIngredientPrefabs;
     public List<GameObject> allIngredientBinPrefabs;
-
 
     public void Start()
     {
@@ -86,7 +85,7 @@ public class TacoMakingGameManager : MonoBehaviour
     {
         scoreType score = customerManager.currCustomer.ScoreTaco(submissionTaco);
         NewTacoScore(score);
-
+        
         Debug.Log("Submitted Taco! Customer Score " + score);
 
         CreateNewSubmissionTaco();
@@ -99,14 +98,16 @@ public class TacoMakingGameManager : MonoBehaviour
     public void NewTacoScore(scoreType score)
     {
         uiManager.DisplayScore(score);
-
         if (score == scoreType.PERFECT)
         {
             gameScore += 3;
+            
             perfectCounter++;
+   
             if (perfectCounter % 3 == 0 && perfectCounter != 0)
             {
-                comboCounter++; //display combo stuff //maybe move elsewhere
+                comboCounter++;
+                uiManager.DisplayNitro(comboCounter); //updates the nitro display
             }
         }
         else
@@ -128,6 +129,9 @@ public class TacoMakingGameManager : MonoBehaviour
         {
             gameScore += 0;
         }
+        SetGasAmount();
+        uiManager.DisplayGas(gasAmount); //100 is the max fuel amount, 
+        //DisplayGas ^^ needs to be changed later so that you don't need to insert max fuel everytime you want to update the bar
     }
 
 
@@ -136,7 +140,8 @@ public class TacoMakingGameManager : MonoBehaviour
     {
         // gas amount == correct tacos / max game score (( need to create new variables ))
         maxGameScore = totalCustomers * 3;
-        gasAmount = gameScore / maxGameScore;
+        gasAmount = gameScore/maxGameScore;
+        Debug.Log("gasAmout: "+gasAmount+" gameScore: "+ gameScore+" maxGameScore: "+ maxGameScore+" totalCustomers: "+ totalCustomers);
     }
 
 

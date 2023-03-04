@@ -100,6 +100,7 @@ public class Customer: MonoBehaviour
         // << PERFECT >> ingredients are the same and order is perfect
         if (numSameIngredients == order.Count && correctPlacementCount == order.Count)
         {
+            
             return scoreType.PERFECT;
         }
         // << GOOD >> ingredients are the same, but order is wrong

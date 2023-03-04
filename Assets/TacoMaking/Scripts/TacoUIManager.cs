@@ -27,7 +27,7 @@ public class TacoUIManager : MonoBehaviour
     public Image nCharge1, nCharge2, nCharge3;
     [Header("Test Gas/Nitro UI")]
     public float fuelAmount = 0;
-    public float maxFuelAmount = 100;
+    public float maxFuelAmount = 1;
     public int numNitroCharges = 0;
     
     
@@ -39,7 +39,7 @@ public class TacoUIManager : MonoBehaviour
     {
         customerManager = tacoGameManager.customerManager;
 
-        DisplayGas(0, 100);
+        DisplayGas(0);
         DisplayNitro(0);
 
         DisplayScore(scoreType.FAILED);
@@ -58,8 +58,8 @@ public class TacoUIManager : MonoBehaviour
         }
 
         // Update Gas Amount (to be deleted later)
-        DisplayGas(fuelAmount, maxFuelAmount);
-        DisplayNitro(numNitroCharges);
+        //DisplayGas(fuelAmount, maxFuelAmount);
+        //DisplayNitro(numNitroCharges);
     }
     
     // Call this function to display the score. Takes in the score.
@@ -164,11 +164,10 @@ public class TacoUIManager : MonoBehaviour
     
     // Call this to display the fuel and nitro amounts. 
     // It takes in the fuel amount, the maximum amount of fuel, and the number of nitro charges
-    public void DisplayGas(float fuel, float maxFuel){
-        fuelBar.fillAmount = Mathf.Clamp(fuel/maxFuel, 0, 1f); // Fill the bar according to the given fuel amount
-        // Switch between the 4 possible states of nitro charges
+    public void DisplayGas(float percent){
+        fuelBar.fillAmount = Mathf.Clamp(percent, 0, 1f); // Fill the bar according to the given fuel amount
     }
-    public void DisplayNitro(int nitro){
+    public void DisplayNitro(int nitro){ // Switch between the 4 possible states of nitro charges
         switch(nitro){
         case 1:
             nCharge1.color = Color.HSVToRGB(236f/360, 0.71f, 0.96f, true);
