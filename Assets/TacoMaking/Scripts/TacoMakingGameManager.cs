@@ -27,6 +27,7 @@ public class TacoMakingGameManager : MonoBehaviour
 
     [Header("Score")]
     public int gameScore = 0; // max score is 3 * numOfCustomers served
+    public int maxGameScore;
     public float gasAmount = 0;
 
     [Header("Prefabs")]
@@ -134,6 +135,8 @@ public class TacoMakingGameManager : MonoBehaviour
     public void SetGasAmount()
     {
         // gas amount == correct tacos / max game score (( need to create new variables ))
+        maxGameScore = totalCustomers * 3;
+        gasAmount = gameScore / maxGameScore;
     }
 
 
