@@ -17,12 +17,12 @@ TagManager:
   - Water
   - UI
   - 
-  - Environment
+  - 
   - Ground
-  - 
-  - 
-  - 
-  - 
+  - Foreground
+  - PlayArea
+  - Background
+  - Skybox
   - 
   - 
   - 
@@ -45,6 +45,9 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Skybox
+    uniqueID: 3666420847
     locked: 0
   - name: Background
     uniqueID: 3643169501
