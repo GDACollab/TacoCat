@@ -132,7 +132,7 @@ MonoBehaviour:
   m_LightType: 4
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
-  m_Color: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
@@ -354,7 +354,7 @@ MonoBehaviour:
   m_LightType: 4
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
-  m_Color: {r: 0.13243146, g: 0.13543062, b: 0.3018868, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
@@ -1035,7 +1035,7 @@ MonoBehaviour:
   m_LightType: 4
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
-  m_Color: {r: 0.3962264, g: 0.3962264, b: 0.3962264, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
@@ -1150,6 +1150,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9401a9290ea57a54eb116824c5b52cd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  foregroundGlobalColor: {r: 1, g: 1, b: 1, a: 0}
+  playAreaGlobalColor: {r: 1, g: 1, b: 1, a: 0}
+  backgroundGlobalColor: {r: 1, g: 1, b: 1, a: 0}
+  skyboxGlobalColor: {r: 1, g: 1, b: 1, a: 0}
+  layerSpacing: 10
+  skyboxSpacing: 0
   foregroundLight: {fileID: 6155609678889088353}
   playAreaLight: {fileID: 539166336}
   backgroundLight: {fileID: 638674696}
@@ -1162,12 +1168,6 @@ MonoBehaviour:
   - {fileID: 7612350585535590640}
   skyboxLayerObjects:
   - {fileID: 4066685854781710512}
-  foregroundGlobalColor: {r: 0.3962264, g: 0.3962264, b: 0.3962264, a: 0}
-  playAreaGlobalColor: {r: 1, g: 1, b: 1, a: 0}
-  backgroundGlobalColor: {r: 0.13243146, g: 0.13543062, b: 0.3018868, a: 0}
-  skyboxGlobalColor: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 0}
-  layerSpacing: 0
-  skyboxSpacing: 0
 --- !u!1 &7396829995579867967
 GameObject:
   m_ObjectHideFlags: 0

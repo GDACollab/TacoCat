@@ -6,6 +6,24 @@ using UnityEngine.Rendering.Universal;
 [ExecuteAlways]
 public class EnvironmentManager : MonoBehaviour
 {
+
+    [Header("COLORS")]
+    // effect the colors of each different layer independently and globally
+    public Color foregroundGlobalColor;
+    public Color playAreaGlobalColor;
+    public Color backgroundGlobalColor;
+    public Color skyboxGlobalColor;
+
+
+    [Header("POSITIONS")]
+    // space the layers out based on a modular float for perspective things
+    [Range(0, 1000)]
+    public float layerSpacing = 1000f;
+    [Range(0, 5000)]
+    public float skyboxSpacing = 3000f;
+
+
+    [Header("SETUP VARIABLES [[DONT TOUCH]]")]
     // hold lights for each sorting layer
     public Light2D foregroundLight;
     public Light2D playAreaLight;
@@ -17,18 +35,6 @@ public class EnvironmentManager : MonoBehaviour
     public List<GameObject> playAreaObjects;
     public List<GameObject> backgroundLayerObjects;
     public List<GameObject> skyboxLayerObjects;
-
-    // effect the colors of each different layer independently and globally
-    public Color foregroundGlobalColor;
-    public Color playAreaGlobalColor;
-    public Color backgroundGlobalColor;
-    public Color skyboxGlobalColor;
-
-    // space the layers out based on a modular float for perspective things
-    [Range(0, 1000)]
-    public float layerSpacing = 1000f;
-    [Range(0, 5000)]
-    public float skyboxSpacing = 3000f;
 
     private void Start()
     {
