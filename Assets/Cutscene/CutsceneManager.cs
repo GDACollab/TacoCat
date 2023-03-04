@@ -12,7 +12,10 @@ public class CutsceneManager : MonoBehaviour
     [Range(0.0f, 5.0f)]
     public float messageDelay;
 
-    
+    [Header("Typing out the message")]
+    public bool typeOutMessage;
+    public float textSpeed;
+    //private int index;
 
 
 
@@ -22,25 +25,49 @@ public class CutsceneManager : MonoBehaviour
 
         // clear text in phoneText.text
         phoneText.text = string.Empty;
+        //index = 0;
 
-        StartCoroutine(Type());
+        //check if typing out the text or printing the whole message
+        if (typeOutMessage)
+        {
+            StartCoroutine(Typeline());
+        }
+        else { 
+            StartCoroutine(PrintText()); 
+        }
     }
 
-        IEnumerator Type() {
+    IEnumerator PrintText() {
 
-            //Add each element from phone_texts to phoneText
-            foreach (string line in phone_texts)
-            {
-                phoneText.text += line + "\n";
+        //Add each element from phone_texts to phoneText
+        foreach (string line in phone_texts)
+        {
+            phoneText.text += line + "\n";
 
-                yield return new WaitForSeconds(messageDelay);
-            }
-
+            yield return new WaitForSeconds(messageDelay);
         }
-        
 
-        
-    
+    }
+
+    IEnumerator Typeline()
+    {
+        foreach (string line in phone_texts)
+        {
+            //Add each element from phone_texts to phoneText
+            foreach (char c in line.ToCharArray())
+            {
+                phoneText.text += c;
+
+                yield return new WaitForSeconds(textSpeed);
+            }
+            phoneText.text += "\n";
+            yield return new WaitForSeconds(messageDelay);
+        }
+    }
+
+
+
+
 
     // Update is called once per frame
     void Update()
