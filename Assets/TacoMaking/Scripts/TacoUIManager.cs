@@ -57,8 +57,9 @@ public class TacoUIManager : MonoBehaviour
             DisplayOrder(customerManager.currCustomer.order, ingredientSpacing);
         }
 
-        // Update Gas Amount
-        DisplayFuel(fuelAmount, maxFuelAmount, numNitroCharges);
+        // Update Gas Amount (to be deleted later)
+        DisplayGas(fuelAmount, maxFuelAmount);
+        DisplayNitro(numNitroCharges);
     }
     
     // Call this function to display the score. Takes in the score.
