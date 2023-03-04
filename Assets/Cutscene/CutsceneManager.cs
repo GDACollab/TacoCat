@@ -12,10 +12,18 @@ public class CutsceneManager : MonoBehaviour
     [Range(0.0f, 5.0f)]
     public float messageDelay;
 
+    
+
     [Header("Typing out the message")]
     public bool typeOutMessage;
+
+    [Range(0.0f, 0.5f)]
     public float textSpeed;
-    //private int index;
+
+    [Tooltip("Max charcters per line.\nWon't move the whole word to the next line currently")]
+    public int characterLimit;
+
+    private int counter;
 
 
 
@@ -25,7 +33,7 @@ public class CutsceneManager : MonoBehaviour
 
         // clear text in phoneText.text
         phoneText.text = string.Empty;
-        //index = 0;
+        counter = 0;
 
         //check if typing out the text or printing the whole message
         if (typeOutMessage)
@@ -37,6 +45,7 @@ public class CutsceneManager : MonoBehaviour
         }
     }
 
+    //for printing the entire message at once
     IEnumerator PrintText() {
 
         //Add each element from phone_texts to phoneText
@@ -49,6 +58,7 @@ public class CutsceneManager : MonoBehaviour
 
     }
 
+    //For typing out the message
     IEnumerator Typeline()
     {
         foreach (string line in phone_texts)
@@ -58,7 +68,14 @@ public class CutsceneManager : MonoBehaviour
             {
                 phoneText.text += c;
 
+                counter++;
+
                 yield return new WaitForSeconds(textSpeed);
+                if (counter == characterLimit) {
+                    phoneText.text += "\n";
+                    counter = 0;
+                }
+                
             }
             phoneText.text += "\n";
             yield return new WaitForSeconds(messageDelay);

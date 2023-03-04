@@ -312,6 +312,7 @@ MonoBehaviour:
   messageDelay: 1
   typeOutMessage: 1
   textSpeed: 0.05
+  characterLimit: 100
 --- !u!4 &1104355424
 Transform:
   m_ObjectHideFlags: 0
@@ -455,6 +456,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Text (TMP)
       objectReference: {fileID: 0}
+    - target: {fileID: 4909303822951794284, guid: be635faacab3f7744b13c97549120a30, type: 3}
+      propertyPath: m_margin.z
+      value: 0.69654083
+      objectReference: {fileID: 0}
     - target: {fileID: 4909303822951794285, guid: be635faacab3f7744b13c97549120a30, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -485,7 +490,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4909303822951794285, guid: be635faacab3f7744b13c97549120a30, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 200
+      value: 328.15
       objectReference: {fileID: 0}
     - target: {fileID: 4909303822951794285, guid: be635faacab3f7744b13c97549120a30, type: 3}
       propertyPath: m_SizeDelta.y
@@ -521,7 +526,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4909303822951794285, guid: be635faacab3f7744b13c97549120a30, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -100
+      value: -35.93
       objectReference: {fileID: 0}
     - target: {fileID: 4909303822951794285, guid: be635faacab3f7744b13c97549120a30, type: 3}
       propertyPath: m_AnchoredPosition.y
