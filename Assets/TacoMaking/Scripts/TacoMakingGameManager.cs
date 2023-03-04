@@ -27,7 +27,7 @@ public class TacoMakingGameManager : MonoBehaviour
 
     [Header("Score")]
     public int gameScore = 0; // max score is 3 * numOfCustomers served
-    public int maxGameScore;
+    public float maxGameScore;
     public float gasAmount = 0;
 
     [Header("Prefabs")]
@@ -48,7 +48,8 @@ public class TacoMakingGameManager : MonoBehaviour
 
     public void Update()
     {
-        CustomerRotation();     
+        CustomerRotation();
+        SetGasAmount();
 
     }
 

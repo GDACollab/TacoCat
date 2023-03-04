@@ -57,6 +57,7 @@ public class TacoUIManager : MonoBehaviour
         }
 
         // Update Gas Amount
+        GasUI();
         DisplayFuel(fuelAmount, maxFuelAmount, numNitroCharges);
     }
     
@@ -160,6 +161,11 @@ public class TacoUIManager : MonoBehaviour
         orderIngredientObjects.Clear();
     }
     
+    private void GasUI()
+    {
+        fuelAmount = tacoGameManager.gasAmount * maxFuelAmount;
+    }
+
     // Call this to display the fuel and nitro amounts. 
     // It takes in the fuel amount, the maximum amount of fuel, and the number of nitro charges
     public void DisplayFuel(float fuel, float maxFuel, int nitro){
