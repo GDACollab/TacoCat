@@ -106,15 +106,18 @@ public class FuelGuageUI : MonoBehaviour
         nitroText.text = "Nitro: " + vehicle_script.GetNitro()/initNitro*100 + "%\n";
         nitroGuage.fillAmount = Mathf.Clamp(vehicle_script.GetNitro()/initNitro, 0, 1f);
         nitroGuage.color = barColor(1);
+        Debug.Log("fuelBar");
     }
     
     void fuelCircle(){
         Vector3 nRotation = new Vector3(0f, 0f, (-90)*Mathf.Clamp(vehicle_script.GetFuel()/initFuel, 0, 1f));
         fuelSlider.transform.eulerAngles = nRotation;
-        nitroSlider.fillAmount = Mathf.Clamp(vehicle_script.GetNitro()/initNitro, 0, 1f);
-        nitroSlider.color = barColor(1);
+        //nitroSlider.fillAmount = Mathf.Clamp(vehicle_script.GetNitro()/initNitro, 0, 1f);
+        //nitroSlider.color = barColor(1);
+        //Debug.Log("fuelcircle");
     }
     
+
     // Changes the way the color changes on the bar
     Color barColor(int type){
         if(type==1){
