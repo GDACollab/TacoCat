@@ -7,7 +7,7 @@ public enum driveState { NONE, START_DRIVE, GROUNDED, IN_AIR, NITRO, CRASH, END_
 public class Vehicle : MonoBehaviour
 {
     public Rigidbody2D rb_vehicle;
-
+    public FuelGuageUI uiFuelGuage;
     [Space(10)]
     public LayerMask groundLayer;
     public List<Collider2D> groundColliderList;
@@ -133,7 +133,7 @@ public class Vehicle : MonoBehaviour
     {
         state = driveState.NITRO;
         nitroCharges--;
-
+        uiFuelGuage.DisplayNitro(nitroCharges);
         yield return new WaitForSeconds(activeNitroTime);
 
         state = driveState.IN_AIR;

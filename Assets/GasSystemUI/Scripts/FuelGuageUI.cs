@@ -18,6 +18,11 @@ public class FuelGuageUI : MonoBehaviour
     public Image fuelSlider;
     public Image nitroSlider;
 
+    [Header("Nitro UI")]
+    public Image nCharge1, nCharge2, nCharge3;
+    [Tooltip("is supposed to be carried over from the previous taco making minigame")]
+    public int comboCounter=2;
+
     [Header("Debugging UI objects")]
     public TMP_Text velocityText;
 
@@ -44,9 +49,12 @@ public class FuelGuageUI : MonoBehaviour
         vehicle = GameObject.FindGameObjectWithTag("Vehicle"); // The vehicle needs the "vehicle" tag for the UI to work
         vehicle_script = vehicle.GetComponent<Vehicle>();
         initFuel = vehicle_script.GetFuel();
-        initNitro = vehicle_script.GetNitro();
-
-
+        //initNitro = vehicle_script.GetNitro();
+        if(comboCounter>3){ 
+            DisplayNitro(3);
+        }else{
+            DisplayNitro(comboCounter);
+        }
 
         // Change the UI based on type
         switch (gaugeType) 
@@ -116,7 +124,30 @@ public class FuelGuageUI : MonoBehaviour
         //nitroSlider.color = barColor(1);
         //Debug.Log("fuelcircle");
     }
-    
+    public void DisplayNitro(int nitro){ // Switch between the 4 possible states of nitro charges
+    switch(nitro){
+        case 1:
+            nCharge1.color = Color.HSVToRGB(236f/360, 0.71f, 0.96f, true);
+            nCharge2.color = Color.black;
+            nCharge3.color = Color.black;
+            break;
+        case 2:
+            nCharge1.color = Color.HSVToRGB(236f/360, 0.71f, 0.96f, true);
+            nCharge2.color = Color.HSVToRGB(236f/360, 0.71f, 0.96f, true);
+            nCharge3.color = Color.black;
+            break;
+        case 3:
+            nCharge1.color = Color.HSVToRGB(236f/360, 0.71f, 0.96f, true);
+            nCharge2.color = Color.HSVToRGB(236f/360, 0.71f, 0.96f, true);
+            nCharge3.color = Color.HSVToRGB(236f/360, 0.71f, 0.96f, true);
+            break;
+        default:
+            nCharge1.color = Color.black;
+            nCharge2.color = Color.black;
+            nCharge3.color = Color.black;
+            break;
+        }
+    }
 
     // Changes the way the color changes on the bar
     Color barColor(int type){
