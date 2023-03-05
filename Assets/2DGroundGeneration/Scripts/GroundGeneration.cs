@@ -36,6 +36,12 @@ public class GroundGeneration : MonoBehaviour
     [Tooltip("Override and show objects and mesh even if not in camera range")]
     public bool inCameraRangeOverride;
 
+    [Space(20)]
+    [Range(-1000, 0)]
+    public int beginning_offset = -700;
+    [Range(0, 1000)]
+    public int ending_offset = 700;
+
     [Header("Full Generation Values ==============================")]
     [Tooltip("Choose the style of the full generation")]
     public GENERATION_STYLES generationStyle = GENERATION_STYLES.random;
@@ -91,11 +97,10 @@ public class GroundGeneration : MonoBehaviour
     public void StaggeredUpdate()
     {
         // set all ground points if generation not already finished
-        if (!generationFinished && allGroundPoints.Count == 0 && chunks.Count == GetHorizontalChunksNeeded())
+        if (!generationFinished && allGroundPoints.Count == 0 && chunks.Count >= GetHorizontalChunksNeeded())
         {
             SetAllGroundPoints();
         }
-
 
         // create mesh if generation finished && mesh not created
         if (generationFinished && !meshCreator.meshCreated && allGroundPoints.Count > 0)
@@ -166,6 +171,11 @@ public class GroundGeneration : MonoBehaviour
         // clear references to chunks in list
         chunks.Clear();
 
+
+        StartIslandGenerator();
+        //EndIslandGenerator();
+
+        
         if (style == GENERATION_STYLES.consistent)
         {
             ConsistentChunkGenerator();
@@ -178,6 +188,26 @@ public class GroundGeneration : MonoBehaviour
         {
             SineChunkGenerator();
         }
+        
+    }
+
+    public void StartIslandGenerator()
+    {
+        Vector2 offsetPos = beginningGenPos + new Vector2(beginning_offset, maxChunkHeight); // init last chunk as the current beginning position
+
+        // << FLAT START ZONE >>
+        SpawnBezierGroundChunk(offsetPos + new Vector2(beginning_offset, 0), offsetPos, CHUNK_STYLES.flat); // spawn flat beginning
+
+        // << HILL TO GAIN SPEED >>
+        SpawnBezierGroundChunk(offsetPos, beginningGenPos, CHUNK_STYLES.rounded); // spawn
+
+    }
+
+    public void EndIslandGenerator()
+    {
+        Vector2 offsetPos = endGenPos + new Vector2(ending_offset, 0); ; // init last chunk as the current beginning position
+
+        SpawnBezierGroundChunk(endGenPos, offsetPos, CHUNK_STYLES.flat); // spawn flat beginning
     }
 
     public void ConsistentChunkGenerator()
@@ -186,7 +216,6 @@ public class GroundGeneration : MonoBehaviour
 
         int vertChunksNeeded = GetVerticalChunksNeeded();
         int horzChunksNeeded = GetHorizontalChunksNeeded();
-
 
         // << SET CHUNK HEIGHT AND LENGTH >>
         // only using one parameter for this cause its just easier
@@ -369,7 +398,9 @@ public class GroundGeneration : MonoBehaviour
 
     #region CHUNK GENERATION STYLES =======================================================================
 
-    // These are deciding the position of the middle edipt points to create certain types of bezier curves
+
+
+    // These are deciding the position of the middle edit points to create certain types of bezier curves
     // the x position is base on distance, the y on height distance
 
     public void SetRoundedHillsGeneration(BezierCurveGeneration ground)

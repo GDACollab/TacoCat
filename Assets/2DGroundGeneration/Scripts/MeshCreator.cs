@@ -87,6 +87,7 @@ public class MeshCreator : MonoBehaviour
         undergroundMesh.RecalculateNormals(); //fixes lighting
         undergroundMeshObj.GetComponent<MeshFilter>().sharedMesh = undergroundMesh;
 
+
         // << SET EDGE COLLIDER >>
         if (collisionMesh)
         {
@@ -107,6 +108,7 @@ public class MeshCreator : MonoBehaviour
             undergroundMeshObj.GetComponent<EdgeCollider2D>().enabled = false;
         }
 
+        //undergroundMeshObj.transform.localPosition = new Vector3(undergroundMeshObj.transform.position.x, undergroundMeshObj.transform.position.y, 0);
 
         Debug.Log("Underground Mesh Created", gameObject);
         meshCreated = true;
