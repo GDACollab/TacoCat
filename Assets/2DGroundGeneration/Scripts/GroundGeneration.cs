@@ -36,6 +36,12 @@ public class GroundGeneration : MonoBehaviour
     [Tooltip("Override and show objects and mesh even if not in camera range")]
     public bool inCameraRangeOverride;
 
+    [Space(20)]
+    [Range(-1000, 0)]
+    public int beginning_offset = -700;
+    [Range(0, 1000)]
+    public int ending_offset = 700;
+
     [Header("Full Generation Values ==============================")]
     [Tooltip("Choose the style of the full generation")]
     public GENERATION_STYLES generationStyle = GENERATION_STYLES.random;
@@ -91,11 +97,10 @@ public class GroundGeneration : MonoBehaviour
     public void StaggeredUpdate()
     {
         // set all ground points if generation not already finished
-        if (!generationFinished && allGroundPoints.Count == 0 && chunks.Count == GetHorizontalChunksNeeded())
+        if (!generationFinished && allGroundPoints.Count == 0 && chunks.Count >= GetHorizontalChunksNeeded())
         {
             SetAllGroundPoints();
         }
-
 
         // create mesh if generation finished && mesh not created
         if (generationFinished && !meshCreator.meshCreated && allGroundPoints.Count > 0)
@@ -138,10 +143,6 @@ public class GroundGeneration : MonoBehaviour
             begGenerationPoint.GetComponent<SpriteRenderer>().enabled = false;
             endGenerationPoint.GetComponent<SpriteRenderer>().enabled = false;
         }
-
-
-
-        
     }
 
     #region GENERATION ====================================================
@@ -166,6 +167,9 @@ public class GroundGeneration : MonoBehaviour
         // clear references to chunks in list
         chunks.Clear();
 
+
+        StartIslandGenerator();
+
         if (style == GENERATION_STYLES.consistent)
         {
             ConsistentChunkGenerator();
@@ -178,6 +182,27 @@ public class GroundGeneration : MonoBehaviour
         {
             SineChunkGenerator();
         }
+
+        EndIslandGenerator();
+    }
+
+    public void StartIslandGenerator()
+    {
+        Vector2 offsetPos = begGenerationPoint.position + new Vector3(beginning_offset, maxChunkHeight); // init last chunk as the current beginning position
+
+        // << FLAT START ZONE >>
+        SpawnBezierGroundChunk(offsetPos + new Vector2(beginning_offset, 0), offsetPos, CHUNK_STYLES.flat); // spawn flat beginning
+
+        // << HILL TO GAIN SPEED >>
+        SpawnBezierGroundChunk(offsetPos, begGenerationPoint.position, CHUNK_STYLES.rounded); // spawn
+
+    }
+
+    public void EndIslandGenerator()
+    {
+        Vector2 offsetPos = endGenerationPoint.position + new Vector3(ending_offset, 0); ; // init last chunk as the current beginning position
+
+        SpawnBezierGroundChunk(endGenerationPoint.position, offsetPos, CHUNK_STYLES.flat); // spawn flat beginning
     }
 
     public void ConsistentChunkGenerator()
@@ -186,7 +211,6 @@ public class GroundGeneration : MonoBehaviour
 
         int vertChunksNeeded = GetVerticalChunksNeeded();
         int horzChunksNeeded = GetHorizontalChunksNeeded();
-
 
         // << SET CHUNK HEIGHT AND LENGTH >>
         // only using one parameter for this cause its just easier
@@ -331,6 +355,7 @@ public class GroundGeneration : MonoBehaviour
         GameObject newCurveObject = Instantiate(curveGenerationPrefab, newGenPosParentPos, Quaternion.identity);
         BezierCurveGeneration bezierGroundGen = newCurveObject.GetComponent<BezierCurveGeneration>();
 
+
         newCurveObject.SetActive(true); // set curve gen as active
         newCurveObject.transform.parent = chunkParent.transform; // set parent
         chunks.Add(newCurveObject); // add to chunks list
@@ -338,6 +363,9 @@ public class GroundGeneration : MonoBehaviour
         // set beginning and end points of the bezier curve
         bezierGroundGen.p0_pos = begPos;
         bezierGroundGen.p3_pos = endPos;
+
+        bezierGroundGen.SetAngleType();
+
 
         // set camera override
         if (inCameraRangeOverride)
@@ -369,7 +397,9 @@ public class GroundGeneration : MonoBehaviour
 
     #region CHUNK GENERATION STYLES =======================================================================
 
-    // These are deciding the position of the middle edipt points to create certain types of bezier curves
+
+
+    // These are deciding the position of the middle edit points to create certain types of bezier curves
     // the x position is base on distance, the y on height distance
 
     public void SetRoundedHillsGeneration(BezierCurveGeneration ground)
@@ -382,15 +412,17 @@ public class GroundGeneration : MonoBehaviour
         float horzDistance = Vector3.Distance(begPos, endPos);
         float vertDistance = Mathf.Abs(endPos.y - begPos.y);
 
+        Debug.Log("Rounded Hills gen angle " + ground.generationAngleType);
+
         if (ground.generationAngleType == "uphill")
         {
-            ground.p1_pos = new Vector3(begPos.x + horzDistance / 3, begPos.y - vertDistance);
-            ground.p2_pos = new Vector3(endPos.x - horzDistance / 2, endPos.y + vertDistance);
+            ground.p1_pos = new Vector3(begPos.x + horzDistance / 3, begPos.y);
+            ground.p2_pos = new Vector3(endPos.x - horzDistance / 3, endPos.y);
         }
         else
         {
-            ground.p1_pos = new Vector3(begPos.x + horzDistance / 3, begPos.y - vertDistance);
-            ground.p2_pos = new Vector3(endPos.x - horzDistance / 2, endPos.y + vertDistance);
+            ground.p1_pos = new Vector3(begPos.x + horzDistance / 3, begPos.y);
+            ground.p2_pos = new Vector3(endPos.x - horzDistance / 3, endPos.y);
         }
     }
 
@@ -406,13 +438,13 @@ public class GroundGeneration : MonoBehaviour
 
         if (ground.generationAngleType == "uphill")
         {
-            ground.p1_pos = new Vector3(begPos.x + horzDistance / 2, begPos.y - vertDistance / 2);
-            ground.p2_pos = new Vector3(endPos.x - horzDistance / 5, endPos.y - vertDistance / 3);
+            ground.p1_pos = new Vector3(begPos.x + horzDistance / 2, begPos.y );
+            ground.p2_pos = new Vector3(endPos.x - horzDistance / 5, endPos.y - vertDistance / 2);
         }
         else
         {
-            ground.p1_pos = new Vector3(begPos.x + horzDistance / 3, begPos.y - vertDistance / 2);
-            ground.p2_pos = new Vector3(endPos.x - horzDistance / 2, endPos.y + vertDistance / 4);
+            ground.p1_pos = new Vector3(begPos.x + horzDistance / 5, begPos.y - vertDistance / 2);
+            ground.p2_pos = new Vector3(endPos.x - horzDistance / 2, endPos.y);
         }
     }
 
@@ -509,6 +541,27 @@ public class GroundGeneration : MonoBehaviour
 
         generationFinished = true;
     }
+
+    public int GetClosestGroundPointIndexToPos(Vector3 pos)
+    {
+        int closestIndex = -1;
+        float closestDistance = float.MaxValue;
+
+        for (int i = 0; i < allGroundPoints.Count; i++)
+        {
+            float distance = Vector3.Distance(pos, allGroundPoints[i]);
+
+            if (distance < closestDistance)
+            {
+                closestIndex = i;
+                closestDistance = distance;
+            }
+        }
+
+        return closestIndex;
+    }
+
+
     #endregion
 
     private void OnDrawGizmos()
@@ -516,5 +569,18 @@ public class GroundGeneration : MonoBehaviour
     {
         Gizmos.color = Color.white;
         Gizmos.DrawLine(begGenerationPoint.position, endGenerationPoint.position);
+
+
+        // << FLAT START ZONE >>
+        Gizmos.color = Color.green;
+        Vector2 offsetPos = begGenerationPoint.position + new Vector3(beginning_offset, maxChunkHeight); // init last chunk as the current beginning position
+        Gizmos.DrawLine(offsetPos + new Vector2(beginning_offset, 0), offsetPos); // spawn flat beginning
+
+        // << HILL TO GAIN SPEED >>
+        Gizmos.DrawLine(offsetPos, begGenerationPoint.position); // spawn
+
+        // << END OFFSET >>
+        Vector2 endOffsetPosition = endGenerationPoint.position + new Vector3(ending_offset, 0); ; // init last chunk as the current beginning position
+        Gizmos.DrawLine(endGenerationPoint.position, endOffsetPosition); // spawn
     }
 }

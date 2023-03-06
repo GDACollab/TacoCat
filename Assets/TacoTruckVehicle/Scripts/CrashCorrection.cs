@@ -50,6 +50,8 @@ public class CrashCorrection : MonoBehaviour
         yield return new WaitUntil(() => IsTruckUpright(0.2f));
 
         // reset constraints,  trigger and bool
+        rb.angularVelocity = 0;
+
         rb.constraints = RigidbodyConstraints2D.None;
         collisionTrigger.enabled = true;
         isCorrecting = false;
@@ -77,14 +79,14 @@ public class CrashCorrection : MonoBehaviour
         Vector3 currentRotation = transform.rotation.eulerAngles;
         float difference = Mathf.Abs(currentRotation.z - resetAngle);
 
-        Debug.Log("difference " + difference);
+        //Debug.Log("difference " + difference);
 
         if (difference < buffer)
         {
             return true;
         }
 
-        Debug.Log("Rotation Difference " + currentRotation.z);
+        //Debug.Log("Rotation Difference " + currentRotation.z);
 
         return false;
     }

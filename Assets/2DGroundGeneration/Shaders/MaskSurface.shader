@@ -1,4 +1,4 @@
-Shader "Unlit/MaskSurface"
+Shader "Custom/MaskSurface"
 {
     Properties
     {

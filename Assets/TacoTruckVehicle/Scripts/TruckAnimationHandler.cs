@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class TruckAnimationHandler : MonoBehaviour
 {
-    public Vehicle vehicle;
-
+    Vehicle vehicle;
+    public CameraHandler cameraHandler;
+    
+    [Space(10)]
     public GameObject crashEffectPrefab;
     private GameObject spawnedCrashEffect;
 
     public GameObject nitroEffect;
+
+    public GameObject perfectLandingEffect;
 
     public void Start()
     {
@@ -29,9 +33,15 @@ public class TruckAnimationHandler : MonoBehaviour
         {
             TriggerCrashEffect(2);
         }
+
+        if (vehicle.state == driveState.PERFECT_LANDING)
+        {
+            EnablePerfectBoostEffect(true);
+        }
+        else { EnablePerfectBoostEffect(false); }
     }
 
-    public void TriggerCrashEffect(float destroyTimer)
+    public void TriggerCrashEffect(float destroyTimer = 2)
     {
         if (spawnedCrashEffect != null) { return; } // don't spawn if spawned already 
 
@@ -42,6 +52,17 @@ public class TruckAnimationHandler : MonoBehaviour
 
     public void EnableNitroEffect(bool enabled)
     {
+
         nitroEffect.SetActive(enabled);
+    }
+
+    public void EnablePerfectBoostEffect(bool enabled)
+    {
+        if (enabled)
+        {
+            StartCoroutine(cameraHandler.Shake(0.1f, 0.35f));
+        }
+
+        perfectLandingEffect.SetActive(enabled);
     }
 }

@@ -166,6 +166,10 @@ public class BezierCurveGeneration : MonoBehaviour
         //depthMesh = new Mesh();
         //depthMeshObj.GetComponent<MeshFilter>().mesh = depthMesh;
 
+
+        SetAngleType(); // sets the angle type
+
+
     }
 
     public void Update()
