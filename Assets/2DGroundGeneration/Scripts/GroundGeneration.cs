@@ -143,10 +143,6 @@ public class GroundGeneration : MonoBehaviour
             begGenerationPoint.GetComponent<SpriteRenderer>().enabled = false;
             endGenerationPoint.GetComponent<SpriteRenderer>().enabled = false;
         }
-
-
-
-        
     }
 
     #region GENERATION ====================================================
@@ -173,9 +169,7 @@ public class GroundGeneration : MonoBehaviour
 
 
         StartIslandGenerator();
-        //EndIslandGenerator();
 
-        
         if (style == GENERATION_STYLES.consistent)
         {
             ConsistentChunkGenerator();
@@ -188,26 +182,27 @@ public class GroundGeneration : MonoBehaviour
         {
             SineChunkGenerator();
         }
-        
+
+        EndIslandGenerator();
     }
 
     public void StartIslandGenerator()
     {
-        Vector2 offsetPos = beginningGenPos + new Vector2(beginning_offset, maxChunkHeight); // init last chunk as the current beginning position
+        Vector2 offsetPos = begGenerationPoint.position + new Vector3(beginning_offset, maxChunkHeight); // init last chunk as the current beginning position
 
         // << FLAT START ZONE >>
         SpawnBezierGroundChunk(offsetPos + new Vector2(beginning_offset, 0), offsetPos, CHUNK_STYLES.flat); // spawn flat beginning
 
         // << HILL TO GAIN SPEED >>
-        SpawnBezierGroundChunk(offsetPos, beginningGenPos, CHUNK_STYLES.rounded); // spawn
+        SpawnBezierGroundChunk(offsetPos, begGenerationPoint.position, CHUNK_STYLES.rounded); // spawn
 
     }
 
     public void EndIslandGenerator()
     {
-        Vector2 offsetPos = endGenPos + new Vector2(ending_offset, 0); ; // init last chunk as the current beginning position
+        Vector2 offsetPos = endGenerationPoint.position + new Vector3(ending_offset, 0); ; // init last chunk as the current beginning position
 
-        SpawnBezierGroundChunk(endGenPos, offsetPos, CHUNK_STYLES.flat); // spawn flat beginning
+        SpawnBezierGroundChunk(endGenerationPoint.position, offsetPos, CHUNK_STYLES.flat); // spawn flat beginning
     }
 
     public void ConsistentChunkGenerator()
@@ -574,5 +569,18 @@ public class GroundGeneration : MonoBehaviour
     {
         Gizmos.color = Color.white;
         Gizmos.DrawLine(begGenerationPoint.position, endGenerationPoint.position);
+
+
+        // << FLAT START ZONE >>
+        Gizmos.color = Color.green;
+        Vector2 offsetPos = begGenerationPoint.position + new Vector3(beginning_offset, maxChunkHeight); // init last chunk as the current beginning position
+        Gizmos.DrawLine(offsetPos + new Vector2(beginning_offset, 0), offsetPos); // spawn flat beginning
+
+        // << HILL TO GAIN SPEED >>
+        Gizmos.DrawLine(offsetPos, begGenerationPoint.position); // spawn
+
+        // << END OFFSET >>
+        Vector2 endOffsetPosition = endGenerationPoint.position + new Vector3(ending_offset, 0); ; // init last chunk as the current beginning position
+        Gizmos.DrawLine(endGenerationPoint.position, endOffsetPosition); // spawn
     }
 }

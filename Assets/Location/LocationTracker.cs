@@ -9,8 +9,8 @@ public class LocationTracker : MonoBehaviour
 
     [Header("Player Vehicle")]
     public GameObject playerVehicle;
-    public PointOfInterest StartingLocation;
-    public PointOfInterest Destination;
+    public PointOfInterest startingLocation;
+    public PointOfInterest destination;
     // LocationTracker has all the PointsOfInterests of the current scene
     [Header("List of Landmarks")]
     public List<PointOfInterest> allPointsOfInterest = new List<PointOfInterest>();
@@ -23,12 +23,12 @@ public class LocationTracker : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        allPointsOfInterest.Add(StartingLocation);
-        allPointsOfInterest.Add(Destination);
+        allPointsOfInterest.Add(startingLocation);
+        allPointsOfInterest.Add(destination);
         s_vehicle = playerVehicle.GetComponent<Vehicle>();//makes LocationTracker able to call Vehicle.GetPosition()
         Vector3 vehiclePositon3D = s_vehicle.GetPosition();
         vehiclePosition = new Vector2(vehiclePositon3D.x, vehiclePositon3D.y);
-        StartingLocation.SetLocation(vehiclePosition);
+        startingLocation.SetLocation(vehiclePosition);
         Debug.Log(vehiclePosition);
     }
 
@@ -36,8 +36,8 @@ public class LocationTracker : MonoBehaviour
     void Update()
     {
         vehiclePosition = s_vehicle.GetPosition();
-        totalDistance = CalculateDistanceFromStart(StartingLocation, Destination);
-        remainingDistance = CalculateDistanceToDestination(s_vehicle, Destination);
+        totalDistance = CalculateDistanceFromStart(startingLocation, destination);
+        remainingDistance = CalculateDistanceToDestination(s_vehicle, destination);
         //Debug.Log( "Distance to Destination from start:"+ totalDistance);
         /*Debug.Log("Distance to Destination:" + remainingDistance);
         Debug.Log("Distance in Percent:" + ConvertToPercent(remainingDistance, totalDistance));*/

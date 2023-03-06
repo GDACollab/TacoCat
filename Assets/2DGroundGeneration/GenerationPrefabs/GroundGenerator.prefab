@@ -365,7 +365,7 @@ SortingGroup:
   m_GameObject: {fileID: 861253198387667648}
   m_Enabled: 1
   m_SortingLayerID: 2132478623
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
 --- !u!1 &3742885630959358602
 GameObject:
@@ -457,6 +457,8 @@ MonoBehaviour:
   meshCreator: {fileID: 0}
   editMode: 0
   inCameraRangeOverride: 1
+  beginning_offset: -1000
+  ending_offset: 1000
   generationStyle: 0
   begGenerationPoint: {fileID: 39365123}
   endGenerationPoint: {fileID: 1297085516}

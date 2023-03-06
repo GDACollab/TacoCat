@@ -113,8 +113,10 @@ public class Vehicle : MonoBehaviour
         // << ROTATE CAR >>
         rb_vehicle.angularVelocity = Mathf.Lerp(rb_vehicle.angularVelocity, rotationDir * rotationSpeed, Time.deltaTime);
 
-        // << CLAMP VELOCITY >>
-       rb_vehicle.velocity = Vector2.ClampMagnitude(rb_vehicle.velocity, velocityClamp);
+        // << CLAMP HORIZONTAL VELOCITY >>
+        rb_vehicle.velocity = new Vector2(Vector2.ClampMagnitude(rb_vehicle.velocity, velocityClamp).x, rb_vehicle.velocity.y);
+
+        
     }
 
     public void Inputs()
