@@ -115,7 +115,6 @@ public class Vehicle : MonoBehaviour
 
         // << CLAMP HORIZONTAL VELOCITY >>
         rb_vehicle.velocity = new Vector2(Vector2.ClampMagnitude(rb_vehicle.velocity, velocityClamp).x, rb_vehicle.velocity.y);
-
         
     }
 

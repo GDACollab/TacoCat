@@ -438,13 +438,13 @@ public class GroundGeneration : MonoBehaviour
 
         if (ground.generationAngleType == "uphill")
         {
-            ground.p1_pos = new Vector3(begPos.x + horzDistance / 2, begPos.y - vertDistance / 2);
-            ground.p2_pos = new Vector3(endPos.x - horzDistance / 5, endPos.y - vertDistance / 3);
+            ground.p1_pos = new Vector3(begPos.x + horzDistance / 2, begPos.y );
+            ground.p2_pos = new Vector3(endPos.x - horzDistance / 5, endPos.y - vertDistance / 2);
         }
         else
         {
-            ground.p1_pos = new Vector3(begPos.x + horzDistance / 3, begPos.y - vertDistance / 2);
-            ground.p2_pos = new Vector3(endPos.x - horzDistance / 2, endPos.y + vertDistance / 4);
+            ground.p1_pos = new Vector3(begPos.x + horzDistance / 5, begPos.y - vertDistance / 2);
+            ground.p2_pos = new Vector3(endPos.x - horzDistance / 2, endPos.y);
         }
     }
 
