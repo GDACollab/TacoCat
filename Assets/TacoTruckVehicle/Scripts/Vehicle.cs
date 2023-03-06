@@ -25,6 +25,7 @@ public class Vehicle : MonoBehaviour
 
     [Space(10)]
     public int fuelAmount;
+    public int maxFuel;
     public Vector2 startingVelocity; // initial velocity
     public Vector2 inAirForce; // input based force on truck
     public Vector2 groundedForce; // input based force on truck
@@ -170,8 +171,8 @@ public class Vehicle : MonoBehaviour
         state = driveState.GROUNDED;
     }
 
-    public int GetFuel() {
-        return fuelAmount;
+    public float GetFuel() {
+        return (float)fuelAmount/maxFuel;
     }
     public int GetNitro() {
         return nitroCharges;
