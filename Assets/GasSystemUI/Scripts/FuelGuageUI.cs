@@ -20,6 +20,7 @@ public class FuelGuageUI : MonoBehaviour
 
     [Header("Debugging UI objects")]
     public TMP_Text velocityText;
+    public TMP_Text flipText;
 
     [Header("UI Types")]
     // Change the type of fuel gauge UI. 0: Bar-style fuel gauge, 1: Circle-style fuel guage
@@ -33,6 +34,7 @@ public class FuelGuageUI : MonoBehaviour
     // Private variables 
     public GameObject vehicle; 
     Vehicle vehicle_script;
+    FlipTracker flipTracker;
     private float initFuel = 0; // Initial fuel
     private float initNitro = 0; // Initial nitro
     
@@ -43,6 +45,7 @@ public class FuelGuageUI : MonoBehaviour
         //fuelGuage = GetComponent<Image>();
         vehicle = GameObject.FindGameObjectWithTag("Vehicle"); // The vehicle needs the "vehicle" tag for the UI to work
         vehicle_script = vehicle.GetComponent<Vehicle>();
+        flipTracker = vehicle.GetComponent<FlipTracker>();
         initFuel = vehicle_script.GetFuel();
         initNitro = vehicle_script.GetNitro();
 
@@ -65,7 +68,9 @@ public class FuelGuageUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        velocityText.text = "velocity: " + vehicle.GetComponent<Rigidbody2D>().velocity.x;
+        velocityText.text = "Velocity: " + vehicle.GetComponent<Rigidbody2D>().velocity.x;
+
+        flipText.text = "Flip Count: " + flipTracker.flipCount;
 
         switch (gaugeType) 
         {

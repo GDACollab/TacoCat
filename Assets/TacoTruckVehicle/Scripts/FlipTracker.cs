@@ -16,13 +16,16 @@ public class FlipTracker : MonoBehaviour
     public bool jumpStarted = false;
 
     [Space(10)]
-    public float airTime;
+    public int flipCount;
+    private bool flipCounted;
+    public float currAirTime;
 
     [Space(10)]
     public float perfectLandingRotationBound = 1;
     public float perfectLandingMinAirTime = 0.75f;
 
     [Space(10)]
+    public float currRot;
     public float startJumpRot;
     public float endJumpRot;
 
@@ -30,7 +33,7 @@ public class FlipTracker : MonoBehaviour
     public float landPointRotation;
 
 
-    private void Start()
+    void Start()
     {
         vehicle = GetComponent<Vehicle>();
         animHandler = GetComponent<TruckAnimationHandler>();
@@ -40,6 +43,8 @@ public class FlipTracker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        currRot = transform.rotation.eulerAngles.z - initTruckRotation;
+
         // get point underneath truck
         hit = Physics2D.Raycast(transform.position, Vector2.down, Mathf.Infinity, vehicle.groundLayer);
         if (hit.collider == null) { return; }
@@ -58,7 +63,7 @@ public class FlipTracker : MonoBehaviour
 
             // set values
             jumpStarted = true;
-            startJumpRot = transform.rotation.eulerAngles.z - initTruckRotation;
+            startJumpRot = currRot;
         }
 
         // << TRIGGER WHEN GROUNDED >>
@@ -66,23 +71,28 @@ public class FlipTracker : MonoBehaviour
         {
             // set values
             jumpStarted = false;
-            endJumpRot = transform.rotation.eulerAngles.z - initTruckRotation;
+            endJumpRot = currRot;
 
             landPointRotation = groundGeneration.allGroundRotations[hitPointIndex];
 
             if (IsPerfectLanding(endJumpRot, landPointRotation)) 
             {
-                animHandler.TriggerPerfectLanding();
-                Debug.Log("<<PERFECT LANDING>>"); 
+                StartCoroutine(vehicle.PerfectLandingBoost());
             }
         }
 
         // track in air time
-        if (jumpStarted)
+        if (jumpStarted && vehicle.state == driveState.IN_AIR)
         {
-            airTime += Time.deltaTime;
+            currAirTime += Time.deltaTime;
+
+            ActiveFlipCounter();
         }
-        else { airTime = 0; }
+        else 
+        { 
+            currAirTime = 0;
+            flipCount = 0;
+        }
     }
 
     public bool IsPerfectLanding(float landPointRot, float groundPointRot)
@@ -90,11 +100,24 @@ public class FlipTracker : MonoBehaviour
         if (vehicle.state == driveState.CRASH) { return false; }
 
         // if rotation is within bound and enough time has passed and landing downhill
-        if ((groundPointRot - landPointRot) < perfectLandingRotationBound && airTime > perfectLandingMinAirTime && landPointRot < -5) 
+        if ((groundPointRot - landPointRot) < perfectLandingRotationBound && currAirTime > perfectLandingMinAirTime && landPointRot < -5) 
         { 
             return true;
         }
         return false;
+    }
+
+    public void ActiveFlipCounter()
+    {
+        if ((currRot < -250) && (currRot > -270) && !flipCounted)
+        {
+            flipCount++;
+            flipCounted = true;
+        }
+        else if ((currRot < 10) && (currRot > -10))
+        {
+            flipCounted = false;
+        }
     }
 
     private void OnDrawGizmos()

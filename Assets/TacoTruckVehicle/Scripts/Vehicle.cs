@@ -2,16 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum driveState { NONE, START_DRIVE, GROUNDED, IN_AIR, NITRO, CRASH, END_DRIVE }
+public enum driveState { NONE, START_DRIVE, GROUNDED, IN_AIR, NITRO, PERFECT_LANDING, CRASH, END_DRIVE }
 
 public class Vehicle : MonoBehaviour
 {
+    public CameraHandler cameraHandler;
     public Rigidbody2D rb_vehicle;
 
     [Space(10)]
     public LayerMask groundLayer;
     public List<Collider2D> groundColliderList;
     public float groundColliderSize = 15;
+    public float groundColliderHeightOffset = -2;
 
     [Header("States")]
     public driveState state = driveState.START_DRIVE;
@@ -37,6 +39,10 @@ public class Vehicle : MonoBehaviour
     public int nitroCharges = 3;
     public Vector2 nitroForce;
     public float activeNitroTime = 5; // how long each charge lasts
+
+    [Header("Perfect Boost")]
+    public Vector2 perfectLandingBoostForce;
+    public float activePerfectBoostTime = 0.5f;
 
     [Header("Inputs")]
     public KeyCode gasInputKey;
@@ -68,7 +74,7 @@ public class Vehicle : MonoBehaviour
         rb_vehicle.AddForce(Vector2.down * gravity * rb_vehicle.mass * Time.deltaTime);
 
         // << CHECK FOR GROUND COLLIDERS >>
-        Collider2D[] groundColliders = Physics2D.OverlapCircleAll(transform.position, groundColliderSize, groundLayer);
+        Collider2D[] groundColliders = Physics2D.OverlapCircleAll(transform.position + new Vector3(0, groundColliderHeightOffset), groundColliderSize, groundLayer);
         groundColliderList = new List<Collider2D>(groundColliders);
 
         // << GAS STATE >>
@@ -98,6 +104,12 @@ public class Vehicle : MonoBehaviour
             rb_vehicle.AddForce(nitroForce * rb_vehicle.mass);
         }
 
+        // << PERFECT BOOST STATE >>
+        if (state == driveState.PERFECT_LANDING)
+        {
+            rb_vehicle.AddForce(perfectLandingBoostForce * rb_vehicle.mass);
+        }
+
         // << ROTATE CAR >>
         rb_vehicle.angularVelocity = Mathf.Lerp(rb_vehicle.angularVelocity, rotationDir * rotationSpeed, Time.deltaTime);
 
@@ -120,13 +132,15 @@ public class Vehicle : MonoBehaviour
         if (state != driveState.NITRO && Input.GetKeyDown(nitroInputKey) && nitroCharges > 0)
         {
             StartCoroutine(NitroBoost());
+
+            StartCoroutine(cameraHandler.Shake(activeNitroTime, 0.5f));
         }
     }
 
     public void StateMachine()
     {
         // if not in nitro mode
-        if (state != driveState.NITRO && state != driveState.CRASH)
+        if (state != driveState.NITRO && state != driveState.CRASH && state != driveState.PERFECT_LANDING)
         {
             // set in air / ground drive
             if (groundColliderList.Count > 0) { state = driveState.GROUNDED; }
@@ -145,6 +159,16 @@ public class Vehicle : MonoBehaviour
         state = driveState.IN_AIR;
     }
 
+    // override all states and 
+    public IEnumerator PerfectLandingBoost()
+    {
+        state = driveState.PERFECT_LANDING;
+
+        yield return new WaitForSeconds(activePerfectBoostTime);
+
+        state = driveState.GROUNDED;
+    }
+
     public int GetFuel() {
         return fuelAmount;
     }
@@ -161,7 +185,7 @@ public class Vehicle : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.white;
-        //Gizmos.DrawSphere(transform.position, groundColliderSize);
+        Gizmos.DrawWireSphere(transform.position + new Vector3(0, groundColliderHeightOffset), groundColliderSize);
 
         // draw ray to show current velocity of rigidbody
         if (rb_vehicle != null)

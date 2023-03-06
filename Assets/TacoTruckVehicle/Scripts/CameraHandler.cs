@@ -2,18 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FollowMovingVehicle : MonoBehaviour
+public class CameraHandler : MonoBehaviour
 {
+    private Rigidbody2D vehicleRb;
 
     public GameObject vehicle;
     public GameObject ground;
 
-    private Rigidbody2D vehicleRb;
+    [Space(10)]
     public float camSpeed = 0.2f;
+
+    [Header("Parameters")]
     public Vector2 velocityRange = new Vector2(300, 1000); //the range of velocity the camera should adjust for
     public Vector2 heightRange = new Vector2(300, 1000);
     
     [Space(30)]
+    [Header("Adjustment Ranges")]
     public Vector2 xPosRange = new Vector2(0, -100); // the range of z positions the camera should adjust between
     public Vector2 yPosRange = new Vector2(0, -200);
     public Vector2 zPosRange = new Vector2(-200, -500); // the range of z positions the camera should adjust between
@@ -47,6 +51,22 @@ public class FollowMovingVehicle : MonoBehaviour
             currOffset = new Vector3(xPos, yPos, zPos);
             transform.position = Vector3.Lerp(transform.position, vehicle.transform.position + currOffset, camSpeed * Time.deltaTime);
             
+        }
+    }
+
+
+    public IEnumerator Shake(float duration, float magnitude)
+    {
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            float x = Random.Range(-1f, 1f) * magnitude;
+            float y = Random.Range(-1f, 1f) * magnitude;
+
+            transform.position += new Vector3(x, y, 0);
+            elapsed += Time.deltaTime;
+            yield return 0;
         }
     }
 }
