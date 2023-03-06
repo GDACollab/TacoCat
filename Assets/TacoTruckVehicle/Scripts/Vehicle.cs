@@ -27,6 +27,9 @@ public class Vehicle : MonoBehaviour
     public Vector2 inAirForce; // input based force on truck
     public Vector2 groundedForce; // input based force on truck
 
+    [Space(20)]
+    public float velocityClamp = 500;
+
     [Space(10)]
     public float rotationSpeed = 50f;
 
@@ -97,6 +100,9 @@ public class Vehicle : MonoBehaviour
 
         // << ROTATE CAR >>
         rb_vehicle.angularVelocity = Mathf.Lerp(rb_vehicle.angularVelocity, rotationDir * rotationSpeed, Time.deltaTime);
+
+        // << CLAMP VELOCITY >>
+       rb_vehicle.velocity = Vector2.ClampMagnitude(rb_vehicle.velocity, velocityClamp);
     }
 
     public void Inputs()

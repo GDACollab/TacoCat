@@ -6,10 +6,16 @@ public class FollowMovingVehicle : MonoBehaviour
 {
 
     public GameObject vehicle;
+    public GameObject ground;
+
     private Rigidbody2D vehicleRb;
     public float camSpeed = 0.2f;
     public Vector2 velocityRange = new Vector2(300, 1000); //the range of velocity the camera should adjust for
+    public Vector2 heightRange = new Vector2(300, 1000);
+    
+    [Space(30)]
     public Vector2 xPosRange = new Vector2(0, -100); // the range of z positions the camera should adjust between
+    public Vector2 yPosRange = new Vector2(0, -200);
     public Vector2 zPosRange = new Vector2(-200, -500); // the range of z positions the camera should adjust between
 
     public Vector3 currOffset;
@@ -32,13 +38,15 @@ public class FollowMovingVehicle : MonoBehaviour
             float zPos = Mathf.Lerp(zPosRange.x, zPosRange.y, velocityPercent);
             float xPos = Mathf.Lerp(xPosRange.x, xPosRange.y, velocityPercent);
 
+            // Linearly interpolate the camera's y-position based on the height
+            float heightPercent = Mathf.InverseLerp(heightRange.x, heightRange.y, vehicle.transform.position.y - ground.transform.position.y);
+
+            float yPos = Mathf.Lerp(yPosRange.x, yPosRange.y, heightPercent);
+
             // Update the camera's position with the new z-position
-            currOffset = new Vector3(xPos, currOffset.y, zPos);
+            currOffset = new Vector3(xPos, yPos, zPos);
             transform.position = Vector3.Lerp(transform.position, vehicle.transform.position + currOffset, camSpeed * Time.deltaTime);
             
         }
-
-
-
     }
 }

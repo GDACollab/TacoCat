@@ -11,6 +11,9 @@ public class TruckAnimationHandler : MonoBehaviour
 
     public GameObject nitroEffect;
 
+    public GameObject perfectLandingEffectPrefab;
+    private GameObject spawnedLandingEffect;
+
     public void Start()
     {
         vehicle = GetComponentInParent<Vehicle>();
@@ -31,13 +34,22 @@ public class TruckAnimationHandler : MonoBehaviour
         }
     }
 
-    public void TriggerCrashEffect(float destroyTimer)
+    public void TriggerCrashEffect(float destroyTimer = 2)
     {
         if (spawnedCrashEffect != null) { return; } // don't spawn if spawned already 
 
         spawnedCrashEffect = Instantiate(crashEffectPrefab, vehicle.transform.position, Quaternion.identity);
 
         Destroy(spawnedCrashEffect, destroyTimer);
+    }
+
+    public void TriggerPerfectLanding(float destroyTimer = 2)
+    {
+        if (spawnedLandingEffect != null) { return; } // don't spawn if spawned already 
+
+        spawnedLandingEffect = Instantiate(perfectLandingEffectPrefab, vehicle.transform.position, Quaternion.identity);
+
+        Destroy(spawnedLandingEffect, destroyTimer);
     }
 
     public void EnableNitroEffect(bool enabled)

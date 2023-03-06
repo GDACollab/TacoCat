@@ -360,6 +360,7 @@ public class GroundGeneration : MonoBehaviour
         GameObject newCurveObject = Instantiate(curveGenerationPrefab, newGenPosParentPos, Quaternion.identity);
         BezierCurveGeneration bezierGroundGen = newCurveObject.GetComponent<BezierCurveGeneration>();
 
+
         newCurveObject.SetActive(true); // set curve gen as active
         newCurveObject.transform.parent = chunkParent.transform; // set parent
         chunks.Add(newCurveObject); // add to chunks list
@@ -367,6 +368,9 @@ public class GroundGeneration : MonoBehaviour
         // set beginning and end points of the bezier curve
         bezierGroundGen.p0_pos = begPos;
         bezierGroundGen.p3_pos = endPos;
+
+        bezierGroundGen.SetAngleType();
+
 
         // set camera override
         if (inCameraRangeOverride)
@@ -413,15 +417,17 @@ public class GroundGeneration : MonoBehaviour
         float horzDistance = Vector3.Distance(begPos, endPos);
         float vertDistance = Mathf.Abs(endPos.y - begPos.y);
 
+        Debug.Log("Rounded Hills gen angle " + ground.generationAngleType);
+
         if (ground.generationAngleType == "uphill")
         {
-            ground.p1_pos = new Vector3(begPos.x + horzDistance / 3, begPos.y - vertDistance);
-            ground.p2_pos = new Vector3(endPos.x - horzDistance / 2, endPos.y + vertDistance);
+            ground.p1_pos = new Vector3(begPos.x + horzDistance / 3, begPos.y);
+            ground.p2_pos = new Vector3(endPos.x - horzDistance / 3, endPos.y);
         }
         else
         {
-            ground.p1_pos = new Vector3(begPos.x + horzDistance / 3, begPos.y - vertDistance);
-            ground.p2_pos = new Vector3(endPos.x - horzDistance / 2, endPos.y + vertDistance);
+            ground.p1_pos = new Vector3(begPos.x + horzDistance / 3, begPos.y);
+            ground.p2_pos = new Vector3(endPos.x - horzDistance / 3, endPos.y);
         }
     }
 
@@ -540,6 +546,27 @@ public class GroundGeneration : MonoBehaviour
 
         generationFinished = true;
     }
+
+    public int GetClosestGroundPointIndexToPos(Vector3 pos)
+    {
+        int closestIndex = -1;
+        float closestDistance = float.MaxValue;
+
+        for (int i = 0; i < allGroundPoints.Count; i++)
+        {
+            float distance = Vector3.Distance(pos, allGroundPoints[i]);
+
+            if (distance < closestDistance)
+            {
+                closestIndex = i;
+                closestDistance = distance;
+            }
+        }
+
+        return closestIndex;
+    }
+
+
     #endregion
 
     private void OnDrawGizmos()
