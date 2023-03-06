@@ -2053,6 +2053,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5231190167668380752, guid: aad9dd5e0dc8547b388ccec1d0309294, type: 3}
   m_PrefabInstance: {fileID: 5231190168114980224}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1067633373 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5231190167668380751, guid: aad9dd5e0dc8547b388ccec1d0309294, type: 3}
+  m_PrefabInstance: {fileID: 5231190168114980224}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1067633357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b99eb8140a7b473895a4cc7a39cb687, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1067633374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2070,6 +2081,7 @@ MonoBehaviour:
   currAirTime: 0
   perfectLandingRotationBound: 5
   perfectLandingMinAirTime: 0.75
+  currRot: 0
   startJumpRot: 0
   endJumpRot: 0
   landPointRotation: 0
@@ -4092,9 +4104,17 @@ PrefabInstance:
       value: -500
       objectReference: {fileID: 0}
     - target: {fileID: 5231190167668380751, guid: aad9dd5e0dc8547b388ccec1d0309294, type: 3}
+      propertyPath: nitroForce.x
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 5231190167668380751, guid: aad9dd5e0dc8547b388ccec1d0309294, type: 3}
       propertyPath: nitroForce.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5231190167668380751, guid: aad9dd5e0dc8547b388ccec1d0309294, type: 3}
+      propertyPath: cameraHandler
+      value: 
+      objectReference: {fileID: 1440028594}
     - target: {fileID: 5231190167668380751, guid: aad9dd5e0dc8547b388ccec1d0309294, type: 3}
       propertyPath: velocityClamp
       value: 800
@@ -4112,12 +4132,8 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5231190167668380751, guid: aad9dd5e0dc8547b388ccec1d0309294, type: 3}
-      propertyPath: groundColliderHeightOffset
-      value: -5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5231190167668380751, guid: aad9dd5e0dc8547b388ccec1d0309294, type: 3}
       propertyPath: perfectLandingBoostForce.x
-      value: 500
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 5231190167668380751, guid: aad9dd5e0dc8547b388ccec1d0309294, type: 3}
       propertyPath: perfectLandingBoostForce.y
@@ -4183,6 +4199,14 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+    - target: {fileID: 7641457981194525658, guid: aad9dd5e0dc8547b388ccec1d0309294, type: 3}
+      propertyPath: vehicle
+      value: 
+      objectReference: {fileID: 1067633373}
+    - target: {fileID: 7641457981194525658, guid: aad9dd5e0dc8547b388ccec1d0309294, type: 3}
+      propertyPath: cameraHandler
+      value: 
+      objectReference: {fileID: 1440028594}
     - target: {fileID: 7641457981194525658, guid: aad9dd5e0dc8547b388ccec1d0309294, type: 3}
       propertyPath: perfectLandingEffectPrefab
       value: 
