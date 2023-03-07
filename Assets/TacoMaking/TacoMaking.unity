@@ -304,6 +304,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &724822553 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2687932735789318911, guid: 8cf711440cf4ce64d8c2729c7a0ed2c6, type: 3}
+  m_PrefabInstance: {fileID: 2687932734444593327}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1027206385
 GameObject:
   m_ObjectHideFlags: 0
@@ -385,12 +390,42 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2687932735789318910, guid: 8cf711440cf4ce64d8c2729c7a0ed2c6, type: 3}
   m_PrefabInstance: {fileID: 2687932734444593327}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 724822553}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3112e9585a7225e4d8c898652422f1b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1349198419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 724822553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 758261598
+      Data2: 1147408143
+      Data3: 508694203
+      Data4: -1612420227
+    Path: event:/TacoMusic
+  Event: 
+  PlayEvent: 1
+  StopEvent: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!4 &1404059661 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7277452623187438659, guid: 8bdc26fc693360d4499aa43fd2bc0433, type: 3}
