@@ -8,6 +8,7 @@ public class CustomerManager : MonoBehaviour
     public TacoMakingGameManager tacoGameManager;
     public GameObject customerPrefab;
     public Customer currCustomer;
+    public TacoAudioManager tacoAudioManager;
   
     public float transitionTime;       //How long it takes in seconds for the customer to transition between positions
     public List<Transform> positionList = new List<Transform>(); //Used as the points the customer transitions to/from 
@@ -66,9 +67,10 @@ public class CustomerManager : MonoBehaviour
         if (currCustomer == null && customerList.Count > 0)
         {
             currCustomer = customerList[0];
+            tacoAudioManager.OrderAudio(); //needs to be edited later
         }
 
-        //Iterate through all the customers and check if there position needs to be updated
+        //Iterate through all the customers and check if their position needs to be updated
         for (int i = 0; i < customerList.Count; i++)
         {
             //If the customers current position has changed, then update its variables
