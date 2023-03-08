@@ -12,6 +12,13 @@ public class CameraHandler : MonoBehaviour
     [Space(10)]
     public float camSpeed = 0.2f;
 
+    [Header("Camera Shake")]
+    [Range(0, 1)]
+    public float perfect_camShakeMagnitude = 0.5f;
+    [Range(0, 1)]
+    public float nitro_camShakeMagnitude = 0.5f;
+
+
     [Header("Parameters")]
     public Vector2 velocityRange = new Vector2(300, 1000); //the range of velocity the camera should adjust for
     public Vector2 heightRange = new Vector2(300, 1000);

@@ -135,7 +135,7 @@ public class Vehicle : MonoBehaviour
         {
             StartCoroutine(NitroBoost());
 
-            StartCoroutine(cameraHandler.Shake(activeNitroTime, 0.5f));
+            StartCoroutine(cameraHandler.Shake(activeNitroTime, cameraHandler.nitro_camShakeMagnitude));
         }
     }
 
@@ -165,6 +165,9 @@ public class Vehicle : MonoBehaviour
     public IEnumerator PerfectLandingBoost()
     {
         state = driveState.PERFECT_LANDING;
+
+        StartCoroutine(cameraHandler.Shake(activePerfectBoostTime, cameraHandler.perfect_camShakeMagnitude));
+
 
         yield return new WaitForSeconds(activePerfectBoostTime);
 

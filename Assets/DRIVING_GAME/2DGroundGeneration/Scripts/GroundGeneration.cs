@@ -35,6 +35,7 @@ public class GroundGeneration : MonoBehaviour
     public bool editMode;
     [Tooltip("Override and show objects and mesh even if not in camera range")]
     public bool inCameraRangeOverride;
+    public Color gizmosColor = Color.green;
 
     [Space(20)]
     public Vector3 fullGenerationPosOffset = Vector3.zero; // moves the entire generation to specified offset after everything is created
@@ -550,6 +551,8 @@ public class GroundGeneration : MonoBehaviour
         }
 
         generationFinished = true;
+
+        chunkParent.SetActive(false); // disable chunk parent
     }
 
     public int GetClosestGroundPointIndexToPos(Vector3 pos)
@@ -575,14 +578,12 @@ public class GroundGeneration : MonoBehaviour
     #endregion
 
     private void OnDrawGizmos()
-
     {
         Gizmos.color = Color.white;
         Gizmos.DrawLine(begGenerationPoint.position, endGenerationPoint.position);
 
-
         // << FLAT START ZONE >>
-        Gizmos.color = Color.green;
+        Gizmos.color = gizmosColor;
         Vector2 offsetPos = begGenerationPoint.position + new Vector3(begGenOffset, maxChunkHeight); // init last chunk as the current beginning position
         Gizmos.DrawLine(offsetPos + new Vector2(begGenOffset, 0), offsetPos); // spawn flat beginning
 

@@ -75,7 +75,7 @@ public class FlipTracker : MonoBehaviour
 
             landPointRotation = groundGeneration.allGroundRotations[hitPointIndex];
 
-            if (IsPerfectLanding(endJumpRot, landPointRotation)) 
+            if (IsPerfectLanding(endJumpRot, landPointRotation) && flipCount > 0) 
             {
                 StartCoroutine(vehicle.PerfectLandingBoost());
             }

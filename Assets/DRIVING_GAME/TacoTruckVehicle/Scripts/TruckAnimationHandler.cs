@@ -58,11 +58,6 @@ public class TruckAnimationHandler : MonoBehaviour
 
     public void EnablePerfectBoostEffect(bool enabled)
     {
-        if (enabled)
-        {
-            StartCoroutine(cameraHandler.Shake(0.1f, 0.35f));
-        }
-
         perfectLandingEffect.SetActive(enabled);
     }
 }

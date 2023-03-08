@@ -54,7 +54,12 @@ public class DrivingUIManager : MonoBehaviour
         flipText.text = "Flip Count: " + flipTracker.flipCount;
         
         // update the distance travelled
-        pointer.position = Vector3.Lerp(pointerStart.position, pointerEnd.position, drivingGameManager.percentageTraveled);
+        if (drivingGameManager.percentageTraveled < 0) { pointer.position = pointerStart.position; }
+        else if (drivingGameManager.percentageTraveled > 1) { pointer.position = pointerEnd.position; }
+        else
+        {
+            pointer.position = Vector3.Lerp(pointerStart.position, pointerEnd.position, drivingGameManager.percentageTraveled);
+        }
 
     }
 
