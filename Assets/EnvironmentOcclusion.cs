@@ -4,36 +4,42 @@ using UnityEngine;
 
 public class EnvironmentOcclusion : MonoBehaviour
 {
-
-    public Transform followTarget;
-    public Vector2 activeObjectRange = new Vector2(200,100);
-
+    public List<EnvironmentGenerator> envGenerators;
 
     public Transform targetTransform; // the center of the range
     public float range = 2.0f; // the range around the center
 
-    public List<GameObject> gameObjectsToCheck; // the list of game objects to check
-
-    private void Start()
+    private void Update()
     {
-        foreach (GameObject gameObjectToCheck in gameObjectsToCheck)
+
+        foreach (EnvironmentGenerator envGenerator in envGenerators)
         {
-            Transform transformToCheck = gameObjectToCheck.transform;
-
-            // calculate the distance between the target and the transform to check
-            float distance = Vector3.Distance(targetTransform.position, transformToCheck.position);
-
-            // check if the distance is within the specified range
-            if (distance <= range)
+            foreach (GameObject envObject in envGenerator.allSpawnedObjects)
             {
-                Debug.Log(transformToCheck.name + " is within range of " + targetTransform.name);
+                Transform transformToCheck = envObject.transform;
+
+                // calculate the distance between the target and the transform to check
+                float distance = Vector3.Distance(targetTransform.position, transformToCheck.position);
+
+                // check if the distance is within the specified range
+                if (distance <= range)
+                {
+                    envObject.SetActive(true);
+                    // Debug.Log(transformToCheck.name + " is within range of " + targetTransform.name);
+                }
+                else
+                {
+                    envObject.SetActive(false);
+                }
             }
         }
+
+
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(followTarget.position, activeObjectRange);
+        Gizmos.DrawWireSphere(targetTransform.position, range);
     }
 }

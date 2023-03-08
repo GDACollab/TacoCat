@@ -13,7 +13,6 @@ public class MeshCreator : MonoBehaviour
     public bool collisionMesh = true;
     public Material groundMaterial;
 
-
     [Header("Debug")]
     public GameObject debugMarker;
     public List<GameObject> debugMarkerList = new List<GameObject>();
@@ -108,10 +107,11 @@ public class MeshCreator : MonoBehaviour
             undergroundMeshObj.GetComponent<EdgeCollider2D>().enabled = false;
         }
 
-        //undergroundMeshObj.transform.localPosition = new Vector3(undergroundMeshObj.transform.position.x, undergroundMeshObj.transform.position.y, 0);
+
 
         Debug.Log("Underground Mesh Created", gameObject);
         meshCreated = true;
+
     }
 
     public Vector3[] GetUndergroundVertices(List<Vector3> genCurvePoints, float underground_height, int triSize, int chunkCount)

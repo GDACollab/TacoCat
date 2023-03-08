@@ -28,7 +28,7 @@ public class GroundGeneration : MonoBehaviour
     [Space(10)]
     public GameObject undergroundMeshObj;
     [HideInInspector]
-    public MeshCreator meshCreator;
+    public MeshCreator undergroundMeshCreator;
 
     [Space(20)]
     [Tooltip("Reloads the ground generation every second so you can see how the script will react to the settings you have used.")]
@@ -37,10 +37,13 @@ public class GroundGeneration : MonoBehaviour
     public bool inCameraRangeOverride;
 
     [Space(20)]
+    public Vector3 fullGenerationPosOffset = Vector3.zero; // moves the entire generation to specified offset after everything is created
+    private bool setGenOffset;
+
     [Range(-5000, 0)]
-    public int beginning_offset = -700;
+    public int begGenOffset = -700;
     [Range(0, 5000)]
-    public int ending_offset = 700;
+    public int endGenOffset = 700;
 
     [Header("Full Generation Values ==============================")]
     [Tooltip("Choose the style of the full generation")]
@@ -82,7 +85,7 @@ public class GroundGeneration : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        meshCreator = undergroundMeshObj.GetComponent<MeshCreator>();
+        undergroundMeshCreator = undergroundMeshObj.GetComponent<MeshCreator>();
 
         // disable end point sprites
         begGenerationPoint.GetComponent<SpriteRenderer>().enabled = false;
@@ -103,10 +106,17 @@ public class GroundGeneration : MonoBehaviour
         }
 
         // create mesh if generation finished && mesh not created
-        if (generationFinished && !meshCreator.meshCreated && allGroundPoints.Count > 0)
+        if (generationFinished && !undergroundMeshCreator.meshCreated && allGroundPoints.Count > 0)
         {
             // create undergound mesh
-            meshCreator.CreateUnderground(allGroundPoints, undergroundMeshHeight);
+            undergroundMeshCreator.CreateUnderground(allGroundPoints, undergroundMeshHeight);
+        }
+        else if (undergroundMeshCreator.meshCreated && !setGenOffset)
+        {
+            // adjust object to offset
+            gameObject.transform.position += fullGenerationPosOffset;
+
+            setGenOffset = true;
         }
 
         if (editMode)
@@ -120,7 +130,7 @@ public class GroundGeneration : MonoBehaviour
             endGenerationPoint.GetComponent<SpriteRenderer>().enabled = true;
 
             // if points found and mesh created
-            if (generationFinished && meshCreator.meshCreated && !newGenerationStarted)
+            if (generationFinished && undergroundMeshCreator.meshCreated && !newGenerationStarted)
             {
                 newGenerationStarted = true; // manage generation resets
 
@@ -128,11 +138,11 @@ public class GroundGeneration : MonoBehaviour
                 generationFinished = false;
                 allGroundPoints.Clear();
                 allGroundRotations.Clear();
-                meshCreator.DestroyUndergroundMesh();
+                undergroundMeshCreator.DestroyUndergroundMesh();
 
                 NewGeneration(generationStyle);
             }
-            else if (generationFinished && meshCreator.meshCreated)
+            else if (generationFinished && undergroundMeshCreator.meshCreated)
             {
                 newGenerationStarted = false;
             }
@@ -188,10 +198,10 @@ public class GroundGeneration : MonoBehaviour
 
     public void StartIslandGenerator()
     {
-        Vector2 offsetPos = begGenerationPoint.position + new Vector3(beginning_offset, maxChunkHeight); // init last chunk as the current beginning position
+        Vector2 offsetPos = begGenerationPoint.position + new Vector3(begGenOffset, maxChunkHeight); // init last chunk as the current beginning position
 
         // << FLAT START ZONE >>
-        SpawnBezierGroundChunk(offsetPos + new Vector2(beginning_offset, 0), offsetPos, CHUNK_STYLES.flat); // spawn flat beginning
+        SpawnBezierGroundChunk(offsetPos + new Vector2(begGenOffset, 0), offsetPos, CHUNK_STYLES.flat); // spawn flat beginning
 
         // << HILL TO GAIN SPEED >>
         SpawnBezierGroundChunk(offsetPos, begGenerationPoint.position, CHUNK_STYLES.rounded); // spawn
@@ -200,7 +210,7 @@ public class GroundGeneration : MonoBehaviour
 
     public void EndIslandGenerator()
     {
-        Vector2 offsetPos = endGenerationPoint.position + new Vector3(ending_offset, 0); ; // init last chunk as the current beginning position
+        Vector2 offsetPos = endGenerationPoint.position + new Vector3(endGenOffset, 0); ; // init last chunk as the current beginning position
 
         SpawnBezierGroundChunk(endGenerationPoint.position, offsetPos, CHUNK_STYLES.flat); // spawn flat beginning
     }
@@ -573,14 +583,14 @@ public class GroundGeneration : MonoBehaviour
 
         // << FLAT START ZONE >>
         Gizmos.color = Color.green;
-        Vector2 offsetPos = begGenerationPoint.position + new Vector3(beginning_offset, maxChunkHeight); // init last chunk as the current beginning position
-        Gizmos.DrawLine(offsetPos + new Vector2(beginning_offset, 0), offsetPos); // spawn flat beginning
+        Vector2 offsetPos = begGenerationPoint.position + new Vector3(begGenOffset, maxChunkHeight); // init last chunk as the current beginning position
+        Gizmos.DrawLine(offsetPos + new Vector2(begGenOffset, 0), offsetPos); // spawn flat beginning
 
         // << HILL TO GAIN SPEED >>
         Gizmos.DrawLine(offsetPos, begGenerationPoint.position); // spawn
 
         // << END OFFSET >>
-        Vector2 endOffsetPosition = endGenerationPoint.position + new Vector3(ending_offset, 0); ; // init last chunk as the current beginning position
+        Vector2 endOffsetPosition = endGenerationPoint.position + new Vector3(endGenOffset, 0); ; // init last chunk as the current beginning position
         Gizmos.DrawLine(endGenerationPoint.position, endOffsetPosition); // spawn
     }
 }

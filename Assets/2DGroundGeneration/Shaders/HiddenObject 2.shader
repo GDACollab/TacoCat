@@ -1,4 +1,4 @@
-Shader "Custom/HiddenObject1"
+Shader "Custom/HiddenObject2"
 {
     Properties
     {
@@ -24,7 +24,7 @@ Shader "Custom/HiddenObject1"
         LOD 100
 
         Stencil{
-            ref 1
+            ref 2
             comp equal
         }
 

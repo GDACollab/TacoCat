@@ -97,7 +97,7 @@ public class EnvironmentGenerator : MonoBehaviour
             SpawnAllEnvironmentObjects();
             SpawnGroundObjects(groundGeneration.allGroundPoints, groundGeneration.allGroundRotations, pointsBetweenGroundObjs);
 
-            if (drawLine) { DrawCurveLine(groundPoints, lineWidth, lineOffset, lineMaterial); }
+            if (drawLine) { DrawCurveLine(groundPoints, lineWidth, lineMaterial); }
         }
 
         else if (!groundGeneration.generationFinished && environmentSpawned)
@@ -340,7 +340,7 @@ public class EnvironmentGenerator : MonoBehaviour
         return vector;
     }
 
-    void DrawCurveLine(List<Vector3> points, float width, Vector3 y_offset,  Material material)
+    void DrawCurveLine(List<Vector3> points, float width,  Material material)
     {
         lineRenderer.startWidth = width;
         lineRenderer.endWidth = width;
@@ -351,7 +351,7 @@ public class EnvironmentGenerator : MonoBehaviour
         // add offset to points
         for (int i = 0; i < points.Count; i++)
         {
-            points[i] += lineOffset;
+            points[i] += lineOffset + groundGeneration.fullGenerationPosOffset;
         }
 
         // set points

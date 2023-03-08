@@ -1,4 +1,4 @@
-Shader "Custom/MaskSurface1"
+Shader "Custom/MaskSurface2"
 {
     Properties
     {
@@ -10,7 +10,7 @@ Shader "Custom/MaskSurface1"
         LOD 100
 
         Stencil{
-            ref 1
+            ref 2
             comp always
             pass replace
         }
