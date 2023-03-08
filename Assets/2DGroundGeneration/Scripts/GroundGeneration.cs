@@ -37,9 +37,9 @@ public class GroundGeneration : MonoBehaviour
     public bool inCameraRangeOverride;
 
     [Space(20)]
-    [Range(-1000, 0)]
+    [Range(-5000, 0)]
     public int beginning_offset = -700;
-    [Range(0, 1000)]
+    [Range(0, 5000)]
     public int ending_offset = 700;
 
     [Header("Full Generation Values ==============================")]
