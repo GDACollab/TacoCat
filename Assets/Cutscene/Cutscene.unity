@@ -306,13 +306,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phoneText: {fileID: 1555489853}
   phone_texts:
-  - Insert first text
-  - Insert second text
-  - Insert third text
-  messageDelay: 1
+  - 'Alex: jamie!! '
+  - 'Alex: how was ur last day? '
+  - 'Jamie: Hey hey!! It was good, the final was wayy easier than I thought. '
+  - 'Jamie: I was just about to start packing :) '
+  - 'Alex: packing? wait i thought we were going to meet up after your last day '
+  - "Jamie: Oh nooo, Alex I\u2019m so sorry. D:"
+  - 'Jamie: I thought I told you, I had to change my flight to leave tonight. I must
+    have forgot because of school. '
+  - "Alex: so we wont be able to see each other :\u2019( "
+  - "Jamie: No, I know this was our only chance, but I can\u2019t. I\u2019m so so
+    sorry. :\u2019\u2019( "
+  - 'Jamie: I really wish things worked out so that we could have finally met up. '
+  - 'Alex: wait, ur still in California until tonight? '
+  - 'Jamie: yes :P'
+  - 'Alex: santa cruz ;), right?'
+  - 'Jamie: yup yup '
+  - "Alex: i think\u2026i have an idea."
+  - 'Jamie: I wish you could just teleport here ;( '
+  - 'Alex: i have the next best thing. i can get there by tonight.'
+  - 'Jamie: what??  really?? how??'
+  - "Alex: i\u2019ll just drive"
+  - 'Jamie: Since when do you have a car??? '
+  - "Alex: well, it\u2019s not rlly a car\u2026"
+  messageDelay: 1.32
   typeOutMessage: 1
-  textSpeed: 0.05
-  characterLimit: 100
+  textSpeed: 0.028
+  characterLimit: 1000
 --- !u!4 &1104355424
 Transform:
   m_ObjectHideFlags: 0
@@ -457,8 +477,20 @@ PrefabInstance:
       value: Text (TMP)
       objectReference: {fileID: 0}
     - target: {fileID: 4909303822951794284, guid: be635faacab3f7744b13c97549120a30, type: 3}
+      propertyPath: m_text
+      value: text
+      objectReference: {fileID: 0}
+    - target: {fileID: 4909303822951794284, guid: be635faacab3f7744b13c97549120a30, type: 3}
+      propertyPath: m_fontSize
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 4909303822951794284, guid: be635faacab3f7744b13c97549120a30, type: 3}
       propertyPath: m_margin.z
       value: 0.69654083
+      objectReference: {fileID: 0}
+    - target: {fileID: 4909303822951794284, guid: be635faacab3f7744b13c97549120a30, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 4909303822951794285, guid: be635faacab3f7744b13c97549120a30, type: 3}
       propertyPath: m_Pivot.x
@@ -474,7 +506,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4909303822951794285, guid: be635faacab3f7744b13c97549120a30, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4909303822951794285, guid: be635faacab3f7744b13c97549120a30, type: 3}
       propertyPath: m_AnchorMax.y
@@ -482,7 +514,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4909303822951794285, guid: be635faacab3f7744b13c97549120a30, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4909303822951794285, guid: be635faacab3f7744b13c97549120a30, type: 3}
       propertyPath: m_AnchorMin.y
@@ -490,11 +522,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4909303822951794285, guid: be635faacab3f7744b13c97549120a30, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 328.15
+      value: 328.15002
       objectReference: {fileID: 0}
     - target: {fileID: 4909303822951794285, guid: be635faacab3f7744b13c97549120a30, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 50
+      value: 540
       objectReference: {fileID: 0}
     - target: {fileID: 4909303822951794285, guid: be635faacab3f7744b13c97549120a30, type: 3}
       propertyPath: m_LocalPosition.x
@@ -526,7 +558,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4909303822951794285, guid: be635faacab3f7744b13c97549120a30, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -35.93
+      value: -589.93
       objectReference: {fileID: 0}
     - target: {fileID: 4909303822951794285, guid: be635faacab3f7744b13c97549120a30, type: 3}
       propertyPath: m_AnchoredPosition.y
