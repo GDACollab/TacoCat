@@ -87,7 +87,6 @@ public class PlayerHand : MonoBehaviour
             if (TransformProximity())
             {
                 state = handState.PLACE_INGR;
-                //tacoAudioManager.pop();
             }
 
         }
@@ -102,6 +101,8 @@ public class PlayerHand : MonoBehaviour
                 tacoGameManager.AddIngredientToTaco(currHeldIngredient);
                 currHeldIngredient = new ingredientType();
                 state = handState.HOME;
+                //pop sound when placed
+                tacoAudioManager.pop();
             }
         }
 
@@ -142,7 +143,8 @@ public class PlayerHand : MonoBehaviour
             state = handState.PICK_FROM_BIN;
 
             pickBin = bin;
-            //tacoAudioManager.woosh();
+            //woosh sound when starting to pick up ingredient
+            tacoAudioManager.woosh();
         }
     }
 

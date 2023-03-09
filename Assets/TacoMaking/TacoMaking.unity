@@ -1018,17 +1018,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b75fe25cc9aaded4b8efe0158ef3a504, type: 3}
---- !u!4 &1390395743094321315 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3354342240746308266, guid: b75fe25cc9aaded4b8efe0158ef3a504, type: 3}
-  m_PrefabInstance: {fileID: 1390395743094321314}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4452405924561553218
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1390395743094321315}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2043782244719006703, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
       propertyPath: tacoAudioManager
@@ -1036,7 +1031,7 @@ PrefabInstance:
       objectReference: {fileID: 1640037158}
     - target: {fileID: 4452405924312791584, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4452405924312791584, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1044,7 +1039,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4452405924312791584, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4452405924312791584, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
       propertyPath: m_LocalPosition.z
