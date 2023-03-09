@@ -14,6 +14,7 @@ public class TacoUIManager : MonoBehaviour
     public float starScale = 1;
     public Transform starPosition;
     public TMP_Text scoreText;
+    public Color emptyStarColor = Color.black;
     
     [Header("Order Window UI")]
     public float ingredientScale = 0.1f;
@@ -111,7 +112,7 @@ public class TacoUIManager : MonoBehaviour
             foreach(Image img in starImg){
                 img.rectTransform.SetParent(starPosition);
                 img.transform.localScale = Vector3.one*starScale;
-                img.color = Color.black;
+                img.color = emptyStarColor;
                 starTracker.Add(img);
             }
         }

@@ -39,7 +39,6 @@ public class IngredientBenchManager : MonoBehaviour
             GameObject ingr_obj = gameManager.GetIngredientBinSprite(ingr);
             ingr_obj.transform.localScale = Vector3.one * ingredientScale;
 
-
             ingrObjs.Add(ingr_obj);
         }
 
