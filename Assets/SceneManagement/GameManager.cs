@@ -13,8 +13,8 @@ public class GameManager : MonoBehaviour
     public int cutscene = 3;
     public int loadingSceneIndex = 4;
 
-    // TacoMakingGameManager tacoGameManager;
-    // DrivingGameManager drivingGameManager;
+    TacoMakingGameManager tacoGameManager;
+    DrivingGameManager drivingGameManager;
 
     void Awake()
     {
@@ -23,17 +23,41 @@ public class GameManager : MonoBehaviour
 
     public void Update()
     {
-        /*
+        
         // << TACO GAME MANAGER >>
         if (tacoGameManager == null)
         {
-            tacoGameManager = GameObject.FindGameObjectWithTag("TacoGameManager").GetComponent<TacoMakingGameManager>();
+            try
+            {
+                tacoGameManager = GameObject.FindGameObjectWithTag("TacoGameManager").GetComponent<TacoMakingGameManager>();
+            }
+            catch{ }
         }
         else
         {
             // check if all customers submitted , if so move to driving with gas amount
+            if (tacoGameManager.endOfGame)
+            {
+                LoadDrivingScene();
+            }
         }
-        */
+
+
+        // << DRIVING GAME MANAGER >>
+        if (drivingGameManager == null)
+        {
+            try
+            {
+                drivingGameManager = GameObject.FindGameObjectWithTag("DrivingGameManager").GetComponent<DrivingGameManager>();
+            }
+            catch { }
+
+            if (drivingGameManager.endOfGame)
+            {
+                LoadTacoMakingScene();
+            }
+        }
+        
     }
 
     public void LoadMenu()
@@ -44,34 +68,40 @@ public class GameManager : MonoBehaviour
     public void LoadTacoMakingScene()
     {
 
-        StartCoroutine(TacoMakingLoadCoroutine());
+        StartCoroutine(LoadingCoroutine(tacoMakingIndex));
     }
-
-    IEnumerator TacoMakingLoadCoroutine()
-    {
-        SceneManager.LoadSceneAsync(loadingSceneIndex);
-        
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(tacoMakingIndex);
-
-        yield return new WaitForSeconds(2);
-
-        SceneManager.UnloadSceneAsync(loadingSceneIndex);
-    }
-
-
 
     public void LoadDrivingScene()
     {
-        SceneManager.LoadScene(drivingIndex);
+        StartCoroutine(LoadingCoroutine(drivingIndex));
     }
 
-    IEnumerator DrivingLoadCoroutine()
+    IEnumerator LoadingCoroutine(int sceneIndex)
     {
-        SceneManager.LoadSceneAsync(loadingSceneIndex);
+        yield return null;
 
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(drivingIndex);
+        SceneManager.LoadSceneAsync(loadingSceneIndex); // load loading scene
 
-        yield return new WaitForSeconds(2);
+        AsyncOperation newScene = SceneManager.LoadSceneAsync(sceneIndex, LoadSceneMode.Additive); // async load next scene
+
+        //Don't let the Scene activate until you allow it to
+        newScene.allowSceneActivation = false;
+        Debug.Log("Pro :" + newScene.progress);
+
+        //When the load is still in progress, output the Text and progress bar
+        while (!newScene.isDone)
+        {
+            //Output the current progress
+            Debug.Log("Loading progress: " + (newScene.progress * 100) + "%");
+
+            // Check if the load has finished
+            if (newScene.progress >= 0.9f)
+            {
+                newScene.allowSceneActivation = true;
+            }
+
+            yield return null;
+        }
 
         SceneManager.UnloadSceneAsync(loadingSceneIndex);
     }

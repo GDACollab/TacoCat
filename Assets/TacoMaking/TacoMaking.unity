@@ -360,6 +360,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1328948728 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7716071509725877988, guid: 8bdc26fc693360d4499aa43fd2bc0433, type: 3}
+  m_PrefabInstance: {fileID: 1948827671}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1389148912
 GameObject:
   m_ObjectHideFlags: 0
@@ -621,6 +626,42 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 10.4
       objectReference: {fileID: 0}
+    - target: {fileID: 3669339764372431597, guid: 8bdc26fc693360d4499aa43fd2bc0433, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3669339764372431597, guid: 8bdc26fc693360d4499aa43fd2bc0433, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3669339764372431597, guid: 8bdc26fc693360d4499aa43fd2bc0433, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3669339764372431597, guid: 8bdc26fc693360d4499aa43fd2bc0433, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3669339764372431597, guid: 8bdc26fc693360d4499aa43fd2bc0433, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3669339764372431597, guid: 8bdc26fc693360d4499aa43fd2bc0433, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6885326607644638215, guid: 8bdc26fc693360d4499aa43fd2bc0433, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6885326607644638215, guid: 8bdc26fc693360d4499aa43fd2bc0433, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6885326607644638215, guid: 8bdc26fc693360d4499aa43fd2bc0433, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7277452622676225723, guid: 8bdc26fc693360d4499aa43fd2bc0433, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 7
@@ -629,6 +670,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TacoUIManager
       objectReference: {fileID: 0}
+    - target: {fileID: 7277452623187438658, guid: 8bdc26fc693360d4499aa43fd2bc0433, type: 3}
+      propertyPath: endText
+      value: 
+      objectReference: {fileID: 1328948728}
     - target: {fileID: 7277452623187438658, guid: 8bdc26fc693360d4499aa43fd2bc0433, type: 3}
       propertyPath: starScale
       value: 0.8
@@ -691,6 +736,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7277452623187438659, guid: 8bdc26fc693360d4499aa43fd2bc0433, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7716071509725877988, guid: 8bdc26fc693360d4499aa43fd2bc0433, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

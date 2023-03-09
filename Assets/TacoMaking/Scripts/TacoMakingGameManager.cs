@@ -9,7 +9,9 @@ public class TacoMakingGameManager : MonoBehaviour
     public TacoUIManager uiManager;
     [HideInInspector]
     public IngredientBenchManager benchManager;
-    
+
+    public bool endOfGame;
+
     [Header("Submission Taco")]
     public Taco submissionTaco;
 
@@ -22,6 +24,8 @@ public class TacoMakingGameManager : MonoBehaviour
     public int comboCounter;   //counts the number for 3 combos in total throughout the whole minigame
     public int totalCustomers; //Total number of customers that will appear
     public int customersLeftToGenerate; //the number of customers left to generate in the scene
+    [HideInInspector]
+    public int submittedCustomers;
     public int lineSize;
     private float customerCreationTimer; //Used to space out the creation of customers
 
@@ -47,8 +51,14 @@ public class TacoMakingGameManager : MonoBehaviour
 
     public void Update()
     {
-        CustomerRotation();     
+        CustomerRotation();
 
+        // check for end
+        if (submittedCustomers == totalCustomers)
+        {
+            uiManager.endText.SetActive(true);
+            endOfGame = true;
+        }
     }
 
     public void CreateNewSubmissionTaco()
@@ -91,6 +101,8 @@ public class TacoMakingGameManager : MonoBehaviour
         CreateNewSubmissionTaco();
 
         customerManager.RemoveCurrentCustomer();
+
+        submittedCustomers++;
     }
 
     // Parameter: score from completed Taco

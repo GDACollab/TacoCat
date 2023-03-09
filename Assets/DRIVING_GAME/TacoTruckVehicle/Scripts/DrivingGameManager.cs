@@ -7,6 +7,8 @@ public class DrivingGameManager : MonoBehaviour
     public Vehicle vehicle;
     public GroundGeneration groundGeneration;
 
+    [Space(10)]
+    public bool endOfGame;
 
     [Header("Distance")]
     public Transform beginningPoint;

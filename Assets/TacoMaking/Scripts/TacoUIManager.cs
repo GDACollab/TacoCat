@@ -9,6 +9,10 @@ public class TacoUIManager : MonoBehaviour
     public TacoMakingGameManager tacoGameManager;
     CustomerManager customerManager;
 
+    [Space(10)]
+    public GameObject endText;
+    public bool endOfGame;
+
     [Header("Score UI")]
     public Image star;
     public float starScale = 1;
@@ -26,6 +30,7 @@ public class TacoUIManager : MonoBehaviour
     [Header("Gas/Nitro UI")]
     public Image fuelBar;
     public Image nCharge1, nCharge2, nCharge3;
+
     [Header("Test Gas/Nitro UI")]
     public float fuelAmount = 0;
     public float maxFuelAmount = 1;
@@ -61,6 +66,8 @@ public class TacoUIManager : MonoBehaviour
         // Update Gas Amount (to be deleted later)
         //DisplayGas(fuelAmount, maxFuelAmount);
         //DisplayNitro(numNitroCharges);
+
+
     }
     
     // Call this function to display the score. Takes in the score.
