@@ -20,7 +20,7 @@ public class TacoAudioManager : MonoBehaviour
     public string giveOrder, goodReaction, MehReaction, badReaction;
     void Start()
     {
-        customerManager = tacoGameManager.customerManager;
+        // customerManager = tacoGameManager.customerManager;
     }
 
     // Update is called once per frame

@@ -235,6 +235,63 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1001 &400979187
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2687932735789318909, guid: 8cf711440cf4ce64d8c2729c7a0ed2c6, type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2687932735789318909, guid: 8cf711440cf4ce64d8c2729c7a0ed2c6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 56.896423
+      objectReference: {fileID: 0}
+    - target: {fileID: 2687932735789318909, guid: 8cf711440cf4ce64d8c2729c7a0ed2c6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 7.9590025
+      objectReference: {fileID: 0}
+    - target: {fileID: 2687932735789318909, guid: 8cf711440cf4ce64d8c2729c7a0ed2c6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.098888084
+      objectReference: {fileID: 0}
+    - target: {fileID: 2687932735789318909, guid: 8cf711440cf4ce64d8c2729c7a0ed2c6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2687932735789318909, guid: 8cf711440cf4ce64d8c2729c7a0ed2c6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2687932735789318909, guid: 8cf711440cf4ce64d8c2729c7a0ed2c6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2687932735789318909, guid: 8cf711440cf4ce64d8c2729c7a0ed2c6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2687932735789318909, guid: 8cf711440cf4ce64d8c2729c7a0ed2c6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2687932735789318909, guid: 8cf711440cf4ce64d8c2729c7a0ed2c6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2687932735789318909, guid: 8cf711440cf4ce64d8c2729c7a0ed2c6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2687932735789318911, guid: 8cf711440cf4ce64d8c2729c7a0ed2c6, type: 3}
+      propertyPath: m_Name
+      value: TacoAudioManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8cf711440cf4ce64d8c2729c7a0ed2c6, type: 3}
 --- !u!1 &504390084
 GameObject:
   m_ObjectHideFlags: 0
@@ -487,6 +544,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1640037158 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2687932735789318910, guid: 8cf711440cf4ce64d8c2729c7a0ed2c6, type: 3}
+  m_PrefabInstance: {fileID: 400979187}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3112e9585a7225e4d8c898652422f1b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1884928305
 GameObject:
   m_ObjectHideFlags: 0
@@ -513,7 +581,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1884928305}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22243bf780eaab74aaf5e2bf8cbf84a3, type: 3}
+  m_Script: {fileID: 11500000, guid: 575fbfb9aa09b2241960627440be3872, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   tacoGameManager: {fileID: 332676449}
@@ -857,6 +925,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2043782244719006703, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
+      propertyPath: tacoAudioManager
+      value: 
+      objectReference: {fileID: 1640037158}
     - target: {fileID: 4452405924312791584, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
       propertyPath: m_RootOrder
       value: 1

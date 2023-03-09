@@ -5,10 +5,19 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/SceneManagement/Menu.unity
+    guid: bc98fc8a138170c4999aeb6c297f3ffb
+  - enabled: 1
+    path: Assets/SceneManagement/LoadingScreen.unity
+    guid: 0bb09585c49ab344a94086c6da4d617b
+  - enabled: 1
+    path: Assets/TacoMaking/TacoMaking.unity
+    guid: 12b5f7d8c3f14e648b7bee55ec51e365
   - enabled: 1
     path: Assets/DRIVING_GAME/SunsetDrive.unity
     guid: 5a5e100860b2bee4593c56a86f2246b7
+  - enabled: 1
+    path: Assets/Cutscene/Cutscene.unity
+    guid: ba4d0311e07eddb49a77f31b2d027d46
   m_configObjects: {}

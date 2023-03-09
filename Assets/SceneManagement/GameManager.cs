@@ -44,10 +44,10 @@ public class GameManager : MonoBehaviour
     public void LoadTacoMakingScene()
     {
 
-        StartCoroutine(TacoMakingLoading());
+        StartCoroutine(TacoMakingLoadCoroutine());
     }
 
-    IEnumerator TacoMakingLoading()
+    IEnumerator TacoMakingLoadCoroutine()
     {
         SceneManager.LoadSceneAsync(loadingSceneIndex);
         
@@ -63,6 +63,17 @@ public class GameManager : MonoBehaviour
     public void LoadDrivingScene()
     {
         SceneManager.LoadScene(drivingIndex);
+    }
+
+    IEnumerator DrivingLoadCoroutine()
+    {
+        SceneManager.LoadSceneAsync(loadingSceneIndex);
+
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(drivingIndex);
+
+        yield return new WaitForSeconds(2);
+
+        SceneManager.UnloadSceneAsync(loadingSceneIndex);
     }
 
     public void LoadCutscene()
