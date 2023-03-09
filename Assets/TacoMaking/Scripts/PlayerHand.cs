@@ -14,6 +14,9 @@ public class PlayerHand : MonoBehaviour
     //We need the tacoGameManager so as to place the ingredient on the taco later
     public TacoMakingGameManager tacoGameManager;
 
+    //reference for pop and woosh audio 
+    public TacoAudioManager tacoAudioManager;
+
     // what's the main thing that I want the hand to do? move from one position to another
     // so I'm going to make a "target" object for the hand to move towards
     public Transform target; // i use a transform here because i'm only worried about the position of the object
@@ -84,7 +87,9 @@ public class PlayerHand : MonoBehaviour
             if (TransformProximity())
             {
                 state = handState.PLACE_INGR;
+                //tacoAudioManager.pop();
             }
+
         }
 
         if (state == handState.PLACE_INGR)
@@ -137,6 +142,7 @@ public class PlayerHand : MonoBehaviour
             state = handState.PICK_FROM_BIN;
 
             pickBin = bin;
+            //tacoAudioManager.woosh();
         }
     }
 
