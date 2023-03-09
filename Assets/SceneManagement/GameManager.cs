@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public enum currScene { MENU , INTRO_CUTSCENE , TACO_MAKING , DRIVING }
+
 public class GameManager : MonoBehaviour
 {
     public int menuIndex = 0;
     public int tacoMakingIndex = 1;
     public int drivingIndex = 2;
     public int cutscene = 3;
+    public int loadingSceneIndex = 4;
 
-    TacoMakingGameManager tacoGameManager;
+    // TacoMakingGameManager tacoGameManager;
     // DrivingGameManager drivingGameManager;
 
     void Awake()
@@ -20,6 +23,7 @@ public class GameManager : MonoBehaviour
 
     public void Update()
     {
+        /*
         // << TACO GAME MANAGER >>
         if (tacoGameManager == null)
         {
@@ -29,6 +33,7 @@ public class GameManager : MonoBehaviour
         {
             // check if all customers submitted , if so move to driving with gas amount
         }
+        */
     }
 
     public void LoadMenu()
@@ -38,8 +43,22 @@ public class GameManager : MonoBehaviour
 
     public void LoadTacoMakingScene()
     {
-        SceneManager.LoadScene(tacoMakingIndex);
+
+        StartCoroutine(TacoMakingLoading());
     }
+
+    IEnumerator TacoMakingLoading()
+    {
+        SceneManager.LoadSceneAsync(loadingSceneIndex);
+        
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(tacoMakingIndex);
+
+        yield return new WaitForSeconds(2);
+
+        SceneManager.UnloadSceneAsync(loadingSceneIndex);
+    }
+
+
 
     public void LoadDrivingScene()
     {
