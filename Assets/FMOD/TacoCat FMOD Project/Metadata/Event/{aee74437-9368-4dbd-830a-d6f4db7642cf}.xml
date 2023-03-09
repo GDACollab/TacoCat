@@ -83,6 +83,7 @@ https://wingless-seraph.net</value>
 			<destination>{79d8cf78-57b8-4d56-9b8f-24b1912734c1}</destination>
 			<destination>{843d0b59-d1e4-4164-ba8b-35f5e2f6e206}</destination>
 			<destination>{1328635b-2f71-4bbb-861c-05bfe8674b3a}</destination>
+			<destination>{50f114b1-075e-4cd7-8ac9-a9d108e364cd}</destination>
 		</relationship>
 		<relationship name="banks">
 			<destination>{ad52fdca-ce5c-46d9-a998-88b429aaffe5}</destination>
@@ -206,6 +207,11 @@ https://wingless-seraph.net</value>
 	<object class="ParameterProxy" id="{1328635b-2f71-4bbb-861c-05bfe8674b3a}">
 		<relationship name="preset">
 			<destination>{acd14848-36b3-4763-be4a-70f9a273033d}</destination>
+		</relationship>
+	</object>
+	<object class="ParameterProxy" id="{50f114b1-075e-4cd7-8ac9-a9d108e364cd}">
+		<relationship name="preset">
+			<destination>{5c0f9d6e-3bb4-4f7b-91c9-7a58d863a036}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{db58566f-f985-4f0b-869a-87125f3e88fc}">
