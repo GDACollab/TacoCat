@@ -330,9 +330,9 @@ MonoBehaviour:
   - "Alex: i\u2019ll just drive"
   - 'Jamie: Since when do you have a car??? '
   - "Alex: well, it\u2019s not rlly a car\u2026"
-  messageDelay: 0
+  messageDelay: 1
   typeOutMessage: 1
-  textSpeed: 0
+  textSpeed: 0.028
   characterLimit: 1000
 --- !u!4 &1104355424
 Transform:
@@ -483,7 +483,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4909303822951794284, guid: be635faacab3f7744b13c97549120a30, type: 3}
       propertyPath: m_fontSize
-      value: 17
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4909303822951794284, guid: be635faacab3f7744b13c97549120a30, type: 3}
       propertyPath: m_margin.z
@@ -491,7 +491,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4909303822951794284, guid: be635faacab3f7744b13c97549120a30, type: 3}
       propertyPath: m_fontSizeBase
-      value: 17
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4909303822951794285, guid: be635faacab3f7744b13c97549120a30, type: 3}
       propertyPath: m_Pivot.x
@@ -507,7 +507,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4909303822951794285, guid: be635faacab3f7744b13c97549120a30, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4909303822951794285, guid: be635faacab3f7744b13c97549120a30, type: 3}
       propertyPath: m_AnchorMax.y
@@ -515,7 +515,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4909303822951794285, guid: be635faacab3f7744b13c97549120a30, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4909303822951794285, guid: be635faacab3f7744b13c97549120a30, type: 3}
       propertyPath: m_AnchorMin.y
@@ -523,11 +523,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4909303822951794285, guid: be635faacab3f7744b13c97549120a30, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 328.15002
+      value: 400
       objectReference: {fileID: 0}
     - target: {fileID: 4909303822951794285, guid: be635faacab3f7744b13c97549120a30, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 540
+      value: 800
       objectReference: {fileID: 0}
     - target: {fileID: 4909303822951794285, guid: be635faacab3f7744b13c97549120a30, type: 3}
       propertyPath: m_LocalPosition.x
@@ -559,7 +559,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4909303822951794285, guid: be635faacab3f7744b13c97549120a30, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -589.93
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4909303822951794285, guid: be635faacab3f7744b13c97549120a30, type: 3}
       propertyPath: m_AnchoredPosition.y
