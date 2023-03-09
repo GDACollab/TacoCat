@@ -80,7 +80,10 @@ public class DrivingUIManager : MonoBehaviour
     
     // Function to update the fuel gauge
     void updateFuel(){
-        Vector3 nRotation = new Vector3(0f, 0f, 50f-140*Mathf.Clamp(vehicle_script.GetFuel(), 0, 1f));
+        //Vector3 nRotation = new Vector3(0f, 0f, 50f - 140 * Mathf.Clamp(vehicle_script.GetFuel(), 0, 1f));
+
+        Vector3 nRotation = Vector3.Lerp(Vector3.forward * 50f, Vector3.forward * -90f, vehicle_script.GetFuel());
+
         fuelSlider.transform.eulerAngles = nRotation;
     }
     
