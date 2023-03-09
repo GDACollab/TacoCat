@@ -1,6 +1,30 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7370532362929148437
+--- !u!114 &-8658339641355087253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/City/Traffic
+  m_EditorClassIdentifier: 
+  Name: Traffic
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 1984920251
+    data2: 3114584748
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
+--- !u!114 &-8561930763350662122
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -15,12 +39,12 @@ MonoBehaviour:
   Path: Assets/FMOD/TacoCat FMOD Project/Build/Desktop/Music.bank
   Name: Music
   StudioPath: bank:/Music
-  lastModified: 638139737647907311
+  lastModified: 638139004094751792
   FileSizes:
   - Name: Desktop
-    Value: 7015840
+    Value: 7015904
   Exists: 1
---- !u!114 &-6941612788058921229
+--- !u!114 &-8423685065464471139
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -30,21 +54,144 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/City/Walla
+  m_Name: parameter:/DrivingMusic/timeOfDay
   m_EditorClassIdentifier: 
-  Name: Walla
+  Name: timeOfDay
   StudioPath: 
   Min: 0
-  Max: 1
+  Max: 100
   Default: 0
   ID:
-    data1: 3911900181
-    data2: 1706493413
+    data1: 996920352
+    data2: 713284525
   Type: 0
   IsGlobal: 0
   Labels: []
   Exists: 1
---- !u!114 &-6634891998811666367
+--- !u!114 &-7776303222598069245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/TacoMusic
+  m_EditorClassIdentifier: 
+  Path: event:/Music/TacoMusic
+  Guid:
+    Data1: -1864684560
+    Data2: 1331220027
+    Data3: -397749323
+    Data4: -65858103
+  Banks:
+  - {fileID: -8561930763350662122}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 128064
+--- !u!114 &-7595185006366903977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Taco Making/Customer_Order
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Taco Making/Customer_Order
+  Guid:
+    Data1: -343311969
+    Data2: 1134924137
+    Data3: -1675159378
+    Data4: 1872976629
+  Banks:
+  - {fileID: -4883576881100996228}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters:
+  - {fileID: -4189828553822359907}
+  - {fileID: -3478068578892910875}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 3988
+--- !u!114 &-7568347909635091294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/StoryMusic
+  m_EditorClassIdentifier: 
+  Path: event:/Music/StoryMusic
+  Guid:
+    Data1: 382405416
+    Data2: 1090295510
+    Data3: 2034776713
+    Data4: 1466376842
+  Banks:
+  - {fileID: -8561930763350662122}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 177912
+--- !u!114 &-7274067073098588606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.strings.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/FMOD/TacoCat FMOD Project/Build/Desktop/Master.strings.bank
+  Name: Master.strings
+  StudioPath: bank:/Master.strings
+  lastModified: 638139004094256214
+  FileSizes:
+  - Name: Desktop
+    Value: 1728
+  Exists: 1
+--- !u!114 &-4883576881100996228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/SFX.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/FMOD/TacoCat FMOD Project/Build/Desktop/SFX.bank
+  Name: SFX
+  StudioPath: bank:/SFX
+  lastModified: 638139004094892665
+  FileSizes:
+  - Name: Desktop
+    Value: 2780480
+  Exists: 1
+--- !u!114 &-4189828553822359907
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -72,423 +219,7 @@ MonoBehaviour:
   - Okay
   - Perfect
   Exists: 1
---- !u!114 &-6376549383991062596
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/Driving/Truck Engine [Placeholder]
-  m_EditorClassIdentifier: 
-  Path: event:/SFX/Driving/Truck Engine [Placeholder]
-  Guid:
-    Data1: -1586190589
-    Data2: 1218736270
-    Data3: -1038978159
-    Data4: -1449645814
-  Banks:
-  - {fileID: -5515129586151917901}
-  IsStream: 0
-  Is3D: 1
-  IsOneShot: 0
-  Parameters:
-  - {fileID: 6557344707745027398}
-  - {fileID: -4741897202124267178}
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 0
---- !u!114 &-5613045479165825957
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Music/TacoMusic
-  m_EditorClassIdentifier: 
-  Path: event:/Music/TacoMusic
-  Guid:
-    Data1: -1864684560
-    Data2: 1331220027
-    Data3: -397749323
-    Data4: -65858103
-  Banks:
-  - {fileID: -7370532362929148437}
-  IsStream: 1
-  Is3D: 0
-  IsOneShot: 0
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 128064
---- !u!114 &-5552257207148950434
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/Taco Making/Customer_Order
-  m_EditorClassIdentifier: 
-  Path: event:/SFX/Taco Making/Customer_Order
-  Guid:
-    Data1: -343311969
-    Data2: 1134924137
-    Data3: -1675159378
-    Data4: 1872976629
-  Banks:
-  - {fileID: -5515129586151917901}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 0
-  Parameters:
-  - {fileID: -6634891998811666367}
-  - {fileID: 6560248994551624092}
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 3988
---- !u!114 &-5515129586151917901
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/SFX.bank
-  m_EditorClassIdentifier: 
-  Path: Assets/FMOD/TacoCat FMOD Project/Build/Desktop/SFX.bank
-  Name: SFX
-  StudioPath: bank:/SFX
-  lastModified: 638139737661197067
-  FileSizes:
-  - Name: Desktop
-    Value: 2780480
-  Exists: 1
---- !u!114 &-4741897202124267178
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/Truck Engine [Placeholder]/Load
-  m_EditorClassIdentifier: 
-  Name: Load
-  StudioPath: 
-  Min: -1
-  Max: 1
-  Default: -1
-  ID:
-    data1: 680435508
-    data2: 3204922823
-  Type: 0
-  IsGlobal: 0
-  Labels: []
-  Exists: 1
---- !u!114 &-1023786706596089496
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Music/DrivingMusic
-  m_EditorClassIdentifier: 
-  Path: event:/Music/DrivingMusic
-  Guid:
-    Data1: -281622740
-    Data2: 1292746749
-    Data3: 1306725779
-    Data4: -22050800
-  Banks:
-  - {fileID: -7370532362929148437}
-  IsStream: 1
-  Is3D: 0
-  IsOneShot: 0
-  Parameters:
-  - {fileID: 3960043556965590762}
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 220096
---- !u!114 &-559681615587390294
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Master.strings.bank
-  m_EditorClassIdentifier: 
-  Path: Assets/FMOD/TacoCat FMOD Project/Build/Desktop/Master.strings.bank
-  Name: Master.strings
-  StudioPath: bank:/Master.strings
-  lastModified: 638139737618763910
-  FileSizes:
-  - Name: Desktop
-    Value: 1858
-  Exists: 1
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d32cf7c32a3ed8347bac48ef5ed56d82, type: 3}
-  m_Name: FMODStudioCache
-  m_EditorClassIdentifier: 
-  EditorBanks:
-  - {fileID: -559681615587390294}
-  - {fileID: 7513194440752623938}
-  - {fileID: -7370532362929148437}
-  - {fileID: -5515129586151917901}
-  EditorEvents:
-  - {fileID: 1907305601802514593}
-  - {fileID: -1023786706596089496}
-  - {fileID: -5613045479165825957}
-  - {fileID: -6376549383991062596}
-  - {fileID: 5091310406749857534}
-  - {fileID: 2470110925340440847}
-  - {fileID: 8400391634024355646}
-  - {fileID: -5552257207148950434}
-  EditorParameters:
-  - {fileID: 3357083703737602470}
-  - {fileID: 762563208204201121}
-  - {fileID: 7541029848855921311}
-  MasterBanks:
-  - {fileID: 7513194440752623938}
-  StringsBanks:
-  - {fileID: -559681615587390294}
-  cacheTime: 638139737661197067
-  cacheVersion: 131601
---- !u!114 &762563208204201121
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/sfxVolume
-  m_EditorClassIdentifier: 
-  Name: sfxVolume
-  StudioPath: parameter:/sfxVolume
-  Min: 0
-  Max: 1
-  Default: 0
-  ID:
-    data1: 4039078160
-    data2: 1755679933
-  Type: 0
-  IsGlobal: 1
-  Labels: []
-  Exists: 1
---- !u!114 &1907305601802514593
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Music/StoryMusic
-  m_EditorClassIdentifier: 
-  Path: event:/Music/StoryMusic
-  Guid:
-    Data1: 382405416
-    Data2: 1090295510
-    Data3: 2034776713
-    Data4: 1466376842
-  Banks:
-  - {fileID: -7370532362929148437}
-  IsStream: 1
-  Is3D: 0
-  IsOneShot: 0
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 177912
---- !u!114 &2470110925340440847
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/Taco Making/Alex/Swipe
-  m_EditorClassIdentifier: 
-  Path: event:/SFX/Taco Making/Alex/Swipe
-  Guid:
-    Data1: -151863973
-    Data2: 1291252495
-    Data3: -908097398
-    Data4: 241443470
-  Banks:
-  - {fileID: -5515129586151917901}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 250
---- !u!114 &3357083703737602470
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/ambienceVolume
-  m_EditorClassIdentifier: 
-  Name: ambienceVolume
-  StudioPath: parameter:/AmbienceVolume
-  Min: 0
-  Max: 1
-  Default: 0
-  ID:
-    data1: 2211050040
-    data2: 1103005367
-  Type: 0
-  IsGlobal: 1
-  Labels: []
-  Exists: 1
---- !u!114 &3960043556965590762
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/DrivingMusic/timeOfDay
-  m_EditorClassIdentifier: 
-  Name: timeOfDay
-  StudioPath: 
-  Min: 0
-  Max: 100
-  Default: 0
-  ID:
-    data1: 996920352
-    data2: 713284525
-  Type: 0
-  IsGlobal: 0
-  Labels: []
-  Exists: 1
---- !u!114 &5091310406749857534
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Ambience/City
-  m_EditorClassIdentifier: 
-  Path: event:/Ambience/City
-  Guid:
-    Data1: -1360575433
-    Data2: 1304269672
-    Data3: -187299197
-    Data4: -817727781
-  Banks:
-  - {fileID: -5515129586151917901}
-  IsStream: 1
-  Is3D: 1
-  IsOneShot: 0
-  Parameters:
-  - {fileID: 6138169504940044811}
-  - {fileID: -6941612788058921229}
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 0
---- !u!114 &6138169504940044811
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/City/Traffic
-  m_EditorClassIdentifier: 
-  Name: Traffic
-  StudioPath: 
-  Min: 0
-  Max: 1
-  Default: 0
-  ID:
-    data1: 1984920251
-    data2: 3114584748
-  Type: 0
-  IsGlobal: 0
-  Labels: []
-  Exists: 1
---- !u!114 &6557344707745027398
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/Truck Engine [Placeholder]/RPM
-  m_EditorClassIdentifier: 
-  Name: RPM
-  StudioPath: 
-  Min: 0
-  Max: 2000
-  Default: 0
-  ID:
-    data1: 2863879515
-    data2: 48337986
-  Type: 0
-  IsGlobal: 0
-  Labels: []
-  Exists: 1
---- !u!114 &6560248994551624092
+--- !u!114 &-3478068578892910875
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -515,7 +246,7 @@ MonoBehaviour:
   - Bird
   - Frog
   Exists: 1
---- !u!114 &7513194440752623938
+--- !u!114 &-3384493171452183607
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -530,12 +261,12 @@ MonoBehaviour:
   Path: Assets/FMOD/TacoCat FMOD Project/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638139737618743920
+  lastModified: 638139004094256214
   FileSizes:
   - Name: Desktop
-    Value: 1856
+    Value: 1340
   Exists: 1
---- !u!114 &7541029848855921311
+--- !u!114 &-3192474062382926919
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -545,21 +276,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/musicVolume
+  m_Name: parameter:/Truck Engine [Placeholder]/Load
   m_EditorClassIdentifier: 
-  Name: musicVolume
-  StudioPath: parameter:/musicVolume
-  Min: 0
+  Name: Load
+  StudioPath: 
+  Min: -1
   Max: 1
-  Default: 0
+  Default: -1
   ID:
-    data1: 794079583
-    data2: 2990606425
+    data1: 680435508
+    data2: 3204922823
   Type: 0
-  IsGlobal: 1
+  IsGlobal: 0
   Labels: []
   Exists: 1
---- !u!114 &8400391634024355646
+--- !u!114 &-1908798460221713646
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -578,7 +309,7 @@ MonoBehaviour:
     Data3: 2116338054
     Data4: -698823307
   Banks:
-  - {fileID: -5515129586151917901}
+  - {fileID: -4883576881100996228}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -586,3 +317,197 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 250
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d32cf7c32a3ed8347bac48ef5ed56d82, type: 3}
+  m_Name: FMODStudioCache
+  m_EditorClassIdentifier: 
+  EditorBanks:
+  - {fileID: -7274067073098588606}
+  - {fileID: -3384493171452183607}
+  - {fileID: -8561930763350662122}
+  - {fileID: -4883576881100996228}
+  EditorEvents:
+  - {fileID: -7568347909635091294}
+  - {fileID: 7910431161787833670}
+  - {fileID: -7776303222598069245}
+  - {fileID: 7127440623263209391}
+  - {fileID: 3319560882327201080}
+  - {fileID: 1662494057405389240}
+  - {fileID: -1908798460221713646}
+  - {fileID: -7595185006366903977}
+  EditorParameters: []
+  MasterBanks:
+  - {fileID: -3384493171452183607}
+  StringsBanks:
+  - {fileID: -7274067073098588606}
+  cacheTime: 638139004094892665
+  cacheVersion: 131601
+--- !u!114 &1662494057405389240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Taco Making/Alex/Swipe
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Taco Making/Alex/Swipe
+  Guid:
+    Data1: -151863973
+    Data2: 1291252495
+    Data3: -908097398
+    Data4: 241443470
+  Banks:
+  - {fileID: -4883576881100996228}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 250
+--- !u!114 &3319560882327201080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Ambience/City
+  m_EditorClassIdentifier: 
+  Path: event:/Ambience/City
+  Guid:
+    Data1: -1360575433
+    Data2: 1304269672
+    Data3: -187299197
+    Data4: -817727781
+  Banks:
+  - {fileID: -4883576881100996228}
+  IsStream: 1
+  Is3D: 1
+  IsOneShot: 0
+  Parameters:
+  - {fileID: -8658339641355087253}
+  - {fileID: 8797459119931217095}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &7127440623263209391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Driving/Truck Engine [Placeholder]
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Driving/Truck Engine [Placeholder]
+  Guid:
+    Data1: -1586190589
+    Data2: 1218736270
+    Data3: -1038978159
+    Data4: -1449645814
+  Banks:
+  - {fileID: -4883576881100996228}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 0
+  Parameters:
+  - {fileID: 8481989994907687017}
+  - {fileID: -3192474062382926919}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &7910431161787833670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/DrivingMusic
+  m_EditorClassIdentifier: 
+  Path: event:/Music/DrivingMusic
+  Guid:
+    Data1: -281622740
+    Data2: 1292746749
+    Data3: 1306725779
+    Data4: -22050800
+  Banks:
+  - {fileID: -8561930763350662122}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters:
+  - {fileID: -8423685065464471139}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 220096
+--- !u!114 &8481989994907687017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Truck Engine [Placeholder]/RPM
+  m_EditorClassIdentifier: 
+  Name: RPM
+  StudioPath: 
+  Min: 0
+  Max: 2000
+  Default: 0
+  ID:
+    data1: 2863879515
+    data2: 48337986
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
+--- !u!114 &8797459119931217095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/City/Walla
+  m_EditorClassIdentifier: 
+  Name: Walla
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 3911900181
+    data2: 1706493413
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1

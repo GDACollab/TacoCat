@@ -62,6 +62,7 @@ Recordings by David Nichols of Track Time Audio. Engine is a 1988 Craftsman II 1
 		<relationship name="parameters">
 			<destination>{55a2c782-9a4c-4599-9552-a3c488fa273e}</destination>
 			<destination>{c6c14f4c-4a61-4a42-840d-15834fba96f8}</destination>
+			<destination>{6bcc828c-797d-4fbb-a62c-a23628c572be}</destination>
 		</relationship>
 		<relationship name="banks">
 			<destination>{ad52fdca-ce5c-46d9-a998-88b429aaffe5}</destination>
@@ -146,6 +147,11 @@ Recordings by David Nichols of Track Time Audio. Engine is a 1988 Craftsman II 1
 	<object class="ParameterProxy" id="{c6c14f4c-4a61-4a42-840d-15834fba96f8}">
 		<relationship name="preset">
 			<destination>{e7f5bbd6-bff8-4e7f-aa7c-434526538da4}</destination>
+		</relationship>
+	</object>
+	<object class="ParameterProxy" id="{6bcc828c-797d-4fbb-a62c-a23628c572be}">
+		<relationship name="preset">
+			<destination>{a3396888-0b90-4da5-8b53-2add9674ed94}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{f7d8b769-5b29-4842-8a34-4960179d969b}">
