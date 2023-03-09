@@ -287,7 +287,7 @@ GameObject:
   - component: {fileID: 1104355423}
   m_Layer: 0
   m_Name: CutsceneManager
-  m_TagString: Untagged
+  m_TagString: CutsceneManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -305,6 +305,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   phoneText: {fileID: 1555489853}
+  endOfCutscene: 0
   phone_texts:
   - 'Alex: jamie!! '
   - 'Alex: how was ur last day? '
@@ -329,9 +330,9 @@ MonoBehaviour:
   - "Alex: i\u2019ll just drive"
   - 'Jamie: Since when do you have a car??? '
   - "Alex: well, it\u2019s not rlly a car\u2026"
-  messageDelay: 1.32
+  messageDelay: 0
   typeOutMessage: 1
-  textSpeed: 0.028
+  textSpeed: 0
   characterLimit: 1000
 --- !u!4 &1104355424
 Transform:

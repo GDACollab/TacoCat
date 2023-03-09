@@ -7,14 +7,19 @@ public enum currScene { MENU , INTRO_CUTSCENE , TACO_MAKING , DRIVING }
 
 public class GameManager : MonoBehaviour
 {
+
+    public bool isLoadingScene;
+
     public int menuIndex = 0;
     public int tacoMakingIndex = 1;
     public int drivingIndex = 2;
     public int cutscene = 3;
     public int loadingSceneIndex = 4;
+    public int randDriveIndex;
 
     TacoMakingGameManager tacoGameManager;
     DrivingGameManager drivingGameManager;
+    CutsceneManager cutsceneManager;
 
     void Awake()
     {
@@ -36,7 +41,7 @@ public class GameManager : MonoBehaviour
         else
         {
             // check if all customers submitted , if so move to driving with gas amount
-            if (tacoGameManager.endOfGame)
+            if (tacoGameManager.endOfGame && !isLoadingScene)
             {
                 LoadDrivingScene();
             }
@@ -51,13 +56,32 @@ public class GameManager : MonoBehaviour
                 drivingGameManager = GameObject.FindGameObjectWithTag("DrivingGameManager").GetComponent<DrivingGameManager>();
             }
             catch { }
+        }
+        else {
 
-            if (drivingGameManager.endOfGame)
+            if (drivingGameManager.endOfGame && !isLoadingScene)
+            {
+                LoadMenu();
+            }
+        }
+
+        // << CUTSCENE MANAGER >>
+        if (cutsceneManager == null)
+        {
+            try
+            {
+                cutsceneManager = GameObject.FindGameObjectWithTag("CutsceneManager").GetComponent<CutsceneManager>();
+            }
+            catch { }
+        }
+        else { 
+
+            if (cutsceneManager.endOfCutscene && !isLoadingScene)
             {
                 LoadTacoMakingScene();
             }
         }
-        
+
     }
 
     public void LoadMenu()
@@ -76,8 +100,14 @@ public class GameManager : MonoBehaviour
         StartCoroutine(LoadingCoroutine(drivingIndex));
     }
 
+    public void LoadRandDrivingScene()
+    {
+        StartCoroutine(LoadingCoroutine(randDriveIndex));
+    }
+
     IEnumerator LoadingCoroutine(int sceneIndex)
     {
+        isLoadingScene = true;
         yield return null;
 
         SceneManager.LoadSceneAsync(loadingSceneIndex); // load loading scene
@@ -104,6 +134,7 @@ public class GameManager : MonoBehaviour
         }
 
         SceneManager.UnloadSceneAsync(loadingSceneIndex);
+        isLoadingScene = false;
     }
 
     public void LoadCutscene()

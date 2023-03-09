@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Unity.VisualScripting;
 
 public class CutsceneManager : MonoBehaviour
 {
     public TextMeshProUGUI phoneText;
+    public bool endOfCutscene;
 
+    [Space(10)]
     public List<string> phone_texts;
 
     [Range(0.0f, 5.0f)]
     public float messageDelay;
-
-    
 
     [Header("Typing out the message")]
     public bool typeOutMessage;
@@ -24,8 +25,6 @@ public class CutsceneManager : MonoBehaviour
     public int characterLimit;
 
     private int counter;
-
-
 
     // Start is called before the first frame update
     void Start()
@@ -56,6 +55,8 @@ public class CutsceneManager : MonoBehaviour
             yield return new WaitForSeconds(messageDelay);
         }
 
+        endOfCutscene = true;
+
     }
 
     //For typing out the message
@@ -80,15 +81,13 @@ public class CutsceneManager : MonoBehaviour
             phoneText.text += "\n";
             yield return new WaitForSeconds(messageDelay);
         }
+
+        endOfCutscene = true;
     }
 
 
 
 
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 }
