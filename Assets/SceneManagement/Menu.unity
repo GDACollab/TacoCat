@@ -472,6 +472,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+        m_TargetAssemblyTypeName: MenuAudioManager, Assembly-CSharp
+        m_MethodName: click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &610623319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -597,6 +609,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1354788260}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: LoadDrivingScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+        m_TargetAssemblyTypeName: MenuAudioManager, Assembly-CSharp
+        m_MethodName: click
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -875,6 +899,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+        m_TargetAssemblyTypeName: MenuAudioManager, Assembly-CSharp
+        m_MethodName: click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1312987036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1127,6 +1163,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1354788260}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: LoadTacoMakingScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+        m_TargetAssemblyTypeName: MenuAudioManager, Assembly-CSharp
+        m_MethodName: click
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1733,3 +1781,64 @@ MonoBehaviour:
   OverrideAttenuation: 0
   OverrideMinDistance: -1
   OverrideMaxDistance: -1
+--- !u!1001 &5558428075629181418
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1345991178725705055, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+      propertyPath: m_Name
+      value: MenuAudioManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 1798788856762079704, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1798788856762079704, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.7620814
+      objectReference: {fileID: 0}
+    - target: {fileID: 1798788856762079704, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 9.362319
+      objectReference: {fileID: 0}
+    - target: {fileID: 1798788856762079704, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 42.00499
+      objectReference: {fileID: 0}
+    - target: {fileID: 1798788856762079704, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1798788856762079704, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1798788856762079704, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1798788856762079704, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1798788856762079704, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1798788856762079704, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1798788856762079704, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+      propertyPath: clickk
+      value: event:/SFX/Taco Making/Alex/Pop
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}

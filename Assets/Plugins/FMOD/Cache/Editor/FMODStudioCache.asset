@@ -15,10 +15,10 @@ MonoBehaviour:
   Path: Assets/FMOD/TacoCat FMOD Project/Build/Desktop/Music.bank
   Name: Music
   StudioPath: bank:/Music
-  lastModified: 638139679327525418
+  lastModified: 638139737647907311
   FileSizes:
   - Name: Desktop
-    Value: 7015904
+    Value: 7015840
   Exists: 1
 --- !u!114 &-6941612788058921229
 MonoBehaviour:
@@ -172,7 +172,7 @@ MonoBehaviour:
   Path: Assets/FMOD/TacoCat FMOD Project/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638139679327675410
+  lastModified: 638139737661197067
   FileSizes:
   - Name: Desktop
     Value: 2780480
@@ -244,10 +244,10 @@ MonoBehaviour:
   Path: Assets/FMOD/TacoCat FMOD Project/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638139679326955215
+  lastModified: 638139737618763910
   FileSizes:
   - Name: Desktop
-    Value: 1728
+    Value: 1858
   Exists: 1
 --- !u!114 &11400000
 MonoBehaviour:
@@ -275,13 +275,40 @@ MonoBehaviour:
   - {fileID: 2470110925340440847}
   - {fileID: 8400391634024355646}
   - {fileID: -5552257207148950434}
-  EditorParameters: []
+  EditorParameters:
+  - {fileID: 3357083703737602470}
+  - {fileID: 762563208204201121}
+  - {fileID: 7541029848855921311}
   MasterBanks:
   - {fileID: 7513194440752623938}
   StringsBanks:
   - {fileID: -559681615587390294}
-  cacheTime: 638139679327675410
+  cacheTime: 638139737661197067
   cacheVersion: 131601
+--- !u!114 &762563208204201121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/sfxVolume
+  m_EditorClassIdentifier: 
+  Name: sfxVolume
+  StudioPath: parameter:/sfxVolume
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 4039078160
+    data2: 1755679933
+  Type: 0
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
 --- !u!114 &1907305601802514593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -336,6 +363,30 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 250
+--- !u!114 &3357083703737602470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/ambienceVolume
+  m_EditorClassIdentifier: 
+  Name: ambienceVolume
+  StudioPath: parameter:/AmbienceVolume
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 2211050040
+    data2: 1103005367
+  Type: 0
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
 --- !u!114 &3960043556965590762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -479,10 +530,34 @@ MonoBehaviour:
   Path: Assets/FMOD/TacoCat FMOD Project/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638139679326945213
+  lastModified: 638139737618743920
   FileSizes:
   - Name: Desktop
-    Value: 1340
+    Value: 1856
+  Exists: 1
+--- !u!114 &7541029848855921311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/musicVolume
+  m_EditorClassIdentifier: 
+  Name: musicVolume
+  StudioPath: parameter:/musicVolume
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 794079583
+    data2: 2990606425
+  Type: 0
+  IsGlobal: 1
+  Labels: []
   Exists: 1
 --- !u!114 &8400391634024355646
 MonoBehaviour:
