@@ -2582,13 +2582,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tacoGameManager: {fileID: 0}
+  endText: {fileID: 0}
+  endOfGame: 0
   star: {fileID: 911993962761377609, guid: 7959ef196595eb843b99cff645b3ebc4, type: 3}
   starScale: 1
   starPosition: {fileID: 7277452622676225723}
   scoreText: {fileID: 7277452622403338238}
   emptyStarColor: {r: 0, g: 0, b: 0, a: 1}
-  ingredientScale: 0.1
-  ingredientSpacing: 0.75
+  ingredientScale: 0.6
+  ingredientSpacing: 0.85
   ingredientPointParent: {fileID: 7277452622875311823}
   testIngredients: 00000000010000000200000004000000
   fuelBar: {fileID: 128996101638885814}
