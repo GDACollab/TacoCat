@@ -21,6 +21,17 @@ public class Customer: MonoBehaviour
     [HideInInspector] public float currTransitionTime; //Used for keeping track of time during transitions
     [HideInInspector] public int currPosition;
 
+    // List of possible colors to tint this customer's sprite once their taco is finished.
+    // Elements correspond to the values in the scoreType enum in TacoMakingGameManager.cs .
+    public List<Color> colorAfterTacoFinished = new List<Color>
+    {
+        Color.gray,
+        new Color(0 / 255.0f, 243 / 255.0f, 27 / 255.0f), // Bright green
+        new Color(192 / 255.0f, 255.0f, 101 / 255.0f), // Light green
+        new Color(249 / 255.0f, 141 / 255.0f, 0 / 255.0f), // Orange
+        Color.red
+    };
+
     private void Awake()
     {
         tacoGameManager = GetComponentInParent<TacoMakingGameManager>();
@@ -174,5 +185,10 @@ public class Customer: MonoBehaviour
         }
     }
 
-
+    // Changes this customer's sprite appearance based on the score of their taco
+    public void CustomerReaction(scoreType tacoScore)
+    {
+        SpriteRenderer mySpriteRenderer = GetComponent<SpriteRenderer>();
+        mySpriteRenderer.color = colorAfterTacoFinished[(int)tacoScore];
+    }
 }
