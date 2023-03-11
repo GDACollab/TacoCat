@@ -15,6 +15,8 @@ public class CutsceneManager : MonoBehaviour
     [Range(0.0f, 5.0f)]
     public float messageDelay;
 
+    
+
     [Header("Typing out the message")]
     public bool typeOutMessage;
 
@@ -25,6 +27,8 @@ public class CutsceneManager : MonoBehaviour
     public int characterLimit;
 
     private int counter;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -76,7 +80,7 @@ public class CutsceneManager : MonoBehaviour
                     phoneText.text += "\n";
                     counter = 0;
                 }
-                
+                FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Cutscene/Texting");
             }
             phoneText.text += "\n";
             yield return new WaitForSeconds(messageDelay);
@@ -89,5 +93,9 @@ public class CutsceneManager : MonoBehaviour
 
 
 
-
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
 }
