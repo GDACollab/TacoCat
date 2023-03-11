@@ -2,10 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using Random = System.Random;
-
 public enum SpeciesType {Fish, Ravens, Sheep, Frogs, Capybaras};
-
 
 public class Customer: MonoBehaviour
 {
@@ -66,9 +63,9 @@ public class Customer: MonoBehaviour
         return s_order;
     }
 
-    public void RandomizeSpecies(SpeciesType mySpecies)    //Generates a Random Species
+    public SpeciesType RandomizeSpecies()    //Generates a Random Species
     {
-        mySpecies = (SpeciesType)Random.Range(SpeciesType);
+        return (SpeciesType)Random.Range(0,4);
     }
 
     // << SPAWN ORDER UI BOX >>
