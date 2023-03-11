@@ -12,6 +12,7 @@ public class Customer: MonoBehaviour
     [Header("Order UI")]
     public OrderBubble orderUI;
 
+    public enum species {Fish,Raven,Sheep,Frog,Capybara}; //species selectable by CreateCustomerOrder
     public List<ingredientType> order; //ingredients in the order
 
     [HideInInspector] public Vector3 prevPos;
@@ -47,6 +48,10 @@ public class Customer: MonoBehaviour
 
         Debug.Log("Created Customer Order");
 
+        // Decide on customer species
+        species custSpecies;
+        custSpecies = (species)Random.Range(0,4); //Selects random species from the range of possible options
+
         // get menu from bench manager
         List<ingredientType> menu = tacoGameManager.benchManager.menu;        
         int orderLength = Random.Range(minOrderLength, maxOrderLength + 1); // randomize order length
@@ -54,10 +59,34 @@ public class Customer: MonoBehaviour
         // To be returned
         List<ingredientType> s_order = new List<ingredientType>(orderLength);
 
+        // Decides on possible ingredients + said element's weight
+        List<int> custPreference = new List<int> { 0, 1, 2, 3, 4 };
+        // I would like to switch this with calling for the required value (ie getting fish.value)
+        // but afaik we don't have that implemented, and I don't want to risk messing with it rn
+        switch (custSpecies)
+        {
+            case species.Fish: //No fish, 2x sour cream
+                custPreference = new List<int> { 0, 1, 3, 4, 4 };
+                break;
+            case species.Raven: //2x fish
+                custPreference = new List<int> { 0, 1, 2, 2, 3, 4 };
+                break;
+            case species.Sheep: //2x cabbage
+                custPreference = new List<int> { 0, 0, 1, 2, 3, 4 };
+                break;
+            case species.Frog: // 1/2x fish, 2x jalapenos
+                custPreference = new List<int> { 0, 0, 1, 1, 2, 3, 3, 3, 3, 4, 4 };
+                break;
+            case species.Capybara: // 1/2x Pico
+                custPreference = new List<int> { 0, 0, 1, 2, 2, 3, 3, 4, 4 };
+                break;
+        }
+        Debug.Log(custPreference);
+
         // Fill list with random items from menu
         for (int i = 0; i < orderLength; i++)
         {
-            s_order.Add(menu[Random.Range(0, menu.Count)]);
+            s_order.Add(menu[custPreference[Random.Range(0, custPreference.Count)]]);
         }
 
         return s_order;
