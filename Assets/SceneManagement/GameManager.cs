@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public int cutscene = 3;
     public int loadingSceneIndex = 4;
     public int randDriveIndex;
+    public int nightDriveIndex;
 
     TacoMakingGameManager tacoGameManager;
     DrivingGameManager drivingGameManager;
@@ -103,6 +104,11 @@ public class GameManager : MonoBehaviour
     public void LoadRandDrivingScene()
     {
         StartCoroutine(LoadingCoroutine(randDriveIndex));
+    }
+
+    public void LoadNightDrivingScene()
+    {
+        StartCoroutine(LoadingCoroutine(nightDriveIndex));
     }
 
     IEnumerator LoadingCoroutine(int sceneIndex)
