@@ -94,7 +94,7 @@ public class Customer: MonoBehaviour
                     Debug.Log("Removed item "+randValue+" from "+string.Join(",",custPreference));
                 }
             } 
-            s_order.Add(menu[custPreference[Random.Range(0, custPreference.Count)]]);
+            s_order.Add(menu[randValue]);
         }
 
         return s_order;
