@@ -40,7 +40,6 @@ public class DrivingUIManager : MonoBehaviour
     {
         vehicle_script = vehicle.GetComponent<Vehicle>();
         flipTracker = vehicle.GetComponent<FlipTracker>();
-        initFuelNitro(vehicle_script.GetFuel(),vehicle_script.GetNitro());
     }
 
     // Update is called once per frame
@@ -68,14 +67,6 @@ public class DrivingUIManager : MonoBehaviour
         foreach(GameObject x in GameObject.FindGameObjectsWithTag("FuelUIGauge")){
             x.SetActive(true);
         }
-    }
-    
-    // Function to initialize the fuel and nitro. Called outside this class.
-    void initFuelNitro(float fuel, int nitro){
-        fuelAmount = fuel;
-        numNitro = (nitro>3) ? 3: nitro;
-        updateFuel();
-        updateNitro();
     }
     
     // Function to update the fuel gauge

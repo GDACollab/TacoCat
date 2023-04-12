@@ -18,6 +18,9 @@ public class GameManager : MonoBehaviour
     public int randDriveIndex;
     public int nightDriveIndex;
 
+    private float initfuel = 1;
+    private int initnitro = 3;
+
     TacoMakingGameManager tacoGameManager;
     DrivingGameManager drivingGameManager;
     CutsceneManager cutsceneManager;
@@ -44,6 +47,8 @@ public class GameManager : MonoBehaviour
             // check if all customers submitted , if so move to driving with gas amount
             if (tacoGameManager.endOfGame && !isLoadingScene)
             {
+                initfuel = tacoGameManager.gasAmount;
+                initnitro = tacoGameManager.comboCounter;
                 LoadDrivingScene();
             }
         }
@@ -55,6 +60,7 @@ public class GameManager : MonoBehaviour
             try
             {
                 drivingGameManager = GameObject.FindGameObjectWithTag("DrivingGameManager").GetComponent<DrivingGameManager>();
+                drivingGameManager.initFuelNitro(initfuel, initnitro);
             }
             catch { }
         }

@@ -22,6 +22,7 @@ public class DrivingGameManager : MonoBehaviour
     void Start()
     {
         vehicle.rb_vehicle.constraints = RigidbodyConstraints2D.FreezeAll;
+        // initFuelNitro(0.5f, 2);
     }
 
     // Update is called once per frame
@@ -38,5 +39,11 @@ public class DrivingGameManager : MonoBehaviour
         vehicleDistance = Vector2.Distance(beginningPoint.position, vehicle.transform.position);
         percentageTraveled = vehicleDistance / totalDistance;
 
+    }
+    
+    // Function to initialize the fuel and nitro. Called outside this class.
+    public void initFuelNitro(float fuel, int nitro){
+        vehicle.fuelAmount = (int)(fuel*vehicle.maxFuel);
+        vehicle.nitroCharges = (nitro>3) ? 3: nitro;
     }
 }
