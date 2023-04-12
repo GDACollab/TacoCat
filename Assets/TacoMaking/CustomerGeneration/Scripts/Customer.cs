@@ -86,6 +86,14 @@ public class Customer: MonoBehaviour
         // Fill list with random items from menu
         for (int i = 0; i < orderLength; i++)
         {
+            int randValue = custPreference[Random.Range(0, custPreference.Count)];
+            if (s_order.Contains(menu[randValue])) //If item pulled has already been added, all instances of it are removed as future possibilities
+            {
+                while (custPreference.Contains(randValue)) {
+                    custPreference.Remove(randValue);
+                    Debug.Log("Removed item "+randValue+" from "+string.Join(",",custPreference));
+                }
+            } 
             s_order.Add(menu[custPreference[Random.Range(0, custPreference.Count)]]);
         }
 
