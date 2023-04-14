@@ -18,7 +18,7 @@ public class GroundGeneration : MonoBehaviour
      * ===================================================================================================
      */
 
-    public enum GENERATION_STYLES { consistent, sine, random };
+    public enum GENERATION_STYLES { consistent, sine, random, ethan, ethansine};
     public enum CHUNK_STYLES { random, rounded, straight, flat };
 
     public GameObject curveGenerationPrefab;
@@ -189,6 +189,14 @@ public class GroundGeneration : MonoBehaviour
         {
             RandomChunkGenerator();
         }
+        else if (style == GENERATION_STYLES.ethan)
+        {
+            EthansChunkGenerator();
+        }
+        else if (style == GENERATION_STYLES.ethansine)
+        {
+            EthanSineChunkGenerator();
+        }
         else if (style == GENERATION_STYLES.sine)
         {
             SineChunkGenerator();
@@ -308,6 +316,220 @@ public class GroundGeneration : MonoBehaviour
             // set last chunk pos to current end
             lastChunkEndPosition = newGenEndPos;
         }
+    }
+    
+    public void EthansChunkGenerator()
+    {
+        // estimated chunks needed
+        float possibleHorizontalChunks = fullGenerationLength / maxChunkLength;
+        float possibleVerticalChunks = fullGenerationHeight / maxChunkHeight;
+
+        // true amount of chunks needed
+        int horzChunksNeeded = GetHorizontalChunksNeeded(); // get horizontal chunks needed to reach end
+        int vertChunksNeeded = GetVerticalChunksNeeded(); // get vertical chunks needed to reach the end
+
+        // random height values
+        float heightLeft = -fullGenerationHeight; // amount of height left to fill in with chunks
+
+        // ========================================
+        // << SET RANDOM HEIGHT VALUES >>
+        // ======================================
+        int numchunks = 0;
+        // store end and beginning of current chunk
+        Vector2 newGenEndPos;
+        Vector2 lastChunkEndPosition = beginningGenPos;
+        //get the necessecary length of each chunk to reach end
+        float length = (possibleHorizontalChunks / horzChunksNeeded) * maxChunkLength;
+        CHUNK_STYLES laststyle = CHUNK_STYLES.rounded;
+        int count = 0;
+        
+        while (numchunks < horzChunksNeeded-1) //for each chunk needed
+        {
+            // get average height value of chunks between current chunk and end of generation
+            float averageHeightNeeded = heightLeft / (horzChunksNeeded - numchunks);
+            float height; // height of current chunk
+
+            // >> first chunk heights are 'random' 
+            int ncc = Mathf.Min(Random.Range(1,4), horzChunksNeeded-numchunks-1);
+            // if(ncc<=0){
+            //     break;
+            // }
+            float ncchunks = ncc;
+            float hmin = maxChunkHeight*ncc/2f;
+            float hmax = maxChunkHeight*ncc;
+            List<float> chunkpiece = new List<float>(10);
+            
+            for(int i=0; i<ncc; i++){
+                chunkpiece.Add(1/ncc);
+            }
+            
+            // for(int i=0; i<ncc-1; i++){
+            //     if(ncchunks>0.1f){
+            //         chunkpiece.Add(Random.Range(0.1f, ncchunks));
+            //         ncchunks -= chunkpiece[i];
+            //     }
+            //     else{
+            //         chunkpiece.Add(0);
+            //     }
+            // }
+            // if(ncchunks>0){
+            //     chunkpiece.Add(ncchunks);
+            // }
+            // else{
+            //     chunkpiece.Add(0);
+            // }
+            
+            if(heightLeft>maxChunkHeight && count%2==1){
+                hmin = maxChunkHeight*3f/2f - averageHeightNeeded;
+                hmax = maxChunkHeight*(ncc+1) - averageHeightNeeded;
+            }
+            else if(heightLeft<-maxChunkHeight && count%2==0){
+                hmin = maxChunkHeight*3f/2f - averageHeightNeeded;
+                hmax = maxChunkHeight*(ncc+1) - averageHeightNeeded;
+            }
+            height = Random.Range(hmin, hmax);
+            height = (count%2==1) ? -height : height;
+            
+            for(int i=0; i<ncc; i++){
+                if(count%2==1){
+                    if(laststyle==CHUNK_STYLES.straight){
+                        laststyle = CHUNK_STYLES.rounded;
+                    }
+                    else{
+                        laststyle = (CHUNK_STYLES)Random.Range(1,3);
+                    }
+                }
+                else{
+                    if(height>0){
+                        laststyle = (CHUNK_STYLES)Random.Range(1,3);
+                    }
+                    else{
+                        laststyle = CHUNK_STYLES.rounded;
+                    }
+                }
+                newGenEndPos = new Vector2(lastChunkEndPosition.x + length, lastChunkEndPosition.y + chunkpiece[i]*height);
+                SpawnBezierGroundChunk(lastChunkEndPosition, newGenEndPos, laststyle);
+                lastChunkEndPosition = newGenEndPos;
+            }
+            numchunks+=ncc;
+            heightLeft += height;
+            count++;
+            // // the second partition of chunk heights are set to average height to make sure generation makes it to end
+            // else
+            // {
+            //     height = -averageHeightNeeded*3f;
+                
+            //     // set end position based off random height
+            //     newGenEndPos = new Vector2(lastChunkEndPosition.x + length, lastChunkEndPosition.y + height);
+                
+            //     // spawn ground with values
+            //     SpawnBezierGroundChunk(lastChunkEndPosition, newGenEndPos, chunkStyles[Random.Range(0, chunkStyles.Count)]); // use random chunk style from list
+
+            //     // set last chunk pos to current end
+            //     lastChunkEndPosition = newGenEndPos;
+            //     numchunks++;
+            // }
+        }
+        // spawn ground with values
+        SpawnBezierGroundChunk(lastChunkEndPosition, endGenerationPoint.position, chunkStyles[Random.Range(0, chunkStyles.Count)]); // use random chunk style from list
+    }
+    
+    public void EthanSineChunkGenerator()
+    {
+
+        Debug.Log("Sine Generation Style");
+
+        Vector2 lastChunkEndPosition = beginningGenPos; // init last chunk as the current beginning position
+
+        int vertChunksNeeded = GetVerticalChunksNeeded();
+        int horzChunksNeeded = GetHorizontalChunksNeeded();
+
+        float currChunkHeight = maxChunkHeight; // init as max height
+
+        // << SET CHUNK HEIGHT AND LENGTH >>
+        float chunkLength = fullGenerationLength / horzChunksNeeded;
+        
+        float heightLeft = fullGenerationHeight;
+        
+        int rem = horzChunksNeeded%2;
+        int sign = 1;
+        float mod = 1;
+        
+        float i = horzChunksNeeded;
+        // iterate through the num of chunks needed
+        while (i > 1)
+        {
+            // if (i == 1)
+            // {
+            //     // create new chunk starting at the last chunks end point and ending at the full length of this chunk
+            //     Vector2 endGenPos = new Vector2(lastChunkEndPosition.x + chunkLength, endGenerationPoint.position.y);
+            //     SpawnBezierGroundChunk(lastChunkEndPosition, endGenPos, chunkStyles[Random.Range(0, chunkStyles.Count)]); // use random chunk style from list
+            //     return;
+            // }
+            
+            if(i==Mathf.Floor(i) && i%2==rem){
+                mod = Random.Range(0.4f, 0.6f); //((float)Random.Range(1, 3))/2f; 
+            }
+            else if(i!=Mathf.Floor(i)){
+                mod = 1-mod; 
+            }
+            
+            float hmin = currChunkHeight*mod;
+            float hmax = currChunkHeight*mod*4;
+            
+            // if(heightLeft>currChunkHeight*2){
+            //     if(sign<0){
+            //         hmin = currChunkHeight*mod/2;
+            //         hmax = currChunkHeight*mod*2;
+            //     }
+            //     if(sign>0){
+            //         hmin = currChunkHeight*mod/8;
+            //         hmax = currChunkHeight*mod*8;
+            //     }
+            // }
+            // else if(heightLeft<-currChunkHeight*2){
+            //     if(sign>0){
+            //         hmin = currChunkHeight*mod/2;
+            //         hmax = currChunkHeight*mod*2;
+            //     }
+            //     if(sign<0){
+            //         hmin = currChunkHeight*mod/8;
+            //         hmax = currChunkHeight*mod*8;
+            //     }
+            // }
+            
+            float height = sign*Random.Range(hmin, hmax);
+            float length = chunkLength*mod;
+            
+            // create new chunk starting at the last chunks end point and ending at the full length of this chunk
+            Vector2 newGenEndPos = new Vector2(lastChunkEndPosition.x + length, lastChunkEndPosition.y + height);
+            SpawnBezierGroundChunk(lastChunkEndPosition, newGenEndPos, CHUNK_STYLES.rounded); // use random chunk style from list
+
+            // update last chunk end position
+            lastChunkEndPosition = newGenEndPos;
+
+            // invert height
+            heightLeft -= height;
+            sign *= -1;
+            i -= mod;
+        }
+        // create new chunk starting at the last chunks end point and ending at the full length of this chunk
+        SpawnBezierGroundChunk(lastChunkEndPosition, endGenerationPoint.position, CHUNK_STYLES.rounded); // use random chunk style from list
+        // if(rem==1){
+        //     // create new chunk starting at the last chunks end point and ending at the full length of this chunk
+        //     Vector2 endGenPos = new Vector2(lastChunkEndPosition.x + chunkLength, endGenerationPoint.position.y);
+        //     SpawnBezierGroundChunk(lastChunkEndPosition, endGenPos, chunkStyles[Random.Range(0, chunkStyles.Count)]); // use random chunk style from list
+        // }
+        // else{
+        //     // create new chunk starting at the last chunks end point and ending at the full length of this chunk
+        //     Vector2 newGenEndPos = new Vector2(lastChunkEndPosition.x + chunkLength, lastChunkEndPosition.y + currChunkHeight);
+        //     SpawnBezierGroundChunk(lastChunkEndPosition, newGenEndPos, chunkStyles[Random.Range(0, chunkStyles.Count)]); // use random chunk style from list
+        //     // update last chunk end position
+        //     lastChunkEndPosition = newGenEndPos;
+        //     // create new chunk starting at the last chunks end point and ending at the full length of this chunk
+        //     Vector2 endGenPos = new Vector2(lastChunkEndPosition.x + chunkLength, endGenerationPoint.position.y);
+        //     SpawnBezierGroundChunk(lastChunkEndPosition, endGenPos, chunkStyles[Random.Range(0, chunkStyles.Count)]); // use random chunk style from list
+        // }
     }
 
     public void SineChunkGenerator()

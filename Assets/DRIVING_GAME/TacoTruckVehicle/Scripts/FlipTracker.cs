@@ -31,6 +31,7 @@ public class FlipTracker : MonoBehaviour
 
     [Space(10)]
     public float landPointRotation;
+    private float initgravity = 15000;
 
 
     void Start()
@@ -38,6 +39,7 @@ public class FlipTracker : MonoBehaviour
         vehicle = GetComponent<Vehicle>();
         animHandler = GetComponent<TruckAnimationHandler>();
         initTruckRotation = transform.rotation.eulerAngles.z;
+        initgravity = vehicle.gravity;
     }
 
     // Update is called once per frame
@@ -75,10 +77,31 @@ public class FlipTracker : MonoBehaviour
 
             landPointRotation = groundGeneration.allGroundRotations[hitPointIndex];
 
-            if (IsPerfectLanding(endJumpRot, landPointRotation) && flipCount > 0) 
+            if (/* IsPerfectLanding(endJumpRot, landPointRotation) &&  */flipCount > 0) 
             {
                 StartCoroutine(vehicle.PerfectLandingBoost());
             }
+        }
+        
+        if (vehicle.state == driveState.GROUNDED)
+        {
+            // set values
+            endJumpRot = currRot;
+
+            landPointRotation = groundGeneration.allGroundRotations[hitPointIndex];
+            if ((landPointRotation - endJumpRot) < perfectLandingRotationBound && endJumpRot > 5 && vehicle.gasPressed) 
+            { 
+                vehicle.gravity = initgravity/(endJumpRot);
+                vehicle.groundedForce.y = 0;
+            }
+            else{
+                vehicle.gravity = initgravity;
+                vehicle.groundedForce.y = -30;
+            }
+        }
+        else{
+            vehicle.gravity = initgravity;
+            vehicle.groundedForce.y = -30;
         }
 
         // track in air time
