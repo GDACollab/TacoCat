@@ -1,3 +1,12 @@
-GDACollab's 2023 game -- TacoCat
+Pause Implementation based on the Playtest
+Press P button to pause
+Travel to Assets > SceneManagement > Menu scene to start the game
 
-Uses Unity 2021.3.16f1 LTS.
+Basic logics in Pause Implementation:
+- The 'Pause' UI canvas is included in the main 'Menu' scene
+- The invisible object 'PauseController' in the Menu scene contains PauseController.cs script that controls the pause feature in the game
+- The object 'Pause' and 'PauseController' is included in DontDestroyOnLoad which can be active through all scenes in the game
+- The pause feature is disabled in the scene 'LoadingScreen'
+
+You can also test play the Pause Implementation in this link:
+https://umjunsik2002.itch.io/pause-implementation
