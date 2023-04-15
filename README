@@ -7,6 +7,7 @@ Basic logics in Pause Implementation:
 - The invisible object 'PauseController' in the Menu scene contains PauseController.cs script that controls the pause feature in the game
 - The object 'Pause' and 'PauseController' is included in DontDestroyOnLoad which can be active through all scenes in the game
 - The pause feature is disabled in the scene 'LoadingScreen'
+- If the pause mode is enabled, the game ignores all other keys except 'P' (which resumes the game) to prevent glitches
 
 You can also test play the Pause Implementation in this link:
 https://umjunsik2002.itch.io/pause-implementation
