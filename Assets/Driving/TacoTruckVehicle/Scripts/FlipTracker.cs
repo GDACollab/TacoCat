@@ -30,7 +30,7 @@ public class FlipTracker : MonoBehaviour
     public float endJumpRot;
 
     [Space(10)]
-    public float landPointRotation;
+    public float groundPointRotation;
 
 
     void Start()
@@ -73,9 +73,9 @@ public class FlipTracker : MonoBehaviour
             jumpStarted = false;
             endJumpRot = currRot;
 
-            landPointRotation = groundGeneration.allGroundRotations[hitPointIndex];
+            groundPointRotation = groundGeneration.allGroundRotations[hitPointIndex];
 
-            if (IsPerfectLanding(endJumpRot, landPointRotation) && flipCount > 0) 
+            if (IsPerfectLanding(endJumpRot, groundPointRotation) && flipCount > 0) 
             {
                 StartCoroutine(vehicle.PerfectLandingBoost());
             }
@@ -100,7 +100,7 @@ public class FlipTracker : MonoBehaviour
         if (vehicle.state == driveState.CRASH) { return false; }
 
         // if rotation is within bound and enough time has passed and landing downhill
-        if ((groundPointRot - landPointRot) < perfectLandingRotationBound && currAirTime > perfectLandingMinAirTime) //&& landPointRot < -5) 
+        if (Mathf.Abs(groundPointRot - landPointRot) < perfectLandingRotationBound && currAirTime > perfectLandingMinAirTime)
         { 
             return true;
         }
