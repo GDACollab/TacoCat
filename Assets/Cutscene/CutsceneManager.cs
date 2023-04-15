@@ -5,22 +5,31 @@ using TMPro;
 
 public class CutsceneManager : MonoBehaviour
 {
-    public TextMeshProUGUI phoneTextAlex;
-    public TextMeshProUGUI phoneTextJamie;
+    public TextMeshProUGUI phoneText;
 
 
-    [Tooltip("Max charcters per line.\nWon't move the whole word to the next line currently")]
+    [Tooltip("[WIP] Max charcters per line.\nWon't move the whole word to the next line currently")]
     public int characterLimit;
 
     [Space]
 
+    public List<string> phone_texts;
+    public List<string> order_of_texts;
 
-    public List<string> alex_texts;
+    private List<List<string>> master_list;
 
-    [Range(0.0f, 5.0f)]
+    [System.Serializable]
+    public struct PhoneText
+    {
+        public List<string> text;
+        public string person;
+    }
+    public List<PhoneText> list;
+
+    [Range(0.0f, 0.5f)]
     public float messageDelayAlex;
 
-    
+
 
     [Header("Typing out the message")]
     public bool typeOutAlex;
@@ -33,7 +42,7 @@ public class CutsceneManager : MonoBehaviour
 
     [Space]
 
-    public List<string> jamie_texts;
+    [Header("Jamie")]
 
     [Range(0.0f, 5.0f)]
     public float messageDelayJamie;
@@ -53,108 +62,74 @@ public class CutsceneManager : MonoBehaviour
     {
 
         // clear text in phoneText.text
-        phoneTextAlex.text = string.Empty;
-        phoneTextJamie.text = string.Empty;
+        phoneText.text = string.Empty;
+        
         counter = 0;
+
+        master_list.Add(order_of_texts);
+        master_list.Add(phone_texts);
 
 
         //check if typing out the text or printing the whole message
         if (typeOutAlex)
         {
-            StartCoroutine(TypelineAlex());
+            StartCoroutine(Typeline());
         }
         else { 
-            StartCoroutine(PrintTextAlex()); 
+            StartCoroutine(PrintText()); 
         }
 
-        //check if typing out the text or printing the whole message
-        if (typeOutJamie)
-        {
-            StartCoroutine(TypelineJamie());
-        }
-        else
-        {
-            StartCoroutine(PrintTextJamie());
-        }
     }
 
     //for printing the entire message at once
-    IEnumerator PrintTextAlex() {
+    IEnumerator PrintText() {
 
         //Add each element from phone_texts to phoneText
-        foreach (string line in alex_texts)
+        foreach (List<string> line in master_list)
         {
-            phoneTextAlex.text += line + "\n";
-
-            yield return new WaitForSeconds(messageDelayAlex);
-        }
-
-    }
-
-    //For typing out the message
-    IEnumerator TypelineAlex()
-    {
-        foreach (string line in alex_texts)
-        {
-            //Add each element from phone_texts to phoneText
-            foreach (char c in line.ToCharArray())
+            foreach (string s in line)
             {
-                phoneTextAlex.text += c;
+                phoneText.text += line + "\n";
 
-                counter++;
-
-                yield return new WaitForSeconds(textSpeedAlex);
-                if (counter == characterLimit) {
-                    phoneTextAlex.text += "\n";
-                    counter = 0;
-                }
-                
+                yield return new WaitForSeconds(messageDelayAlex);
             }
-            phoneTextAlex.text += "\n";
-            yield return new WaitForSeconds(messageDelayAlex);
-        }
-    }
-
-    //for printing the entire message at once
-    IEnumerator PrintTextJamie()
-    {
-
-        //Add each element from phone_texts to phoneText
-        foreach (string line in jamie_texts)
-        {
-            phoneTextJamie.text += line + "\n";
-
-            yield return new WaitForSeconds(messageDelayJamie);
+            
         }
 
     }
 
     //For typing out the message
-    IEnumerator TypelineJamie()
+    IEnumerator Typeline()
     {
-        foreach (string line in jamie_texts)
+        foreach (List<string> line in master_list)
         {
-            //Add each element from phone_texts to phoneText
-            foreach (char c in line.ToCharArray())
+            foreach (string s in line)
             {
-                phoneTextJamie.text += c;
-
-                counter++;
-
-                yield return new WaitForSeconds(textSpeedJamie);
-                if (counter == characterLimit)
+                //Add each element from phone_texts to phoneText
+                foreach (char c in s.ToCharArray())
                 {
-                    phoneTextJamie.text += "\n";
-                    counter = 0;
-                }
+                    phoneText.text += c;
 
+                    counter++;
+
+                    yield return new WaitForSeconds(textSpeedAlex);
+                    if (counter == characterLimit)
+                    {
+                        phoneText.text += "\n";
+                        counter = 0;
+                    }
+
+                }
+                phoneText.text += "\n";
+                yield return new WaitForSeconds(messageDelayAlex);
             }
-            phoneTextJamie.text += "\n";
-            yield return new WaitForSeconds(messageDelayJamie);
         }
     }
 
+    //for printing the entire message at once
+    
 
+    
 
     // Update is called once per frame
     void Update()
