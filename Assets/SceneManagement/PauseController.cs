@@ -5,19 +5,27 @@ using UnityEngine.SceneManagement;
 
 public class PauseController : MonoBehaviour
 {
-    public KeyCode pauseKey = KeyCode.P; // Set the key that should be used to pause the game
-    public GameObject pauseCanvas; // Reference to the pause menu canvas
-    public string excludedSceneName; // The name of the scene to exclude from pausing
+    // Set the key that should be used to pause the game
+    public KeyCode pauseKey = KeyCode.P;
+
+    // Reference to the pause menu canvas
+    public GameObject pauseCanvas;
+
+    // The name of the scene to exclude from pausing
+    public string excludedSceneName;
 
     private bool isPaused = false;
 
     void Start()
     {
         // Disable the pause menu canvas at the start of the game
-        pauseCanvas.SetActive(false);
+        if (pauseCanvas != null)
+        {
+            pauseCanvas.SetActive(false);
 
-        // Make the pause menu persistent across scenes
-        DontDestroyOnLoad(pauseCanvas);
+            // Make the pause menu canvas persistent across scenes
+            DontDestroyOnLoad(pauseCanvas);
+        }
 
         // Make the pause menu controller persistent across scenes
         DontDestroyOnLoad(gameObject);
@@ -25,6 +33,7 @@ public class PauseController : MonoBehaviour
 
     void Update()
     {
+        // Pause or resume the game when the pause key is pressed
         if (Input.GetKeyDown(pauseKey))
         {
             if (isPaused)
@@ -37,35 +46,31 @@ public class PauseController : MonoBehaviour
             }
         }
 
-        // Check if the game is paused
+        // Disable all input except for the pause key when the game is paused
         if (isPaused)
         {
-            // Check if the pause key is pressed again to resume the game
-            if (Input.GetKeyDown(pauseKey))
-            {
-                return;
-            }
-            else
-            {
-                // Disable all input other than the pause key
-                DisableInput();
-            }
+            DisableInput();
         }
     }
 
+    // Disable all input except for the pause key
     private void DisableInput()
     {
-        // Disable all input except for the pause key
         foreach (KeyCode keyCode in System.Enum.GetValues(typeof(KeyCode)))
         {
-            // Skip the pause key
-            if (keyCode == pauseKey) continue;
-
-            // Disable the key if it is currently being pressed
-            if (Input.GetKey(keyCode))
+            switch (keyCode)
             {
-                Input.ResetInputAxes();
-                return;
+                // Skip the pause key
+                case KeyCode.P:
+                    continue;
+
+                // Disable the key if it is currently being pressed
+                default:
+                    if (Input.GetKey(keyCode))
+                    {
+                        Input.ResetInputAxes();
+                    }
+                    break;
             }
         }
     }
@@ -80,8 +85,11 @@ public class PauseController : MonoBehaviour
         Time.timeScale = 0f; // Set time scale to zero to pause the game
         isPaused = true;
 
-        // Enable the pause menu canvas
-        pauseCanvas.SetActive(true);
+        if (pauseCanvas != null)
+        {
+            // Enable the pause menu canvas
+            pauseCanvas.SetActive(true);
+        }
 
         Debug.Log("Game paused.");
     }
@@ -91,8 +99,11 @@ public class PauseController : MonoBehaviour
         Time.timeScale = 1f; // Set time scale back to one to resume the game
         isPaused = false;
 
-        // Disable the pause menu canvas
-        pauseCanvas.SetActive(false);
+        if (pauseCanvas != null)
+        {
+            // Disable the pause menu canvas
+            pauseCanvas.SetActive(false);
+        }
 
         Debug.Log("Game resumed.");
     }
