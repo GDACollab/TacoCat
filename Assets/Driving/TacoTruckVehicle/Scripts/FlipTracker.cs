@@ -100,7 +100,7 @@ public class FlipTracker : MonoBehaviour
         if (vehicle.state == driveState.CRASH) { return false; }
 
         // if rotation is within bound and enough time has passed and landing downhill
-        if ((groundPointRot - landPointRot) < perfectLandingRotationBound && currAirTime > perfectLandingMinAirTime && landPointRot < -5) 
+        if ((groundPointRot - landPointRot) < perfectLandingRotationBound && currAirTime > perfectLandingMinAirTime) //&& landPointRot < -5) 
         { 
             return true;
         }
