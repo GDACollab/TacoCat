@@ -27,19 +27,56 @@ public class PauseController : MonoBehaviour
     {
         if (Input.GetKeyDown(pauseKey))
         {
-            if (!IsExcludedScene() && !isPaused)
+            if (isPaused)
+            {
+                ResumeGame();
+            }
+            else
             {
                 PauseGame();
             }
-            else if (isPaused)
+        }
+
+        // Check if the game is paused
+        if (isPaused)
+        {
+            // Check if the pause key is pressed again to resume the game
+            if (Input.GetKeyDown(pauseKey))
             {
-                ResumeGame();
+                return;
+            }
+            else
+            {
+                // Disable all input other than the pause key
+                DisableInput();
+            }
+        }
+    }
+
+    private void DisableInput()
+    {
+        // Disable all input except for the pause key
+        foreach (KeyCode keyCode in System.Enum.GetValues(typeof(KeyCode)))
+        {
+            // Skip the pause key
+            if (keyCode == pauseKey) continue;
+
+            // Disable the key if it is currently being pressed
+            if (Input.GetKey(keyCode))
+            {
+                Input.ResetInputAxes();
+                return;
             }
         }
     }
 
     private void PauseGame()
     {
+        if (IsExcludedScene())
+        {
+            return;
+        }
+
         Time.timeScale = 0f; // Set time scale to zero to pause the game
         isPaused = true;
 
