@@ -2158,5 +2158,29 @@ PrefabInstance:
       propertyPath: clickk
       value: event:/SFX/Cutscene/Texting
       objectReference: {fileID: 0}
+    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+      propertyPath: menuMusic
+      value: MenuMusic
+      objectReference: {fileID: 0}
+    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+      propertyPath: musicPath
+      value: event:/Music/
+      objectReference: {fileID: 0}
+    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+      propertyPath: tacoMusic
+      value: TacoMusic
+      objectReference: {fileID: 0}
+    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+      propertyPath: drivingMusic
+      value: DrivingMusic
+      objectReference: {fileID: 0}
+    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+      propertyPath: cutsceneMusic
+      value: StoryMusic
+      objectReference: {fileID: 0}
+    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+      propertyPath: menuMusicPath
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}

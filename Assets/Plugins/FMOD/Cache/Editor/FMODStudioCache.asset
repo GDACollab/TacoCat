@@ -1,29 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8658339641355087253
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/City/Traffic
-  m_EditorClassIdentifier: 
-  Name: Traffic
-  StudioPath: 
-  Min: 0
-  Max: 1
-  Default: 0
-  ID:
-    data1: 1984920251
-    data2: 3114584748
-  Type: 0
-  IsGlobal: 0
-  Labels: []
-  Exists: 1
 --- !u!114 &-8561930763350662122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39,10 +15,10 @@ MonoBehaviour:
   Path: Assets/FMOD/TacoCat FMOD Project/Build/Desktop/Music.bank
   Name: Music
   StudioPath: bank:/Music
-  lastModified: 638140703702266745
+  lastModified: 638173714144209436
   FileSizes:
   - Name: Desktop
-    Value: 7549440
+    Value: 10081600
   Exists: 1
 --- !u!114 &-8423685065464471139
 MonoBehaviour:
@@ -59,13 +35,13 @@ MonoBehaviour:
   Name: timeOfDay
   StudioPath: 
   Min: 0
-  Max: 100
+  Max: 1
   Default: 0
   ID:
     data1: 996920352
     data2: 713284525
   Type: 0
-  IsGlobal: 0
+  IsGlobal: 1
   Labels: []
   Exists: 1
 --- !u!114 &-8277723285106948488
@@ -84,7 +60,7 @@ MonoBehaviour:
   StudioPath: parameter:/musicVolume
   Min: 0
   Max: 1
-  Default: 0
+  Default: 1
   ID:
     data1: 794079583
     data2: 2990606425
@@ -92,7 +68,7 @@ MonoBehaviour:
   IsGlobal: 1
   Labels: []
   Exists: 1
---- !u!114 &-7958086373431127930
+--- !u!114 &-8135716303321940982
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,21 +77,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/Customer_Order/sfxVolume
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Taco Making/Bell Ding
   m_EditorClassIdentifier: 
-  Name: sfxVolume
-  StudioPath: 
-  Min: 0
-  Max: 1
-  Default: 0
-  ID:
-    data1: 4039078160
-    data2: 1755679933
-  Type: 0
-  IsGlobal: 1
-  Labels: []
-  Exists: 1
+  Path: event:/SFX/Taco Making/Bell Ding
+  Guid:
+    Data1: 1904593846
+    Data2: 1317795547
+    Data3: 1755346359
+    Data4: 1928455868
+  Banks:
+  - {fileID: -4883576881100996228}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-7936478035370587751
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,7 +122,31 @@ MonoBehaviour:
   - {fileID: -4115816714941350097}
   MinDistance: 1
   MaxDistance: 20
-  Length: 42448
+  Length: 44277
+--- !u!114 &-7864442556691564548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/City/Walla
+  m_EditorClassIdentifier: 
+  Name: Walla
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 3911900181
+    data2: 1706493413
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
 --- !u!114 &-7776303222598069245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,39 +172,10 @@ MonoBehaviour:
   IsOneShot: 0
   Parameters:
   - {fileID: -7564376105489239313}
+  - {fileID: 2946598746567200621}
   MinDistance: 1
   MaxDistance: 20
   Length: 128064
---- !u!114 &-7595185006366903977
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/Taco Making/Customer_Order
-  m_EditorClassIdentifier: 
-  Path: event:/SFX/Taco Making/Customer_Order
-  Guid:
-    Data1: -343311969
-    Data2: 1134924137
-    Data3: -1675159378
-    Data4: 1872976629
-  Banks:
-  - {fileID: -4883576881100996228}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 0
-  Parameters:
-  - {fileID: -4189828553822359907}
-  - {fileID: -3478068578892910875}
-  - {fileID: -7958086373431127930}
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 3988
 --- !u!114 &-7568347909635091294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,6 +201,7 @@ MonoBehaviour:
   IsOneShot: 0
   Parameters:
   - {fileID: -7378074347644053548}
+  - {fileID: -3841058633553957203}
   MinDistance: 1
   MaxDistance: 20
   Length: 177912
@@ -246,7 +221,7 @@ MonoBehaviour:
   StudioPath: 
   Min: 0
   Max: 1
-  Default: 0
+  Default: 1
   ID:
     data1: 794079583
     data2: 2990606425
@@ -270,7 +245,7 @@ MonoBehaviour:
   StudioPath: 
   Min: 0
   Max: 1
-  Default: 0
+  Default: 1
   ID:
     data1: 794079583
     data2: 2990606425
@@ -293,11 +268,247 @@ MonoBehaviour:
   Path: Assets/FMOD/TacoCat FMOD Project/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638140703702053021
+  lastModified: 638173714143185118
   FileSizes:
   - Name: Desktop
-    Value: 1946
+    Value: 2606
   Exists: 1
+--- !u!114 &-7107409376266658087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Cutscene/Texting Clicks
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Cutscene/Texting Clicks
+  Guid:
+    Data1: -2122918461
+    Data2: 1247885746
+    Data3: -1319506024
+    Data4: -184280849
+  Banks:
+  - {fileID: -4883576881100996228}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters:
+  - {fileID: -3621206148952496191}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-6961948405353550207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Driving/Nitro Boost
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Driving/Nitro Boost
+  Guid:
+    Data1: 1435229284
+    Data2: 1296353816
+    Data3: 1490453160
+    Data4: -1369738504
+  Banks:
+  - {fileID: -4883576881100996228}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters:
+  - {fileID: -6613328432739228935}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-6803036533714215528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Plop Ingredients/sfxVolume
+  m_EditorClassIdentifier: 
+  Name: sfxVolume
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 1
+  ID:
+    data1: 4039078160
+    data2: 1755679933
+  Type: 0
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
+--- !u!114 &-6613328432739228935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Nitro Boost/sfxVolume
+  m_EditorClassIdentifier: 
+  Name: sfxVolume
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 1
+  ID:
+    data1: 4039078160
+    data2: 1755679933
+  Type: 0
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
+--- !u!114 &-6417357638099388368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Cutscene/Send Text
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Cutscene/Send Text
+  Guid:
+    Data1: -1734943920
+    Data2: 1273665487
+    Data3: 773313187
+    Data4: -584924913
+  Banks:
+  - {fileID: -4883576881100996228}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-6054235942394460729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Customer_Order/animalSpecies
+  m_EditorClassIdentifier: 
+  Name: animalSpecies
+  StudioPath: 
+  Min: 0
+  Max: 5
+  Default: 0
+  ID:
+    data1: 3009924003
+    data2: 2192548950
+  Type: 2
+  IsGlobal: 0
+  Labels:
+  - Default
+  - Bird
+  - Frog
+  - Capybaras
+  - Fish
+  - Sheep
+  Exists: 1
+--- !u!114 &-5892913955921103055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Swipe Ingredients/sfxVolume
+  m_EditorClassIdentifier: 
+  Name: sfxVolume
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 1
+  ID:
+    data1: 4039078160
+    data2: 1755679933
+  Type: 0
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
+--- !u!114 &-5845851579487902562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/City/ambienceVolume
+  m_EditorClassIdentifier: 
+  Name: ambienceVolume
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 2211050040
+    data2: 1103005367
+  Type: 0
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
+--- !u!114 &-5307356932494830778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/UI & Menu/UI Hover
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/UI & Menu/UI Hover
+  Guid:
+    Data1: 1872175858
+    Data2: 1233608765
+    Data3: 10172579
+    Data4: -1027622721
+  Banks:
+  - {fileID: -4883576881100996228}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-4883576881100996228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -313,12 +524,583 @@ MonoBehaviour:
   Path: Assets/FMOD/TacoCat FMOD Project/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638140703702713071
+  lastModified: 638173714144737265
   FileSizes:
   - Name: Desktop
-    Value: 2785344
+    Value: 3108032
   Exists: 1
---- !u!114 &-4189828553822359907
+--- !u!114 &-4115816714941350097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/MenuMusic/musicVolume
+  m_EditorClassIdentifier: 
+  Name: musicVolume
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 1
+  ID:
+    data1: 794079583
+    data2: 2990606425
+  Type: 0
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
+--- !u!114 &-4003210237793971999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Ambience/City
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Ambience/City
+  Guid:
+    Data1: -1360575433
+    Data2: 1304269672
+    Data3: -187299197
+    Data4: -817727781
+  Banks:
+  - {fileID: -4883576881100996228}
+  IsStream: 1
+  Is3D: 1
+  IsOneShot: 0
+  Parameters:
+  - {fileID: -5845851579487902562}
+  - {fileID: 5525694143560931933}
+  - {fileID: -7864442556691564548}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-3841058633553957203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/StoryMusic/inPauseMenu
+  m_EditorClassIdentifier: 
+  Name: inPauseMenu
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 1
+  ID:
+    data1: 3321311025
+    data2: 4109458338
+  Type: 1
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
+--- !u!114 &-3621206148952496191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Texting Clicks/sfxVolume
+  m_EditorClassIdentifier: 
+  Name: sfxVolume
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 1
+  ID:
+    data1: 4039078160
+    data2: 1755679933
+  Type: 0
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
+--- !u!114 &-3505090397827910660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Customer_Order/sfxVolume
+  m_EditorClassIdentifier: 
+  Name: sfxVolume
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 1
+  ID:
+    data1: 4039078160
+    data2: 1755679933
+  Type: 0
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
+--- !u!114 &-3384493171452183607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/FMOD/TacoCat FMOD Project/Build/Desktop/Master.bank
+  Name: Master
+  StudioPath: bank:/Master
+  lastModified: 638173714142868341
+  FileSizes:
+  - Name: Desktop
+    Value: 2474
+  Exists: 1
+--- !u!114 &-3192474062382926919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Truck Engine [Placeholder]/Load
+  m_EditorClassIdentifier: 
+  Name: Load
+  StudioPath: 
+  Min: -1
+  Max: 1
+  Default: -1
+  ID:
+    data1: 680435508
+    data2: 3204922823
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
+--- !u!114 &-3011408174650857806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Dialogue.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/FMOD/TacoCat FMOD Project/Build/Desktop/Dialogue.bank
+  Name: Dialogue
+  StudioPath: bank:/Dialogue
+  lastModified: 638173714142698190
+  FileSizes:
+  - Name: Desktop
+    Value: 99360
+  Exists: 1
+--- !u!114 &-2672446414839660440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/DrivingMusic/musicVolume
+  m_EditorClassIdentifier: 
+  Name: musicVolume
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 1
+  ID:
+    data1: 794079583
+    data2: 2990606425
+  Type: 0
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
+--- !u!114 &-1089417108525839468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/timeOfDay
+  m_EditorClassIdentifier: 
+  Name: timeOfDay
+  StudioPath: parameter:/timeOfDay
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 996920352
+    data2: 713284525
+  Type: 0
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
+--- !u!114 &-1006073422796448546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/inPauseMenu
+  m_EditorClassIdentifier: 
+  Name: inPauseMenu
+  StudioPath: parameter:/inPauseMenu
+  Min: 0
+  Max: 1
+  Default: 1
+  ID:
+    data1: 3321311025
+    data2: 4109458338
+  Type: 1
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
+--- !u!114 &-859114474465381614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Cutscene/Receive Text
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Cutscene/Receive Text
+  Guid:
+    Data1: 1689604318
+    Data2: 1096164377
+    Data3: -228838210
+    Data4: -1906958667
+  Banks:
+  - {fileID: -4883576881100996228}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-755161815091727212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/ambienceVolume
+  m_EditorClassIdentifier: 
+  Name: ambienceVolume
+  StudioPath: parameter:/AmbienceVolume
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 2211050040
+    data2: 1103005367
+  Type: 0
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
+--- !u!114 &-266990166306480512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Ambience/Wind Ambience
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Ambience/Wind Ambience
+  Guid:
+    Data1: 551145397
+    Data2: 1197365238
+    Data3: 1163505339
+    Data4: -856349098
+  Banks:
+  - {fileID: -4883576881100996228}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters:
+  - {fileID: 3294220769485491966}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d32cf7c32a3ed8347bac48ef5ed56d82, type: 3}
+  m_Name: FMODStudioCache
+  m_EditorClassIdentifier: 
+  EditorBanks:
+  - {fileID: -7274067073098588606}
+  - {fileID: -3384493171452183607}
+  - {fileID: -8561930763350662122}
+  - {fileID: -4883576881100996228}
+  - {fileID: -3011408174650857806}
+  EditorEvents:
+  - {fileID: -7568347909635091294}
+  - {fileID: 7910431161787833670}
+  - {fileID: -7776303222598069245}
+  - {fileID: 7127440623263209391}
+  - {fileID: -7936478035370587751}
+  - {fileID: 508256917806727663}
+  - {fileID: -4003210237793971999}
+  - {fileID: -6417357638099388368}
+  - {fileID: 6501717657210663639}
+  - {fileID: -6961948405353550207}
+  - {fileID: 8646433093093905296}
+  - {fileID: 3210343305304456116}
+  - {fileID: 3685288577220858703}
+  - {fileID: -266990166306480512}
+  - {fileID: -8135716303321940982}
+  - {fileID: -7107409376266658087}
+  - {fileID: -859114474465381614}
+  - {fileID: -5307356932494830778}
+  EditorParameters:
+  - {fileID: -755161815091727212}
+  - {fileID: 9051437348140866170}
+  - {fileID: -8277723285106948488}
+  - {fileID: -1089417108525839468}
+  - {fileID: -1006073422796448546}
+  MasterBanks:
+  - {fileID: -3384493171452183607}
+  StringsBanks:
+  - {fileID: -7274067073098588606}
+  cacheTime: 638173714144737265
+  cacheVersion: 131601
+--- !u!114 &508256917806727663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Dialogue/Customer_Order
+  m_EditorClassIdentifier: 
+  Path: event:/Dialogue/Customer_Order
+  Guid:
+    Data1: -343311969
+    Data2: 1134924137
+    Data3: -1675159378
+    Data4: 1872976629
+  Banks:
+  - {fileID: -3011408174650857806}
+  - {fileID: -4883576881100996228}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters:
+  - {fileID: -3505090397827910660}
+  - {fileID: 5318573971285839601}
+  - {fileID: -6054235942394460729}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 3988
+--- !u!114 &2946598746567200621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/TacoMusic/inPauseMenu
+  m_EditorClassIdentifier: 
+  Name: inPauseMenu
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 1
+  ID:
+    data1: 3321311025
+    data2: 4109458338
+  Type: 1
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
+--- !u!114 &3210343305304456116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Driving/Flip Boost
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Driving/Flip Boost
+  Guid:
+    Data1: -139841896
+    Data2: 1155466213
+    Data3: -841197903
+    Data4: -1056351020
+  Banks:
+  - {fileID: -4883576881100996228}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &3294220769485491966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Wind Ambience/carHeight
+  m_EditorClassIdentifier: 
+  Name: carHeight
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 1237451992
+    data2: 261589428
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
+--- !u!114 &3685288577220858703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/UI & Menu/UI Select
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/UI & Menu/UI Select
+  Guid:
+    Data1: -481034849
+    Data2: 1088508360
+    Data3: 40640398
+    Data4: -1654153393
+  Banks:
+  - {fileID: -4883576881100996228}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &4182253337407509890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/DrivingMusic/inPauseMenu
+  m_EditorClassIdentifier: 
+  Name: inPauseMenu
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 1
+  ID:
+    data1: 3321311025
+    data2: 4109458338
+  Type: 1
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
+--- !u!114 &4198868994049983285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Truck Engine [Placeholder]/sfxVolume
+  m_EditorClassIdentifier: 
+  Name: sfxVolume
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 1
+  ID:
+    data1: 4039078160
+    data2: 1755679933
+  Type: 0
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
+--- !u!114 &5318573971285839601
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -346,7 +1128,7 @@ MonoBehaviour:
   - Okay
   - Perfect
   Exists: 1
---- !u!114 &-4115816714941350097
+--- !u!114 &5525694143560931933
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -356,116 +1138,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/MenuMusic/musicVolume
+  m_Name: parameter:/City/Traffic
   m_EditorClassIdentifier: 
-  Name: musicVolume
+  Name: Traffic
   StudioPath: 
   Min: 0
   Max: 1
   Default: 0
   ID:
-    data1: 794079583
-    data2: 2990606425
-  Type: 0
-  IsGlobal: 1
-  Labels: []
-  Exists: 1
---- !u!114 &-3478068578892910875
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/Customer_Order/Animal
-  m_EditorClassIdentifier: 
-  Name: Animal
-  StudioPath: 
-  Min: 0
-  Max: 2
-  Default: 0
-  ID:
-    data1: 3009924003
-    data2: 2192548950
-  Type: 2
-  IsGlobal: 0
-  Labels:
-  - Default
-  - Bird
-  - Frog
-  Exists: 1
---- !u!114 &-3384493171452183607
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Master.bank
-  m_EditorClassIdentifier: 
-  Path: Assets/FMOD/TacoCat FMOD Project/Build/Desktop/Master.bank
-  Name: Master
-  StudioPath: bank:/Master
-  lastModified: 638140703702026381
-  FileSizes:
-  - Name: Desktop
-    Value: 1856
-  Exists: 1
---- !u!114 &-3192474062382926919
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/Truck Engine [Placeholder]/Load
-  m_EditorClassIdentifier: 
-  Name: Load
-  StudioPath: 
-  Min: -1
-  Max: 1
-  Default: -1
-  ID:
-    data1: 680435508
-    data2: 3204922823
+    data1: 1984920251
+    data2: 3114584748
   Type: 0
   IsGlobal: 0
   Labels: []
   Exists: 1
---- !u!114 &-2672446414839660440
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/DrivingMusic/musicVolume
-  m_EditorClassIdentifier: 
-  Name: musicVolume
-  StudioPath: 
-  Min: 0
-  Max: 1
-  Default: 0
-  ID:
-    data1: 794079583
-    data2: 2990606425
-  Type: 0
-  IsGlobal: 1
-  Labels: []
-  Exists: 1
---- !u!114 &-1908798460221713646
+--- !u!114 &6501717657210663639
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -475,171 +1162,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/Taco Making/Alex/Pop
+  m_Name: event:/SFX/Taco Making/Swipe Ingredients
   m_EditorClassIdentifier: 
-  Path: event:/SFX/Taco Making/Alex/Pop
-  Guid:
-    Data1: -1419212665
-    Data2: 1229593064
-    Data3: 2116338054
-    Data4: -698823307
-  Banks:
-  - {fileID: -4883576881100996228}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters:
-  - {fileID: -813781701674175006}
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 250
---- !u!114 &-813781701674175006
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/Pop/sfxVolume
-  m_EditorClassIdentifier: 
-  Name: sfxVolume
-  StudioPath: 
-  Min: 0
-  Max: 1
-  Default: 0
-  ID:
-    data1: 4039078160
-    data2: 1755679933
-  Type: 0
-  IsGlobal: 1
-  Labels: []
-  Exists: 1
---- !u!114 &-800753161851783638
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/City/ambienceVolume
-  m_EditorClassIdentifier: 
-  Name: ambienceVolume
-  StudioPath: 
-  Min: 0
-  Max: 1
-  Default: 0
-  ID:
-    data1: 2211050040
-    data2: 1103005367
-  Type: 0
-  IsGlobal: 1
-  Labels: []
-  Exists: 1
---- !u!114 &-755161815091727212
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/ambienceVolume
-  m_EditorClassIdentifier: 
-  Name: ambienceVolume
-  StudioPath: parameter:/AmbienceVolume
-  Min: 0
-  Max: 1
-  Default: 0
-  ID:
-    data1: 2211050040
-    data2: 1103005367
-  Type: 0
-  IsGlobal: 1
-  Labels: []
-  Exists: 1
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d32cf7c32a3ed8347bac48ef5ed56d82, type: 3}
-  m_Name: FMODStudioCache
-  m_EditorClassIdentifier: 
-  EditorBanks:
-  - {fileID: -7274067073098588606}
-  - {fileID: -3384493171452183607}
-  - {fileID: -8561930763350662122}
-  - {fileID: -4883576881100996228}
-  EditorEvents:
-  - {fileID: -7568347909635091294}
-  - {fileID: 7910431161787833670}
-  - {fileID: -7776303222598069245}
-  - {fileID: 7127440623263209391}
-  - {fileID: 3319560882327201080}
-  - {fileID: 1662494057405389240}
-  - {fileID: -1908798460221713646}
-  - {fileID: -7595185006366903977}
-  - {fileID: -7936478035370587751}
-  - {fileID: 3183661079320590360}
-  EditorParameters:
-  - {fileID: -755161815091727212}
-  - {fileID: 9051437348140866170}
-  - {fileID: -8277723285106948488}
-  MasterBanks:
-  - {fileID: -3384493171452183607}
-  StringsBanks:
-  - {fileID: -7274067073098588606}
-  cacheTime: 638140703702713071
-  cacheVersion: 131601
---- !u!114 &1515545188506201535
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/Swipe/sfxVolume
-  m_EditorClassIdentifier: 
-  Name: sfxVolume
-  StudioPath: 
-  Min: 0
-  Max: 1
-  Default: 0
-  ID:
-    data1: 4039078160
-    data2: 1755679933
-  Type: 0
-  IsGlobal: 1
-  Labels: []
-  Exists: 1
---- !u!114 &1662494057405389240
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/Taco Making/Alex/Swipe
-  m_EditorClassIdentifier: 
-  Path: event:/SFX/Taco Making/Alex/Swipe
+  Path: event:/SFX/Taco Making/Swipe Ingredients
   Guid:
     Data1: -151863973
     Data2: 1291252495
@@ -651,91 +1176,10 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 1
   Parameters:
-  - {fileID: 1515545188506201535}
+  - {fileID: -5892913955921103055}
   MinDistance: 1
   MaxDistance: 20
   Length: 250
---- !u!114 &3183661079320590360
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/Cutscene/Texting
-  m_EditorClassIdentifier: 
-  Path: event:/SFX/Cutscene/Texting
-  Guid:
-    Data1: -2122918461
-    Data2: 1247885746
-    Data3: -1319506024
-    Data4: -184280849
-  Banks:
-  - {fileID: -4883576881100996228}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 0
---- !u!114 &3319560882327201080
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Ambience/City
-  m_EditorClassIdentifier: 
-  Path: event:/Ambience/City
-  Guid:
-    Data1: -1360575433
-    Data2: 1304269672
-    Data3: -187299197
-    Data4: -817727781
-  Banks:
-  - {fileID: -4883576881100996228}
-  IsStream: 1
-  Is3D: 1
-  IsOneShot: 0
-  Parameters:
-  - {fileID: -8658339641355087253}
-  - {fileID: 8797459119931217095}
-  - {fileID: -800753161851783638}
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 0
---- !u!114 &4198868994049983285
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/Truck Engine [Placeholder]/sfxVolume
-  m_EditorClassIdentifier: 
-  Name: sfxVolume
-  StudioPath: 
-  Min: 0
-  Max: 1
-  Default: 0
-  ID:
-    data1: 4039078160
-    data2: 1755679933
-  Type: 0
-  IsGlobal: 1
-  Labels: []
-  Exists: 1
 --- !u!114 &7127440623263209391
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -792,9 +1236,10 @@ MonoBehaviour:
   Parameters:
   - {fileID: -8423685065464471139}
   - {fileID: -2672446414839660440}
+  - {fileID: 4182253337407509890}
   MinDistance: 1
   MaxDistance: 20
-  Length: 220096
+  Length: 245000
 --- !u!114 &8481989994907687017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -819,7 +1264,7 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
---- !u!114 &8797459119931217095
+--- !u!114 &8646433093093905296
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -828,21 +1273,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/City/Walla
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Taco Making/Plop Ingredients
   m_EditorClassIdentifier: 
-  Name: Walla
-  StudioPath: 
-  Min: 0
-  Max: 1
-  Default: 0
-  ID:
-    data1: 3911900181
-    data2: 1706493413
-  Type: 0
-  IsGlobal: 0
-  Labels: []
-  Exists: 1
+  Path: event:/SFX/Taco Making/Plop Ingredients
+  Guid:
+    Data1: -1419212665
+    Data2: 1229593064
+    Data3: 2116338054
+    Data4: -698823307
+  Banks:
+  - {fileID: -4883576881100996228}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters:
+  - {fileID: -6803036533714215528}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 250
 --- !u!114 &9051437348140866170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -859,7 +1308,7 @@ MonoBehaviour:
   StudioPath: parameter:/sfxVolume
   Min: 0
   Max: 1
-  Default: 0
+  Default: 1
   ID:
     data1: 4039078160
     data2: 1755679933
