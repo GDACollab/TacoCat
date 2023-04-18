@@ -9,6 +9,7 @@ public class AudioManager : MonoBehaviour
     [Header("Volumes")]
     public float masterVolume;
     public float musicVolume;
+    public float sfxVolume;
     public float dialogueVolume;
     public float ambianceVolume;
 
