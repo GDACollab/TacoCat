@@ -39,4 +39,16 @@ public class DrivingGameManager : MonoBehaviour
         percentageTraveled = vehicleDistance / totalDistance;
 
     }
+    
+    public List<int> getSignDistances(int numLandmarks, int totalSignDistance){
+        List<int> signs = new List<int>(numLandmarks);
+        int signDistance = Mathf.FloorToInt(totalSignDistance/(numLandmarks+1));
+        int distanceLeft = totalSignDistance;
+        
+        for(int i = 0; i<numLandmarks; i++){
+            distanceLeft -= signDistance;
+            signs.Add(distanceLeft);
+        }
+        return signs;
+    }
 }
