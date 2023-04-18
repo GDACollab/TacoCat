@@ -39,10 +39,10 @@ MonoBehaviour:
   Path: Assets/FMOD/TacoCat FMOD Project/Build/Desktop/Music.bank
   Name: Music
   StudioPath: bank:/Music
-  lastModified: 638139004094751792
+  lastModified: 638171249371258720
   FileSizes:
   - Name: Desktop
-    Value: 7015904
+    Value: 8850752
   Exists: 1
 --- !u!114 &-8423685065464471139
 MonoBehaviour:
@@ -91,7 +91,9 @@ MonoBehaviour:
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
-  Parameters: []
+  Parameters:
+  - {fileID: -4104022230305613398}
+  - {fileID: 5764855952784588756}
   MinDistance: 1
   MaxDistance: 20
   Length: 128064
@@ -121,6 +123,7 @@ MonoBehaviour:
   Parameters:
   - {fileID: -4189828553822359907}
   - {fileID: -3478068578892910875}
+  - {fileID: 1085766995315375643}
   MinDistance: 1
   MaxDistance: 20
   Length: 3988
@@ -147,7 +150,9 @@ MonoBehaviour:
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
-  Parameters: []
+  Parameters:
+  - {fileID: -578177114451770475}
+  - {fileID: 5837575255754543363}
   MinDistance: 1
   MaxDistance: 20
   Length: 177912
@@ -166,10 +171,86 @@ MonoBehaviour:
   Path: Assets/FMOD/TacoCat FMOD Project/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638139004094256214
+  lastModified: 638171249344933229
   FileSizes:
   - Name: Desktop
-    Value: 1728
+    Value: 2002
+  Exists: 1
+--- !u!114 &-6685814708768576158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/MenuMusic/musicVolume
+  m_EditorClassIdentifier: 
+  Name: musicVolume
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 794079583
+    data2: 2990606425
+  Type: 0
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
+--- !u!114 &-6583425584156014743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Cutscene/Texting/Texting Clicks
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Cutscene/Texting/Texting Clicks
+  Guid:
+    Data1: -2122918461
+    Data2: 1247885746
+    Data3: -1319506024
+    Data4: -184280849
+  Banks:
+  - {fileID: -4883576881100996228}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters:
+  - {fileID: -5069940938495354477}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-5069940938495354477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Texting Clicks/sfxVolume
+  m_EditorClassIdentifier: 
+  Name: sfxVolume
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 4039078160
+    data2: 1755679933
+  Type: 0
+  IsGlobal: 1
+  Labels: []
   Exists: 1
 --- !u!114 &-4883576881100996228
 MonoBehaviour:
@@ -186,10 +267,10 @@ MonoBehaviour:
   Path: Assets/FMOD/TacoCat FMOD Project/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638139004094892665
+  lastModified: 638171249372952466
   FileSizes:
   - Name: Desktop
-    Value: 2780480
+    Value: 2785728
   Exists: 1
 --- !u!114 &-4189828553822359907
 MonoBehaviour:
@@ -218,6 +299,54 @@ MonoBehaviour:
   - Bad
   - Okay
   - Perfect
+  Exists: 1
+--- !u!114 &-4104022230305613398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/TacoMusic/inPauseMenu
+  m_EditorClassIdentifier: 
+  Name: inPauseMenu
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 1
+  ID:
+    data1: 3321311025
+    data2: 4109458338
+  Type: 1
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
+--- !u!114 &-4082033817227333512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Swipe/sfxVolume
+  m_EditorClassIdentifier: 
+  Name: sfxVolume
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 4039078160
+    data2: 1755679933
+  Type: 0
+  IsGlobal: 1
+  Labels: []
   Exists: 1
 --- !u!114 &-3478068578892910875
 MonoBehaviour:
@@ -261,10 +390,10 @@ MonoBehaviour:
   Path: Assets/FMOD/TacoCat FMOD Project/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638139004094256214
+  lastModified: 638171249344883167
   FileSizes:
   - Name: Desktop
-    Value: 1340
+    Value: 2020
   Exists: 1
 --- !u!114 &-3192474062382926919
 MonoBehaviour:
@@ -313,10 +442,63 @@ MonoBehaviour:
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
-  Parameters: []
+  Parameters:
+  - {fileID: 4478104367449299153}
   MinDistance: 1
   MaxDistance: 20
   Length: 250
+--- !u!114 &-578177114451770475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/StoryMusic/inPauseMenu
+  m_EditorClassIdentifier: 
+  Name: inPauseMenu
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 1
+  ID:
+    data1: 3321311025
+    data2: 4109458338
+  Type: 1
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
+--- !u!114 &-326755971979920336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/MenuMusic
+  m_EditorClassIdentifier: 
+  Path: event:/Music/MenuMusic
+  Guid:
+    Data1: -161577168
+    Data2: 1113914750
+    Data3: 1199079837
+    Data4: 920222136
+  Banks:
+  - {fileID: -8561930763350662122}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters:
+  - {fileID: -6685814708768576158}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 42448
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -343,13 +525,67 @@ MonoBehaviour:
   - {fileID: 1662494057405389240}
   - {fileID: -1908798460221713646}
   - {fileID: -7595185006366903977}
-  EditorParameters: []
+  - {fileID: -326755971979920336}
+  - {fileID: -6583425584156014743}
+  EditorParameters:
+  - {fileID: 3685568002006737435}
+  - {fileID: 7125859764481160197}
+  - {fileID: 1815725742131441144}
+  - {fileID: 1084016987317198607}
   MasterBanks:
   - {fileID: -3384493171452183607}
   StringsBanks:
   - {fileID: -7274067073098588606}
-  cacheTime: 638139004094892665
+  cacheTime: 638171249372952466
   cacheVersion: 131601
+--- !u!114 &1084016987317198607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/inPauseMenu
+  m_EditorClassIdentifier: 
+  Name: inPauseMenu
+  StudioPath: parameter:/inPauseMenu
+  Min: 0
+  Max: 1
+  Default: 1
+  ID:
+    data1: 3321311025
+    data2: 4109458338
+  Type: 1
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
+--- !u!114 &1085766995315375643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Customer_Order/sfxVolume
+  m_EditorClassIdentifier: 
+  Name: sfxVolume
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 4039078160
+    data2: 1755679933
+  Type: 0
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
 --- !u!114 &1662494057405389240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -373,10 +609,59 @@ MonoBehaviour:
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
-  Parameters: []
+  Parameters:
+  - {fileID: -4082033817227333512}
   MinDistance: 1
   MaxDistance: 20
   Length: 250
+--- !u!114 &1815725742131441144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/musicVolume
+  m_EditorClassIdentifier: 
+  Name: musicVolume
+  StudioPath: parameter:/musicVolume
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 794079583
+    data2: 2990606425
+  Type: 0
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
+--- !u!114 &2420963847373384202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/DrivingMusic/musicVolume
+  m_EditorClassIdentifier: 
+  Name: musicVolume
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 794079583
+    data2: 2990606425
+  Type: 0
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
 --- !u!114 &3319560882327201080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -403,9 +688,178 @@ MonoBehaviour:
   Parameters:
   - {fileID: -8658339641355087253}
   - {fileID: 8797459119931217095}
+  - {fileID: 6850871860813809443}
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &3685568002006737435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/ambienceVolume
+  m_EditorClassIdentifier: 
+  Name: ambienceVolume
+  StudioPath: parameter:/AmbienceVolume
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 2211050040
+    data2: 1103005367
+  Type: 0
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
+--- !u!114 &4167023092310799061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/DrivingMusic/inPauseMenu
+  m_EditorClassIdentifier: 
+  Name: inPauseMenu
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 1
+  ID:
+    data1: 3321311025
+    data2: 4109458338
+  Type: 1
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
+--- !u!114 &4478104367449299153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Pop/sfxVolume
+  m_EditorClassIdentifier: 
+  Name: sfxVolume
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 4039078160
+    data2: 1755679933
+  Type: 0
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
+--- !u!114 &5764855952784588756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/TacoMusic/musicVolume
+  m_EditorClassIdentifier: 
+  Name: musicVolume
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 794079583
+    data2: 2990606425
+  Type: 0
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
+--- !u!114 &5837575255754543363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/StoryMusic/musicVolume
+  m_EditorClassIdentifier: 
+  Name: musicVolume
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 794079583
+    data2: 2990606425
+  Type: 0
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
+--- !u!114 &6850871860813809443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/City/ambienceVolume
+  m_EditorClassIdentifier: 
+  Name: ambienceVolume
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 2211050040
+    data2: 1103005367
+  Type: 0
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
+--- !u!114 &7125859764481160197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/sfxVolume
+  m_EditorClassIdentifier: 
+  Name: sfxVolume
+  StudioPath: parameter:/sfxVolume
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 4039078160
+    data2: 1755679933
+  Type: 0
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
 --- !u!114 &7127440623263209391
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -432,6 +886,7 @@ MonoBehaviour:
   Parameters:
   - {fileID: 8481989994907687017}
   - {fileID: -3192474062382926919}
+  - {fileID: 9089890832240561654}
   MinDistance: 1
   MaxDistance: 20
   Length: 0
@@ -460,9 +915,11 @@ MonoBehaviour:
   IsOneShot: 0
   Parameters:
   - {fileID: -8423685065464471139}
+  - {fileID: 4167023092310799061}
+  - {fileID: 2420963847373384202}
   MinDistance: 1
   MaxDistance: 20
-  Length: 220096
+  Length: 229199
 --- !u!114 &8481989994907687017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -509,5 +966,29 @@ MonoBehaviour:
     data2: 1706493413
   Type: 0
   IsGlobal: 0
+  Labels: []
+  Exists: 1
+--- !u!114 &9089890832240561654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Truck Engine [Placeholder]/sfxVolume
+  m_EditorClassIdentifier: 
+  Name: sfxVolume
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 4039078160
+    data2: 1755679933
+  Type: 0
+  IsGlobal: 1
   Labels: []
   Exists: 1

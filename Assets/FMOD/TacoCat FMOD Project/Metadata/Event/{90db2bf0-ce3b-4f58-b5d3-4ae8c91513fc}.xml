@@ -47,6 +47,7 @@
 	<object class="MasterTrack" id="{c5c8ac70-b769-4c15-a699-db793e2517de}">
 		<relationship name="automationTracks">
 			<destination>{6244d88d-a49c-46ee-a5ab-4b120ed8509e}</destination>
+			<destination>{5cc3ff58-5cec-4bec-a70d-e5388ec3cf5a}</destination>
 		</relationship>
 		<relationship name="modules">
 			<destination>{2c1edf99-300f-4d87-adb1-7e5d88e4fd32}</destination>
@@ -116,6 +117,11 @@
 	<object class="AutomationTrack" id="{6244d88d-a49c-46ee-a5ab-4b120ed8509e}">
 		<relationship name="automator">
 			<destination>{25847929-3fbf-41e7-af4f-88d23a2ed96f}</destination>
+		</relationship>
+	</object>
+	<object class="AutomationTrack" id="{5cc3ff58-5cec-4bec-a70d-e5388ec3cf5a}">
+		<relationship name="automator">
+			<destination>{bf2740ac-144c-4042-92c0-9d3e79863c02}</destination>
 		</relationship>
 	</object>
 	<object class="TransitionSourceSound" id="{2c1edf99-300f-4d87-adb1-7e5d88e4fd32}">
@@ -387,7 +393,7 @@
 			<value>0</value>
 		</property>
 		<property name="value">
-			<value>1400</value>
+			<value>2000</value>
 		</property>
 	</object>
 </objects>
