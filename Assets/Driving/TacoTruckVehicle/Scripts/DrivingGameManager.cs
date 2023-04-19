@@ -22,6 +22,7 @@ public class DrivingGameManager : MonoBehaviour
     void Start()
     {
         vehicle.rb_vehicle.constraints = RigidbodyConstraints2D.FreezeAll;
+        beginningPoint.position = vehicle.transform.position;
     }
 
     // Update is called once per frame
