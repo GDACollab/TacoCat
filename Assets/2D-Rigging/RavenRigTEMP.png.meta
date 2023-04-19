@@ -119,7 +119,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones:
-      - name: bone_1
+      - name: head
         guid: 69dd07397d66ca048bb11d66f315a1de
         position: {x: 59.87281, y: 2.4019623, z: 0}
         rotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
@@ -557,7 +557,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones:
-      - name: bone_1
+      - name: torso
         guid: 9cf61ad744840c0459d1a76cfd040bce
         position: {x: 35.189682, y: 11.750259, z: 0}
         rotation: {x: 0, y: 0, z: 0.70341456, w: 0.71077985}
@@ -1035,18 +1035,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones:
-      - name: bone_1
+      - name: hand_1
         guid: b5e4a301fc80098458a4bc26e1f3a53c
         position: {x: 4.7655716, y: 69.87703, z: 0}
         rotation: {x: 0, y: 0, z: -0.57439697, w: 0.81857693}
-        length: 35.77122
+        length: 35.771225
         parentId: -1
         color:
           serializedVersion: 2
           rgba: 4278190335
-      - name: bone_2
+      - name: hand_2
         guid: b824e5466d06b78488fcbb5357f9de39
-        position: {x: 35.77122, y: 0.000004998814, z: 0}
+        position: {x: 35.771225, y: 0.0000054949223, z: 0}
         rotation: {x: 0, y: 0, z: -0.09427085, w: 0.9955466}
         length: 34.06397
         parentId: 0
@@ -1538,18 +1538,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones:
-      - name: bone_1
+      - name: left_knee
         guid: 967672505eb1db14c997a5253f202f5f
         position: {x: 6.1832047, y: 65.659836, z: 0}
         rotation: {x: 0, y: 0, z: -0.688781, w: 0.72496945}
-        length: 24.01446
+        length: 24.014452
         parentId: -1
         color:
           serializedVersion: 2
           rgba: 4278190335
-      - name: bone_2
+      - name: left_leg
         guid: 2a7522c9a72c2fa4e802a8b2afd944c7
-        position: {x: 24.014454, y: 0.000004062122, z: 0}
+        position: {x: 24.014446, y: 0.00000397624, z: 0}
         rotation: {x: 0, y: 0, z: 0.058163736, w: 0.99830705}
         length: 35.574314
         parentId: 0
@@ -1970,18 +1970,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones:
-      - name: bone_1
+      - name: right_knee
         guid: 7c0994d0beda26b4bbb7e7bd959e0043
         position: {x: 8.446556, y: 64.52721, z: 0}
         rotation: {x: 0, y: 0, z: -0.6246901, w: 0.78087276}
-        length: 32.970284
+        length: 32.970287
         parentId: -1
         color:
           serializedVersion: 2
           rgba: 4278190335
-      - name: bone_2
+      - name: right_leg
         guid: 651cfd36a0bb50e4e929b776f9eed90a
-        position: {x: 32.970287, y: -0.0000028172403, z: 0}
+        position: {x: 32.97029, y: -0.0000027242484, z: 0}
         rotation: {x: 0, y: 0, z: -0.052568268, w: 0.99861735}
         length: 28.552332
         parentId: 0
