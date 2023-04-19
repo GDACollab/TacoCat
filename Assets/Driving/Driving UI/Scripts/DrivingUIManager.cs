@@ -33,14 +33,26 @@ public class DrivingUIManager : MonoBehaviour
     public Transform pointerStart;
     public Transform pointerEnd;
 
+    [Header("Toggle Progress Bar")]
+    private GameObject progressBarSlider;
+    public bool viewProgressBar;
 
     
     // Start is called before the first frame update
     void Start()
     {
+        progressBarSlider = GameObject.Find("DistanceSlider");
         vehicle_script = vehicle.GetComponent<Vehicle>();
         flipTracker = vehicle.GetComponent<FlipTracker>();
         initFuelNitro(vehicle_script.GetFuel(),vehicle_script.GetNitro());
+        if (viewProgressBar)
+        {
+            progressBarSlider.SetActive(true);
+        }
+        else
+        {
+            progressBarSlider.SetActive(false);
+        }
     }
 
     // Update is called once per frame
