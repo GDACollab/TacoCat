@@ -305,19 +305,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   phoneText: {fileID: 1555489853}
-  characterLimit: 100
-  phone_texts:
-  - Testarfjdneroidfvjnsera9rjgiob
-  order_of_texts:
-  - 1
-  - 0
-  - 1
-  list:
-  - text:
-    - 
-    - 
-    - 
-    person: 
+  characterLimit: 1000
+  Dialoge:
+  - person: 0
+    texts:
+    - hello this is Alex
+    - more text
+  - person: 1
+    texts:
+    - hello this is Jamie
+    - even more text
+  - person: 0
+    texts:
+    - hi
   messageDelayAlex: 0
   typeOutAlex: 1
   textSpeedAlex: 0.1
