@@ -11,20 +11,16 @@ public class CutsceneManager : MonoBehaviour
     [Tooltip("[WIP] Max charcters per line.\nWon't move the whole word to the next line currently")]
     public int characterLimit;
 
-    [Space]
-
-    public List<string> phone_texts;
-    public List<string> order_of_texts;
-
-    private List<List<string>> master_list;
-
+    public enum character { ALEX, JAMIE };
     [System.Serializable]
-    public struct PhoneText
+    public struct TextList
     {
-        public List<string> text;
-        public string person;
+        public character person;
+        public List<string> texts;
     }
-    public List<PhoneText> list;
+
+    public List<TextList> Dialoge;
+    private TextList list;
 
     [Range(0.0f, 0.5f)]
     public float messageDelayAlex;
@@ -66,45 +62,57 @@ public class CutsceneManager : MonoBehaviour
         
         counter = 0;
 
-        master_list.Add(order_of_texts);
-        master_list.Add(phone_texts);
+
 
 
         //check if typing out the text or printing the whole message
-        if (typeOutAlex)
+
+
+        foreach (TextList a in Dialoge)
         {
-            StartCoroutine(Typeline());
+            if (a.person == 0)
+            {
+                //type out Alex
+                StartCoroutine(Typeline(a.texts));
+            
+            }
+            else
+            {
+                StartCoroutine(PrintText(a.texts));
+            }
+
+
+
+
         }
-        else { 
-            StartCoroutine(PrintText()); 
-        }
+        
+
 
     }
 
     //for printing the entire message at once
-    IEnumerator PrintText() {
+    IEnumerator PrintText(List<string> characterText) {
 
         //Add each element from phone_texts to phoneText
-        foreach (List<string> line in master_list)
-        {
-            foreach (string s in line)
+
+        foreach (string l in characterText)
             {
-                phoneText.text += line + "\n";
+                phoneText.text += l + "\n";
 
                 yield return new WaitForSeconds(messageDelayAlex);
             }
             
-        }
 
     }
 
     //For typing out the message
-    IEnumerator Typeline()
+    
+    IEnumerator Typeline(List<string> l)
     {
-        foreach (List<string> line in master_list)
+        foreach (string s in l)
         {
-            foreach (string s in line)
-            {
+           
+           
                 //Add each element from phone_texts to phoneText
                 foreach (char c in s.ToCharArray())
                 {
@@ -122,14 +130,13 @@ public class CutsceneManager : MonoBehaviour
                 }
                 phoneText.text += "\n";
                 yield return new WaitForSeconds(messageDelayAlex);
-            }
+            
         }
     }
 
     //for printing the entire message at once
     
-
-    
+   
 
     // Update is called once per frame
     void Update()
