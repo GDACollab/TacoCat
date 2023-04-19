@@ -102,7 +102,7 @@ public class PlayerHand : MonoBehaviour
                 currHeldIngredient = new ingredientType();
                 state = handState.HOME;
                 //pop sound when placed
-                tacoAudioManager.pop();
+                //tacoAudioManager.pop();
             }
         }
 
@@ -144,7 +144,7 @@ public class PlayerHand : MonoBehaviour
 
             pickBin = bin;
             //woosh sound when starting to pick up ingredient
-            tacoAudioManager.woosh();
+            //tacoAudioManager.woosh();
         }
     }
 

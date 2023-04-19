@@ -692,6 +692,17 @@ MonoBehaviour:
   OverrideAttenuation: 0
   OverrideMinDistance: 1
   OverrideMaxDistance: 20
+--- !u!114 &536576063 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+  m_PrefabInstance: {fileID: 5558428075629181418}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 536576061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 399d30af4f863cf488de9a77942e1814, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &610623316
 GameObject:
   m_ObjectHideFlags: 0
@@ -1298,10 +1309,11 @@ MonoBehaviour:
   menuIndex: 0
   tacoMakingIndex: 2
   drivingIndex: 3
-  cutscene: 4
+  cutsceneIndex: 3
   loadingSceneIndex: 1
   randDriveIndex: 5
   nightDriveIndex: 6
+  audioManager: {fileID: 536576063}
 --- !u!4 &1354788261
 Transform:
   m_ObjectHideFlags: 0
@@ -2108,7 +2120,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1345991178725705055, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
       propertyPath: m_Name
-      value: MenuAudioManager
+      value: AudioManager
       objectReference: {fileID: 0}
     - target: {fileID: 1798788856762079704, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
       propertyPath: m_RootOrder
@@ -2167,12 +2179,24 @@ PrefabInstance:
       value: event:/Music/
       objectReference: {fileID: 0}
     - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+      propertyPath: sfxVolume
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
       propertyPath: tacoMusic
       value: TacoMusic
       objectReference: {fileID: 0}
     - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+      propertyPath: musicVolume
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
       propertyPath: drivingMusic
       value: DrivingMusic
+      objectReference: {fileID: 0}
+    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+      propertyPath: masterVolume
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
       propertyPath: cutsceneMusic
@@ -2181,6 +2205,14 @@ PrefabInstance:
     - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
       propertyPath: menuMusicPath
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+      propertyPath: ambianceVolume
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+      propertyPath: dialogueVolume
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}

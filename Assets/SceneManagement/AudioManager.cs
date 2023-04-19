@@ -43,21 +43,74 @@ public class AudioManager : MonoBehaviour
     //a little more complicated! DO MATH to give sound 1 variable to work with
 
     //volType {0= master, 1= music, 2 = sfx, 3 = dialogue}, volAmount = float range: [0,1]
-
+    void Awake()
+    {
+        DontDestroyOnLoad(this.gameObject);
+    }
 
     private FMOD.Studio.EventInstance MusicInstance;
+
+    bool isPlaying(FMOD.Studio.EventInstance instance){
+        FMOD.Studio.PLAYBACK_STATE state;   
+        instance.getPlaybackState(out state);
+        return state != FMOD.Studio.PLAYBACK_STATE.STOPPED;
+    }
+
+    int currSong(){ //returns index of the song that's currently playing
+        if(isPlaying(menuMusicInst)){
+            return 0; //menu index == 0
+        }else if(isPlaying(tacoMusicInst)){
+            return 1; //taco making music index = 1
+        }else if(isPlaying(drivingMusicInst)){
+            return 2; // driving music instance = 2
+        }else if(isPlaying(cutsceneMusicInst)){
+            return 3;
+        }else{
+            return -1;
+        }
+    }
+
     public void PlaySong(int index){
-        switch(index){
+
+        switch(currSong()){
             case 0:
-                
+                menuMusicInst.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                menuMusicInst.release();
+                Debug.Log("stopping menu music");
                 break;
             case 1:
-                
+                tacoMusicInst.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                tacoMusicInst.release();
+                Debug.Log("stopping taco music");
                 break;
             case 2:
-
+                drivingMusicInst.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                drivingMusicInst.release();
+                Debug.Log("stopping driving music");
                 break;
-            
+            case 3:
+                cutsceneMusicInst.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                cutsceneMusicInst.release();
+                Debug.Log("stopping cutscene music");
+                break;
+        }
+        switch(index){
+            case 0:
+                menuMusicInst.start();
+                Debug.Log("starting menu music");
+                break;
+            case 1:
+                tacoMusicInst.start();
+                Debug.Log("starting taco music");
+                break;
+            case 2:
+                drivingMusicInst.start();
+                Debug.Log("starting driving music");
+                break;
+            case 3:
+                cutsceneMusicInst.start();
+                Debug.Log("starting cutscene music");
+                break;
         }
         //if song is already playing, nothing happens
         //if diff song

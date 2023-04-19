@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public int menuIndex = 0;
     public int tacoMakingIndex = 1;
     public int drivingIndex = 2;
-    public int cutscene = 3;
+    public int cutsceneIndex = 3;
     public int loadingSceneIndex = 4;
     public int randDriveIndex;
     public int nightDriveIndex;
@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     TacoMakingGameManager tacoGameManager;
     DrivingGameManager drivingGameManager;
     CutsceneManager cutsceneManager;
+    public AudioManager audioManager;
 
     void Awake()
     {
@@ -82,33 +83,48 @@ public class GameManager : MonoBehaviour
                 LoadTacoMakingScene();
             }
         }
-
+        // << AUDIO MANAGER >>
+        /*
+        if (audioManager == null)
+        {
+            try
+            {
+                audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+            }
+            catch { }
+        }*/
     }
 
     public void LoadMenu()
     {
         SceneManager.LoadScene(menuIndex);
+        audioManager.PlaySong(menuIndex);
     }
 
     public void LoadTacoMakingScene()
     {
 
         StartCoroutine(LoadingCoroutine(tacoMakingIndex));
+        audioManager.PlaySong(tacoMakingIndex);
+
     }
 
     public void LoadDrivingScene()
     {
         StartCoroutine(LoadingCoroutine(drivingIndex));
+        audioManager.PlaySong(drivingIndex);
     }
 
     public void LoadRandDrivingScene()
     {
         StartCoroutine(LoadingCoroutine(randDriveIndex));
+        audioManager.PlaySong(drivingIndex);
     }
 
     public void LoadNightDrivingScene()
     {
         StartCoroutine(LoadingCoroutine(nightDriveIndex));
+        audioManager.PlaySong(drivingIndex);
     }
 
     IEnumerator LoadingCoroutine(int sceneIndex)
@@ -145,8 +161,12 @@ public class GameManager : MonoBehaviour
 
     public void LoadCutscene()
     {
-        SceneManager.LoadScene(cutscene);
+        SceneManager.LoadScene(cutsceneIndex);
+        audioManager.PlaySong(cutsceneIndex);
     }
-
+    void Start(){
+        //audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+        audioManager.PlaySong(menuIndex);
+    }
 
 }
