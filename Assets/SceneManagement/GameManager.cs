@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
+        audioManager.PlaySong(menuIndex);
     }
 
     public void Update()
@@ -166,7 +167,7 @@ public class GameManager : MonoBehaviour
     }
     void Start(){
         //audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
-        audioManager.PlaySong(menuIndex);
+        
     }
 
 }

@@ -108,9 +108,11 @@ public class AudioManager : MonoBehaviour
     private FMOD.Studio.EventInstance tacoMusicInst;
 
     //plays a one shot given the fmod event path
-    public void Play(string path) 
+    public void Play(string path)
 	{
-		FMODUnity.RuntimeManager.PlayOneShot(path);
+        FMOD.Studio.EventInstance instance =  FMODUnity.RuntimeManager.CreateInstance(path);
+		instance.start();
+        instance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
 	}
 
     //a little more complicated! DO MATH to give sound 1 variable to work with

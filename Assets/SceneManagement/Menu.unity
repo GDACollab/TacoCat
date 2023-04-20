@@ -219,16 +219,16 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-        m_TargetAssemblyTypeName: MenuAudioManager, Assembly-CSharp
-        m_MethodName: click
-        m_Mode: 1
+      - m_Target: {fileID: 6994455183296229762}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: event:/SFX/Cutscene/Texting Clicks
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &7027924
@@ -549,8 +549,8 @@ GameObject:
   m_Component:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
-  - component: {fileID: 519420029}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420034}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -558,14 +558,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &519420029
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -657,17 +649,19 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!114 &536576063 stripped
+--- !u!114 &519420034
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-  m_PrefabInstance: {fileID: 5558428075629181418}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 399d30af4f863cf488de9a77942e1814, type: 3}
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 0}
 --- !u!1 &610623316
 GameObject:
   m_ObjectHideFlags: 0
@@ -764,16 +758,16 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-        m_TargetAssemblyTypeName: MenuAudioManager, Assembly-CSharp
-        m_MethodName: click
-        m_Mode: 1
+      - m_Target: {fileID: 6994455183296229762}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: event:/SFX/Cutscene/Texting Clicks
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &610623319
@@ -910,16 +904,16 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-        m_TargetAssemblyTypeName: MenuAudioManager, Assembly-CSharp
-        m_MethodName: click
-        m_Mode: 1
+      - m_Target: {fileID: 6994455183296229762}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: event:/SFX/Cutscene/Texting Clicks
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &930333165
@@ -1191,16 +1185,16 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-        m_TargetAssemblyTypeName: MenuAudioManager, Assembly-CSharp
-        m_MethodName: click
-        m_Mode: 1
+      - m_Target: {fileID: 6994455183296229762}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: event:/SFX/Cutscene/Texting Clicks
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1312987036
@@ -1278,7 +1272,7 @@ MonoBehaviour:
   loadingSceneIndex: 1
   randDriveIndex: 5
   nightDriveIndex: 6
-  audioManager: {fileID: 536576063}
+  audioManager: {fileID: 6994455183296229762}
 --- !u!4 &1354788261
 Transform:
   m_ObjectHideFlags: 0
@@ -1466,16 +1460,16 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-        m_TargetAssemblyTypeName: MenuAudioManager, Assembly-CSharp
-        m_MethodName: click
-        m_Mode: 1
+      - m_Target: {fileID: 6994455183296229762}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: event:/SFX/Cutscene/Texting Clicks
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1575197696
@@ -2076,168 +2070,71 @@ MonoBehaviour:
   OverrideAttenuation: 0
   OverrideMinDistance: -1
   OverrideMaxDistance: -1
---- !u!1001 &5558428075629181418
+--- !u!114 &6994455183296229762 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+  m_PrefabInstance: {fileID: 7231967244906649192}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 399d30af4f863cf488de9a77942e1814, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1001 &7231967244906649192
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1345991178725705055, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-      propertyPath: m_Name
-      value: AudioManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 1798788856762079704, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+    - target: {fileID: 3569120199698855514, guid: ce38256018985f14987391b520377013, type: 3}
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 1798788856762079704, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+    - target: {fileID: 3569120199698855514, guid: ce38256018985f14987391b520377013, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.7620814
       objectReference: {fileID: 0}
-    - target: {fileID: 1798788856762079704, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+    - target: {fileID: 3569120199698855514, guid: ce38256018985f14987391b520377013, type: 3}
       propertyPath: m_LocalPosition.y
       value: 9.362319
       objectReference: {fileID: 0}
-    - target: {fileID: 1798788856762079704, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+    - target: {fileID: 3569120199698855514, guid: ce38256018985f14987391b520377013, type: 3}
       propertyPath: m_LocalPosition.z
       value: 42.00499
       objectReference: {fileID: 0}
-    - target: {fileID: 1798788856762079704, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+    - target: {fileID: 3569120199698855514, guid: ce38256018985f14987391b520377013, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1798788856762079704, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+    - target: {fileID: 3569120199698855514, guid: ce38256018985f14987391b520377013, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1798788856762079704, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+    - target: {fileID: 3569120199698855514, guid: ce38256018985f14987391b520377013, type: 3}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1798788856762079704, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+    - target: {fileID: 3569120199698855514, guid: ce38256018985f14987391b520377013, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1798788856762079704, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+    - target: {fileID: 3569120199698855514, guid: ce38256018985f14987391b520377013, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1798788856762079704, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+    - target: {fileID: 3569120199698855514, guid: ce38256018985f14987391b520377013, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1798788856762079704, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+    - target: {fileID: 3569120199698855514, guid: ce38256018985f14987391b520377013, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-      propertyPath: clickk
-      value: event:/SFX/Cutscene/Texting
-      objectReference: {fileID: 0}
-    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-      propertyPath: menuMusic
-      value: MenuMusic
-      objectReference: {fileID: 0}
-    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-      propertyPath: musicPath
-      value: event:/Music/
-      objectReference: {fileID: 0}
-    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-      propertyPath: sfxVolume
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-      propertyPath: tacoMusic
-      value: TacoMusic
-      objectReference: {fileID: 0}
-    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-      propertyPath: typingSFX
-      value: Texting Clicks
-      objectReference: {fileID: 0}
-    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-      propertyPath: musicVolume
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-      propertyPath: pawSwipeSFX
-      value: Swipe Ingredients
-      objectReference: {fileID: 0}
-    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-      propertyPath: sendTextSFX
-      value: Send Text
-      objectReference: {fileID: 0}
-    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-      propertyPath: drivingMusic
-      value: DrivingMusic
-      objectReference: {fileID: 0}
-    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-      propertyPath: flipBoostSFX
-      value: Flip Boost
-      objectReference: {fileID: 0}
-    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-      propertyPath: masterVolume
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-      propertyPath: cutsceneMusic
-      value: StoryMusic
-      objectReference: {fileID: 0}
-    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-      propertyPath: diaVolBusPath
-      value: bus:/Dialogue
-      objectReference: {fileID: 0}
-    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-      propertyPath: ingriPlaceSFX
-      value: Plop Ingredients
-      objectReference: {fileID: 0}
-    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-      propertyPath: masVolBusPath
-      value: bus:/Master
-      objectReference: {fileID: 0}
-    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-      propertyPath: menuMusicPath
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-      propertyPath: musVolBusPath
-      value: bus:/Music
-      objectReference: {fileID: 0}
-    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-      propertyPath: nitroBoostSFX
-      value: Nitro Boost
-      objectReference: {fileID: 0}
-    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-      propertyPath: sfxVolBusPath
-      value: bus:/SFX
-      objectReference: {fileID: 0}
-    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-      propertyPath: submitTacoSFX
-      value: Bell Ding
-      objectReference: {fileID: 0}
-    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-      propertyPath: ambiVolBusPath
-      value: bus:/Ambiance
-      objectReference: {fileID: 0}
-    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-      propertyPath: ambianceVolume
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-      propertyPath: dialogueVolume
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-      propertyPath: drivingSFXPath
-      value: event:/SFX/Driving
-      objectReference: {fileID: 0}
-    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-      propertyPath: recieveTextSFX
-      value: Recieve Text
-      objectReference: {fileID: 0}
-    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-      propertyPath: cutsceneSFXPath
-      value: event:/SFX/Cutscene
+    - target: {fileID: 4310913368992377565, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: m_Name
+      value: AudioManager
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: ce38256018985f14987391b520377013, type: 3}

@@ -38,6 +38,7 @@ public class FlipTracker : MonoBehaviour
         vehicle = GetComponent<Vehicle>();
         animHandler = GetComponent<TruckAnimationHandler>();
         initTruckRotation = transform.rotation.eulerAngles.z;
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
     }
 
     // Update is called once per frame

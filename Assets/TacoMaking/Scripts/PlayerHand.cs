@@ -159,4 +159,8 @@ public class PlayerHand : MonoBehaviour
             state = handState.PLACE_INGR;
         }
     }
+
+    public void Start(){
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+    }
 }
