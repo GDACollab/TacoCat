@@ -7,7 +7,7 @@
 [LOG] OutputWASAPI::init                       : Output buffer size: 4096 samples, latency: 0.00ms, period: 10.00ms, DSP buffer: 1024 * 4
 [LOG] Thread::initThread                       : Init FMOD stream thread. Affinity: 0x4000000000000003, Priority: 0xFFFF7FFB, Stack Size: 98304, Semaphore: No, Sleep Time: 10, Looping: Yes.
 [LOG] Thread::initThread                       : Init FMOD mixer thread. Affinity: 0x4000000000000001, Priority: 0xFFFF7FFA, Stack Size: 81920, Semaphore: No, Sleep Time: 0, Looping: Yes.
-[LOG] AsyncManager::init                       : manager 00000281FF2B60A8 isAsync 0 updatePeriod 0.02
+[LOG] AsyncManager::init                       : manager 000002114ED63328 isAsync 0 updatePeriod 0.02
 [LOG] AsyncManager::init                       : done
 [LOG] PlaybackSystem::init                     : 
 [LOG] Thread::initThread                       : Init FMOD Studio sample load thread. Affinity: 0x4000000000000003, Priority: 0xFFFF7FFD, Stack Size: 98304, Semaphore: No, Sleep Time: 1, Looping: No.
@@ -17,43 +17,6 @@
 [LOG] Manager::readBank                        : fileversion = 142, compatVersion = 140 (oldest = 44, newest = 142)
 [LOG] Manager::readBank                        : fileversion = 142, compatVersion = 140 (oldest = 44, newest = 142)
 [LOG] Manager::readBank                        : fileversion = 142, compatVersion = 140 (oldest = 44, newest = 142)
-[LOG] Manager::readBank                        : fileversion = 142, compatVersion = 140 (oldest = 44, newest = 142)
 [LOG] PlaybackSystem::acquireMasterBus         : Setting master channel group format to 6
 [LOG] Manager::readBank                        : fileversion = 142, compatVersion = 140 (oldest = 44, newest = 142)
-[LOG] AsyncThread::add                         : add sound to async queue : soundi = 00000281ADFF9868, queue head = 00000280E8610958, queue count = 0
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 00000281ADFF9868
-[LOG] AsyncThread::add                         : add sound to async queue : soundi = 00000281ADFF91A8, queue head = 00000280E8610958, queue count = 0
-[LOG] AsyncThread::add                         :     add sound to async queue : soundi = 00000281ADFF85D8, queue head = 00000280E8610958, queue count = 1
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 00000281ADFF9868
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 00000281ADFF91A8
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 00000281ADFF91A8
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 00000281ADFF85D8
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 00000281ADFF85D8
-[LOG] SoundI::release                          : TacoMakingConcept01a_JacksonRichmond (00000281ADFF9358)
-[LOG] SoundI::release                          :     TacoMakingConcept01a_JacksonRichmond (0000027ECFFA82D8)
-[LOG] SoundI::release                          :     TacoMakingConcept01a_JacksonRichmond (00000281ADFF9868)
-[LOG] SoundI::release                          : TacoCat_Concept_FastDriving3_v2 (00000281ADFF8FF8)
-[LOG] SoundI::release                          :     TacoCat_Concept_FastDriving3_v2 (0000027ED51203B8)
-[LOG] SoundI::release                          :     TacoCat_Concept_FastDriving3_v2 (00000281ADFF85D8)
-[LOG] SoundI::release                          : TacoCat_Concept_FastDriving_3_v2Abmin (00000281ADFFA0D8)
-[LOG] SoundI::release                          :     TacoCat_Concept_FastDriving_3_v2Abmin (0000027ED5120558)
-[LOG] SoundI::release                          :     TacoCat_Concept_FastDriving_3_v2Abmin (00000281ADFF91A8)
-[LOG] Thread::callback                         : FMOD Studio update thread finished.
-[LOG] Thread::callback                         : FMOD Studio bank load thread finished.
-[LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
-[LOG] Thread::callback                         : FMOD Studio sample load thread finished.
-[LOG] LiveUpdate::release                      : 
-[LOG] LiveUpdate::reset                        : Reset connection (reason Disconnected)
-[LOG] Thread::callback                         : FMOD stream thread finished.
-[LOG] Thread::callback                         : FMOD mixer thread finished.
-[LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
-[LOG] SystemI::close                           : Closed.
-[LOG] Thread::callback                         : FMOD Studio bank load thread finished.
-[LOG] Thread::callback                         : FMOD Studio sample load thread finished.
-[LOG] LiveUpdate::release                      : 
-[LOG] LiveUpdate::reset                        : Reset connection (reason Disconnected)
-[LOG] Thread::callback                         : FMOD stream thread finished.
-[LOG] Thread::callback                         : FMOD mixer thread finished.
-[LOG] SystemI::close                           : Closed.
-[LOG] Thread::callback                         : FMOD nonblocking thread (0) finished.
-[LOG] Thread::callback                         : FMOD file thread finished.
+[LOG] Manager::readBank                        : fileversion = 142, compatVersion = 140 (oldest = 44, newest = 142)

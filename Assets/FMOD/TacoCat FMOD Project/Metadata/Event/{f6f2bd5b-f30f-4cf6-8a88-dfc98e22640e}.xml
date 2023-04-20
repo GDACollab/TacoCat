@@ -119,7 +119,6 @@
 			<destination>{09b6d869-0f2c-4929-aa13-b1a0c07e6811}</destination>
 			<destination>{509b329c-8b2f-449f-a391-1462bac8321f}</destination>
 			<destination>{826bb52d-6a38-4f77-a1be-7e590022bd72}</destination>
-			<destination>{71f2e25b-05a3-449d-8cd5-02188f33f282}</destination>
 			<destination>{aff3095f-0160-4470-a1b2-158b6ffcb3c4}</destination>
 		</relationship>
 	</object>
@@ -181,17 +180,6 @@
 			<destination>{2fb5fad6-8fef-4197-84d0-244017770a15}</destination>
 		</relationship>
 	</object>
-	<object class="SingleSound" id="{71f2e25b-05a3-449d-8cd5-02188f33f282}">
-		<property name="startOffset">
-			<value>12</value>
-		</property>
-		<property name="pitch">
-			<value>4.5</value>
-		</property>
-		<relationship name="audioFile">
-			<destination>{3dd57e94-66ba-4f12-89d9-0c9da40a1e6b}</destination>
-		</relationship>
-	</object>
 	<object class="SingleSound" id="{aff3095f-0160-4470-a1b2-158b6ffcb3c4}">
 		<relationship name="audioFile">
 			<destination>{5868bee1-bf63-4a6b-93fd-bcfefb2e2f1e}</destination>
@@ -200,6 +188,7 @@
 	<object class="MixerBusEffectChain" id="{2b9d9d7d-ece2-4e60-81d7-7e764bd0fb00}">
 		<relationship name="effects">
 			<destination>{28fe98ca-2c0c-4bc2-a702-fc9cc8873cb4}</destination>
+			<destination>{3ad7786c-f3b3-4194-8f78-cbd99008389a}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{03b0f0f7-1bd1-494e-95be-36e024d078ef}" />
@@ -241,6 +230,17 @@
 		</property>
 	</object>
 	<object class="MixerBusFader" id="{28fe98ca-2c0c-4bc2-a702-fc9cc8873cb4}" />
+	<object class="MultibandEqEffect" id="{3ad7786c-f3b3-4194-8f78-cbd99008389a}">
+		<property name="filterTypeA">
+			<value>4</value>
+		</property>
+		<property name="frequencyA">
+			<value>540</value>
+		</property>
+		<property name="qualityA">
+			<value>0.419999987</value>
+		</property>
+	</object>
 	<object class="AutomationPoint" id="{d770b5c3-1d97-413d-a9e8-33aad162f530}">
 		<property name="position">
 			<value>1</value>
