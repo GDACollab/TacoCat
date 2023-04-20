@@ -30,14 +30,14 @@ public class AudioManager : MonoBehaviour
     static public string musVolBusPath ="bus:/Music";
     static public string sfxVolBusPath ="bus:/SFX";
     static public string diaVolBusPath = "bus:/Dialogue";
-    static public string ambiVolBusPath = "bus:/Ambiance";
+    static public string ambiVolBusPath = "bus:/Ambience";
 
     //BUSES
-    public FMOD.Studio.Bus masBus = FMODUnity.RuntimeManager.GetBus(masVolBusPath);
-    public FMOD.Studio.Bus musBus = FMODUnity.RuntimeManager.GetBus(musVolBusPath);
-    public FMOD.Studio.Bus sfxBus = FMODUnity.RuntimeManager.GetBus(sfxVolBusPath);
-    public FMOD.Studio.Bus diaBus = FMODUnity.RuntimeManager.GetBus(diaVolBusPath);
-    public FMOD.Studio.Bus ambiBus = FMODUnity.RuntimeManager.GetBus(ambiVolBusPath);
+    public FMOD.Studio.Bus masBus;
+    public FMOD.Studio.Bus musBus;
+    public FMOD.Studio.Bus sfxBus;
+    public FMOD.Studio.Bus diaBus;
+    public FMOD.Studio.Bus ambiBus;
 
     /////////////////////////MUSIC//////////////////////////////
     [Header("FMOD Music Event Path Strings")]
@@ -91,7 +91,7 @@ public class AudioManager : MonoBehaviour
 
     public bool isPaused;
 
-    //FMODUnity.RuntimeManager.StudioSystem.setParameterByName("isPaused", bus);
+    //FMODUnity.RuntimeManager.StudioSystem.setParameterByName("isPaused", isPaused);
 
     //need to have name of parameter and variable
     // FOR GLOBAL PARAMETERS FMOD Parameter name, variable name
@@ -121,6 +121,12 @@ public class AudioManager : MonoBehaviour
     void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
+        masBus = FMODUnity.RuntimeManager.GetBus(masVolBusPath);
+        musBus = FMODUnity.RuntimeManager.GetBus(musVolBusPath);
+        sfxBus = FMODUnity.RuntimeManager.GetBus(sfxVolBusPath);
+        diaBus = FMODUnity.RuntimeManager.GetBus(diaVolBusPath);
+        ambiBus = FMODUnity.RuntimeManager.GetBus(ambiVolBusPath);
+
     }
 
     private FMOD.Studio.EventInstance MusicInstance;
@@ -194,16 +200,16 @@ public class AudioManager : MonoBehaviour
         cutsceneMusicInst= FMODUnity.RuntimeManager.CreateInstance(musicPath+cutsceneMusic);
         tacoMusicInst= FMODUnity.RuntimeManager.CreateInstance(musicPath+tacoMusic);
         drivingMusicInst= FMODUnity.RuntimeManager.CreateInstance(musicPath+drivingMusic);
-        masBus.setVolume(masterVolume);
-        musBus.setVolume(musicVolume);
-        sfxBus.setVolume(sfxVolume);
-        diaBus.setVolume(dialogueVolume);
-        ambiBus.setVolume(ambianceVolume);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        FMODUnity.RuntimeManager.StudioSystem.setParameterByName("isPaused", isPaused);
+        masBus.setVolume(masterVolume);
+        musBus.setVolume(musicVolume);
+        sfxBus.setVolume(sfxVolume);
+        diaBus.setVolume(dialogueVolume);
+        ambiBus.setVolume(ambianceVolume);
     }
 }
