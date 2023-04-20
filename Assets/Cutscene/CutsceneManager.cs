@@ -22,6 +22,8 @@ public class CutsceneManager : MonoBehaviour
     public List<TextList> Dialoge;
     private TextList list;
 
+    //private bool stop;
+
     [Range(0.0f, 0.5f)]
     public float messageDelayAlex;
 
@@ -45,11 +47,11 @@ public class CutsceneManager : MonoBehaviour
 
 
 
-    [Header("Typing out the message")]
+    /*[Header("Typing out the message")]
     public bool typeOutJamie;
 
     [Range(0.0f, 0.5f)]
-    public float textSpeedJamie;
+    public float textSpeedJamie;*/
 
 
 
@@ -61,34 +63,41 @@ public class CutsceneManager : MonoBehaviour
         phoneText.text = string.Empty;
         
         counter = 0;
-
-
-
+        //stop = false;
 
         //check if typing out the text or printing the whole message
 
 
+
+        StartCoroutine(begin());
+
+
+    }
+    
+    public IEnumerator begin()
+    {
         foreach (TextList a in Dialoge)
         {
             if (a.person == 0)
             {
-                //type out Alex
-                StartCoroutine(Typeline(a.texts));
-            
+                //Alex
+
+                phoneText.text += "Alex: ";
+                yield return StartCoroutine(Typeline(a.texts));
+                
+
             }
             else
             {
-                StartCoroutine(PrintText(a.texts));
+                //Jamie
+
+                phoneText.text += "Jamie: ";
+                yield return StartCoroutine(PrintText(a.texts));
             }
 
-
-
-
         }
-        
-
-
     }
+    
 
     //for printing the entire message at once
     IEnumerator PrintText(List<string> characterText) {
@@ -99,7 +108,7 @@ public class CutsceneManager : MonoBehaviour
             {
                 phoneText.text += l + "\n";
 
-                yield return new WaitForSeconds(messageDelayAlex);
+                yield return new WaitForSeconds(messageDelayJamie);
             }
             
 
@@ -132,6 +141,7 @@ public class CutsceneManager : MonoBehaviour
                 yield return new WaitForSeconds(messageDelayAlex);
             
         }
+        
     }
 
     //for printing the entire message at once
