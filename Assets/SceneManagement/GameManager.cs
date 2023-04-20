@@ -23,9 +23,7 @@ public class GameManager : MonoBehaviour
     CutsceneManager cutsceneManager;
     public AudioManager audioManager;
 
-    void Awake()
-    {
-        DontDestroyOnLoad(this.gameObject);
+    void Start() {
         audioManager.PlaySong(menuIndex);
     }
 
@@ -164,10 +162,6 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(cutsceneIndex);
         audioManager.PlaySong(cutsceneIndex);
-    }
-    void Start(){
-        //audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
-        
     }
 
 }

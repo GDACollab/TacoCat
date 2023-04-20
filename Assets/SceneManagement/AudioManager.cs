@@ -127,6 +127,11 @@ public class AudioManager : MonoBehaviour
         diaBus = FMODUnity.RuntimeManager.GetBus(diaVolBusPath);
         ambiBus = FMODUnity.RuntimeManager.GetBus(ambiVolBusPath);
 
+        menuMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + menuMusic);
+        cutsceneMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + cutsceneMusic);
+        tacoMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + tacoMusic);
+        drivingMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + drivingMusic);
+
     }
 
     private FMOD.Studio.EventInstance MusicInstance;
@@ -194,18 +199,11 @@ public class AudioManager : MonoBehaviour
                 break;
         }
     }
-    void Start()
-    {
-        menuMusicInst= FMODUnity.RuntimeManager.CreateInstance(musicPath+menuMusic);
-        cutsceneMusicInst= FMODUnity.RuntimeManager.CreateInstance(musicPath+cutsceneMusic);
-        tacoMusicInst= FMODUnity.RuntimeManager.CreateInstance(musicPath+tacoMusic);
-        drivingMusicInst= FMODUnity.RuntimeManager.CreateInstance(musicPath+drivingMusic);
-    }
 
     // Update is called once per frame
     void Update()
     {
-        FMODUnity.RuntimeManager.StudioSystem.setParameterByName("isPaused", isPaused);
+        FMODUnity.RuntimeManager.StudioSystem.setParameterByName("isPaused", isPaused ? 0 : 1);
         masBus.setVolume(masterVolume);
         musBus.setVolume(musicVolume);
         sfxBus.setVolume(sfxVolume);
