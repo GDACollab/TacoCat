@@ -2,8 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//EVENTS W/ PARAMETERS
+//music events, isPaused
+//the truck engine, 
+//wind ambiance, 
+//customer order
 public class AudioManager : MonoBehaviour
 {
+    GameManager gameManager;
 
     //SLIDERS FOR VOLUME, SHOULD BE A VALUE BETWEEN 0 & 1
     [Header("Volumes")]
@@ -25,8 +31,42 @@ public class AudioManager : MonoBehaviour
     public string tacoMusic;
     [Tooltip("Name of driving music event")]
     public string drivingMusic;
+    
+    [Header("FMOD Cutscene(SFX) Event Path Strings")]
+    
+    [Tooltip("FMOD Event Path for the folder that contains all the Cutscene SFX")]
+    public string cutsceneSFXPath;
+    [Tooltip("Name of receieve text event")]
+    public string recieveTextSFX;
+    [Tooltip("Name of the sending text event")]
+    public string sendTextSFX;
+    [Tooltip("Name of the typing event")]
+    public string typingSFX;
 
-    GameManager gameManager;
+    [Header("FMOD Driving(SFX) Event Path Strings")]
+    
+    [Tooltip("FMOD Event Path for the folder that contains all the Driving SFX")]
+    public string drivingSFXPath;
+    
+    [Tooltip("Name of Nitro Boost event")]
+    public string nitroBoostSFX;
+    [Tooltip("Name of the Successful Flip event")]
+    public string flipBoostSFX;
+
+    [Header("FMOD Taco(SFX) Event Path Strings")]
+    
+    [Tooltip("Name of taco submission event")]
+    public string submitTacoSFX;
+    [Tooltip("Name of the ingredient placement event")]
+    public string ingriPlaceSFX;
+    [Tooltip("Name of the paw swiping event")]
+    public string pawSwipeSFX;
+
+    //need to have name of parameter and variable
+    // 
+
+
+    
     //Mathf.Clamp(percent, 0,1);
     private FMOD.Studio.EventInstance instance; //for testing purposes
     private FMOD.Studio.EventInstance menuMusicInst;
@@ -124,8 +164,8 @@ public class AudioManager : MonoBehaviour
         //text typing: click clack
         //text sending & reciving
 
+
     //TACO MAKING
-        //music >> event, bool
         //ambiance^^
         //customers score
         //order submission

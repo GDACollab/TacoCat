@@ -15,7 +15,7 @@ public class PlayerHand : MonoBehaviour
     public TacoMakingGameManager tacoGameManager;
 
     //reference for pop and woosh audio 
-    public TacoAudioManager tacoAudioManager;
+    public AudioManager audioManager;
 
     // what's the main thing that I want the hand to do? move from one position to another
     // so I'm going to make a "target" object for the hand to move towards
