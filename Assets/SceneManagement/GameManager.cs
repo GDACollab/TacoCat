@@ -10,13 +10,13 @@ public class GameManager : MonoBehaviour
 
     public bool isLoadingScene;
 
-    public int menuIndex = 0;
-    public int tacoMakingIndex = 1;
-    public int drivingIndex = 2;
-    public int cutsceneIndex = 3;
-    public int loadingSceneIndex = 4;
-    public int randDriveIndex;
-    public int nightDriveIndex;
+    public string menuIndex = "Menu";
+    public string tacoMakingIndex = "TacoMaking";
+    public string drivingIndex = "SunsetDrive";
+    public string cutsceneIndex = "Cutscene";
+    public string loadingSceneIndex = "LoadingScreen";
+    public string randDriveIndex = "RandDrive";
+    public string nightDriveIndex = "NightDrive";
 
     TacoMakingGameManager tacoGameManager;
     DrivingGameManager drivingGameManager;
@@ -24,7 +24,8 @@ public class GameManager : MonoBehaviour
     public AudioManager audioManager;
 
     void Start() {
-        audioManager.PlaySong(menuIndex);
+        var music = menuIndex + "Music";
+        audioManager.PlaySong(music);
     }
 
     public void Update()
@@ -97,36 +98,36 @@ public class GameManager : MonoBehaviour
     public void LoadMenu()
     {
         SceneManager.LoadScene(menuIndex);
-        audioManager.PlaySong(menuIndex);
+        audioManager.PlaySong(menuIndex + "Music");
     }
 
     public void LoadTacoMakingScene()
     {
 
         StartCoroutine(LoadingCoroutine(tacoMakingIndex));
-        audioManager.PlaySong(tacoMakingIndex);
+        audioManager.PlaySong(tacoMakingIndex + "Music");
 
     }
 
     public void LoadDrivingScene()
     {
         StartCoroutine(LoadingCoroutine(drivingIndex));
-        audioManager.PlaySong(drivingIndex);
+        audioManager.PlaySong(drivingIndex + "Music");
     }
 
     public void LoadRandDrivingScene()
     {
         StartCoroutine(LoadingCoroutine(randDriveIndex));
-        audioManager.PlaySong(drivingIndex);
+        audioManager.PlaySong(drivingIndex + "Music");
     }
 
     public void LoadNightDrivingScene()
     {
         StartCoroutine(LoadingCoroutine(nightDriveIndex));
-        audioManager.PlaySong(drivingIndex);
+        audioManager.PlaySong(drivingIndex + "Music");
     }
 
-    IEnumerator LoadingCoroutine(int sceneIndex)
+    IEnumerator LoadingCoroutine(string sceneIndex)
     {
         isLoadingScene = true;
         yield return null;
@@ -161,7 +162,7 @@ public class GameManager : MonoBehaviour
     public void LoadCutscene()
     {
         SceneManager.LoadScene(cutsceneIndex);
-        audioManager.PlaySong(cutsceneIndex);
+        audioManager.PlaySong("StoryMusic");
     }
 
 }

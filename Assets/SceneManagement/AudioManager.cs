@@ -1,5 +1,8 @@
+using FMOD.Studio;
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 //EVENTS W/ PARAMETERS
@@ -7,28 +10,27 @@ using UnityEngine;
 //the truck engine, 
 //wind ambiance, 
 //customer order
-public class AudioManager : MonoBehaviour
-{
+public class AudioManager : MonoBehaviour {
     GameManager gameManager;
 
     //SLIDERS FOR VOLUME, SHOULD BE A VALUE BETWEEN 0 & 1
     [Header("Volumes (sliders)")]
-    [Range(0f,1f)]
+    [Range(0f, 1f)]
     public float masterVolume;
-    [Range(0f,1f)]
+    [Range(0f, 1f)]
     public float musicVolume;
-    [Range(0f,1f)]
+    [Range(0f, 1f)]
     public float sfxVolume;
-    [Range(0f,1f)]
+    [Range(0f, 1f)]
     public float dialogueVolume;
-    [Range(0f,1f)]
+    [Range(0f, 1f)]
     public float ambianceVolume;
-    
+
     [Header("Bus Paths")]
     [SerializeField]
     static public string masVolBusPath = "bus:/";
-    static public string musVolBusPath ="bus:/Music";
-    static public string sfxVolBusPath ="bus:/SFX";
+    static public string musVolBusPath = "bus:/Music";
+    static public string sfxVolBusPath = "bus:/SFX";
     static public string diaVolBusPath = "bus:/Dialogue";
     static public string ambiVolBusPath = "bus:/Ambience";
 
@@ -40,18 +42,11 @@ public class AudioManager : MonoBehaviour
     public FMOD.Studio.Bus ambiBus;
 
     /////////////////////////MUSIC//////////////////////////////
-    [Header("FMOD Music Event Path Strings")]
-    
+    [Header("FMOD Music")]
+
     [Tooltip("FMOD Event Path for the folder that contains all the music")]
-    public string musicPath;
-    [Tooltip("Name of menu music event")]
-    public string menuMusic;
-    [Tooltip("Name of the cutscene music event")]
-    public string cutsceneMusic;
-    [Tooltip("Name of taco making music event")]
-    public string tacoMusic;
-    [Tooltip("Name of driving music event")]
-    public string drivingMusic;
+    public List<EventReference> music;
+    protected Dictionary<string, string> musicList = new Dictionary<string, string>();
     /////////////////////////SFX//////////////////////////////
 
     // CUTSCENE
@@ -100,19 +95,11 @@ public class AudioManager : MonoBehaviour
 
     
     //Mathf.Clamp(percent, 0,1);
-    private FMOD.Studio.EventInstance instance; //for testing purposes
-    private FMOD.Studio.EventInstance menuMusicInst;
-    
-    private FMOD.Studio.EventInstance cutsceneMusicInst;
-    private FMOD.Studio.EventInstance drivingMusicInst;
-    private FMOD.Studio.EventInstance tacoMusicInst;
 
     //plays a one shot given the fmod event path
     public void Play(string path)
 	{
-        FMOD.Studio.EventInstance instance =  FMODUnity.RuntimeManager.CreateInstance(path);
-		instance.start();
-        instance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        RuntimeManager.PlayOneShot(path);
 	}
 
     //a little more complicated! DO MATH to give sound 1 variable to work with
@@ -127,77 +114,35 @@ public class AudioManager : MonoBehaviour
         diaBus = FMODUnity.RuntimeManager.GetBus(diaVolBusPath);
         ambiBus = FMODUnity.RuntimeManager.GetBus(ambiVolBusPath);
 
-        menuMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + menuMusic);
+        // Load music:
+        
+        foreach (EventReference musicRef in music) {
+            var fullPath = musicRef.Path;
+            var name = Regex.Match(fullPath, @"[^\\/]*$");
+            musicList.Add(name.Value, fullPath);
+        }
+
+        /*menuMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + menuMusic);
+
         cutsceneMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + cutsceneMusic);
         tacoMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + tacoMusic);
-        drivingMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + drivingMusic);
+        drivingMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + drivingMusic);*/
 
     }
 
-    private FMOD.Studio.EventInstance MusicInstance;
+    protected EventInstance currentPlaying;
 
     /////////////////////////VOLUME//////////////////////////////
-    //plays a one shot
-    bool isPlaying(FMOD.Studio.EventInstance instance){
-        FMOD.Studio.PLAYBACK_STATE state;
-        instance.getPlaybackState(out state);
-        return state != FMOD.Studio.PLAYBACK_STATE.STOPPED;
-    }
-    int currSong(){ //returns index of the song that's currently playing
-        if(isPlaying(menuMusicInst)){
-            return 0; //menu index == 0
-        }else if(isPlaying(tacoMusicInst)){
-            return 1; //taco making music index = 1
-        }else if(isPlaying(drivingMusicInst)){
-            return 2; // driving music instance = 2
-        }else if(isPlaying(cutsceneMusicInst)){
-            return 3;
-        }else{
-            return -1;
+    public void PlaySong(string name){
+        Debug.Log("[Audio Manager] Playing Song: " + name);
+        if (currentPlaying.isValid()) {
+            currentPlaying.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         }
-    }
-    public void PlaySong(int index){  
-        //Checks to see if a song is playing, if so stops it, then plays the song that belongs to the index
-        switch(currSong()){
-            case 0:
-                menuMusicInst.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-                menuMusicInst.release();
-                Debug.Log("stopping menu music");
-                break;
-            case 1:
-                tacoMusicInst.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-                tacoMusicInst.release();
-                Debug.Log("stopping taco music");
-                break;
-            case 2:
-                drivingMusicInst.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-                drivingMusicInst.release();
-                Debug.Log("stopping driving music");
-                break;
-            case 3:
-                cutsceneMusicInst.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-                cutsceneMusicInst.release();
-                Debug.Log("stopping cutscene music");
-                break;
-        }
-        switch(index){
-            case 0:
-                menuMusicInst.start();
-                Debug.Log("starting menu music");
-                break;
-            case 1:
-                tacoMusicInst.start();
-                Debug.Log("starting taco music");
-                break;
-            case 2:
-                drivingMusicInst.start();
-                Debug.Log("starting driving music");
-                break;
-            case 3:
-                cutsceneMusicInst.start();
-                Debug.Log("starting cutscene music");
-                break;
-        }
+
+        EventInstance song = RuntimeManager.CreateInstance(musicList[name]);
+        currentPlaying = song;
+        song.start();
+        song.release();
     }
 
     // Update is called once per frame

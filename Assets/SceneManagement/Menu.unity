@@ -1265,13 +1265,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLoadingScene: 0
-  menuIndex: 0
-  tacoMakingIndex: 2
-  drivingIndex: 3
-  cutsceneIndex: 3
-  loadingSceneIndex: 1
-  randDriveIndex: 5
-  nightDriveIndex: 6
+  menuIndex: Menu
+  tacoMakingIndex: TacoMaking
+  drivingIndex: SunsetDriving
+  cutsceneIndex: Cutscene
+  loadingSceneIndex: LoadingScreen
+  randDriveIndex: RandDrive
+  nightDriveIndex: NightDrive
   audioManager: {fileID: 6994455183296229762}
 --- !u!4 &1354788261
 Transform:
@@ -2088,6 +2088,94 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music
+      value: Music
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[0].Path
+      value: event:/Music/DrivingMusic
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[1].Path
+      value: event:/Music/MenuMusic
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[2].Path
+      value: event:/Music/StoryMusic
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[3].Path
+      value: event:/Music/TacoMusic
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[0].Guid.Data1
+      value: -281622740
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[0].Guid.Data2
+      value: 1292746749
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[0].Guid.Data3
+      value: 1306725779
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[0].Guid.Data4
+      value: -22050800
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[1].Guid.Data1
+      value: -161577168
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[1].Guid.Data2
+      value: 1113914750
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[1].Guid.Data3
+      value: 1199079837
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[1].Guid.Data4
+      value: 920222136
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[2].Guid.Data1
+      value: 382405416
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[2].Guid.Data2
+      value: 1090295510
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[2].Guid.Data3
+      value: 2034776713
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[2].Guid.Data4
+      value: 1466376842
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[3].Guid.Data1
+      value: -1864684560
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[3].Guid.Data2
+      value: 1331220027
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[3].Guid.Data3
+      value: -397749323
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[3].Guid.Data4
+      value: -65858103
+      objectReference: {fileID: 0}
     - target: {fileID: 3569120199698855514, guid: ce38256018985f14987391b520377013, type: 3}
       propertyPath: m_RootOrder
       value: 4
