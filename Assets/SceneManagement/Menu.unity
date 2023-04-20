@@ -2187,12 +2187,28 @@ PrefabInstance:
       value: TacoMusic
       objectReference: {fileID: 0}
     - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+      propertyPath: typingSFX
+      value: Texting Clicks
+      objectReference: {fileID: 0}
+    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
       propertyPath: musicVolume
       value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+      propertyPath: pawSwipeSFX
+      value: Swipe Ingredients
+      objectReference: {fileID: 0}
+    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+      propertyPath: sendTextSFX
+      value: Send Text
+      objectReference: {fileID: 0}
+    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
       propertyPath: drivingMusic
       value: DrivingMusic
+      objectReference: {fileID: 0}
+    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+      propertyPath: flipBoostSFX
+      value: Flip Boost
       objectReference: {fileID: 0}
     - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
       propertyPath: masterVolume
@@ -2203,8 +2219,20 @@ PrefabInstance:
       value: StoryMusic
       objectReference: {fileID: 0}
     - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+      propertyPath: ingriPlaceSFX
+      value: Plop Ingredients
+      objectReference: {fileID: 0}
+    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
       propertyPath: menuMusicPath
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+      propertyPath: nitroBoostSFX
+      value: Nitro Boost
+      objectReference: {fileID: 0}
+    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+      propertyPath: submitTacoSFX
+      value: Bell Ding
       objectReference: {fileID: 0}
     - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
       propertyPath: ambianceVolume
@@ -2213,6 +2241,18 @@ PrefabInstance:
     - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
       propertyPath: dialogueVolume
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+      propertyPath: drivingSFXPath
+      value: event:/SFX/Driving
+      objectReference: {fileID: 0}
+    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+      propertyPath: recieveTextSFX
+      value: Recieve Text
+      objectReference: {fileID: 0}
+    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+      propertyPath: cutsceneSFXPath
+      value: event:/SFX/Cutscene
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}

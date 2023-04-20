@@ -19,6 +19,7 @@ public class AudioManager : MonoBehaviour
     public float dialogueVolume;
     public float ambianceVolume;
 
+    /////////////////////////MUSIC//////////////////////////////
     [Header("FMOD Music Event Path Strings")]
     
     [Tooltip("FMOD Event Path for the folder that contains all the music")]
@@ -31,7 +32,9 @@ public class AudioManager : MonoBehaviour
     public string tacoMusic;
     [Tooltip("Name of driving music event")]
     public string drivingMusic;
-    
+    /////////////////////////SFX//////////////////////////////
+
+    // CUTSCENE
     [Header("FMOD Cutscene(SFX) Event Path Strings")]
     
     [Tooltip("FMOD Event Path for the folder that contains all the Cutscene SFX")]
@@ -43,6 +46,8 @@ public class AudioManager : MonoBehaviour
     [Tooltip("Name of the typing event")]
     public string typingSFX;
 
+    // DRIVING
+
     [Header("FMOD Driving(SFX) Event Path Strings")]
     
     [Tooltip("FMOD Event Path for the folder that contains all the Driving SFX")]
@@ -52,6 +57,8 @@ public class AudioManager : MonoBehaviour
     public string nitroBoostSFX;
     [Tooltip("Name of the Successful Flip event")]
     public string flipBoostSFX;
+
+    //TACO MAKING
 
     [Header("FMOD Taco(SFX) Event Path Strings")]
     
@@ -110,8 +117,8 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlaySong(int index){
-
+    public void PlaySong(int index){  
+        //Checks to see if a song is playing, if so stops it, then plays the song that belongs to the index
         switch(currSong()){
             case 0:
                 menuMusicInst.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
@@ -152,30 +159,7 @@ public class AudioManager : MonoBehaviour
                 Debug.Log("starting cutscene music");
                 break;
         }
-        //if song is already playing, nothing happens
-        //if diff song
     }
-    //GAME OBJECTS FOR MUSIC w/ event emitters attached
-    //MENU
-        //cursor hover & click
-        //current scene's music is muffled
-
-    //CUTSCENES
-        //text typing: click clack
-        //text sending & reciving
-
-
-    //TACO MAKING
-        //ambiance^^
-        //customers score
-        //order submission
-
-    //DRIVING
-        // music >> event, bool
-        //ambiance ^^
-        //RPM
-
-    // Start is called before the first frame update
     
 
     void Start()
