@@ -22,15 +22,15 @@ public class CutsceneManager : MonoBehaviour
     public List<TextList> Dialoge;
     private TextList list;
 
-    //private bool stop;
+    
 
     [Range(0.0f, 0.5f)]
     public float messageDelayAlex;
 
 
 
-    [Header("Typing out the message")]
-    public bool typeOutAlex;
+    /*[Header("Typing out the message")]
+    public bool typeOutAlex;*/
 
     [Range(0.0f, 0.5f)]
     public float textSpeedAlex;
@@ -63,14 +63,8 @@ public class CutsceneManager : MonoBehaviour
         phoneText.text = string.Empty;
         
         counter = 0;
-        //stop = false;
-
-        //check if typing out the text or printing the whole message
-
-
 
         StartCoroutine(begin());
-
 
     }
     
@@ -90,6 +84,9 @@ public class CutsceneManager : MonoBehaviour
             else
             {
                 //Jamie
+
+                //slight pause so Jamie doesn't respond instantly
+                yield return new WaitForSeconds(messageDelayJamie);
 
                 phoneText.text += "Jamie: ";
                 yield return StartCoroutine(PrintText(a.texts));
