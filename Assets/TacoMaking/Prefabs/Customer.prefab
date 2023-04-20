@@ -107,6 +107,12 @@ MonoBehaviour:
   transitionTime: 0
   currTransitionTime: 0
   currPosition: 0
+  colorAfterTacoFinished:
+  - {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  - {r: 0, g: 0.9529412, b: 0.105882354, a: 1}
+  - {r: 0.7529412, g: 255, b: 0.39607844, a: 1}
+  - {r: 0.9764706, g: 0.5529412, b: 0, a: 1}
+  - {r: 1, g: 0, b: 0, a: 1}
 --- !u!1001 &4969516153737546221
 PrefabInstance:
   m_ObjectHideFlags: 0
