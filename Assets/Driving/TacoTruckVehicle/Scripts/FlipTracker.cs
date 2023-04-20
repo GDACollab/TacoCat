@@ -8,7 +8,7 @@ public class FlipTracker : MonoBehaviour
     Vehicle vehicle;
     TruckAnimationHandler animHandler;
     RaycastHit2D hit;
-
+    public AudioManager audioManager;
     GroundGeneration groundGeneration;
     int hitPointIndex;
     float initTruckRotation;
@@ -78,6 +78,7 @@ public class FlipTracker : MonoBehaviour
             if (IsPerfectLanding(endJumpRot, landPointRotation) && flipCount > 0) 
             {
                 StartCoroutine(vehicle.PerfectLandingBoost());
+                audioManager.Play(audioManager.flipBoostSFX);
             }
         }
 

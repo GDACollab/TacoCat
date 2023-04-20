@@ -43,7 +43,7 @@ MonoBehaviour:
   FileSizes:
   - Name: Desktop
     Value: 8850752
-  Exists: 1
+  Exists: 0
 --- !u!114 &-8423685065464471139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,10 +171,10 @@ MonoBehaviour:
   Path: Assets/FMOD/TacoCat FMOD Project/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638171249344933229
+  lastModified: 638175408933280575
   FileSizes:
   - Name: Desktop
-    Value: 2002
+    Value: 2606
   Exists: 1
 --- !u!114 &-6685814708768576158
 MonoBehaviour:
@@ -271,7 +271,7 @@ MonoBehaviour:
   FileSizes:
   - Name: Desktop
     Value: 2785728
-  Exists: 1
+  Exists: 0
 --- !u!114 &-4189828553822359907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -394,6 +394,24 @@ MonoBehaviour:
   FileSizes:
   - Name: Desktop
     Value: 2020
+  Exists: 0
+--- !u!114 &-3330838406700066915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Ambience.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/FMOD/TacoCat FMOD Project/Build/Desktop/Ambience.bank
+  Name: Ambience
+  StudioPath: 
+  lastModified: 638175395040705982
+  FileSizes: []
   Exists: 1
 --- !u!114 &-3192474062382926919
 MonoBehaviour:
@@ -516,6 +534,7 @@ MonoBehaviour:
   - {fileID: -3384493171452183607}
   - {fileID: -8561930763350662122}
   - {fileID: -4883576881100996228}
+  - {fileID: -3330838406700066915}
   EditorEvents:
   - {fileID: -7568347909635091294}
   - {fileID: 7910431161787833670}
@@ -536,7 +555,7 @@ MonoBehaviour:
   - {fileID: -3384493171452183607}
   StringsBanks:
   - {fileID: -7274067073098588606}
-  cacheTime: 638171249372952466
+  cacheTime: 638175408933932183
   cacheVersion: 131601
 --- !u!114 &1084016987317198607
 MonoBehaviour:
@@ -561,7 +580,7 @@ MonoBehaviour:
   Type: 1
   IsGlobal: 1
   Labels: []
-  Exists: 1
+  Exists: 0
 --- !u!114 &1085766995315375643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -637,7 +656,7 @@ MonoBehaviour:
   Type: 0
   IsGlobal: 1
   Labels: []
-  Exists: 1
+  Exists: 0
 --- !u!114 &2420963847373384202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -715,6 +734,24 @@ MonoBehaviour:
   Type: 0
   IsGlobal: 1
   Labels: []
+  Exists: 0
+--- !u!114 &3817267278513732371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Ambience.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/FMOD/TacoCat FMOD Project/Build/Desktop/Ambience.bank
+  Name: Ambience
+  StudioPath: 
+  lastModified: 638175395040705982
+  FileSizes: []
   Exists: 1
 --- !u!114 &4167023092310799061
 MonoBehaviour:
@@ -859,7 +896,7 @@ MonoBehaviour:
   Type: 0
   IsGlobal: 1
   Labels: []
-  Exists: 1
+  Exists: 0
 --- !u!114 &7127440623263209391
 MonoBehaviour:
   m_ObjectHideFlags: 0

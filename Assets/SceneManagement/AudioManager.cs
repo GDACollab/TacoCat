@@ -12,12 +12,32 @@ public class AudioManager : MonoBehaviour
     GameManager gameManager;
 
     //SLIDERS FOR VOLUME, SHOULD BE A VALUE BETWEEN 0 & 1
-    [Header("Volumes")]
+    [Header("Volumes (sliders)")]
+    [Range(0f,1f)]
     public float masterVolume;
+    [Range(0f,1f)]
     public float musicVolume;
+    [Range(0f,1f)]
     public float sfxVolume;
+    [Range(0f,1f)]
     public float dialogueVolume;
+    [Range(0f,1f)]
     public float ambianceVolume;
+    
+    [Header("Bus Paths")]
+    [SerializeField]
+    static public string masVolBusPath = "bus:/";
+    static public string musVolBusPath ="bus:/Music";
+    static public string sfxVolBusPath ="bus:/SFX";
+    static public string diaVolBusPath = "bus:/Dialogue";
+    static public string ambiVolBusPath = "bus:/Ambiance";
+
+    //BUSES
+    public FMOD.Studio.Bus masBus = FMODUnity.RuntimeManager.GetBus(masVolBusPath);
+    public FMOD.Studio.Bus musBus = FMODUnity.RuntimeManager.GetBus(musVolBusPath);
+    public FMOD.Studio.Bus sfxBus = FMODUnity.RuntimeManager.GetBus(sfxVolBusPath);
+    public FMOD.Studio.Bus diaBus = FMODUnity.RuntimeManager.GetBus(diaVolBusPath);
+    public FMOD.Studio.Bus ambiBus = FMODUnity.RuntimeManager.GetBus(ambiVolBusPath);
 
     /////////////////////////MUSIC//////////////////////////////
     [Header("FMOD Music Event Path Strings")]
@@ -54,9 +74,9 @@ public class AudioManager : MonoBehaviour
     public string drivingSFXPath;
     
     [Tooltip("Name of Nitro Boost event")]
-    public string nitroBoostSFX;
+    public string nitroBoostSFX; //IMPLEMENTED
     [Tooltip("Name of the Successful Flip event")]
-    public string flipBoostSFX;
+    public string flipBoostSFX; //IMPLEMENTED
 
     //TACO MAKING
 
@@ -65,18 +85,24 @@ public class AudioManager : MonoBehaviour
     [Tooltip("Name of taco submission event")]
     public string submitTacoSFX;
     [Tooltip("Name of the ingredient placement event")]
-    public string ingriPlaceSFX;
+    public string ingriPlaceSFX; //IMPLEMENTED
     [Tooltip("Name of the paw swiping event")]
-    public string pawSwipeSFX;
+    public string pawSwipeSFX; //IMPLEMENTED
+
+    public bool isPaused;
+
+    //FMODUnity.RuntimeManager.StudioSystem.setParameterByName("isPaused", bus);
 
     //need to have name of parameter and variable
-    // 
+    // FOR GLOBAL PARAMETERS FMOD Parameter name, variable name
+    //FMODUnity.RuntimeManager.StudioSystem.setParameterByName("", x);
 
 
     
     //Mathf.Clamp(percent, 0,1);
     private FMOD.Studio.EventInstance instance; //for testing purposes
     private FMOD.Studio.EventInstance menuMusicInst;
+    
     private FMOD.Studio.EventInstance cutsceneMusicInst;
     private FMOD.Studio.EventInstance drivingMusicInst;
     private FMOD.Studio.EventInstance tacoMusicInst;
@@ -97,12 +123,13 @@ public class AudioManager : MonoBehaviour
 
     private FMOD.Studio.EventInstance MusicInstance;
 
+    /////////////////////////VOLUME//////////////////////////////
+    //plays a one shot
     bool isPlaying(FMOD.Studio.EventInstance instance){
-        FMOD.Studio.PLAYBACK_STATE state;   
+        FMOD.Studio.PLAYBACK_STATE state;
         instance.getPlaybackState(out state);
         return state != FMOD.Studio.PLAYBACK_STATE.STOPPED;
     }
-
     int currSong(){ //returns index of the song that's currently playing
         if(isPlaying(menuMusicInst)){
             return 0; //menu index == 0
@@ -116,7 +143,6 @@ public class AudioManager : MonoBehaviour
             return -1;
         }
     }
-
     public void PlaySong(int index){  
         //Checks to see if a song is playing, if so stops it, then plays the song that belongs to the index
         switch(currSong()){
@@ -160,14 +186,17 @@ public class AudioManager : MonoBehaviour
                 break;
         }
     }
-    
-
     void Start()
     {
         menuMusicInst= FMODUnity.RuntimeManager.CreateInstance(musicPath+menuMusic);
         cutsceneMusicInst= FMODUnity.RuntimeManager.CreateInstance(musicPath+cutsceneMusic);
         tacoMusicInst= FMODUnity.RuntimeManager.CreateInstance(musicPath+tacoMusic);
         drivingMusicInst= FMODUnity.RuntimeManager.CreateInstance(musicPath+drivingMusic);
+        masBus.setVolume(masterVolume);
+        musBus.setVolume(musicVolume);
+        sfxBus.setVolume(sfxVolume);
+        diaBus.setVolume(dialogueVolume);
+        ambiBus.setVolume(ambianceVolume);
     }
 
     // Update is called once per frame
@@ -175,12 +204,4 @@ public class AudioManager : MonoBehaviour
     {
         
     }
-    /*
-    public void click(){
-        Debug.Log(clickk);
-        instanceMenu = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Cutscene/Texting");
-        instanceMenu.start();
-        instanceMenu.release();
-        Debug.Log("click audio");
-    }*/
 }

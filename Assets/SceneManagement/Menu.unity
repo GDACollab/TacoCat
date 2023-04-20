@@ -657,47 +657,12 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!1 &536576061 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1345991178725705055, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-  m_PrefabInstance: {fileID: 5558428075629181418}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &536576062
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 536576061}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollisionTag: 
-  EventReference:
-    Guid:
-      Data1: -161577168
-      Data2: 1113914750
-      Data3: 1199079837
-      Data4: 920222136
-    Path: event:/Music/MenuMusic
-  Event: 
-  PlayEvent: 1
-  StopEvent: 2
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 20
 --- !u!114 &536576063 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
   m_PrefabInstance: {fileID: 5558428075629181418}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 536576061}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 399d30af4f863cf488de9a77942e1814, type: 3}
@@ -2180,7 +2145,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
       propertyPath: sfxVolume
-      value: 100
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
       propertyPath: tacoMusic
@@ -2192,7 +2157,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
       propertyPath: musicVolume
-      value: 100
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
       propertyPath: pawSwipeSFX
@@ -2212,35 +2177,55 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
       propertyPath: masterVolume
-      value: 100
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
       propertyPath: cutsceneMusic
       value: StoryMusic
       objectReference: {fileID: 0}
     - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+      propertyPath: diaVolBusPath
+      value: bus:/Dialogue
+      objectReference: {fileID: 0}
+    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
       propertyPath: ingriPlaceSFX
       value: Plop Ingredients
+      objectReference: {fileID: 0}
+    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+      propertyPath: masVolBusPath
+      value: bus:/Master
       objectReference: {fileID: 0}
     - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
       propertyPath: menuMusicPath
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+      propertyPath: musVolBusPath
+      value: bus:/Music
+      objectReference: {fileID: 0}
+    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
       propertyPath: nitroBoostSFX
       value: Nitro Boost
+      objectReference: {fileID: 0}
+    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+      propertyPath: sfxVolBusPath
+      value: bus:/SFX
       objectReference: {fileID: 0}
     - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
       propertyPath: submitTacoSFX
       value: Bell Ding
       objectReference: {fileID: 0}
     - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+      propertyPath: ambiVolBusPath
+      value: bus:/Ambiance
+      objectReference: {fileID: 0}
+    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
       propertyPath: ambianceVolume
-      value: 100
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
       propertyPath: dialogueVolume
-      value: 100
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
       propertyPath: drivingSFXPath
