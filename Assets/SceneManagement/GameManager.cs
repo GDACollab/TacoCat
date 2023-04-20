@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     public AudioManager audioManager;
 
     void Start() {
+        DontDestroyOnLoad(this.gameObject);
         var music = menuIndex + "Music";
         audioManager.PlaySong(music);
     }
@@ -107,26 +108,26 @@ public class GameManager : MonoBehaviour
     {
 
         StartCoroutine(LoadingCoroutine(tacoMakingIndex));
-        audioManager.PlaySong(tacoMakingIndex + "Music");
+        audioManager.PlaySong("TacoMusic");
 
     }
 
     public void LoadDrivingScene()
     {
         StartCoroutine(LoadingCoroutine(drivingIndex));
-        audioManager.PlaySong(drivingIndex + "Music");
+        audioManager.PlaySong("DrivingMusic");
     }
 
     public void LoadRandDrivingScene()
     {
         StartCoroutine(LoadingCoroutine(randDriveIndex));
-        audioManager.PlaySong(drivingIndex + "Music");
+        audioManager.PlaySong("DrivingMusic");
     }
 
     public void LoadNightDrivingScene()
     {
         StartCoroutine(LoadingCoroutine(nightDriveIndex));
-        audioManager.PlaySong(drivingIndex + "Music");
+        audioManager.PlaySong("DrivingMusic");
     }
 
     IEnumerator LoadingCoroutine(string sceneIndex)
