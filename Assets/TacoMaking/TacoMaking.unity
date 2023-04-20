@@ -123,17 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!114 &332676449 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4452405924312791587, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
-  m_PrefabInstance: {fileID: 4452405924561553218}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bab324d6be6ea47538aeb7f61d617012, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &363859227
 GameObject:
   m_ObjectHideFlags: 0
@@ -228,7 +217,7 @@ RectTransform:
   m_Children:
   - {fileID: 1404059661}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -301,8 +290,73 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &889484488
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6584911828108904396, guid: 0f53c9ae0f7cec44db14b19b4360f2ff, type: 3}
+      propertyPath: m_Name
+      value: TacoMakingGameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 6584911828108904397, guid: 0f53c9ae0f7cec44db14b19b4360f2ff, type: 3}
+      propertyPath: hand
+      value: 
+      objectReference: {fileID: 1957027083}
+    - target: {fileID: 6584911828108904397, guid: 0f53c9ae0f7cec44db14b19b4360f2ff, type: 3}
+      propertyPath: uiManager
+      value: 
+      objectReference: {fileID: 1404059662}
+    - target: {fileID: 6584911828108904398, guid: 0f53c9ae0f7cec44db14b19b4360f2ff, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6584911828108904398, guid: 0f53c9ae0f7cec44db14b19b4360f2ff, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6584911828108904398, guid: 0f53c9ae0f7cec44db14b19b4360f2ff, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6584911828108904398, guid: 0f53c9ae0f7cec44db14b19b4360f2ff, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6584911828108904398, guid: 0f53c9ae0f7cec44db14b19b4360f2ff, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6584911828108904398, guid: 0f53c9ae0f7cec44db14b19b4360f2ff, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6584911828108904398, guid: 0f53c9ae0f7cec44db14b19b4360f2ff, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6584911828108904398, guid: 0f53c9ae0f7cec44db14b19b4360f2ff, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6584911828108904398, guid: 0f53c9ae0f7cec44db14b19b4360f2ff, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6584911828108904398, guid: 0f53c9ae0f7cec44db14b19b4360f2ff, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6584911828108904398, guid: 0f53c9ae0f7cec44db14b19b4360f2ff, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0f53c9ae0f7cec44db14b19b4360f2ff, type: 3}
 --- !u!1 &1328948728 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7716071509725877988, guid: 8bdc26fc693360d4499aa43fd2bc0433, type: 3}
@@ -390,7 +444,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1404059661 stripped
 Transform:
@@ -490,8 +544,19 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1791657181 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6584911828108904397, guid: 0f53c9ae0f7cec44db14b19b4360f2ff, type: 3}
+  m_PrefabInstance: {fileID: 889484488}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bab324d6be6ea47538aeb7f61d617012, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1884928305
 GameObject:
   m_ObjectHideFlags: 0
@@ -521,7 +586,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 575fbfb9aa09b2241960627440be3872, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tacoGameManager: {fileID: 332676449}
+  tacoGameManager: {fileID: 1791657181}
   bin1: 97
   bin2: 115
   bin3: 100
@@ -541,7 +606,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1948827671
 PrefabInstance:
@@ -621,7 +686,7 @@ PrefabInstance:
     - target: {fileID: 7277452623187438658, guid: 8bdc26fc693360d4499aa43fd2bc0433, type: 3}
       propertyPath: tacoGameManager
       value: 
-      objectReference: {fileID: 332676449}
+      objectReference: {fileID: 1791657181}
     - target: {fileID: 7277452623187438658, guid: 8bdc26fc693360d4499aa43fd2bc0433, type: 3}
       propertyPath: emptyStarColor.b
       value: 0.22352941
@@ -728,7 +793,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2119436390
 GameObject:
@@ -813,7 +878,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2119436394
 MonoBehaviour:
@@ -858,7 +923,7 @@ PrefabInstance:
     - target: {fileID: 567059905770462073, guid: b75fe25cc9aaded4b8efe0158ef3a504, type: 3}
       propertyPath: Taco
       value: 
-      objectReference: {fileID: 4452405924561553219}
+      objectReference: {fileID: 0}
     - target: {fileID: 567059905770462073, guid: b75fe25cc9aaded4b8efe0158ef3a504, type: 3}
       propertyPath: speed
       value: 20
@@ -870,7 +935,7 @@ PrefabInstance:
     - target: {fileID: 567059905770462073, guid: b75fe25cc9aaded4b8efe0158ef3a504, type: 3}
       propertyPath: Ingredient0
       value: 
-      objectReference: {fileID: 4452405924561553222}
+      objectReference: {fileID: 0}
     - target: {fileID: 567059905770462073, guid: b75fe25cc9aaded4b8efe0158ef3a504, type: 3}
       propertyPath: Ingredient1
       value: 
@@ -882,7 +947,7 @@ PrefabInstance:
     - target: {fileID: 567059905770462073, guid: b75fe25cc9aaded4b8efe0158ef3a504, type: 3}
       propertyPath: tacoGameManager
       value: 
-      objectReference: {fileID: 332676449}
+      objectReference: {fileID: 1791657181}
     - target: {fileID: 567059905770462073, guid: b75fe25cc9aaded4b8efe0158ef3a504, type: 3}
       propertyPath: tacoAudioManager
       value: 
@@ -897,7 +962,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3354342240746308266, guid: b75fe25cc9aaded4b8efe0158ef3a504, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3354342240746308266, guid: b75fe25cc9aaded4b8efe0158ef3a504, type: 3}
       propertyPath: m_LocalPosition.x
@@ -949,82 +1014,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b75fe25cc9aaded4b8efe0158ef3a504, type: 3}
---- !u!1001 &4452405924561553218
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2043782244719006703, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
-      propertyPath: tacoAudioManager
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4452405924312791584, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
-      propertyPath: m_RootOrder
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4452405924312791584, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4452405924312791584, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4452405924312791584, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4452405924312791584, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4452405924312791584, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4452405924312791584, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4452405924312791584, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4452405924312791584, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4452405924312791584, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4452405924312791584, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4452405924312791586, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
-      propertyPath: m_Name
-      value: TacoMakingGameManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 4452405924312791587, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
-      propertyPath: hand
-      value: 
-      objectReference: {fileID: 1957027083}
-    - target: {fileID: 4452405924312791587, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
-      propertyPath: uiManager
-      value: 
-      objectReference: {fileID: 1404059662}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
---- !u!1 &4452405924561553219 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1471273228560423760, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
-  m_PrefabInstance: {fileID: 4452405924561553218}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &4452405924561553222 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2297605538903206444, guid: ede7102dfcc7aa2438e7ed283dae1935, type: 3}
-  m_PrefabInstance: {fileID: 4452405924561553218}
-  m_PrefabAsset: {fileID: 0}
