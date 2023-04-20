@@ -8,7 +8,7 @@ public class FlipTracker : MonoBehaviour
     Vehicle vehicle;
     TruckAnimationHandler animHandler;
     RaycastHit2D hit;
-
+    public AudioManager audioManager;
     GroundGeneration groundGeneration;
     int hitPointIndex;
     float initTruckRotation;
@@ -38,6 +38,7 @@ public class FlipTracker : MonoBehaviour
         vehicle = GetComponent<Vehicle>();
         animHandler = GetComponent<TruckAnimationHandler>();
         initTruckRotation = transform.rotation.eulerAngles.z;
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
     }
 
     // Update is called once per frame
@@ -78,6 +79,7 @@ public class FlipTracker : MonoBehaviour
             if (IsPerfectLanding(endJumpRot, groundPointRotation) && flipCount > 0) 
             {
                 StartCoroutine(vehicle.PerfectLandingBoost());
+                audioManager.Play(audioManager.flipBoostSFX);
             }
         }
 

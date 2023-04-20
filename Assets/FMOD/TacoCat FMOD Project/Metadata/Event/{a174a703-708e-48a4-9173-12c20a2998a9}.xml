@@ -112,9 +112,6 @@ Recordings by David Nichols of Track Time Audio. Engine is a 1988 Craftsman II 1
 		</relationship>
 	</object>
 	<object class="GroupTrack" id="{629b4093-b521-4faa-822e-57394da488e8}">
-		<relationship name="automationTracks">
-			<destination>{2cca0fe3-6efd-4a74-b5aa-50aa3c9b32bc}</destination>
-		</relationship>
 		<relationship name="modules">
 			<destination>{9c1c6cf6-0205-469f-8498-bfe81e177f1f}</destination>
 			<destination>{e5c6f9ef-f7e1-4208-9043-012ee63744ff}</destination>
@@ -279,11 +276,6 @@ Recordings by David Nichols of Track Time Audio. Engine is a 1988 Craftsman II 1
 			<destination>{f7d8b769-5b29-4842-8a34-4960179d969b}</destination>
 		</relationship>
 	</object>
-	<object class="AutomationTrack" id="{2cca0fe3-6efd-4a74-b5aa-50aa3c9b32bc}">
-		<relationship name="automator">
-			<destination>{057a0a48-867e-4cee-a118-5a33686501bf}</destination>
-		</relationship>
-	</object>
 	<object class="SingleSound" id="{9c1c6cf6-0205-469f-8498-bfe81e177f1f}">
 		<property name="isCutoff">
 			<value>true</value>
@@ -395,9 +387,6 @@ Recordings by David Nichols of Track Time Audio. Engine is a 1988 Craftsman II 1
 		<property name="name">
 			<value>Exhaust_Offload</value>
 		</property>
-		<relationship name="automators">
-			<destination>{057a0a48-867e-4cee-a118-5a33686501bf}</destination>
-		</relationship>
 		<relationship name="effectChain">
 			<destination>{2ae0eb5f-e3f2-4053-a72c-cb006a0be305}</destination>
 		</relationship>
@@ -596,14 +585,6 @@ Recordings by David Nichols of Track Time Audio. Engine is a 1988 Craftsman II 1
 		</relationship>
 		<relationship name="relatedModule">
 			<destination>{348fcd67-0b42-491e-bd8d-82ec5a7714ec}</destination>
-		</relationship>
-	</object>
-	<object class="Automator" id="{057a0a48-867e-4cee-a118-5a33686501bf}">
-		<property name="nameOfPropertyBeingAutomated">
-			<value>volume</value>
-		</property>
-		<relationship name="automationCurves">
-			<destination>{1cbe88bb-0939-4a53-acc9-d1d7645d4777}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusEffectChain" id="{2ae0eb5f-e3f2-4053-a72c-cb006a0be305}">
@@ -838,15 +819,6 @@ Recordings by David Nichols of Track Time Audio. Engine is a 1988 Craftsman II 1
 			<value>1</value>
 		</property>
 	</object>
-	<object class="AutomationCurve" id="{1cbe88bb-0939-4a53-acc9-d1d7645d4777}">
-		<relationship name="parameter">
-			<destination>{e7f5bbd6-bff8-4e7f-aa7c-434526538da4}</destination>
-		</relationship>
-		<relationship name="automationPoints">
-			<destination>{ee9d9aaa-8f44-4f8d-b6b1-c9f7583f3548}</destination>
-			<destination>{ba909469-0ce4-4b22-a961-9dfdc4f8dd94}</destination>
-		</relationship>
-	</object>
 	<object class="MixerBusFader" id="{bf3f9b3d-7436-4d94-96c1-a895d02ca96a}" />
 	<object class="Automator" id="{cecd4964-24d4-48e0-86cb-b76e4404be20}">
 		<property name="nameOfPropertyBeingAutomated">
@@ -892,25 +864,6 @@ Recordings by David Nichols of Track Time Audio. Engine is a 1988 Craftsman II 1
 		</property>
 		<property name="curveShape">
 			<value>-0.81002897</value>
-		</property>
-	</object>
-	<object class="AutomationPoint" id="{ee9d9aaa-8f44-4f8d-b6b1-c9f7583f3548}">
-		<property name="position">
-			<value>-1</value>
-		</property>
-		<property name="value">
-			<value>0</value>
-		</property>
-		<property name="curveShape">
-			<value>0.323011011</value>
-		</property>
-	</object>
-	<object class="AutomationPoint" id="{ba909469-0ce4-4b22-a961-9dfdc4f8dd94}">
-		<property name="position">
-			<value>1</value>
-		</property>
-		<property name="value">
-			<value>-30</value>
 		</property>
 	</object>
 	<object class="AutomationCurve" id="{6dc5a69a-0cfc-4278-ae47-bfd7cb08d830}">

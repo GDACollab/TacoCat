@@ -319,7 +319,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1104355424}
   - component: {fileID: 1104355423}
-  - component: {fileID: 1104355425}
   m_Layer: 0
   m_Name: CutsceneManager
   m_TagString: CutsceneManager
@@ -384,36 +383,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1104355425
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1104355422}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollisionTag: 
-  EventReference:
-    Guid:
-      Data1: 382405416
-      Data2: 1090295510
-      Data3: 2034776713
-      Data4: 1466376842
-    Path: event:/Music/StoryMusic
-  Event: 
-  PlayEvent: 1
-  StopEvent: 2
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 20
 --- !u!224 &1555489852 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4909303822951794285, guid: be635faacab3f7744b13c97549120a30, type: 3}

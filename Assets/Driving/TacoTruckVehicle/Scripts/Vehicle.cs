@@ -8,6 +8,7 @@ public class Vehicle : MonoBehaviour
 {
     public CameraHandler cameraHandler;
     public Rigidbody2D rb_vehicle;
+    public AudioManager audioManager;
 
     [Space(10)]
     public LayerMask groundLayer;
@@ -59,6 +60,7 @@ public class Vehicle : MonoBehaviour
     void Start()
     {
         rb_vehicle.velocity = startingVelocity;
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
     }
 
     // Update is called once per frame
@@ -134,7 +136,7 @@ public class Vehicle : MonoBehaviour
         if (state != driveState.NITRO && Input.GetKeyDown(nitroInputKey) && nitroCharges > 0)
         {
             StartCoroutine(NitroBoost());
-
+            audioManager.Play(audioManager.nitroBoostSFX); //NITRO BOOST SOUND EFFECT
             StartCoroutine(cameraHandler.Shake(activeNitroTime, cameraHandler.nitro_camShakeMagnitude));
         }
     }

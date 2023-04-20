@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TacoAudioManager : MonoBehaviour
 {
-
+/*
     CustomerManager customerManager;
     public TacoMakingGameManager tacoGameManager;
     public TacoUIManager tacoUIManager;
@@ -45,7 +45,7 @@ public class TacoAudioManager : MonoBehaviour
         instanceSFX.release();
         Debug.Log("woosh audio");
     }
-    public void OrderAudio(/*an enum would be here*/){
+    public void OrderAudio(an enum would be here){
         //ideally would have a list of orders, where the paths to the index matches up w/ the enum species
         switch(0){
             case 0:
@@ -56,5 +56,5 @@ public class TacoAudioManager : MonoBehaviour
                 
             break;
         }
-    }
+    } */
 }

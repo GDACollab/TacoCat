@@ -65,6 +65,7 @@ public class CustomerManager : MonoBehaviour
         if (currCustomer == null && customerList.Count > 0)
         {
             currCustomer = customerList[0];
+            //tacoAudioManager.OrderAudio(); //needs to be edited later
         }
 
         //Iterate through all the customers and check if their position needs to be updated

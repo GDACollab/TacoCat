@@ -219,16 +219,16 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-        m_TargetAssemblyTypeName: MenuAudioManager, Assembly-CSharp
-        m_MethodName: click
-        m_Mode: 1
+      - m_Target: {fileID: 6994455183296229762}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: event:/SFX/Cutscene/Texting Clicks
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &7027924
@@ -549,8 +549,8 @@ GameObject:
   m_Component:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
-  - component: {fileID: 519420029}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420034}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -558,14 +558,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &519420029
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -657,41 +649,19 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!1 &536576061 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1345991178725705055, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-  m_PrefabInstance: {fileID: 5558428075629181418}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &536576062
+--- !u!114 &519420034
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 536576061}
+  m_GameObject: {fileID: 519420028}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CollisionTag: 
-  EventReference:
-    Guid:
-      Data1: -161577168
-      Data2: 1113914750
-      Data3: 1199079837
-      Data4: 920222136
-    Path: event:/Music/MenuMusic
-  Event: 
-  PlayEvent: 1
-  StopEvent: 2
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 20
+  attenuationObject: {fileID: 0}
 --- !u!1 &610623316
 GameObject:
   m_ObjectHideFlags: 0
@@ -788,16 +758,16 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-        m_TargetAssemblyTypeName: MenuAudioManager, Assembly-CSharp
-        m_MethodName: click
-        m_Mode: 1
+      - m_Target: {fileID: 6994455183296229762}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: event:/SFX/Cutscene/Texting Clicks
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &610623319
@@ -934,16 +904,16 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-        m_TargetAssemblyTypeName: MenuAudioManager, Assembly-CSharp
-        m_MethodName: click
-        m_Mode: 1
+      - m_Target: {fileID: 6994455183296229762}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: event:/SFX/Cutscene/Texting Clicks
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &930333165
@@ -1215,16 +1185,16 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-        m_TargetAssemblyTypeName: MenuAudioManager, Assembly-CSharp
-        m_MethodName: click
-        m_Mode: 1
+      - m_Target: {fileID: 6994455183296229762}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: event:/SFX/Cutscene/Texting Clicks
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1312987036
@@ -1295,13 +1265,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLoadingScene: 0
-  menuIndex: 0
-  tacoMakingIndex: 2
-  drivingIndex: 3
-  cutscene: 4
-  loadingSceneIndex: 1
-  randDriveIndex: 5
-  nightDriveIndex: 6
+  menuIndex: Menu
+  tacoMakingIndex: TacoMaking
+  drivingIndex: SunsetDriving
+  cutsceneIndex: Cutscene
+  loadingSceneIndex: LoadingScreen
+  randDriveIndex: RandDrive
+  nightDriveIndex: NightDrive
+  audioManager: {fileID: 6994455183296229762}
 --- !u!4 &1354788261
 Transform:
   m_ObjectHideFlags: 0
@@ -1489,16 +1460,16 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-        m_TargetAssemblyTypeName: MenuAudioManager, Assembly-CSharp
-        m_MethodName: click
-        m_Mode: 1
+      - m_Target: {fileID: 6994455183296229762}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: event:/SFX/Cutscene/Texting Clicks
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1575197696
@@ -2099,64 +2070,159 @@ MonoBehaviour:
   OverrideAttenuation: 0
   OverrideMinDistance: -1
   OverrideMaxDistance: -1
---- !u!1001 &5558428075629181418
+--- !u!114 &6994455183296229762 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+  m_PrefabInstance: {fileID: 7231967244906649192}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 399d30af4f863cf488de9a77942e1814, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1001 &7231967244906649192
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1345991178725705055, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-      propertyPath: m_Name
-      value: MenuAudioManager
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music
+      value: Music
       objectReference: {fileID: 0}
-    - target: {fileID: 1798788856762079704, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[0].Path
+      value: event:/Music/DrivingMusic
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[1].Path
+      value: event:/Music/MenuMusic
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[2].Path
+      value: event:/Music/StoryMusic
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[3].Path
+      value: event:/Music/TacoMusic
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[0].Guid.Data1
+      value: -281622740
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[0].Guid.Data2
+      value: 1292746749
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[0].Guid.Data3
+      value: 1306725779
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[0].Guid.Data4
+      value: -22050800
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[1].Guid.Data1
+      value: -161577168
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[1].Guid.Data2
+      value: 1113914750
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[1].Guid.Data3
+      value: 1199079837
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[1].Guid.Data4
+      value: 920222136
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[2].Guid.Data1
+      value: 382405416
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[2].Guid.Data2
+      value: 1090295510
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[2].Guid.Data3
+      value: 2034776713
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[2].Guid.Data4
+      value: 1466376842
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[3].Guid.Data1
+      value: -1864684560
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[3].Guid.Data2
+      value: 1331220027
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[3].Guid.Data3
+      value: -397749323
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[3].Guid.Data4
+      value: -65858103
+      objectReference: {fileID: 0}
+    - target: {fileID: 3569120199698855514, guid: ce38256018985f14987391b520377013, type: 3}
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 1798788856762079704, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+    - target: {fileID: 3569120199698855514, guid: ce38256018985f14987391b520377013, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.7620814
       objectReference: {fileID: 0}
-    - target: {fileID: 1798788856762079704, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+    - target: {fileID: 3569120199698855514, guid: ce38256018985f14987391b520377013, type: 3}
       propertyPath: m_LocalPosition.y
       value: 9.362319
       objectReference: {fileID: 0}
-    - target: {fileID: 1798788856762079704, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+    - target: {fileID: 3569120199698855514, guid: ce38256018985f14987391b520377013, type: 3}
       propertyPath: m_LocalPosition.z
       value: 42.00499
       objectReference: {fileID: 0}
-    - target: {fileID: 1798788856762079704, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+    - target: {fileID: 3569120199698855514, guid: ce38256018985f14987391b520377013, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1798788856762079704, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+    - target: {fileID: 3569120199698855514, guid: ce38256018985f14987391b520377013, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1798788856762079704, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+    - target: {fileID: 3569120199698855514, guid: ce38256018985f14987391b520377013, type: 3}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1798788856762079704, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+    - target: {fileID: 3569120199698855514, guid: ce38256018985f14987391b520377013, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1798788856762079704, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+    - target: {fileID: 3569120199698855514, guid: ce38256018985f14987391b520377013, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1798788856762079704, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+    - target: {fileID: 3569120199698855514, guid: ce38256018985f14987391b520377013, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1798788856762079704, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+    - target: {fileID: 3569120199698855514, guid: ce38256018985f14987391b520377013, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3184831142539659368, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
-      propertyPath: clickk
-      value: event:/SFX/Cutscene/Texting
+    - target: {fileID: 4310913368992377565, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: m_Name
+      value: AudioManager
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: cdff4a61ccc451047b923cb731db71ef, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: ce38256018985f14987391b520377013, type: 3}

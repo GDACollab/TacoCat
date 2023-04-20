@@ -80,7 +80,7 @@ public class CutsceneManager : MonoBehaviour
                     phoneText.text += "\n";
                     counter = 0;
                 }
-                FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Cutscene/Texting");
+                //FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Cutscene/Texting");
             }
             phoneText.text += "\n";
             yield return new WaitForSeconds(messageDelay);
