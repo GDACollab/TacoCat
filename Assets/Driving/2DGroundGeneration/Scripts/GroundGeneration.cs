@@ -18,8 +18,8 @@ public class GroundGeneration : MonoBehaviour
      * ===================================================================================================
      */
 
-    public enum GENERATION_STYLES { consistent, sine, random };
-    public enum CHUNK_STYLES { random, rounded, straight, flat };
+    public enum GENERATION_STYLES { consistent, sine, random, randomsine};
+    public enum CHUNK_STYLES { random, rounded, straight, flat};
 
     public GameObject curveGenerationPrefab;
     public GameObject chunkParent;
@@ -193,6 +193,10 @@ public class GroundGeneration : MonoBehaviour
         {
             SineChunkGenerator();
         }
+        else if (style == GENERATION_STYLES.randomsine)
+        {
+            RandomSineChunkGenerator();
+        }
 
         EndIslandGenerator();
     }
@@ -308,6 +312,109 @@ public class GroundGeneration : MonoBehaviour
             // set last chunk pos to current end
             lastChunkEndPosition = newGenEndPos;
         }
+    }
+    
+    public void RandomSineChunkGenerator()
+    {
+        // estimated chunks needed
+        float possibleHorizontalChunks = fullGenerationLength / maxChunkLength;
+        float possibleVerticalChunks = fullGenerationHeight / maxChunkHeight;
+
+        // true amount of chunks needed
+        int horzChunksNeeded = GetHorizontalChunksNeeded(); // get horizontal chunks needed to reach end
+        int vertChunksNeeded = GetVerticalChunksNeeded(); // get vertical chunks needed to reach the end
+
+        // random height values
+        float heightLeft = fullGenerationHeight; // amount of height left to fill in with chunks
+        List<float> positiveChunkHeights = new List<float>(); // create list of random heights that all add up to fullGenerationHeight
+        List<float> negativeChunkHeights = new List<float>(); // create list of random heights that all add up to fullGenerationHeight
+        int bound = (int)(horzChunksNeeded * 0.75f);
+        bound = (bound%2==1) ? bound -1: bound;
+        
+        // ========================================
+        // << SET RANDOM HEIGHT VALUES >>
+        // ======================================
+        for (int i = 0; i < horzChunksNeeded-1; i++) //for each chunk needed
+        {
+            // get average height value of chunks between current chunk and end of generation
+            float averageHeightNeeded = heightLeft / (horzChunksNeeded - i);
+            float minChunkHeight = Mathf.Max((Mathf.Abs(averageHeightNeeded) / 2), maxChunkHeight/5); 
+            float height; // height of current chunk
+
+            // >> first chunk heights are 'random' 
+            if (i < bound)
+            {
+                //set random height values
+                height = Random.Range(minChunkHeight, maxChunkHeight);
+                if(i%2==0){
+                    positiveChunkHeights.Add(height);
+                }
+                else{
+                    height*=-1;
+                    negativeChunkHeights.Add(height);
+                }
+                heightLeft -= height;
+            }
+            // the second partition of chunk heights are set to average height to make sure generation makes it to end
+            else
+            {
+                if(i%2==0){
+                    height = averageHeightNeeded;
+                    if(height>0){
+                        positiveChunkHeights.Add(height*2);
+                        negativeChunkHeights.Add(-height);
+                    }
+                    else{
+                        positiveChunkHeights.Add(-height);
+                        negativeChunkHeights.Add(height*2);
+                    }
+                    heightLeft -= height;
+                }
+                //print("2nd Half AVG Height: " + averageHeightNeeded);
+            }
+        }
+
+        // store end and beginning of current chunk
+        Vector2 newGenEndPos;
+        Vector2 lastChunkEndPosition = beginningGenPos;
+
+        //get the necessecary length of each chunk to reach end
+        float length = (possibleHorizontalChunks / horzChunksNeeded) * maxChunkLength;
+
+        /* ======================================
+         *  SPAWN CHUNKS WITH RANDOMIZED HEIGHTS
+         * ====================================== */
+        for (int i = 0; i < horzChunksNeeded-1; i++)
+        {
+            if(i%2==0){
+                // get random index from list
+                int randomHeightIndex = Random.Range(0, positiveChunkHeights.Count);
+
+                // set end position based off random height
+                newGenEndPos = new Vector2(lastChunkEndPosition.x + length, lastChunkEndPosition.y + positiveChunkHeights[randomHeightIndex]);
+
+                // remove used height from list
+                positiveChunkHeights.Remove(positiveChunkHeights[randomHeightIndex]);
+            }
+            else{
+                // get random index from list
+                int randomHeightIndex = Random.Range(0, negativeChunkHeights.Count);
+
+                // set end position based off random height
+                newGenEndPos = new Vector2(lastChunkEndPosition.x + length, lastChunkEndPosition.y + negativeChunkHeights[randomHeightIndex]);
+
+                // remove used height from list
+                negativeChunkHeights.Remove(negativeChunkHeights[randomHeightIndex]);
+            }
+
+            // spawn ground with values
+            SpawnBezierGroundChunk(lastChunkEndPosition, newGenEndPos, chunkStyles[Random.Range(0, chunkStyles.Count)]); // use random chunk style from list
+
+            // set last chunk pos to current end
+            lastChunkEndPosition = newGenEndPos;
+        }
+        Vector2 endGenPos = new Vector2(lastChunkEndPosition.x + length, endGenerationPoint.position.y);
+        SpawnBezierGroundChunk(lastChunkEndPosition, endGenPos, chunkStyles[Random.Range(0, chunkStyles.Count)]);
     }
 
     public void SineChunkGenerator()
