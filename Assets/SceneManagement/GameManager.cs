@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
     public string randDriveIndex = "RandDrive";
     public string nightDriveIndex = "NightDrive";
 
+    public string currentScene;
+
     TacoMakingGameManager tacoGameManager;
     DrivingGameManager drivingGameManager;
     CutsceneManager cutsceneManager;
@@ -134,6 +136,7 @@ public class GameManager : MonoBehaviour
     {
         isLoadingScene = true;
         yield return null;
+        currentScene = menuIndex;
 
         SceneManager.LoadSceneAsync(loadingSceneIndex); // load loading scene
 
