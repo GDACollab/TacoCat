@@ -345,6 +345,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraHandler: {fileID: 0}
   rb_vehicle: {fileID: 5231190167668380749}
+  audioManager: {fileID: 0}
   groundLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -358,7 +359,7 @@ MonoBehaviour:
   fuelAmount: 2000
   maxFuel: 2000
   startingVelocity: {x: 0, y: 0}
-  inAirForce: {x: 30, y: -500}
+  inAirForce: {x: 30, y: -700}
   groundedForce: {x: 100, y: -30}
   velocityClamp: 800
   rotationSpeed: 750
@@ -479,6 +480,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df4443f7146b0824987d1cf43fc89481, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioManager: {fileID: 0}
   jumpStarted: 0
   flipCount: 0
   currAirTime: 0
@@ -487,4 +489,4 @@ MonoBehaviour:
   currRot: 0
   startJumpRot: 0
   endJumpRot: 0
-  landPointRotation: 0
+  groundPointRotation: 0
