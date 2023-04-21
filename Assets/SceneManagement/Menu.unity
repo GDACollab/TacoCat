@@ -6302,6 +6302,22 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[0]
+      value: event:/Music/MenuMusic
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[1]
+      value: event:/Music/TacoMusic
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[2]
+      value: event:/Music/DrivingMusic
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: music.Array.data[3]
+      value: event:/Music/StoryMusic
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
       propertyPath: music.Array.data[0].Path
       value: event:/Music/DrivingMusic
       objectReference: {fileID: 0}

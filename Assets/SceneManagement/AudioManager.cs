@@ -45,7 +45,7 @@ public class AudioManager : MonoBehaviour {
     [Header("FMOD Music")]
 
     [Tooltip("FMOD Event Path for the folder that contains all the music")]
-    public List<EventReference> music;
+    public List<string> music;
     protected Dictionary<string, string> musicList = new Dictionary<string, string>();
     /////////////////////////SFX//////////////////////////////
 
@@ -123,8 +123,7 @@ public class AudioManager : MonoBehaviour {
 
         // Load music:
         
-        foreach (EventReference musicRef in music) {
-            var fullPath = musicRef.Path;
+        foreach (string fullPath in music) {
             var name = Regex.Match(fullPath, @"[^\\/]*$");
             musicList.Add(name.Value, fullPath);
         }
