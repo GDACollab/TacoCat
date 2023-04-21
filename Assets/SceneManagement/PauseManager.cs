@@ -17,7 +17,6 @@ public class PauseManager : MonoBehaviour
         pauseCanvas = GameObject.Find("PauseCanvas");
         audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
 
-        Debug.Log(pauseCanvas.transform.name);
         var sliderTransform = pauseCanvas.transform.GetChild(0).GetChild(1);
         for (var i = 0; i < sliderTransform.childCount; i++) {
             var child = sliderTransform.GetChild(i);
@@ -32,6 +31,7 @@ public class PauseManager : MonoBehaviour
     public void Pause() {
         isPaused = !isPaused;
         pauseCanvas.SetActive(isPaused);
+        audioManager.isPaused = isPaused;
 
         Time.timeScale = isPaused ? 0 : 1;
     }
