@@ -10,6 +10,8 @@ public class TacoMakingGameManager : MonoBehaviour
     [HideInInspector]
     public IngredientBenchManager benchManager;
 
+    public AudioManager audioManager;
+
     public bool endOfGame;
 
     [Header("Submission Taco")]
@@ -43,6 +45,8 @@ public class TacoMakingGameManager : MonoBehaviour
     {
         customerCreationTimer = customerManager.transitionTime;
         benchManager = GetComponentInChildren<IngredientBenchManager>();
+
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
 
         CreateNewSubmissionTaco();
 
@@ -83,8 +87,7 @@ public class TacoMakingGameManager : MonoBehaviour
                 customerCreationTimer = 0;
                 customersLeftToGenerate--;
                 //The ID passed in for each customer starts at 1 and counts up to totalCustomers
-                customerManager.CreateNewCustomer(totalCustomers - customersLeftToGenerate).GetComponent<Customer>();
-
+                var customer = customerManager.CreateNewCustomer(totalCustomers - customersLeftToGenerate).GetComponent<Customer>();
             }
         }
         customerCreationTimer += Time.deltaTime;
@@ -97,6 +100,8 @@ public class TacoMakingGameManager : MonoBehaviour
         NewTacoScore(score);
         
         Debug.Log("Submitted Taco! Customer Score " + score);
+
+        audioManager.Play("event:/SFX/Taco Making/Bell Ding");
 
         CreateNewSubmissionTaco();
 

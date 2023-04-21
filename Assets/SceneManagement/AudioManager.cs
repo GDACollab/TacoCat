@@ -97,9 +97,16 @@ public class AudioManager : MonoBehaviour {
     //Mathf.Clamp(percent, 0,1);
 
     //plays a one shot given the fmod event path
-    public void Play(string path)
+    public void Play(string path, Dictionary<string, float> parameters = null)
 	{
-        RuntimeManager.PlayOneShot(path);
+        var instance = RuntimeManager.CreateInstance(path);
+        if (parameters != null) {
+            foreach (KeyValuePair<string, float> val in parameters) {
+                instance.setParameterByName(val.Key, val.Value);
+            }
+        }
+        instance.start();
+        instance.release();
 	}
 
     //a little more complicated! DO MATH to give sound 1 variable to work with

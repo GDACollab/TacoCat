@@ -53,7 +53,7 @@ public class DrivingGameManager : MonoBehaviour
                 if (stuckTime >= stuckTimeoutDuration && !endOfGame) // Timer is up
                 {
                     Debug.Log("You ran out of gas. A tow truck took you back to the prevous city");
-                    endOfGame = true;
+                    GameObject.Find("GameManager").GetComponent<GameManager>().LoadTacoMakingScene();
                 }
                 else 
                 {
@@ -70,7 +70,7 @@ public class DrivingGameManager : MonoBehaviour
         if (percentageTraveled >= 1 && !endOfGame)
         {
             Debug.Log("You made it to the next city. One step closer to Jamie!");
-            endOfGame = true;
+            GameObject.Find("GameManager").GetComponent<GameManager>().LoadTacoMakingScene();
         }
 
         // << UPDATE DISTANCE TRACKER >>
