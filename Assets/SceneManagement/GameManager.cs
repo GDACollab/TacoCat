@@ -32,6 +32,10 @@ public class GameManager : MonoBehaviour
         audioManager.PlaySong(music);
     }
 
+    public void Quit() {
+        Application.Quit();
+    }
+
     public void Update()
     {
         
