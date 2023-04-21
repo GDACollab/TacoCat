@@ -109,6 +109,12 @@ public class AudioManager : MonoBehaviour {
         instance.release();
 	}
 
+    public void Play(string path) {
+        var instance = RuntimeManager.CreateInstance(path);
+        instance.start();
+        instance.release();
+    }
+
     //a little more complicated! DO MATH to give sound 1 variable to work with
 
     //volType {0= master, 1= music, 2 = sfx, 3 = dialogue}, volAmount = float range: [0,1]
