@@ -37,7 +37,6 @@ public class DrivingGameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         // << INIT SCENE >>
         if (groundGeneration.generationFinished)
         {
