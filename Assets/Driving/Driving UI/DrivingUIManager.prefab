@@ -1143,8 +1143,8 @@ RectTransform:
   - {fileID: 1822055421928719260}
   - {fileID: 8903919817417350570}
   - {fileID: 1822055422894735176}
-  - {fileID: 704532393117096204}
   - {fileID: 704532394506033320}
+  - {fileID: 704532393117096204}
   - {fileID: 704532394766151234}
   - {fileID: 3860839667434451057}
   - {fileID: 1822055421312085820}
@@ -1232,9 +1232,10 @@ MonoBehaviour:
   drivingGameManager: {fileID: 0}
   vehicle: {fileID: 0}
   fuelSlider: {fileID: 1822055421462495741}
-  nitroCharge1: {fileID: 5985268070012721834}
-  nitroCharge2: {fileID: 5985268070796565262}
-  nitroCharge3: {fileID: 5985268070519811556}
+  nitroCharges:
+  - {fileID: 5985268070796565262}
+  - {fileID: 5985268070012721834}
+  - {fileID: 5985268070519811556}
   velocityText: {fileID: 6341367145623667133}
   flipText: {fileID: 1822055421928719330}
   signText: {fileID: 7182494663383682181}
@@ -1509,7 +1510,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1192958821865598106, guid: 3b1da8e6debd24b47a1d574dff26d2c6, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1192958821865598106, guid: 3b1da8e6debd24b47a1d574dff26d2c6, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1587,6 +1588,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: NitroBar (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6861367131925696738, guid: 3b1da8e6debd24b47a1d574dff26d2c6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b1da8e6debd24b47a1d574dff26d2c6, type: 3}
 --- !u!224 &704532394506033320 stripped
@@ -1622,7 +1627,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1192958821865598106, guid: 3b1da8e6debd24b47a1d574dff26d2c6, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1192958821865598106, guid: 3b1da8e6debd24b47a1d574dff26d2c6, type: 3}
       propertyPath: m_AnchorMax.x

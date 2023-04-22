@@ -9,6 +9,7 @@ public class Vehicle : MonoBehaviour
     public CameraHandler cameraHandler;
     public Rigidbody2D rb_vehicle;
     public AudioManager audioManager;
+    public DrivingUIManager drivingUIManager;
 
     [Space(10)]
     public LayerMask groundLayer;
@@ -157,6 +158,8 @@ public class Vehicle : MonoBehaviour
     {
         state = driveState.NITRO;
         nitroCharges--;
+        drivingUIManager.decrementNitro();
+
 
         yield return new WaitForSeconds(activeNitroTime);
 
