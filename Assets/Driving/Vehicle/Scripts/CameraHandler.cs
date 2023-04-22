@@ -31,6 +31,8 @@ public class CameraHandler : MonoBehaviour
 
     public Vector3 currOffset;
 
+    
+
     private void Start()
     {
         vehicleRb = vehicle.GetComponent<Rigidbody2D>();
@@ -44,7 +46,8 @@ public class CameraHandler : MonoBehaviour
 
             // Calculate the current velocity as a percentage of the velocityRange
             float velocityPercent = Mathf.InverseLerp(velocityRange.x, velocityRange.y, vehicleRb.velocity.magnitude);
-
+            var emitter = vehicle.GetComponent<FMODUnity.StudioEventEmitter>();
+            emitter.SetParameter("RPM", velocityPercent);
             // Linearly interpolate the camera's z-position based on the velocityPercent
             float zPos = Mathf.Lerp(zPosRange.x, zPosRange.y, velocityPercent);
             float xPos = Mathf.Lerp(xPosRange.x, xPosRange.y, velocityPercent);

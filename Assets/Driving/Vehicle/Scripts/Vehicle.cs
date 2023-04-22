@@ -56,6 +56,12 @@ public class Vehicle : MonoBehaviour
     [Header("Debug Settings")]
     [Range(0.1f, 10)]
     public float gizmoSize = 1;
+
+    [Header("RPM (AUDIO)")]
+    public float minRPM = 0;
+    public float maxRPM = 2000;
+
+    
     
     // Start is called before the first frame update
     void Start()
@@ -68,7 +74,6 @@ public class Vehicle : MonoBehaviour
     void Update()
     {
         Inputs();
-
         StateMachine();
     }
 
