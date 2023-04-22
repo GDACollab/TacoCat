@@ -2637,7 +2637,19 @@ MonoBehaviour:
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6994455183296229762}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: event:/SFX/Cutscene/Texting Clicks
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &878010840
 GameObject:
   m_ObjectHideFlags: 0
@@ -2863,7 +2875,19 @@ MonoBehaviour:
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6994455183296229762}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: event:/SFX/Cutscene/Texting Clicks
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &910918249
 GameObject:
   m_ObjectHideFlags: 0
@@ -4943,6 +4967,7 @@ MonoBehaviour:
   nightDriveIndex: NightDrive
   currentScene: 
   audioManager: {fileID: 6994455183296229762}
+  loadProgress: 0
 --- !u!4 &1354788261
 Transform:
   m_ObjectHideFlags: 0
@@ -5442,7 +5467,19 @@ MonoBehaviour:
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6994455183296229762}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: event:/SFX/Cutscene/Texting Clicks
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1575197693
 GameObject:
   m_ObjectHideFlags: 0
@@ -5823,7 +5860,19 @@ MonoBehaviour:
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6994455183296229762}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: event:/SFX/Cutscene/Texting Clicks
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1643833191
 GameObject:
   m_ObjectHideFlags: 0
@@ -6525,7 +6574,19 @@ MonoBehaviour:
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6994455183296229762}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: event:/SFX/Cutscene/Texting Clicks
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &6994455183296229762 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}

@@ -119,13 +119,14 @@ public class DrivingUIManager : MonoBehaviour
     
     // Function to update the nitro charges
 
-    public void decrementNitro(){
+    public void decrementNitro(){ //called in Vehicle.cs when nitro is decremented
+    //removes the proper nitro fill 
 
         numNitro = (vehicle_script.GetNitro()>3) ? 3: vehicle_script.GetNitro();
-        Debug.Log(numNitro);
+        //Debug.Log(numNitro);
         for(int i = 2; i>=0;i--){
             if(nitroCharges[i].gameObject.activeInHierarchy){
-                Debug.Log(i);
+                //Debug.Log(i);
                 nitroCharges[i].gameObject.SetActive(false);
                 break;
             }
