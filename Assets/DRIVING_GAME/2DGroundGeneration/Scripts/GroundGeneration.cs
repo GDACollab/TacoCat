@@ -18,7 +18,7 @@ public class GroundGeneration : MonoBehaviour
      * ===================================================================================================
      */
 
-    public enum GENERATION_STYLES { consistent, sine, random };
+    public enum GENERATION_STYLES { consistent, sine, custom_sine, random };
     public enum CHUNK_STYLES { random, rounded, straight, flat };
 
     public GameObject curveGenerationPrefab;
@@ -49,6 +49,11 @@ public class GroundGeneration : MonoBehaviour
     [Header("Full Generation Values ==============================")]
     [Tooltip("Choose the style of the full generation")]
     public GENERATION_STYLES generationStyle = GENERATION_STYLES.random;
+
+    public Vector2 chunkLengthRange = new Vector2(200, 500);
+    public Vector2 chunkHeightRange = new Vector2(200, 500);
+
+
     [Tooltip("Set the transform of beginning point of generation")]
     public Transform begGenerationPoint;
     [Tooltip("Set the transform of end point of generation")]
@@ -97,6 +102,7 @@ public class GroundGeneration : MonoBehaviour
 
         InvokeRepeating("StaggeredUpdate", 1, 1);
     }
+
 
     public void StaggeredUpdate()
     {
@@ -192,6 +198,10 @@ public class GroundGeneration : MonoBehaviour
         else if (style == GENERATION_STYLES.sine)
         {
             SineChunkGenerator();
+        }
+        else if (style == GENERATION_STYLES.custom_sine)
+        {
+            CustomSineChunkGenerator(chunkLengthRange, chunkHeightRange);
         }
 
         EndIslandGenerator();
@@ -347,6 +357,61 @@ public class GroundGeneration : MonoBehaviour
 
             // invert height
             currChunkHeight *= -1;
+
+
+        }
+    }
+
+    public void CustomSineChunkGenerator(Vector2 lengthRange, Vector2 heightRange)
+    {
+
+        Debug.Log("Custom Sine Generation Style");
+        List<float> chunkLengths = new List<float>();
+
+
+        Vector2 lastChunkEndPosition = beginningGenPos; // init last chunk as the current beginning position
+
+        // << GENERATE RANDOM LENGTH VALUES >>
+        float currentDistance = 0f;
+        while (currentDistance < fullGenerationLength)
+        {
+            // get random range length of chunk
+            float newChunkLength = Random.Range(lengthRange.x, lengthRange.y);
+
+            // if next chunk will be longer than generation length, make last chunk meet full generation
+            if (currentDistance + newChunkLength > fullGenerationLength)
+            {
+                chunkLengths[chunkLengths.Count - 1] += fullGenerationLength - currentDistance;
+                currentDistance += fullGenerationLength - currentDistance;
+            }
+            // add random length to list
+            else
+            {
+                chunkLengths.Add(newChunkLength);
+                currentDistance += newChunkLength;
+            }
+
+        }
+
+        // << SPAWN SINE HILL CHUNKS BASED ON LENGTHS >>
+        for (int i = 0; i < chunkLengths.Count; i++)
+        {
+            float curChunkLength = chunkLengths[i];
+
+            float curChunkHeight = Random.Range(heightRange.x, heightRange.y);
+
+
+            // UPHILL CHUNK 
+            Vector2 uphillChunkEndPos = new Vector2(lastChunkEndPosition.x + curChunkLength/2, endGenPos.y + curChunkHeight);
+            SpawnBezierGroundChunk(lastChunkEndPosition, uphillChunkEndPos, chunkStyles[Random.Range(0, chunkStyles.Count)]);
+
+            // DOWNHILL CHUNK 
+            Vector2 downhillChunkEndPos = new Vector2(uphillChunkEndPos.x + curChunkLength/2, endGenPos.y);
+            SpawnBezierGroundChunk(uphillChunkEndPos, downhillChunkEndPos, chunkStyles[Random.Range(0, chunkStyles.Count)]);
+
+
+            // update last chunk end position
+            lastChunkEndPosition = downhillChunkEndPos;
 
 
         }
@@ -595,3 +660,4 @@ public class GroundGeneration : MonoBehaviour
         Gizmos.DrawLine(endGenerationPoint.position, endOffsetPosition); // spawn
     }
 }
+
