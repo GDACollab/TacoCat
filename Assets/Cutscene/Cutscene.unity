@@ -305,12 +305,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   phoneText: {fileID: 1555489853}
+  endOfCutscene: 0
   characterLimit: 1000
   Dialoge:
   - person: 0
     texts:
     - hello this is Alex
-    - more text
+    - '[EMOTE]'
   - person: 1
     texts:
     - hello this is Jamie
@@ -319,7 +320,6 @@ MonoBehaviour:
     texts:
     - hi
   messageDelayAlex: 0
-  typeOutAlex: 1
   textSpeedAlex: 0.1
   messageDelayJamie: 1
 --- !u!4 &1104355424

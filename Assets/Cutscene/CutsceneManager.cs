@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Unity.VisualScripting;
 
 public class CutsceneManager : MonoBehaviour
 {
     public TextMeshProUGUI phoneText;
+    public bool endOfCutscene;
 
 
     [Tooltip("[WIP] Max charcters per line.\nWon't move the whole word to the next line currently")]
@@ -93,6 +95,8 @@ public class CutsceneManager : MonoBehaviour
             }
 
         }
+
+        endOfCutscene = true;
     }
     
 
@@ -138,7 +142,6 @@ public class CutsceneManager : MonoBehaviour
                 yield return new WaitForSeconds(messageDelayAlex);
             
         }
-        
     }
 
     //for printing the entire message at once
