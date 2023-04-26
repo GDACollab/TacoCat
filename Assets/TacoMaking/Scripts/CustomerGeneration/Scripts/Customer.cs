@@ -9,6 +9,11 @@ public class Customer: MonoBehaviour
     CustomerManager customerManager;
     TacoMakingGameManager tacoGameManager;
 
+    public SpriteRenderer sr; //not sure what I'm supposed to do with these yet
+    public Sprite newSprite;
+    sr.sprite = newSprite;
+    public SpeciesType species = SpeciesType.None;
+
     public Taco submittedTaco;
 
     [Header("Order UI")]
@@ -71,11 +76,7 @@ public class Customer: MonoBehaviour
     }
 
     // Change Sprite Based on species type
-    public SpriteRenderer sr; //not sure what I'm supposed to do with these yet
-    public Sprite newSprite;
-    sr.sprite = newSprite;
-    
-    public SpeciesType ChangeSprite()
+    public void ChangeSprite()
     {
         switch (SpeciesType)
         {
