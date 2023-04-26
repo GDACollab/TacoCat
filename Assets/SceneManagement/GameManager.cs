@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour {
     public string loadingSceneIndex = "LoadingScreen";
     public string randDriveIndex = "RandDrive";
     public string nightDriveIndex = "NightDrive";
+    public int levelNum = 0;
 
     public string currentScene;
 
@@ -58,6 +59,7 @@ public class GameManager : MonoBehaviour {
         } else {
 
             if (drivingGameManager.endOfGame && !isLoadingScene) {
+                levelNum++;
                 LoadTacoMakingScene();
             }
 
