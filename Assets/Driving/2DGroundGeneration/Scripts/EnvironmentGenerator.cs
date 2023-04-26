@@ -43,8 +43,10 @@ public class EnvironmentGenerator : MonoBehaviour
     [Header("<< Trees >>")]
     [Tooltip("Parent for the spawned trees")]
     public Transform treeGenParent;
-    [Tooltip("Scale of the Tree Objects")]
-    public float treeScale = 20;
+    [Tooltip("Base scale of the Tree Objects")]
+    public float treeScale = 50;
+    [Tooltip("Amount of variance in the scales of individual tree objects")]
+    public float treeScaleVariance = 10;
 
     public int treeZPosition = -1;
 
@@ -102,7 +104,7 @@ public class EnvironmentGenerator : MonoBehaviour
 
         else if (!groundGeneration.generationFinished && environmentSpawned)
         {
-            DeleteAllEnvironmentObejcts();
+            DeleteAllEnvironmentObjects();
             DestroyAllGroundObjs();
         }
 
@@ -114,7 +116,7 @@ public class EnvironmentGenerator : MonoBehaviour
         groundPoints = groundGeneration.allGroundPoints;
         groundRotations = groundGeneration.allGroundRotations;
 
-        DeleteAllEnvironmentObejcts();
+        DeleteAllEnvironmentObjects();
 
         // spawn tree objects
         SpawnEnvironmentObjects(treePrefabs, treeScale, treeZPosition);
@@ -122,7 +124,7 @@ public class EnvironmentGenerator : MonoBehaviour
         environmentSpawned = true;
     }
 
-    public void DeleteAllEnvironmentObejcts()
+    public void DeleteAllEnvironmentObjects()
     {
         // destroy
         foreach (GameObject obj in allSpawnedObjects)
@@ -148,13 +150,15 @@ public class EnvironmentGenerator : MonoBehaviour
         if (groundRotations.Count < 1) { Debug.LogWarning("No rotation points."); return; }
 
         int sortingOrder = 0; // sorting order of the object to be spawned
-        int spacing = minSpaceBetweenObjects; // spacing between objects
+        int spacing = minSpaceBetweenObjects; // minimum spacing between objects
 
         // << SPAWN OBJECTS >>
         for (int currPointIndex = 10; currPointIndex < groundPoints.Count - 1; currPointIndex += spacing)
         {
             // spawn new environment object
-            SpawnEnvObj(prefabs[Random.Range(0, prefabs.Count)], currPointIndex, scale, sortingOrder, zposition);
+            int facing = Random.Range(0, 2)*2 - 1; 
+            float thisScale = scale + (Random.Range(0, treeScaleVariance * 2) - treeScaleVariance); //this will have to be changed once we are spawning objects besides trees
+            SpawnEnvObj(prefabs[Random.Range(0, prefabs.Count)], currPointIndex, thisScale, facing, sortingOrder, zposition);
 
             /* ===============================
              *  << SET UP FOR NEXT ENVIRONMENT OBJECT >>
@@ -183,7 +187,7 @@ public class EnvironmentGenerator : MonoBehaviour
         }
     }
 
-    public GameObject SpawnEnvObj(GameObject prefab, int pointIndex, float scale, int sortingOrder, int zposition = 0)
+    public GameObject SpawnEnvObj(GameObject prefab, int pointIndex, float scale, int facing, int sortingOrder, int zposition = 0)
     {
         // create a random environment object at indexed groundPoint and with rotation
         GameObject newEnvObject = Instantiate(prefab, groundPoints[pointIndex], Quaternion.Euler(new Vector3(0, 0, 0)));
@@ -193,8 +197,8 @@ public class EnvironmentGenerator : MonoBehaviour
         allSpawnedObjects.Add(newEnvObject);
 
         // randomly face left or right
-        int randomFacing = Random.Range(0, 2) * 2 - 1;
-        newEnvObject.transform.localScale = new Vector3(randomFacing, 1) * scale;
+        Vector3 facingVector = new Vector3( facing,  1 );
+        newEnvObject.transform.localScale = facingVector * scale;
 
         // set z position
         newEnvObject.transform.position = SetZ(newEnvObject.transform.position, zposition);
