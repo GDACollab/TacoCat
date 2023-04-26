@@ -14,6 +14,9 @@ public class PlayerHand : MonoBehaviour
     //We need the tacoGameManager so as to place the ingredient on the taco later
     public TacoMakingGameManager tacoGameManager;
 
+    //reference for pop and woosh audio 
+    public AudioManager audioManager;
+
     // what's the main thing that I want the hand to do? move from one position to another
     // so I'm going to make a "target" object for the hand to move towards
     public Transform target; // i use a transform here because i'm only worried about the position of the object
@@ -85,6 +88,7 @@ public class PlayerHand : MonoBehaviour
             {
                 state = handState.PLACE_INGR;
             }
+
         }
 
         if (state == handState.PLACE_INGR)
@@ -97,6 +101,8 @@ public class PlayerHand : MonoBehaviour
                 tacoGameManager.AddIngredientToTaco(currHeldIngredient);
                 currHeldIngredient = new ingredientType();
                 state = handState.HOME;
+                //pop sound when placed
+                audioManager.Play(audioManager.ingriPlaceSFX);
             }
         }
 
@@ -137,6 +143,8 @@ public class PlayerHand : MonoBehaviour
             state = handState.PICK_FROM_BIN;
 
             pickBin = bin;
+            //woosh sound when starting to pick up ingredient
+            audioManager.Play(audioManager.pawSwipeSFX);
         }
     }
 
@@ -150,5 +158,9 @@ public class PlayerHand : MonoBehaviour
             target = submissionTaco.transform;
             state = handState.PLACE_INGR;
         }
+    }
+
+    public void Start(){
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
     }
 }
