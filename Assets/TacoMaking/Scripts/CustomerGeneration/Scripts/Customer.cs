@@ -70,6 +70,33 @@ public class Customer: MonoBehaviour
         return (SpeciesType)Random.Range(0,4);
     }
 
+    // Change Sprite Based on species type
+    public SpriteRenderer sr; //not sure what I'm supposed to do with these yet
+    public Sprite newSprite;
+    sr.sprite = newSprite;
+    
+    public SpeciesType ChangeSprite()
+    {
+        switch (SpeciesType)
+        {
+            case Fish:
+                sr.sprite = Sprite;
+                break;
+            case Ravens:
+                sr.sprite = Sprite;
+                break;
+            case Sheep:
+                sr.sprite = Sprite;
+                break;
+            case Frogs:
+                sr.sprite = Sprite;
+                break;
+            case Capybaras:
+                sr.sprite = Sprite;
+                break;
+        };
+    }
+
     // << SPAWN ORDER UI BOX >>
     public GameObject ShowBubbleOrder(List<ingredientType> order)
     {
