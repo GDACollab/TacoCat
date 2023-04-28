@@ -51,7 +51,7 @@ public class CustomerManager : MonoBehaviour
         if (currCustomer != null)
         {
             //Delays the destruction of the customer so that they have time to move offscreen
-            UpdateCustomerPos(currCustomer, positionList[0].position);
+            currCustomer.MoveCustomer(positionList[0].position);
             Destroy(currCustomer.gameObject, transitionTime);
             customerList.RemoveAt(0);          
             currCustomer = null;
@@ -76,18 +76,9 @@ public class CustomerManager : MonoBehaviour
             if (customerList[i].currPosition != i)
             {
                 customerList[i].currPosition = i;
-                UpdateCustomerPos(customerList[i], positionList[i + 1].position);
+                customerList[i].MoveCustomer(positionList[i + 1].position);
             }
         }
-    }
-
-    //Helper function for setting the vars for transitioning to a new spot in line
-    private void UpdateCustomerPos(Customer customer, Vector3 newPosition)
-    {
-        customer.prevPos = customer.transform.position;
-        customer.targetPos = newPosition;
-        customer.interpolater = 0;
-        customer.currTransitionTime = 0;
     }
 
     // spawn a bunch of customers at once to debug order generation
