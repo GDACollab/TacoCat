@@ -94,14 +94,14 @@ public class CameraHandler : MonoBehaviour
     public float slope;
     public float constant;
 
-    public Vector3[] bezierPoints; //List of points used to determine where the 'zero' point should be
+    public List<Vector3> bezierPoints = new List<Vector3>(); //List of points used to determine where the 'zero' point should be
     public int bezierPointsListTracker = 0; //Current positioning in the list of points
 
     //Called in the bezier generator, adds the P_1 and P_2 points to the bezierPoints list
     //(To do so, whenever a P_1/2 point is made, run this function with that point before moving onto the next point)
     public void addToBezierPoints(Vector3 point)
     {
-        bezierPoints.add(point);
+        bezierPoints.Add(point);
     }
 
     //Determines the numbers used for making the equation
@@ -112,13 +112,13 @@ public class CameraHandler : MonoBehaviour
         b_x_pos = B_pos.x;
         b_y_pos = B_pos.y;
         slope = (b_y_pos - a_y_pos) / (b_x_pos - a_x_pos);
-        constant = (b_y_pos - (var * (-1))); //-1 = cos(pi)
+        constant = (b_y_pos - (slope * (-1))); //-1 = cos(pi)
     }
 
     //Runs the equation to determine that determines the current 'zero' point
     float CalculateZero(Vector3 car_pos) 
     {
-        return slope * cos(car_pos.x * pi / b_X_pos) + constant;
+        return slope * Mathf.Cos(car_pos.x * Mathf.PI / b_x_pos) + constant;
     }
 
     float GetCurrentZero()
@@ -127,7 +127,7 @@ public class CameraHandler : MonoBehaviour
         if (vehicle)
         {
             //We check if the car is NOT between the current 2 points
-            if (!(a_x_pos <= vehicle.transform.position.x <= b_x_pos)) 
+            if (!(a_x_pos <= vehicle.transform.position.x && vehicle.transform.position.x <= b_x_pos)) 
             {
                 //If so, we either increment or decrement the tracker...
                 if (b_x_pos > vehicle.transform.position.x)
@@ -139,11 +139,13 @@ public class CameraHandler : MonoBehaviour
                     bezierPointsListTracker += 1;
                 }
                 //And then form a new equation for 0!
-                MakeEquation(bezierPoints[bezierPointsListTracker], bezierPoints[bezierPointsListTracker] + 1);
+                MakeEquation(bezierPoints[bezierPointsListTracker], bezierPoints[bezierPointsListTracker + 1]);
             }
             //Then we calculate and return a 'zero' point using the current (whether new or old) equation
             return CalculateZero(vehicle.transform.position);
         }
+        //If no vehicle was grabbed, defaults to 0
+        return 0.0f;
     }
     
 }
