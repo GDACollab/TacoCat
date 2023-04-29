@@ -24,6 +24,8 @@ public class BezierCurveGeneration : MonoBehaviour
 
     public LineRenderer lineRenderer;
     public MeshCreator meshCreator;
+    //[HideInInspector]
+    public CameraHandler cameraHandler;
 
     [Header("Generation Debug Tools ===========================================")]
 
@@ -128,6 +130,7 @@ public class BezierCurveGeneration : MonoBehaviour
 
     public void Start()
     {
+        cameraHandler = GameObject.FindGameObjectWithTag("DrivingGameManager").GetComponent<DrivingGameManager>().camHandler;
         lineRenderer = GetComponent<LineRenderer>();
         meshCreator = undergroundMeshObj.GetComponent<MeshCreator>();
 
@@ -155,6 +158,16 @@ public class BezierCurveGeneration : MonoBehaviour
             p1.position = p1_pos;
             p2.position = p2_pos;
             p3.position = p3_pos;
+
+            //Send info to camera
+            if (p1_pos.y < p2_pos.y)
+            {
+                cameraHandler.GetComponent<CameraHandler>().addToBezierPoints(p1_pos);
+            }
+            else
+            {
+                cameraHandler.GetComponent<CameraHandler>().addToBezierPoints(p2_pos);
+            }
         }
 
 

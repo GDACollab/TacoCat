@@ -93,15 +93,21 @@ public class CameraHandler : MonoBehaviour
     // slope/constant values used in equation
     public float slope;
     public float constant;
+    // Used for determining if new bezier points should be added to the list
+    float lastCurvePointY = 99999999; //Y of lowest Point from the last curve
 
     public List<Vector3> bezierPoints = new List<Vector3>(); //List of points used to determine where the 'zero' point should be
     public int bezierPointsListTracker = 0; //Current positioning in the list of points
 
-    //Called in the bezier generator, adds the P_1 and P_2 points to the bezierPoints list
+    //Called in the bezier generator, adds the P_1/P_2 point to the bezierPoints list
     //(To do so, whenever a P_1/2 point is made, run this function with that point before moving onto the next point)
     public void addToBezierPoints(Vector3 point)
     {
-        bezierPoints.Add(point);
+        if (lastCurvePointY > point.y)
+        {
+            bezierPoints.Add(point);
+        }
+        lastCurvePointY = point.y;
     }
 
     //Determines the numbers used for making the equation

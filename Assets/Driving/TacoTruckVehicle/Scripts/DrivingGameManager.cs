@@ -6,6 +6,8 @@ public class DrivingGameManager : MonoBehaviour
 {
     public Vehicle vehicle;
     public GroundGeneration groundGeneration;
+    public CameraHandler camHandler;
+    private Camera cam;
 
     [Space(10)]
     public bool endOfGame;
@@ -21,6 +23,7 @@ public class DrivingGameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        cam = Camera.main;
         vehicle.rb_vehicle.constraints = RigidbodyConstraints2D.FreezeAll;
     }
 
