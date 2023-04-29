@@ -47,6 +47,11 @@ public class EnvironmentGenerator : MonoBehaviour
     public float treeScale = 50;
     [Tooltip("Amount of variance in the scales of individual tree objects")]
     public float treeScaleVariance = 10;
+    [Tooltip("Whether or not the trees rotate with the ground at all")]
+    public bool treeRotationEnabled = true;
+    [Range(0, 100), Tooltip("From 0-100%, how closely will the trees align with the rotation of the ground")]
+    public float treeRotScalar = 70;
+
 
     public int treeZPosition = -1;
 
@@ -78,8 +83,7 @@ public class EnvironmentGenerator : MonoBehaviour
     [Tooltip("Z offset of the ground")]
     public int groundZOffest = -10;
 
-    [Tooltip("The amount of points between spawned ground objects")]
-    [Range(1, 100)]
+    [Range(1, 100), Tooltip("The amount of points between spawned ground objects")]
     public int pointsBetweenGroundObjs = 40;
 
     [Range(0, 0.2f), Tooltip("Makes the ground objects more randomly placed so it looks more natural")]
@@ -202,6 +206,11 @@ public class EnvironmentGenerator : MonoBehaviour
 
         // set z position
         newEnvObject.transform.position = SetZ(newEnvObject.transform.position, zposition);
+
+        //Apply rotation 
+        if(treeRotationEnabled){
+            newEnvObject.transform.Rotate(new Vector3(0, 0, groundRotations[pointIndex] * (treeRotScalar / 100)));
+        }
 
         // << SET SORTING ORDER >>
         if (!newEnvObject.GetComponentInChildren<SpriteRenderer>())
