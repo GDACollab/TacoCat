@@ -22,6 +22,8 @@ public class Customer: MonoBehaviour
     private float interpolater;
     [HideInInspector] public float transitionTime; //How long it takes in seconds for the customer to move between positions
     private float currTransitionTime; //Used for keeping track of time during transitions
+    [HideInInspector] public float transitionOffset; //The most that a customers transition time can be randomly offset (used to make customers move at diff speeds)
+    private float offsetTransitionTime;
     [HideInInspector] public int currPosition;
     private Coroutine lastRoutine = null;
 
@@ -213,9 +215,9 @@ public class Customer: MonoBehaviour
     {
         interpolater = 0;
         currTransitionTime = 0;
+        offsetTransitionTime = transitionTime + transitionOffset;
         prevPos = transform.position;
         targetPos = newPosition;
-        //StopAllCoroutines();
         if (lastRoutine != null)
         {
             StopCoroutine(lastRoutine);
@@ -226,15 +228,16 @@ public class Customer: MonoBehaviour
     IEnumerator MovePosition()
     {
         //Stops moving customer once they are at their new position
-        while (currTransitionTime < transitionTime)
+        while (currTransitionTime < offsetTransitionTime)
         {
             //Math to make the transition ease in and out
-            interpolater = currTransitionTime / transitionTime;
+            interpolater = currTransitionTime / offsetTransitionTime;
             interpolater = interpolater * interpolater * (3f - 2f * interpolater);
             transform.position = Vector3.Lerp(prevPos, targetPos, interpolater);
             currTransitionTime += Time.deltaTime;
             yield return null;
         }
+        transitionOffset = 0;
         lastRoutine = null;
     }
 

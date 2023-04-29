@@ -10,6 +10,8 @@ public class CustomerManager : MonoBehaviour
     public Customer currCustomer;
   
     public float transitionTime;       //How long it takes in seconds for the customer to transition between positions
+    [SerializeField] private float transitionDelay; //The most that a customers transition time can be randomly offset (used to make customers move at diff speeds)
+    private float delayCounter;
     public List<Transform> positionList = new List<Transform>(); //Used as the points the customer transitions to/from 
     public List<Customer> customerList = new List<Customer>();
 
@@ -38,6 +40,11 @@ public class CustomerManager : MonoBehaviour
         customerScript.transform.position = positionList[5].position;
         customerScript.transitionTime = transitionTime;
         customerScript.currPosition = -1;
+        //Makes sure the new customer comes in a little after the customer before them starts moving
+        if (customerList.Count > 0)
+        {
+            customerScript.transitionOffset = transitionDelay + customerList[customerList.Count - 1].transitionOffset;
+        }
         customerList.Add(customerScript);
         UpdateCustomers();
 
@@ -61,6 +68,7 @@ public class CustomerManager : MonoBehaviour
     //Member to update the positions of all the customers in line
     private void UpdateCustomers()
     {
+        delayCounter = 0;
         //Assign the new current customer when the current one gets removed
         if (currCustomer == null && customerList.Count > 0)
         {
@@ -75,6 +83,10 @@ public class CustomerManager : MonoBehaviour
             //If the customers current position has changed, then update its variables
             if (customerList[i].currPosition != i)
             {
+                //Adds a delay to subsequent customers being moved so that they don't all move at the same exact time              
+                customerList[i].transitionOffset = delayCounter * transitionDelay;
+                delayCounter++;
+
                 customerList[i].currPosition = i;
                 customerList[i].MoveCustomer(positionList[i + 1].position);
             }
