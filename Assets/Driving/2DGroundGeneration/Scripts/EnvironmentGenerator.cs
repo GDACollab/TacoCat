@@ -186,7 +186,7 @@ public class EnvironmentGenerator : MonoBehaviour
     public GameObject SpawnEnvObj(GameObject prefab, int pointIndex, float scale, int sortingOrder, int zposition = 0)
     {
         // create a random environment object at indexed groundPoint and with rotation
-        GameObject newEnvObject = Instantiate(prefab, groundPoints[pointIndex], Quaternion.Euler(new Vector3(0, 0, groundRotations[pointIndex])));
+        GameObject newEnvObject = Instantiate(prefab, groundPoints[pointIndex], Quaternion.Euler(new Vector3(0, 0, 0)));
 
         //set parent
         newEnvObject.transform.parent = treeGenParent;

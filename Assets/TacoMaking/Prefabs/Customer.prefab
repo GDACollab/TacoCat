@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6066377948223541155}
   - component: {fileID: 2354081417323375753}
-  - component: {fileID: 5717409494419669627}
+  - component: {fileID: 4876190386815158619}
   m_Layer: 0
   m_Name: Customer
   m_TagString: Untagged
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9aebd705574f9e642aef1e5f59b3e4d8, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
@@ -86,7 +86,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5717409494419669627
+--- !u!114 &4876190386815158619
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -95,11 +95,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4784761311512434799}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf7694643ee790241b262796cb7dc214, type: 3}
+  m_Script: {fileID: 11500000, guid: b3c0798fdb633254ca435b4cdac5f476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   submittedTaco: {fileID: 0}
-  orderUI: {fileID: 8441591478171991896}
+  orderUI: {fileID: 7669438798918109656}
   order: 
   prevPos: {x: 0, y: 0, z: 0}
   targetPos: {x: 0, y: 0, z: 0}
@@ -107,6 +107,12 @@ MonoBehaviour:
   transitionTime: 0
   currTransitionTime: 0
   currPosition: 0
+  colorAfterTacoFinished:
+  - {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  - {r: 0, g: 0.9529412, b: 0.105882354, a: 1}
+  - {r: 0.7529412, g: 255, b: 0.39607844, a: 1}
+  - {r: 0.9764706, g: 0.5529412, b: 0, a: 1}
+  - {r: 1, g: 0, b: 0, a: 1}
 --- !u!1001 &4969516153737546221
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -198,7 +204,8 @@ PrefabInstance:
       propertyPath: m_Icon
       value: 
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -5633499394667940171, guid: 5e3c1cfbd1189194b8bfe03e5d680cf7, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 5e3c1cfbd1189194b8bfe03e5d680cf7, type: 3}
 --- !u!4 &1296459971039843008 stripped
 Transform:
@@ -210,14 +217,35 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7153826386096119568, guid: 5e3c1cfbd1189194b8bfe03e5d680cf7, type: 3}
   m_PrefabInstance: {fileID: 4969516153737546221}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8441591478171991896 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: -5633499394667940171, guid: 5e3c1cfbd1189194b8bfe03e5d680cf7, type: 3}
+--- !u!1 &6074817814590066916 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1205084541170784521, guid: 5e3c1cfbd1189194b8bfe03e5d680cf7, type: 3}
   m_PrefabInstance: {fileID: 4969516153737546221}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+--- !u!114 &2270913474708530347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6074817814590066916}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea77ddf0092499347a85bb299a5deded, type: 3}
+  m_Script: {fileID: 11500000, guid: 1c685d3fa60a2d448a2df5acdb45df01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ingredientPointParent: {fileID: 0}
+  order: 
+  spacing: 1
+  ingredientScale: 0.1
+--- !u!114 &7669438798918109656 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3357457061797118005, guid: 5e3c1cfbd1189194b8bfe03e5d680cf7, type: 3}
+  m_PrefabInstance: {fileID: 4969516153737546221}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6074817814590066916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c685d3fa60a2d448a2df5acdb45df01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

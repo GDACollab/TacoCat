@@ -45,7 +45,7 @@ public class AudioManager : MonoBehaviour {
     [Header("FMOD Music")]
 
     [Tooltip("FMOD Event Path for the folder that contains all the music")]
-    public List<EventReference> music;
+    public List<string> music;
     protected Dictionary<string, string> musicList = new Dictionary<string, string>();
     /////////////////////////SFX//////////////////////////////
 
@@ -97,10 +97,23 @@ public class AudioManager : MonoBehaviour {
     //Mathf.Clamp(percent, 0,1);
 
     //plays a one shot given the fmod event path
-    public void Play(string path)
+    public void Play(string path, Dictionary<string, float> parameters = null)
 	{
-        RuntimeManager.PlayOneShot(path);
+        var instance = RuntimeManager.CreateInstance(path);
+        if (parameters != null) {
+            foreach (KeyValuePair<string, float> val in parameters) {
+                instance.setParameterByName(val.Key, val.Value);
+            }
+        }
+        instance.start();
+        instance.release();
 	}
+
+    public void Play(string path) {
+        var instance = RuntimeManager.CreateInstance(path);
+        instance.start();
+        instance.release();
+    }
 
     //a little more complicated! DO MATH to give sound 1 variable to work with
 
@@ -116,8 +129,7 @@ public class AudioManager : MonoBehaviour {
 
         // Load music:
         
-        foreach (EventReference musicRef in music) {
-            var fullPath = musicRef.Path;
+        foreach (string fullPath in music) {
             var name = Regex.Match(fullPath, @"[^\\/]*$");
             musicList.Add(name.Value, fullPath);
         }

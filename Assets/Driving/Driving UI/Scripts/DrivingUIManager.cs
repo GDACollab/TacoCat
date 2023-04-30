@@ -13,41 +13,63 @@ public class DrivingUIManager : MonoBehaviour
     FlipTracker flipTracker;
 
     private float fuelAmount = 0; // Initial fuel
-    private float numNitro = 0; // Initial nitro
+    private int numNitro = 0; // Initial nitro
+    private int miles = 0;
+    private List<int> signs;
+    private int signNum = 0;
 
+    
 
     // Public variables used to define the UI objects
     // Need these for Circle-style fuel guage. They need the "FuelUIGauge" tag.
     [Header("Circle-style UI objects")]
     public Transform fuelSlider;
-    public Image nitroCharge1;
-    public Image nitroCharge2;
-    public Image nitroCharge3;
+
+    public List<Image> nitroCharges;
 
     [Header("Debugging UI objects")]
     public TMP_Text velocityText;
     public TMP_Text flipText;
+    public TMP_Text signText;
+    public int numSigns = 4;
+    public int totalMiles = 1000;
 
     [Header("Distance")]
     public Transform pointer;
     public Transform pointerStart;
     public Transform pointerEnd;
 
+    [Header("Toggle Progress Bar")]
+    private GameObject progressBarSlider;
+    public bool viewProgressBar;
 
     
     // Start is called before the first frame update
     void Start()
     {
+        progressBarSlider = GameObject.Find("DistanceSlider");
         vehicle_script = vehicle.GetComponent<Vehicle>();
         flipTracker = vehicle.GetComponent<FlipTracker>();
         initFuelNitro(vehicle_script.GetFuel(),vehicle_script.GetNitro());
+        miles = totalMiles;
+        signs = drivingGameManager.getSignDistances(numSigns, totalMiles);
+        signs.Add(0);
+        signText.text = miles + " Miles Till Cat Nyansisco";
+        if (viewProgressBar)
+        {
+            progressBarSlider.SetActive(true);
+        }
+        else
+        {
+            progressBarSlider.SetActive(false);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         updateFuel();
-        updateNitro();
+        //updateNitro();
         
         velocityText.text = "Velocity: " + vehicle.GetComponent<Rigidbody2D>().velocity.x;
 
@@ -60,7 +82,13 @@ public class DrivingUIManager : MonoBehaviour
         {
             pointer.position = Vector3.Lerp(pointerStart.position, pointerEnd.position, drivingGameManager.percentageTraveled);
         }
-
+        
+        // Update "x Miles Till Cat Nyansisco" sign
+        miles = (int)(totalMiles - totalMiles*(drivingGameManager.percentageTraveled));
+        if(signNum <= numSigns && miles <= signs[signNum]){
+            signText.text = signs[signNum] + " Miles Till Cat Nyansisco";
+            signNum++;
+        }
     }
 
     // Function to initialize the fuel gauges
@@ -75,7 +103,9 @@ public class DrivingUIManager : MonoBehaviour
         fuelAmount = fuel;
         numNitro = (nitro>3) ? 3: nitro;
         updateFuel();
-        updateNitro();
+        for(int i=0; i<numNitro;i++){
+            nitroCharges[i].gameObject.SetActive(true);
+        }
     }
     
     // Function to update the fuel gauge
@@ -88,29 +118,18 @@ public class DrivingUIManager : MonoBehaviour
     }
     
     // Function to update the nitro charges
-    void updateNitro(){
+
+    public void decrementNitro(){ //called in Vehicle.cs when nitro is decremented
+    //removes the proper nitro fill 
+
         numNitro = (vehicle_script.GetNitro()>3) ? 3: vehicle_script.GetNitro();
-        switch(numNitro){
-            case 1:
-                nitroCharge1.gameObject.SetActive(true);
-                nitroCharge2.gameObject.SetActive(false);
-                nitroCharge3.gameObject.SetActive(false);
+        //Debug.Log(numNitro);
+        for(int i = 2; i>=0;i--){
+            if(nitroCharges[i].gameObject.activeInHierarchy){
+                //Debug.Log(i);
+                nitroCharges[i].gameObject.SetActive(false);
                 break;
-            case 2:
-                nitroCharge1.gameObject.SetActive(true);
-                nitroCharge2.gameObject.SetActive(true);
-                nitroCharge3.gameObject.SetActive(false);
-                break;
-            case 3:
-                nitroCharge1.gameObject.SetActive(true);
-                nitroCharge2.gameObject.SetActive(true);
-                nitroCharge3.gameObject.SetActive(true);
-                break;
-            default:
-                nitroCharge1.gameObject.SetActive(false);
-                nitroCharge2.gameObject.SetActive(false);
-                nitroCharge3.gameObject.SetActive(false);
-                break;
+            }
         }
     }
 }

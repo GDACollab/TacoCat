@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7153826386096119568}
   - component: {fileID: 5395363248128189133}
-  - component: {fileID: -5633499394667940171}
+  - component: {fileID: 3357457061797118005}
   m_Layer: 0
   m_Name: OrderBubble
   m_TagString: Untagged
@@ -87,7 +87,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-5633499394667940171
+--- !u!114 &3357457061797118005
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -96,12 +96,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1205084541170784521}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea77ddf0092499347a85bb299a5deded, type: 3}
+  m_Script: {fileID: 11500000, guid: 1c685d3fa60a2d448a2df5acdb45df01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ingredientPointParent: {fileID: 6127912438210779949}
   order: 
-  spacing: 10
+  spacing: 0.2
+  ingredientScale: 0.05
 --- !u!1 &4420358974022881964
 GameObject:
   m_ObjectHideFlags: 0
