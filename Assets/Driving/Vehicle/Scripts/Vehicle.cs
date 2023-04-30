@@ -67,7 +67,9 @@ public class Vehicle : MonoBehaviour
     void Start()
     {
         rb_vehicle.velocity = startingVelocity;
+        try{
         audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+        }catch{}
     }
 
     // Update is called once per frame

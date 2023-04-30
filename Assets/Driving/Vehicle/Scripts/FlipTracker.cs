@@ -47,7 +47,9 @@ public class FlipTracker : MonoBehaviour
         vehicle = GetComponent<Vehicle>();
         animHandler = GetComponent<TruckAnimationHandler>();
         initTruckRotation = transform.rotation.eulerAngles.z;
-        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+        try{
+            audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+        }catch{};
         boostSpriteY = boostSprite.transform.localScale.y;
     }
 
@@ -89,12 +91,15 @@ public class FlipTracker : MonoBehaviour
             if (IsPerfectLanding(endJumpRot, groundPointRotation) && flipCount > 0) 
             {
                 int flips = Mathf.Min(flipCount, flipCap);
-                Vector2 newBoost = new Vector2(((flips*percentBoost)+1)*vehicle.perfectLandingBoostForce.x, 0f);
+                float flipBoost=flips*percentBoost;
+                Vector2 newBoost = new Vector2(((flipBoost)+1)*vehicle.perfectLandingBoostForce.x, 0f);
                 float newTime = ((flips*timeBoost)+1)*vehicle.activePerfectBoostTime;
                 boostSprite.transform.localScale = new Vector3(boostSprite.transform.localScale.x, boostSpriteY*((flips*percentBoost)+1), boostSprite.transform.localScale.z);
                 StartCoroutine(vehicle.PerfectLandingBoost(newBoost, newTime));
                 audioManager.Play(audioManager.flipBoostSFX);
             }
+            audioManager.Play(audioManager.truckLandingSFX);
+            //PLAY AUDIO MANAGER REG LANDING
         }
 
         // track in air time
