@@ -51,7 +51,8 @@ public class EnvironmentGenerator : MonoBehaviour
     public bool treeRotationEnabled = true;
     [Range(0, 100), Tooltip("From 0-100%, how closely will the trees align with the rotation of the ground")]
     public float treeRotScalar = 70;
-
+    [Range(-100, 100), Tooltip("Vertical offset for the trees")]
+    public float treeYOffset = 0;
 
     public int treeZPosition = -1;
 
@@ -206,6 +207,9 @@ public class EnvironmentGenerator : MonoBehaviour
 
         // set z position
         newEnvObject.transform.position = SetZ(newEnvObject.transform.position, zposition);
+
+        // Move down slightly 
+        newEnvObject.transform.position = new Vector3(newEnvObject.transform.position.x, newEnvObject.transform.position.y + treeYOffset, newEnvObject.transform.position.z);
 
         //Apply rotation 
         if(treeRotationEnabled){
