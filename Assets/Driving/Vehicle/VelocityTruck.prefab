@@ -121,7 +121,7 @@ MonoBehaviour:
   - {x: -4.2184334, y: -3.4624546, z: 0.00000067891347}
   m_ShapePathHash: 1675360583
   m_Mesh: {fileID: 0}
-  m_InstanceId: 2425644
+  m_InstanceId: 504674
 --- !u!1 &3986610690755736411
 GameObject:
   m_ObjectHideFlags: 0
@@ -346,6 +346,7 @@ MonoBehaviour:
   cameraHandler: {fileID: 0}
   rb_vehicle: {fileID: 5231190167668380749}
   audioManager: {fileID: 0}
+  drivingUIManager: {fileID: 0}
   groundLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -373,6 +374,8 @@ MonoBehaviour:
   rotateRight: 276
   rotateLeft: 275
   gizmoSize: 1
+  minRPM: 0
+  maxRPM: 2000
 --- !u!50 &5231190167668380749
 Rigidbody2D:
   serializedVersion: 4
@@ -482,6 +485,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioManager: {fileID: 0}
   jumpStarted: 0
+  flipCap: 10
+  percentBoost: 0.1
+  timeBoost: 0.05
+  boostSprite: {fileID: 3986610690755736411}
   flipCount: 0
   currAirTime: 0
   perfectLandingRotationBound: 5
