@@ -16,7 +16,7 @@ public class LightingManager : MonoBehaviour
 
     [Header("Time Of Day Lighting Palettes")]
     // Morning Sunrise
-    [Tooltip("Index 0: Foreground, 1: PlayArea, 2: Background, 3: Skybox")]
+    [Tooltip("0: Foreground, 1: PlayArea, 2: Background, 3: Skybox, 4: Sun")]
     public List<Color> morningSunrise = new List<Color>
     {
         new Color32(255, 167, 38, 255),
@@ -26,7 +26,7 @@ public class LightingManager : MonoBehaviour
     };
 
     // Mid-day
-    [Tooltip("Index 0: Foreground, 1: PlayArea, 2: Background, 3: Skybox")]
+    [Tooltip("0: Foreground, 1: PlayArea, 2: Background, 3: Skybox, 4: Sun")]
     public List<Color> midDay = new List<Color>
     {
         new Color32(41, 182, 246, 255),
@@ -36,7 +36,7 @@ public class LightingManager : MonoBehaviour
     };
 
     // Evening Sunset
-    [Tooltip("Index 0: Foreground, 1: PlayArea, 2: Background, 3: Skybox")]
+    [Tooltip("0: Foreground, 1: PlayArea, 2: Background, 3: Skybox, 4: Sun")]
     public List<Color> eveningSunset = new List<Color>
     {
         new Color32(239, 108, 0, 255),
@@ -46,7 +46,7 @@ public class LightingManager : MonoBehaviour
     };
 
     // Night
-    [Tooltip("Index 0: Foreground, 1: PlayArea, 2: Background, 3: Skybox")]
+    [Tooltip("0: Foreground, 1: PlayArea, 2: Background, 3: Skybox, 4: Sun")]
     public List<Color> night = new List<Color>
     {
         new Color32(40, 53, 147, 255),
@@ -62,14 +62,13 @@ public class LightingManager : MonoBehaviour
     public float eveningTimeLength = 0.3f;
     public float nightTimeLength = 0.1f;
 
+    [Space(10)]
+    public List<float> sunIntensities = new List<float>();
 
-    [Header("POSITIONS")]
-    // Space the layers out based on a modular float for perspective things
-    [Range(0, 1000)]
-    public float layerSpacing = 1000f;
-    [Range(0, 5000)]
-    public float skyboxSpacing = 3000f;
+    [Space(10)]
+    public float lightColorAdjustSpeed = 2;
 
+    [Space(20)]
     [Header("SETUP VARIABLES [[DONT TOUCH]]")]
     // Hold lights for each sorting layer
     public Light2D foregroundLight;
@@ -77,11 +76,23 @@ public class LightingManager : MonoBehaviour
     public Light2D backgroundLight;
     public Light2D skyboxLight;
 
+    [Space(10)]
     // Hold each art asset in a list
     public List<GameObject> foregroundObjects;
     public List<GameObject> playAreaObjects;
     public List<GameObject> backgroundLayerObjects;
     public List<GameObject> skyboxLayerObjects;
+
+    [Space(10)]
+    public SunCycle sunCycle;
+    public Light2D sunLight;
+
+    [Header("SPACING")]
+    // Space the layers out based on a modular float for perspective things
+    [Range(0, 1000)]
+    public float layerSpacing = 1000f;
+    [Range(0, 5000)]
+    public float skyboxSpacing = 3000f;
 
     private void Start()
     {
@@ -97,14 +108,45 @@ public class LightingManager : MonoBehaviour
         SetZPositions();
     }
 
-    public void UpdateLightColors(float timeOfDay)
+    public void UpdateLightColors(float curTime)
     {
-        List<Color> toPalette = GetPaletteAtTime(timeOfDay);
+        sunCycle.pathProgress = curTime;
 
-        foregroundLight.color = Color.Lerp(foregroundLight.color, toPalette[0], Time.deltaTime);
-        playAreaLight.color = Color.Lerp(playAreaLight.color, toPalette[1], Time.deltaTime);
-        backgroundLight.color = Color.Lerp(backgroundLight.color, toPalette[2], Time.deltaTime);
-        skyboxLight.color = Color.Lerp(skyboxLight.color, toPalette[3], Time.deltaTime);
+        List<Color> toPalette = GetPaletteAtTime(curTime);
+
+        foregroundLight.color = Color.Lerp(foregroundLight.color, toPalette[0], lightColorAdjustSpeed * Time.deltaTime);
+        playAreaLight.color = Color.Lerp(playAreaLight.color, toPalette[1], lightColorAdjustSpeed * Time.deltaTime);
+        backgroundLight.color = Color.Lerp(backgroundLight.color, toPalette[2], lightColorAdjustSpeed * Time.deltaTime);
+        skyboxLight.color = Color.Lerp(skyboxLight.color, toPalette[3], lightColorAdjustSpeed * Time.deltaTime);
+        sunLight.color = Color.Lerp(sunLight.color, toPalette[4], lightColorAdjustSpeed * Time.deltaTime);
+
+
+        float curSunIntensity = 0;
+
+        // << SUN INTENSITY >>
+        // MORNING
+        if (curTime < morningTimeLength)
+        {
+            curSunIntensity = sunIntensities[0];
+        }
+        // MIDDAY
+        else if (curTime < (morningTimeLength + midDayTimeLength))
+        {
+            curSunIntensity = sunIntensities[1];
+        }
+        // EVENING
+        else if (curTime < (morningTimeLength + midDayTimeLength + eveningTimeLength))
+        {
+            curSunIntensity = sunIntensities[2];
+        }
+        // NIGHT
+        else if (curTime > (morningTimeLength + midDayTimeLength + eveningTimeLength))
+        {
+            curSunIntensity = sunIntensities[3];
+        }
+
+        sunLight.intensity = Mathf.Lerp(sunLight.intensity, curSunIntensity, lightColorAdjustSpeed * Time.deltaTime);
+
     }
 
     private List<Color> GetPaletteAtTime(float curTime)
@@ -120,25 +162,21 @@ public class LightingManager : MonoBehaviour
         // MORNING
         if (curTime < morningTimeLength)
         {
-            dayCycleState = TIME_OF_DAY.MORNING;
             return palettes[0];
         }
         // MIDDAY
         else if (curTime < (morningTimeLength + midDayTimeLength))
         {
-            dayCycleState = TIME_OF_DAY.MIDDAY;
             return palettes[1];
         }
         // EVENING
         if (curTime < (morningTimeLength + midDayTimeLength + eveningTimeLength))
         {
-            dayCycleState = TIME_OF_DAY.EVENING;
             return palettes[2];
         }
         // NIGHT
         if (curTime > (morningTimeLength + midDayTimeLength + eveningTimeLength))
         {
-            dayCycleState = TIME_OF_DAY.NIGHT;
             return palettes[3];
         }
 
@@ -147,7 +185,6 @@ public class LightingManager : MonoBehaviour
 
 
     }
-
 
     public void SetZPositions()
     {

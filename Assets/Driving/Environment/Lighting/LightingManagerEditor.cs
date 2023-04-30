@@ -14,6 +14,7 @@ public class LightingManagerEditor : Editor
     SerializedProperty eveningSunset;
     SerializedProperty night;
 
+    SerializedProperty sunIntensities;
 
     private void OnEnable()
     {
@@ -24,6 +25,9 @@ public class LightingManagerEditor : Editor
         midDay = serializedObject.FindProperty("midDay");
         eveningSunset = serializedObject.FindProperty("eveningSunset");
         night = serializedObject.FindProperty("night");
+
+        sunIntensities = serializedObject.FindProperty("sunIntensities");
+
 
     }
 
@@ -37,6 +41,8 @@ public class LightingManagerEditor : Editor
         EditorGUILayout.PropertyField(midDay);
         EditorGUILayout.PropertyField(eveningSunset);
         EditorGUILayout.PropertyField(night);
+
+        EditorGUILayout.PropertyField(sunIntensities);
 
         serializedObject.ApplyModifiedProperties();
     }
