@@ -10,9 +10,11 @@ public class CustomerManager : MonoBehaviour
     public Customer currCustomer;
   
     public float transitionTime;       //How long it takes in seconds for the customer to transition between positions
+    [SerializeField] private float dialogueDelay;
     [SerializeField] private float transitionDelay; //The most that a customers transition time can be randomly offset (used to make customers move at diff speeds)
     public List<Transform> positionList = new List<Transform>(); //Used as the points the customer transitions to/from 
     public List<Customer> customerList = new List<Customer>();
+    private float dialogueDelayTime = 0;
 
 
     //before calling check if customers left to generate == 0
@@ -39,6 +41,24 @@ public class CustomerManager : MonoBehaviour
         customerScript.transform.position = positionList[5].position;
         customerScript.transitionTime = transitionTime;
         customerScript.currPosition = -1;
+        //Temp for testing
+        if (Random.Range(0f, 1f) < 0.5f)
+        {
+            customerScript.hasIntroDialgue = true;
+        }
+        else
+        {
+            customerScript.hasIntroDialgue = false;
+        }
+        if (Random.Range(0f, 1f) < 0.5f)
+        {
+            customerScript.hasEndingDialogue = true;
+        }
+        else
+        {
+            customerScript.hasEndingDialogue = false;
+        }
+
         customerList.Add(customerScript);
         UpdateCustomers();
 
@@ -53,6 +73,10 @@ public class CustomerManager : MonoBehaviour
         {
             //Delays the destruction of the customer so that they have time to move offscreen
             currCustomer.MoveCustomer(positionList[0].position);
+            if (customerList[0].hasEndingDialogue)
+            {
+                dialogueDelayTime = dialogueDelay;
+            }
             Destroy(currCustomer.gameObject, transitionTime);
             customerList.RemoveAt(0);          
             currCustomer = null;
@@ -77,12 +101,13 @@ public class CustomerManager : MonoBehaviour
             if (customerList[i].currPosition != i)
             {
                 //Adds a delay to subsequent customers being moved so that they don't all move at the same exact time              
-                customerList[i].transitionOffset = i * transitionDelay;
-
+                customerList[i].transitionOffset = (i + 1) * transitionDelay;
+                customerList[i].dialoguePause = dialogueDelayTime;
                 customerList[i].currPosition = i;
                 customerList[i].MoveCustomer(positionList[i + 1].position);
             }
         }
+        dialogueDelayTime = 0;
     }
 
     // spawn a bunch of customers at once to debug order generation

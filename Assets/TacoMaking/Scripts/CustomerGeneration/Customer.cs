@@ -26,6 +26,9 @@ public class Customer: MonoBehaviour
     [HideInInspector] private float offsetTransitionTime;
     [HideInInspector] public int currPosition;
     private Coroutine lastRoutine = null;
+    [HideInInspector] public bool hasEndingDialogue;
+    [HideInInspector] public bool hasIntroDialgue;
+    [HideInInspector] public float dialoguePause;
 
     // List of possible colors to tint this customer's sprite once their taco is finished.
     // Elements correspond to the values in the scoreType enum in TacoMakingGameManager.cs .
@@ -228,6 +231,12 @@ public class Customer: MonoBehaviour
 
     IEnumerator MovePosition()
     {
+        while (dialoguePause > 0)
+        {
+            dialoguePause -= Time.deltaTime;
+            yield return null;
+        }
+
         //Stops moving customer once they are at their new position
         while (currTransitionTime < offsetTransitionTime)
         {
