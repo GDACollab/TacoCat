@@ -29,7 +29,6 @@ public class TacoMakingGameManager : MonoBehaviour
     [HideInInspector]
     public int submittedCustomers;
     public int lineSize;
-    private float customerCreationTimer; //Used to space out the creation of customers
 
     [Header("Score")]
     public float gameScore = 0; // max score is 3 * numOfCustomers served
@@ -43,7 +42,6 @@ public class TacoMakingGameManager : MonoBehaviour
 
     public void Start()
     {
-        customerCreationTimer = customerManager.transitionTime;
         benchManager = GetComponentInChildren<IngredientBenchManager>();
 
         audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
@@ -75,22 +73,16 @@ public class TacoMakingGameManager : MonoBehaviour
         taco.transform.parent = transform;
     }
 
-
     // continue through remaining customers
     public void CustomerRotation()
     {
-        if (customerCreationTimer > customerManager.transitionTime / 3)
+        //Calls to create a new customer as long as there are more customers to generate up to max number of customers in line at once
+        if (customersLeftToGenerate > 0 && customerManager.customerList.Count < lineSize + 1)
         {
-            //Calls to create a new customer as long as there are more customers to generate up to max number of customers in line at once
-            if (customersLeftToGenerate > 0 && customerManager.customerList.Count < lineSize + 1)
-            {
-                customerCreationTimer = 0;
-                customersLeftToGenerate--;
-                //The ID passed in for each customer starts at 1 and counts up to totalCustomers
-                var customer = customerManager.CreateNewCustomer(totalCustomers - customersLeftToGenerate).GetComponent<Customer>();
-            }
-        }
-        customerCreationTimer += Time.deltaTime;
+            customersLeftToGenerate--;
+            //The ID passed in for each customer starts at 1 and counts up to totalCustomers
+            var customer = customerManager.CreateNewCustomer(totalCustomers - customersLeftToGenerate).GetComponent<Customer>();
+        }        
     }
 
     // submit taco to customer to be graded

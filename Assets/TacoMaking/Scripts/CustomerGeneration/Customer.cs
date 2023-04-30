@@ -23,7 +23,7 @@ public class Customer: MonoBehaviour
     [HideInInspector] public float transitionTime; //How long it takes in seconds for the customer to move between positions
     private float currTransitionTime; //Used for keeping track of time during transitions
     [HideInInspector] public float transitionOffset; //The most that a customers transition time can be randomly offset (used to make customers move at diff speeds)
-    private float offsetTransitionTime;
+    [HideInInspector] private float offsetTransitionTime;
     [HideInInspector] public int currPosition;
     private Coroutine lastRoutine = null;
 
@@ -216,6 +216,7 @@ public class Customer: MonoBehaviour
         interpolater = 0;
         currTransitionTime = 0;
         offsetTransitionTime = transitionTime + transitionOffset;
+        transitionOffset = 0;
         prevPos = transform.position;
         targetPos = newPosition;
         if (lastRoutine != null)
@@ -237,7 +238,6 @@ public class Customer: MonoBehaviour
             currTransitionTime += Time.deltaTime;
             yield return null;
         }
-        transitionOffset = 0;
         lastRoutine = null;
     }
 
