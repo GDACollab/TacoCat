@@ -18,7 +18,6 @@ public class MeshCreator : MonoBehaviour
     public List<GameObject> debugMarkerList = new List<GameObject>();
 
 
-
     private void Start()
     {
         groundGeneration = GetComponentInParent<GroundGeneration>();
