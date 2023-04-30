@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
+[RequireComponent(typeof(LineRenderer))]
 public class EnvironmentGenerator : MonoBehaviour
 {
 
@@ -361,14 +361,12 @@ public class EnvironmentGenerator : MonoBehaviour
     {
         lineRenderer.startWidth = width;
         lineRenderer.endWidth = width;
-        //lineRenderer.loop = true;
         lineRenderer.positionCount = points.Count;
-
 
         // add offset to points
         for (int i = 0; i < points.Count; i++)
         {
-            points[i] += lineOffset + groundGeneration.fullGenerationPosOffset;
+            points[i] += lineOffset;
         }
 
         // set points

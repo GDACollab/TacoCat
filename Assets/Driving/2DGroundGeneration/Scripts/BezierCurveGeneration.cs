@@ -22,17 +22,7 @@ public class BezierCurveGeneration : MonoBehaviour
      * 
      * =======================================*/
 
-    public LineRenderer lineRenderer;
-    public MeshCreator meshCreator;
-
     [Header("Generation Debug Tools ===========================================")]
-
-    [Tooltip("Select edit mode to adjust the bezier curve." +
-        "If edit mode is turned on when entering Play Mode, the current positions of the edit points will be used." +
-        "Otherwise, the line will default to the script edit point positions")]
-    public bool editMode = false;
-    [Tooltip("Allows the generation to update every frame to show value changes")]
-    public bool generationEditUpdate;
 
     [Range(1, 10), Tooltip("Change the size of the edit point")]
     public float editPointScale = 1f;
@@ -55,21 +45,12 @@ public class BezierCurveGeneration : MonoBehaviour
     [Range(0, 1), Tooltip("Adjustable point t")]
     public float t;
 
-
-
-
     [Space(10)]
     [Header("Generation States ===========================================")]
     [Tooltip("Shows the current angle type :: flat / downhill / uphill." +
         "Shown in the Inspector for visual purposes only.")]
     public string generationAngleType;
-    [HideInInspector]
     public bool generationFinished;
-    [HideInInspector]
-    public bool first_generation; //gatekeeps new generation
-
-
-
 
     [Header("Render States ===========================================")]
     [Tooltip("If in camera range, render objects and mesh")]
@@ -85,9 +66,11 @@ public class BezierCurveGeneration : MonoBehaviour
 
     [Header("Curve Points ===========================================")]
     [Tooltip("List of all generated curve points")]
-    public List<Vector3> generatedCurvePoints = new List<Vector3>();
+    public List<Vector3> generatedPoints = new List<Vector3>();
     [Tooltip("List of all rotations of index corresponding points")]
-    public List<float> generatedCurvePointRotations = new List<float>();
+    public List<float> generatedRotations = new List<float>();
+    [Tooltip("Adjusted positions for line curve")]
+    public List<Vector3> lineCurvePositions = new List<Vector3>();
 
 
     [Header("Mesh Creation ===========================================")]
@@ -128,53 +111,18 @@ public class BezierCurveGeneration : MonoBehaviour
 
     public void Start()
     {
-        lineRenderer = GetComponent<LineRenderer>();
-        meshCreator = undergroundMeshObj.GetComponent<MeshCreator>();
-
         // add points to list
         bezierPoints.Add(p0);
         bezierPoints.Add(p1);
         bezierPoints.Add(p2);
         bezierPoints.Add(p3);
 
-
-        // << EDIT MODE SAVES THE POSITION OF THE TRANSFORMS >>
-        if (editMode)
-        {
-            // sets script values to point positions
-            p0_pos = p0.position;
-            p1_pos = p1.position;
-            p2_pos = p2.position;
-            p3_pos = p3.position;
-
-        }
-        else
-        {
-            // sets points to script values
-            p0.position = p0_pos;
-            p1.position = p1_pos;
-            p2.position = p2_pos;
-            p3.position = p3_pos;
-        }
-
-
-        // set underground mesh
-        //undergroundMesh = new Mesh();
-        //undergroundMeshObj.GetComponent<MeshFilter>().mesh = undergroundMesh;
-
-        // set depth mesh
-        //depthMesh = new Mesh();
-        //depthMeshObj.GetComponent<MeshFilter>().mesh = depthMesh;
-
-
         SetAngleType(); // sets the angle type
-
-
     }
 
     public void Update()
     {
-        Main(editMode);
+        Main();
 
         //changes the scale of the edit points
         p0.transform.localScale = new Vector3(editPointScale, editPointScale);
@@ -184,38 +132,22 @@ public class BezierCurveGeneration : MonoBehaviour
 
     }
 
-    public void Main(bool edit_mode)
+    public void Main()
     {
-        EditModeEnabled(edit_mode);
-
         // << GENERATION >>
-        if (first_generation || generationEditUpdate)
+        if (!generationFinished)
         {
-            generationFinished = false;
-
             SetAngleType(); // sets the angle type
 
-            generatedCurvePoints = GenerateCurvePointPositions(spaceBetweenPoints); //create list of point positions
-            generatedCurvePointRotations = GenerateCurvePointRotations(spaceBetweenPoints); //createt list of point rotations
+            generatedPoints = GeneratePointPositions(spaceBetweenPoints); //create list of point positions
+            generatedRotations = GeneratePointRotations(spaceBetweenPoints); //createt list of point rotations
+            lineCurvePositions = GenerateLineCurvePositions();
 
-            first_generation = false; //not first gen anymore
-
-            if (generateMesh)
-            {
-                // create undergound mesh
-                meshCreator.CreateUnderground(generatedCurvePoints);
-                //undergroundMeshObj.GetComponent<MeshRenderer>().enabled = false;
-
-                /*
-                CreateGroundDepth(generatedCurvePoints, meshDistBetweenPoints, depth_length);
-                depthMeshObj.GetComponent<MeshRenderer>().enabled = false;
-                */
-            }
 
             generationFinished = true;
         }
 
-        CameraRendering();
+        // CameraRendering();
     }
 
     #region POINT GENERATION =================================================================================
@@ -236,10 +168,9 @@ public class BezierCurveGeneration : MonoBehaviour
         return pointOnCurve;
     }
 
-    public List<Vector3> GenerateCurvePointPositions(float intervalBetweenPoints)
+    public List<Vector3> GeneratePointPositions(float adjustedSpacing)
     {
         List<Vector3> point_positions = new List<Vector3>();
-        float adjustedSpacing = spaceBetweenPoints; // init the object spacing as the adjusted spacing
         // adjusted spacing changes the spacing between the points based on the tangent of the line
 
         // for all points
@@ -250,16 +181,14 @@ public class BezierCurveGeneration : MonoBehaviour
 
             // save current point position
             point_positions.Add(GetPointOnCurve(x)); //add position to list
-
         }
 
         return point_positions;
     }
 
-    public List<float> GenerateCurvePointRotations(float intervalBetweenPoints)
+    public List<float> GeneratePointRotations(float adjustedSpacing)
     {
         List<float> point_rotations = new List<float>();
-        float adjustedSpacing = spaceBetweenPoints; // init the object spacing as the adjusted spacing
         // adjusted spacing changes the spacing between the points based on the tangent of the line
 
         for (float x = 0; x < 1; x += adjustedSpacing)
@@ -273,6 +202,30 @@ public class BezierCurveGeneration : MonoBehaviour
 
         return point_rotations;
     }
+    
+    public List<Vector3> GenerateLineCurvePositions()
+    {
+        //get curve points for line renderer
+        List<Vector3> points = new List<Vector3>();
+        for (float x = 0; x < 1; x += spaceBetweenPoints)
+        {
+            //first set of lerps
+            Vector3 aa = Vector3.Lerp(p0.position, p1.position, x);
+            Vector3 bb = Vector3.Lerp(p1.position, p2.position, x);
+            Vector3 cc = Vector3.Lerp(p2.position, p3.position, x);
+
+            //second set of lerps
+            Vector3 dd = Vector3.Lerp(aa, bb, x);
+            Vector3 ee = Vector3.Lerp(bb, cc, x);
+
+            Vector3 point = Vector3.Lerp(dd, ee, x);
+
+            points.Add(point); //add position to list
+        }
+
+        return points;
+    }
+    
     #endregion
 
     #region BEZIER MATH ====================================================================
@@ -320,29 +273,6 @@ public class BezierCurveGeneration : MonoBehaviour
     #endregion
 
     #region DEBUG VISUALS ====================================================================
-
-    private void EditModeEnabled(bool enabled)
-    {
-        //disables edit point sprites
-        p0.gameObject.GetComponent<SpriteRenderer>().enabled = enabled;
-        p1.gameObject.GetComponent<SpriteRenderer>().enabled = enabled;
-        p2.gameObject.GetComponent<SpriteRenderer>().enabled = enabled;
-        p3.gameObject.GetComponent<SpriteRenderer>().enabled = enabled;
-
-        if (enabled)
-        {                  
-            DrawBezierCurves(generatedCurvePoints, bezierLineWidth); //draw line renderer
-        }
-    }
-
-    void DrawBezierCurves(List<Vector3> vertex_pos, float width)
-    {
-        lineRenderer.startWidth = width;
-        lineRenderer.endWidth = width;
-        //lineRenderer.loop = true;
-        lineRenderer.positionCount = vertex_pos.Count;
-        lineRenderer.SetPositions(vertex_pos.ToArray());
-    }
 
     private void DisplayBezierMath()
     {
@@ -438,7 +368,7 @@ public class BezierCurveGeneration : MonoBehaviour
     private void OnDrawGizmos()
     {
         // show start point of curve
-        if (generatedCurvePoints.Count > 0)
+        if (generatedPoints.Count > 0)
         {
             /*
             Handles.color = Color.black;
@@ -458,12 +388,10 @@ public class BezierCurveGeneration : MonoBehaviour
             DisplayBezierTangent();
         }
 
-        
+        /*
         //show line renderer
         if (showBezierLine)
         {
-            lineRenderer.enabled = true;
-
             //get curve points for line renderer
             List<Vector3> points = new List<Vector3>();
             for (float x = 0; x < 1; x += spaceBetweenPoints)
@@ -483,14 +411,9 @@ public class BezierCurveGeneration : MonoBehaviour
 
             }
 
-            DrawBezierCurves(points, bezierLineWidth);
             points.Clear();
         }
-        else
-        {
-            lineRenderer.enabled = false;
-        }
-        
+        */
 
         //show edge lines
         if (showEdgeLines)
@@ -527,13 +450,8 @@ public class BezierCurveGeneration : MonoBehaviour
     public void CameraRendering()
     {
         // << CAMERA RENDERING >>
-        // if within range and generation is not made, make generation
-        if ((inCameraRange || cameraRangeOverride) && !generationFinished)
-        {
-            first_generation = true;
-        }
         // if in range and generation is made
-        else if (inCameraRange || cameraRangeOverride)
+        if (inCameraRange || cameraRangeOverride)
         {
             // enable mesh
             undergroundMeshObj.GetComponent<MeshRenderer>().enabled = true;

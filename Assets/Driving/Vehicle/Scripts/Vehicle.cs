@@ -67,7 +67,11 @@ public class Vehicle : MonoBehaviour
     void Start()
     {
         rb_vehicle.velocity = startingVelocity;
-        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+        try
+        {
+            audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+        }
+        catch { Debug.LogWarning("Could not find AudioManager", this.gameObject); }
     }
 
     // Update is called once per frame
@@ -142,8 +146,14 @@ public class Vehicle : MonoBehaviour
         if (state != driveState.NITRO && Input.GetKeyDown(nitroInputKey) && nitroCharges > 0)
         {
             StartCoroutine(NitroBoost());
-            audioManager.Play(audioManager.nitroBoostSFX); //NITRO BOOST SOUND EFFECT
             StartCoroutine(cameraHandler.Shake(activeNitroTime, cameraHandler.nitro_camShakeMagnitude));
+
+            try
+            {
+                audioManager.Play(audioManager.nitroBoostSFX); //NITRO BOOST SOUND EFFECT
+            }
+            catch { Debug.LogWarning("nitroBoostSFX :: Could not find AudioManager", this.gameObject); }
+
         }
     }
 

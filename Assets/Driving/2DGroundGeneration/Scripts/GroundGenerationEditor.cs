@@ -6,6 +6,10 @@ using UnityEditor;
 [CustomEditor(typeof(GroundGeneration))]
 public class GroundGenerationEditor : Editor
 {
+
+    SerializedProperty generationFinished;
+
+
     SerializedProperty generationStyle;
     SerializedProperty chunkLengthRange;
     SerializedProperty chunkHeightRange;

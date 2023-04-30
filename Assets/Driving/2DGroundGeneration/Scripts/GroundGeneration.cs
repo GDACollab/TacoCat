@@ -8,189 +8,97 @@ public class GroundGeneration : MonoBehaviour
     /* ===========================
      * Sky Casey , updated 2023
      * 
-     * This script takes the BezierGroundGeneration to the next level
+     * This script takes the BezierCurve Objects to the next level
      * It takes in a beginning position and an end position and places multiple "chunks" of bezier ground generations between them.
      * It also needs a max length and height of each chunk
-     * 
-     * The Consitent Chunk Generator spawns every chunk with the same height and length
-     * 
-     * The Random Chunk Generator spawns every chunk with the same length, but with a random height
      * ===================================================================================================
      */
 
     public enum GENERATION_STYLES { consistent, sine, custom_sine, random };
     public enum CHUNK_STYLES { random, rounded, straight, flat };
 
+    [Header("Generation References")]
     public GameObject bezierCurvePrefab;
-    public GameObject chunkParent;
-    public EnvironmentGenerator envGenerator;
+    Transform chunkGenParent;
+    List<GameObject> chunks = new List<GameObject>();
+    public List<Vector3> allGroundPoints = new List<Vector3>(); // all ground points of the chunks
+    public List<float> allGroundRotations = new List<float>(); // all ground rotations of the chunks
 
-    [Space(10)]
-    public GameObject undergroundMeshObj;
+    [Header("Generation Type")]
+    public bool startIsland;
+    public bool endIsland;
+
+    [Header("Generation State")]
+    bool startIslandGenerated;
+    bool mainGroundGenerated;
+    bool endIslandGenerated;
+    public bool generationFinished;
+
+    [Header("Generation Values")]
+    public Vector3 begGenPos, endGenPos; // end positions
     [HideInInspector]
-    public MeshCreator undergroundMeshCreator;
+    public float fullGenerationLength, fullGenerationHeight;  // store full generation length and height
 
-    [Space(20)]
-    [Tooltip("Reloads the ground generation every second so you can see how the script will react to the settings you have used.")]
-    public bool editMode;
-    [Tooltip("Override and show objects and mesh even if not in camera range")]
-    public bool inCameraRangeOverride;
-    public Color gizmosColor = Color.green;
+    // [[ GENERATION STYLE ]]
+    public GENERATION_STYLES generationStyle = GENERATION_STYLES.sine;
 
-    [Space(20)]
-    public Vector3 fullGenerationPosOffset = Vector3.zero; // moves the entire generation to specified offset after everything is created
-    private bool setGenOffset;
-
-    [Range(-5000, 0)]
-    public int begGenOffset = -700;
-    [Range(0, 5000)]
-    public int endGenOffset = 700;
-
-    [Header("Full Generation Values ==============================")]
-    [Tooltip("Choose the style of the full generation")]
-    public GENERATION_STYLES generationStyle = GENERATION_STYLES.random;
-
+    // >> CUSTOM SINE RANGES
     public Vector2 chunkLengthRange = new Vector2(200, 500);
     public Vector2 chunkHeightRange = new Vector2(200, 500);
 
-    [Tooltip("Set the transform of beginning point of generation")]
-    public Transform begGenerationPoint;
-    [Tooltip("Set the transform of end point of generation")]
-    public Transform endGenerationPoint;
-    [Tooltip("Set the size of the end point sprites in edit mode")]
-    [Range(0.1f, 10)]
-    public float endPointDebugSize = 0.5f;
-    [HideInInspector]
-    public Vector2 beginningGenPos, endGenPos; // store end positions
-    [HideInInspector]
-    public float fullGenerationLength, fullGenerationHeight;  // store full generation length and height
-    [Tooltip("Shows if generation is finished")]
-    public bool generationFinished;
-    public bool newGenerationStarted;
+    // >> DEFAULT MAX CHUNK VALUES
+    public int maxChunkLength = 700;
+    public int maxChunkHeight = 300;
 
-    // get all points and rotations
-    [Tooltip("List of all generated ground points")]
-    public List<Vector3> allGroundPoints = new List<Vector3>();
-    [Tooltip("List of all generated rotations")]
-    public List<float> allGroundRotations = new List<float>();
-
-
-    [Header("Chunk Values ============================")]
-    [Tooltip("Set the max length of a chunk")]
-    public int maxChunkLength = 10;
-    [Tooltip("Set the max height of a chunk")]
-    public int maxChunkHeight = 5;
-    [Tooltip("Set the height of the underground mesh")]
-    public float undergroundMeshHeight = 100;
     [Tooltip("Choose the style of each chunk")]
-    public List<CHUNK_STYLES> chunkStyles = new List<CHUNK_STYLES>(); 
-    [Tooltip("List of chunks")]
-    public List<GameObject> chunks = new List<GameObject>();
+    public List<CHUNK_STYLES> chunkStyles = new List<CHUNK_STYLES>();
+    // [[ END ISLAND OFFSETS ]]
+    public int startIslandXOffset = -700;
+    public int startIslandYOffset = -700;
+    public int endIslandXOffset = 700;
+    public int endIslandYOffset = 700;
 
-    // Start is called before the first frame update
-    void Awake()
+
+    public void CreateGeneration()
     {
-        undergroundMeshCreator = undergroundMeshObj.GetComponent<MeshCreator>();
+        // create chunk parent
+        chunkGenParent = new GameObject("Chunk Parent").transform;
+        chunkGenParent.parent = this.transform;
 
-        // disable end point sprites
-        begGenerationPoint.GetComponent<SpriteRenderer>().enabled = false;
-        endGenerationPoint.GetComponent<SpriteRenderer>().enabled = false;
-
-        // create new generation
-
-        Debug.Log(">> CALLED NEW GENERATION", this.gameObject);
-        NewGeneration(generationStyle);
-
-        InvokeRepeating("StaggeredUpdate", 1, 1);
+        // start generation
+        StartCoroutine( NewGeneration(generationStyle) );
     }
 
-    public void StaggeredUpdate()
-    {
-        // set all ground points if generation not already finished
-        if (!generationFinished && allGroundPoints.Count == 0 && chunks.Count >= GetHorizontalChunksNeeded())
-        {
-            SetAllGroundPoints();
-        }
-
-        // create mesh if generation finished && mesh not created
-        if (generationFinished && !undergroundMeshCreator.meshCreated && allGroundPoints.Count > 0)
-        {
-            // create undergound mesh
-            undergroundMeshCreator.CreateUnderground(allGroundPoints, undergroundMeshHeight);
-        }
-        else if (undergroundMeshCreator.meshCreated && !setGenOffset)
-        {
-            // adjust object to offset
-            gameObject.transform.position += fullGenerationPosOffset;
-
-            // destroy all gameobject chunks and keep the mesh
-            DestroyAll(chunks);
-
-            setGenOffset = true;
-
-        }
-
-        /*
-        if (editMode)
-        {
-            // update size of sprites
-            begGenerationPoint.localScale = new Vector2(endPointDebugSize, endPointDebugSize);
-            endGenerationPoint.localScale = new Vector2(endPointDebugSize, endPointDebugSize);
-
-            // enable end point sprites
-            begGenerationPoint.GetComponent<SpriteRenderer>().enabled = true;
-            endGenerationPoint.GetComponent<SpriteRenderer>().enabled = true;
-
-            // if points found and mesh created
-            if (generationFinished && undergroundMeshCreator.meshCreated && !newGenerationStarted)
-            {
-                newGenerationStarted = true; // manage generation resets
-
-                // destroy all generation and start again
-                generationFinished = false;
-                allGroundPoints.Clear();
-                allGroundRotations.Clear();
-                undergroundMeshCreator.DestroyUndergroundMesh();
-
-                NewGeneration(generationStyle);
-            }
-            else if (generationFinished && undergroundMeshCreator.meshCreated)
-            {
-                newGenerationStarted = false;
-            }
-        }
-    
-        */
-        // disable end point sprites
-        begGenerationPoint.GetComponent<SpriteRenderer>().enabled = false;
-        endGenerationPoint.GetComponent<SpriteRenderer>().enabled = false;
-        
-    }
-
-    #region GENERATION ====================================================
-    public void NewGeneration(GENERATION_STYLES style)
+    public IEnumerator NewGeneration(GENERATION_STYLES style)
     {
         generationFinished = false;
 
-        // make sure z position = 0
-        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
-
-        // get the positions of the corresponding transforms
-        beginningGenPos = begGenerationPoint.position;
-        endGenPos = endGenerationPoint.position;
+        // [[ BREAK OUT OF COROUTINE IF END POINTS ARE NOT SET ]]
+        if (begGenPos == Vector3.zero && endGenPos == Vector3.zero)
+        {
+            Debug.LogError("GENERATION ERROR:: End Points are not set");
+            yield return null;
+        }
 
         // get full generation size
-        fullGenerationLength = endGenPos.x - beginningGenPos.x;
-        fullGenerationHeight = endGenPos.y - beginningGenPos.y;
+        fullGenerationLength = endGenPos.x - begGenPos.x;
+        fullGenerationHeight = endGenPos.y - begGenPos.y;
 
-        // destroy all current chunks
-        foreach (GameObject chunk in chunks) { DestroyImmediate(chunk); }
+        // destroy all current chunks, if any
+        if (chunks.Count > 0) { DestroyAllChunks(); }
 
-        // clear references to chunks in list
-        chunks.Clear();
+        // [[ GENERATION ]]
+        Debug.Log(">> NEW GENERATION ( " + this.gameObject.name + " )", this.gameObject);
 
-        StartIslandGenerator();
+        // generate start
+        if (startIsland)
+        {
+            StartIslandGenerator();
+            yield return new WaitUntil(() => startIslandGenerated);
+            Debug.Log("----> Start Island Generated", this.gameObject);
+        }
 
+        // generate main ground
         if (style == GENERATION_STYLES.consistent)
         {
             ConsistentChunkGenerator();
@@ -207,32 +115,60 @@ public class GroundGeneration : MonoBehaviour
         {
             CustomSineChunkGenerator(chunkLengthRange, chunkHeightRange);
         }
+        yield return new WaitUntil(() => mainGroundGenerated);
+        Debug.Log("----> Main Ground Generated", this.gameObject);
 
-        EndIslandGenerator();
+        // generate end
+        if (endIsland)
+        {
+            EndIslandGenerator();
+            yield return new WaitUntil(() => endIslandGenerated);
+            Debug.Log("----> End Island Generated", this.gameObject);
+        }
+
+        // save all ground points
+        SaveAllGroundPoints();
+        yield return new WaitUntil(() => generationFinished);
+
+        Debug.Log(">> " + this.gameObject.name + " Generation Finished [ " + chunks.Count + " chunks ]", this.gameObject);
     }
+
+    public void DestroyGenerationObjects()
+    {
+        DestroyAllChunks();
+        Destroy(this.gameObject);
+    }
+
+    #region GENERATION ====================================================
 
     public void StartIslandGenerator()
     {
-        Vector2 offsetPos = begGenerationPoint.position + new Vector3(begGenOffset, maxChunkHeight); // init last chunk as the current beginning position
+        Vector2 offsetPos = begGenPos + new Vector3(startIslandXOffset, maxChunkHeight); // init last chunk as the current beginning position
 
         // << FLAT START ZONE >>
-        SpawnBezierGroundChunk(offsetPos + new Vector2(begGenOffset, 0), offsetPos, CHUNK_STYLES.flat); // spawn flat beginning
+        SpawnBezierGroundChunk(offsetPos + new Vector2(startIslandXOffset, 0), offsetPos, CHUNK_STYLES.flat); // spawn flat beginning
 
         // << HILL TO GAIN SPEED >>
-        SpawnBezierGroundChunk(offsetPos, begGenerationPoint.position, CHUNK_STYLES.rounded); // spawn
+        SpawnBezierGroundChunk(offsetPos, begGenPos, CHUNK_STYLES.rounded); // spawn
+
+        startIslandGenerated = true;
 
     }
 
     public void EndIslandGenerator()
     {
-        Vector2 offsetPos = endGenerationPoint.position + new Vector3(endGenOffset, 0); ; // init last chunk as the current beginning position
+        Vector2 offsetPos = endGenPos + new Vector3(endIslandXOffset, 0); ; // init last chunk as the current beginning position
 
-        SpawnBezierGroundChunk(endGenerationPoint.position, offsetPos, CHUNK_STYLES.flat); // spawn flat beginning
+        SpawnBezierGroundChunk(endGenPos, offsetPos, CHUNK_STYLES.flat); // spawn flat beginning
+
+        endIslandGenerated = true;
     }
 
     public void ConsistentChunkGenerator()
     {
-        Vector2 lastChunkEndPosition = beginningGenPos; // init last chunk as the current beginning position
+        Debug.Log("Consistent Generation Style");
+
+        Vector2 lastChunkEndPosition = begGenPos; // init last chunk as the current beginning position
 
         int vertChunksNeeded = GetVerticalChunksNeeded();
         int horzChunksNeeded = GetHorizontalChunksNeeded();
@@ -252,10 +188,14 @@ public class GroundGeneration : MonoBehaviour
             // update last chunk end position
             lastChunkEndPosition = newGenEndPos;
         }
+
+        mainGroundGenerated = true;
     }
 
     public void RandomChunkGenerator()
     {
+        Debug.Log("Random Generation Style");
+
         // estimated chunks needed
         float possibleHorizontalChunks = fullGenerationLength / maxChunkLength;
         float possibleVerticalChunks = fullGenerationHeight / maxChunkHeight;
@@ -297,7 +237,7 @@ public class GroundGeneration : MonoBehaviour
 
         // store end and beginning of current chunk
         Vector2 newGenEndPos;
-        Vector2 lastChunkEndPosition = beginningGenPos;
+        Vector2 lastChunkEndPosition = begGenPos;
 
         //get the necessecary length of each chunk to reach end
         float length = (possibleHorizontalChunks / horzChunksNeeded) * maxChunkLength;
@@ -322,14 +262,16 @@ public class GroundGeneration : MonoBehaviour
             // set last chunk pos to current end
             lastChunkEndPosition = newGenEndPos;
         }
+
+        mainGroundGenerated = true;
+
     }
 
     public void SineChunkGenerator()
     {
-
         Debug.Log("Sine Generation Style");
 
-        Vector2 lastChunkEndPosition = beginningGenPos; // init last chunk as the current beginning position
+        Vector2 lastChunkEndPosition = begGenPos; // init last chunk as the current beginning position
 
         int vertChunksNeeded = GetVerticalChunksNeeded();
         int horzChunksNeeded = GetHorizontalChunksNeeded();
@@ -342,15 +284,16 @@ public class GroundGeneration : MonoBehaviour
         // iterate through the num of chunks needed
         for (int i = horzChunksNeeded; i > 0; i--)
         {
+            // Debug.Log(" ++ " + i + " / " + horzChunksNeeded + " chunks");
+
             // last chunk needs to meet end of generation
             if (i == 1)
             {
                 // create new chunk starting at the last chunks end point and ending at the full length of this chunk
-                Vector2 endGenPos = new Vector2(lastChunkEndPosition.x + chunkLength, endGenerationPoint.position.y);
-                SpawnBezierGroundChunk(lastChunkEndPosition, endGenPos, chunkStyles[Random.Range(0, chunkStyles.Count)]); // use random chunk style from list
-                return;
+                Vector3 newEndGenPos = new Vector3(lastChunkEndPosition.x + chunkLength, endGenPos.y);
+                SpawnBezierGroundChunk(lastChunkEndPosition, newEndGenPos, chunkStyles[Random.Range(0, chunkStyles.Count)]); // use random chunk style from list
+                break;
             }
-
 
             // create new chunk starting at the last chunks end point and ending at the full length of this chunk
             Vector2 newGenEndPos = new Vector2(lastChunkEndPosition.x + chunkLength, lastChunkEndPosition.y + currChunkHeight);
@@ -362,18 +305,17 @@ public class GroundGeneration : MonoBehaviour
             // invert height
             currChunkHeight *= -1;
 
-
         }
+
+        mainGroundGenerated = true;
     }
 
     public void CustomSineChunkGenerator(Vector2 lengthRange, Vector2 heightRange)
     {
-
         Debug.Log("Custom Sine Generation Style");
         List<float> chunkLengths = new List<float>();
 
-
-        Vector2 lastChunkEndPosition = beginningGenPos; // init last chunk as the current beginning position
+        Vector2 lastChunkEndPosition = begGenPos; // init last chunk as the current beginning position
 
         // << GENERATE RANDOM LENGTH VALUES >>
         float currentDistance = 0f;
@@ -385,6 +327,12 @@ public class GroundGeneration : MonoBehaviour
             // if next chunk will be longer than generation length, make last chunk meet full generation
             if (currentDistance + newChunkLength > fullGenerationLength)
             {
+                if (chunkLengths.Count == 0) 
+                { 
+                    Debug.LogError("ERROR:: Custom Sine Gen Length is bigger than full generation length", this.gameObject);
+                    return;
+                }
+                    
                 chunkLengths[chunkLengths.Count - 1] += fullGenerationLength - currentDistance;
                 currentDistance += fullGenerationLength - currentDistance;
             }
@@ -416,9 +364,10 @@ public class GroundGeneration : MonoBehaviour
 
             // update last chunk end position
             lastChunkEndPosition = downhillChunkEndPos;
-
-
         }
+
+        mainGroundGenerated = true;
+
     }
 
     #endregion
@@ -435,27 +384,18 @@ public class GroundGeneration : MonoBehaviour
         GameObject newCurveObject = Instantiate(bezierCurvePrefab, newGenPosParentPos, Quaternion.identity);
         BezierCurveGeneration bezierGroundGen = newCurveObject.GetComponent<BezierCurveGeneration>();
 
-
         newCurveObject.SetActive(true); // set curve gen as active
-        newCurveObject.transform.parent = chunkParent.transform; // set parent
+        newCurveObject.transform.parent = chunkGenParent.transform; // set parent
         chunks.Add(newCurveObject); // add to chunks list
 
         // set beginning and end points of the bezier curve
         bezierGroundGen.p0_pos = begPos;
         bezierGroundGen.p3_pos = endPos;
 
+        // set uphill, downhill, or flat
         bezierGroundGen.SetAngleType();
 
-
-        // set camera override
-        if (inCameraRangeOverride)
-        {
-            bezierGroundGen.cameraRangeOverride = true;
-        }
-
         // << SET GENERATION STYLE >>
-        Debug.Log("Chunk Style: " + style, gameObject);
-
         // if random 
         if (style == CHUNK_STYLES.random)
         {
@@ -467,9 +407,6 @@ public class GroundGeneration : MonoBehaviour
         if (style == CHUNK_STYLES.rounded) { SetRoundedHillsGeneration(bezierGroundGen); }
         else if (style == CHUNK_STYLES.straight) { SetStraightHillsGeneration(bezierGroundGen); }
         else if (style == CHUNK_STYLES.flat) { SetFlatHillsGeneration(bezierGroundGen); }
-
-        // reset generation
-        bezierGroundGen.first_generation = true;
 
         return bezierGroundGen;
     }
@@ -488,8 +425,6 @@ public class GroundGeneration : MonoBehaviour
         // get distances
         float horzDistance = Vector3.Distance(begPos, endPos);
         float vertDistance = Mathf.Abs(endPos.y - begPos.y);
-
-        Debug.Log("Rounded Hills gen angle " + ground.generationAngleType);
 
         if (ground.generationAngleType == "uphill")
         {
@@ -594,7 +529,7 @@ public class GroundGeneration : MonoBehaviour
     }
 
     // sets all of the ground points and rotations of each chunk
-    public void SetAllGroundPoints()
+    public void SaveAllGroundPoints()
     {
         allGroundPoints.Clear();
         allGroundRotations.Clear();
@@ -602,31 +537,20 @@ public class GroundGeneration : MonoBehaviour
         //get positions from point lists in each chunk
         foreach (GameObject chunk in chunks)
         {
-            //Debug.Log("chunk point count: " + chunk.GetComponent<BezierCurveGeneration>().generatedCurvePoints.Count);
-
-            //add points and rotations to main list
-            foreach (Vector3 point in chunk.GetComponent<BezierCurveGeneration>().generatedCurvePoints)
-            {
-                allGroundPoints.Add(point);
-            }
-
-            foreach (float rot in chunk.GetComponent<BezierCurveGeneration>().generatedCurvePointRotations)
-            {
-                allGroundRotations.Add(rot);
-            }
+            allGroundPoints.AddRange(chunk.GetComponent<BezierCurveGeneration>().lineCurvePositions);
+            allGroundRotations.AddRange(chunk.GetComponent<BezierCurveGeneration>().generatedRotations);
         }
 
         generationFinished = true;
-
-        chunkParent.SetActive(false); // disable chunk parent
     }
 
-    public void DestroyAll(List<GameObject> objects)
+    public void DestroyAllChunks()
     {
-        foreach (GameObject obj in objects)
+        foreach (GameObject obj in chunks)
         {
             Destroy(obj);
         }
+        chunks.Clear();
     }
 
     public int GetClosestGroundPointIndexToPos(Vector3 pos)
@@ -652,20 +576,7 @@ public class GroundGeneration : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.white;
-        Gizmos.DrawLine(begGenerationPoint.position, endGenerationPoint.position);
 
-        // << FLAT START ZONE >>
-        Gizmos.color = gizmosColor;
-        Vector2 offsetPos = begGenerationPoint.position + new Vector3(begGenOffset, maxChunkHeight); // init last chunk as the current beginning position
-        Gizmos.DrawLine(offsetPos + new Vector2(begGenOffset, 0), offsetPos); // spawn flat beginning
-
-        // << HILL TO GAIN SPEED >>
-        Gizmos.DrawLine(offsetPos, begGenerationPoint.position); // spawn
-
-        // << END OFFSET >>
-        Vector2 endOffsetPosition = endGenerationPoint.position + new Vector3(endGenOffset, 0); ; // init last chunk as the current beginning position
-        Gizmos.DrawLine(endGenerationPoint.position, endOffsetPosition); // spawn
     }
 }
 
