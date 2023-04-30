@@ -128,7 +128,7 @@ public class TacoMakingGameManager : MonoBehaviour
             
             perfectCounter++;
    
-            if (perfectCounter % 3 == 0 && perfectCounter != 0)
+            if (perfectCounter % 3 == 0 && perfectCounter != 0 && submittedCustomers <= totalCustomers)
             {
                 comboCounter++;
                 uiManager.DisplayNitro(comboCounter); //updates the nitro display
