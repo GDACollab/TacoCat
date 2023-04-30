@@ -162,21 +162,25 @@ public class LightingManager : MonoBehaviour
         // MORNING
         if (curTime < morningTimeLength)
         {
+            dayCycleState = TIME_OF_DAY.MORNING;
             return palettes[0];
         }
         // MIDDAY
         else if (curTime < (morningTimeLength + midDayTimeLength))
         {
+            dayCycleState = TIME_OF_DAY.MIDDAY;
             return palettes[1];
         }
         // EVENING
         if (curTime < (morningTimeLength + midDayTimeLength + eveningTimeLength))
         {
+            dayCycleState = TIME_OF_DAY.EVENING;
             return palettes[2];
         }
         // NIGHT
         if (curTime > (morningTimeLength + midDayTimeLength + eveningTimeLength))
         {
+            dayCycleState = TIME_OF_DAY.NIGHT;
             return palettes[3];
         }
 
