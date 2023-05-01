@@ -15,7 +15,6 @@ public class GroundGeneration : MonoBehaviour
      */
 
     public enum GENERATION_STYLES { consistent, sine, custom_sine, random };
-    public enum CHUNK_STYLES { random, rounded, straight, flat };
 
     [Header("Generation References")]
     public GameObject bezierCurvePrefab;
@@ -395,94 +394,10 @@ public class GroundGeneration : MonoBehaviour
         // set uphill, downhill, or flat
         bezierGroundGen.SetAngleType();
 
-        // << SET GENERATION STYLE >>
-        // if random 
-        if (style == CHUNK_STYLES.random)
-        {
-            int enumLength = System.Enum.GetValues(typeof(CHUNK_STYLES)).Length;
-            style = (CHUNK_STYLES)Random.Range(1, enumLength);
-        }
-
-        // set style
-        if (style == CHUNK_STYLES.rounded) { SetRoundedHillsGeneration(bezierGroundGen); }
-        else if (style == CHUNK_STYLES.straight) { SetStraightHillsGeneration(bezierGroundGen); }
-        else if (style == CHUNK_STYLES.flat) { SetFlatHillsGeneration(bezierGroundGen); }
+        bezierGroundGen.chunkStyle = style;
 
         return bezierGroundGen;
     }
-    #endregion
-
-    #region CHUNK GENERATION STYLES =======================================================================
-    // These are deciding the position of the middle edit points to create certain types of bezier curves
-    // the x position is base on distance, the y on height distance
-
-    public void SetRoundedHillsGeneration(BezierCurveGeneration ground)
-    {
-        // get beg and end pos
-        Vector2 begPos = ground.p0_pos;
-        Vector2 endPos = ground.p3_pos;
-
-        // get distances
-        float horzDistance = Vector3.Distance(begPos, endPos);
-        float vertDistance = Mathf.Abs(endPos.y - begPos.y);
-
-        if (ground.generationAngleType == "uphill")
-        {
-            ground.p1_pos = new Vector3(begPos.x + horzDistance / 3, begPos.y);
-            ground.p2_pos = new Vector3(endPos.x - horzDistance / 3, endPos.y);
-        }
-        else
-        {
-            ground.p1_pos = new Vector3(begPos.x + horzDistance / 3, begPos.y);
-            ground.p2_pos = new Vector3(endPos.x - horzDistance / 3, endPos.y);
-        }
-    }
-
-    public void SetStraightHillsGeneration(BezierCurveGeneration ground)
-    {
-        // get beg and end pos
-        Vector2 begPos = ground.p0_pos;
-        Vector2 endPos = ground.p3_pos;
-
-        // get distances
-        float horzDistance = Vector3.Distance(begPos, endPos);
-        float vertDistance = Mathf.Abs(endPos.y - begPos.y);
-
-        if (ground.generationAngleType == "uphill")
-        {
-            ground.p1_pos = new Vector3(begPos.x + horzDistance / 2, begPos.y );
-            ground.p2_pos = new Vector3(endPos.x - horzDistance / 5, endPos.y - vertDistance / 2);
-        }
-        else
-        {
-            ground.p1_pos = new Vector3(begPos.x + horzDistance / 5, begPos.y - vertDistance / 2);
-            ground.p2_pos = new Vector3(endPos.x - horzDistance / 2, endPos.y);
-        }
-    }
-
-    public void SetFlatHillsGeneration(BezierCurveGeneration ground)
-    {
-        // get beg and end pos
-        Vector2 begPos = ground.p0_pos;
-        Vector2 endPos = ground.p3_pos;
-
-        // get distances
-        float horzDistance = Vector3.Distance(begPos, endPos);
-        float vertDistance = Mathf.Abs(endPos.y - begPos.y);
-
-
-        if (ground.generationAngleType == "uphill")
-        {
-            ground.p1_pos = new Vector3(begPos.x + horzDistance / 30, begPos.y + vertDistance / 20);
-            ground.p2_pos = new Vector3(endPos.x - horzDistance / 30, endPos.y - vertDistance / 20);
-        }
-        else
-        {
-            ground.p1_pos = new Vector3(begPos.x + horzDistance / 30, begPos.y - vertDistance / 20);
-            ground.p2_pos = new Vector3(endPos.x - horzDistance / 30, endPos.y + vertDistance / 20);
-        }
-    }
-
     #endregion
 
     #region HELPER FUNCTIONS =========================================================================
@@ -537,7 +452,6 @@ public class GroundGeneration : MonoBehaviour
         //get positions from point lists in each chunk
         foreach (GameObject chunk in chunks)
         {
-            allGroundPoints.AddRange(chunk.GetComponent<BezierCurveGeneration>().lineCurvePositions);
             allGroundRotations.AddRange(chunk.GetComponent<BezierCurveGeneration>().generatedRotations);
         }
 

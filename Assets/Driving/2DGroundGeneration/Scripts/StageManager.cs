@@ -86,13 +86,6 @@ public class StageManager : MonoBehaviour
         else { Debug.LogError("ERROR:: Mesh Creator is null", this.gameObject); }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-
     private void OnDrawGizmos()
     {
         // show stage areas
