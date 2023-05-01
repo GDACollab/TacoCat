@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class StageManager : MonoBehaviour
 {
+    public bool allStagesGenerated;
     public GroundMeshCreator meshCreator;
 
     [Header("[[ GENERATION LENGTHS ]]")]
@@ -46,6 +47,8 @@ public class StageManager : MonoBehaviour
         // [[ GENERATE EACH STAGE ]]
         if (groundGenerations.Count > 0)
         {
+            Vector3 newStageBeginningPos = this.transform.position;
+
             for (int i = 0; i < groundGenerations.Count; i++)
             {
                 GroundGeneration groundGen = groundGenerations[i];
@@ -65,8 +68,8 @@ public class StageManager : MonoBehaviour
                 }
 
                 // start generation
-                groundGen.begGenPos = new Vector3((i * stageLength), this.transform.position.y); // set beginning pos based on stage length
-                groundGen.endGenPos = new Vector3((i * stageLength) + stageLength, this.transform.position.y); // set end pos based on stage length
+                groundGen.begGenPos = new Vector3(newStageBeginningPos.x, newStageBeginningPos.y); // set beginning pos based on stage length
+                groundGen.endGenPos = new Vector3(newStageBeginningPos.x + stageLength, newStageBeginningPos.y); // set end pos based on stage length
                 groundGen.CreateGeneration();
 
                 // wait until generation is finished
@@ -75,15 +78,22 @@ public class StageManager : MonoBehaviour
                 // add all generation points
                 allLevelGroundPoints.AddRange(groundGen.allGroundPoints);
                 allLevelGroundRotations.AddRange(groundGen.allGroundRotations);
+
+                // update new stage beginning
+                newStageBeginningPos = groundGen.endGenPos;
             }
+
+            // [[ CREATE MESH ]]
+            if (meshCreator != null)
+            {
+                meshCreator.GenerateUndergroundMesh(allLevelGroundPoints, undergroundHeight);
+            }
+            else { Debug.LogError("ERROR:: Mesh Creator is null", this.gameObject); }
+
+            allStagesGenerated = true;
         }
 
-        // [[ CREATE MESH ]]
-        if (meshCreator != null)
-        {
-            meshCreator.GenerateUndergroundMesh(allLevelGroundPoints, undergroundHeight);
-        }
-        else { Debug.LogError("ERROR:: Mesh Creator is null", this.gameObject); }
+
     }
 
     private void OnDrawGizmos()

@@ -6,6 +6,8 @@ using UnityEditor;
 [CustomEditor(typeof(BezierCurveGeneration))]
 public class BezierCurveGenerationEditor : Editor
 {
+    SerializedProperty debugModeProperty;
+
     SerializedProperty chunkStyleProperty;
     SerializedProperty angleTypeProperty;
 
@@ -18,6 +20,8 @@ public class BezierCurveGenerationEditor : Editor
 
     private void OnEnable()
     {
+        debugModeProperty = serializedObject.FindProperty("debugMode");
+
         chunkStyleProperty = serializedObject.FindProperty("chunkStyle");
         angleTypeProperty = serializedObject.FindProperty("angleType");
 
@@ -33,10 +37,8 @@ public class BezierCurveGenerationEditor : Editor
     {
         serializedObject.Update();
 
-        // Show the enum dropdown for angleType
+        EditorGUILayout.PropertyField(debugModeProperty);
         EditorGUILayout.PropertyField(angleTypeProperty);
-
-        // Show the enum dropdown for chunkStyle
         EditorGUILayout.PropertyField(chunkStyleProperty);
 
         // Check the value of chunkStyle and show/hide the appropriate fields

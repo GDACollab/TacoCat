@@ -30,6 +30,7 @@ public class BezierCurveGeneration : MonoBehaviour
 
     public enum ANGLE_TYPE { UPHILL, DOWNHILL, FLAT }
 
+    public bool debugMode;
     public ANGLE_TYPE angleType;
     public CHUNK_STYLES chunkStyle;
 
@@ -65,19 +66,33 @@ public class BezierCurveGeneration : MonoBehaviour
 
     public void Update()
     {
-        if (lineRenderer == null)
-        {
-            lineRenderer = GetComponent<LineRenderer>();
 
+        // [[ DEBUG MODE ]]
+        if (debugMode)
+        {
+            if (lineRenderer == null)
+            {
+                lineRenderer = GetComponent<LineRenderer>();
+
+            }
+            lineRenderer.enabled = true;
+
+            GenerateCurve();
+            UpdateDebugPositions();
+
+            if (generatedPoints.Count > 0)
+            {
+                DrawCurveLine(generatedPoints);
+            }
+        }
+        else
+        {
+            if (lineRenderer != null)
+            {
+                lineRenderer.enabled = false;
+            }
         }
 
-        GenerateCurve();
-        UpdateDebugPositions();
-
-        if (generatedPoints.Count > 0)
-        {
-            DrawCurveLine(generatedPoints);
-        }
     }
 
     public void GenerateCurve()
@@ -86,6 +101,8 @@ public class BezierCurveGeneration : MonoBehaviour
         generationFinished = false;
         generatedPoints.Clear();
         generatedRotations.Clear();
+
+        SetAngleType();
 
         if (chunkStyle == CHUNK_STYLES.random)
         {
@@ -232,28 +249,54 @@ public class BezierCurveGeneration : MonoBehaviour
         {
             p1Offset = rounded_p1_offset;
             p2Offset = rounded_p2_offset;
+
+
+            if (angleType == ANGLE_TYPE.UPHILL)
+            {
+                p1_pos = new Vector3(begPos.x + (horzDistance / p1Offset.x), begPos.y);
+                p2_pos = new Vector3(endPos.x - (horzDistance / p2Offset.x), endPos.y);
+            }
+            else
+            {
+                p1_pos = new Vector3(begPos.x + (horzDistance / p1Offset.x), begPos.y);
+                p2_pos = new Vector3(endPos.x - (horzDistance / p2Offset.x), endPos.y);
+            }
         }
         else if (chunkStyle == CHUNK_STYLES.straight)
         {
             p1Offset = straight_p1_offset;
             p2Offset = straight_p2_offset;
+
+
+            if (angleType == ANGLE_TYPE.UPHILL)
+            {
+                p1_pos = new Vector3(begPos.x + (horzDistance / p1Offset.x), begPos.y);
+                p2_pos = new Vector3(endPos.x - (horzDistance / p2Offset.x), endPos.y - (vertDistance / p2Offset.y));
+            }
+            else
+            {
+                p1_pos = new Vector3(begPos.x + (horzDistance / p1Offset.x), begPos.y);
+                p2_pos = new Vector3(endPos.x - (horzDistance / p2Offset.x), endPos.y + (vertDistance / p2Offset.y));
+            }
         }
         else if (chunkStyle == CHUNK_STYLES.flat)
         {
             p1Offset = flat_p1_offset;
             p2Offset = flat_p2_offset;
+
+            if (angleType == ANGLE_TYPE.UPHILL)
+            {
+                p1_pos = new Vector3(begPos.x + (horzDistance / p1Offset.x), begPos.y + (vertDistance / p1Offset.y));
+                p2_pos = new Vector3(endPos.x - (horzDistance / p2Offset.x), endPos.y - (vertDistance / p2Offset.y));
+            }
+            else
+            {
+                p1_pos = new Vector3(begPos.x + (horzDistance / p1Offset.x), begPos.y - (vertDistance / p1Offset.y));
+                p2_pos = new Vector3(endPos.x - (horzDistance / p2Offset.x), endPos.y + (vertDistance / p2Offset.y));
+            }
         }
 
-        if (angleType == ANGLE_TYPE.UPHILL)
-        {
-            p1_pos = new Vector3(begPos.x + (horzDistance / p1Offset.x), begPos.y + (vertDistance / p1Offset.y));
-            p2_pos = new Vector3(endPos.x - (horzDistance / p2Offset.x), endPos.y - (vertDistance / p2Offset.y));
-        }
-        else
-        {
-            p1_pos = new Vector3(begPos.x + (horzDistance / p1Offset.x), begPos.y - (vertDistance / p1Offset.y));
-            p2_pos = new Vector3(endPos.x - (horzDistance / p2Offset.x), endPos.y + (vertDistance / p2Offset.y));
-        }
+
     }
 #endregion
 
@@ -312,18 +355,18 @@ public class BezierCurveGeneration : MonoBehaviour
     public void UpdateDebugPositions()
     {
 
-        p0_pos = new Vector3(-100, 0);
+        p0_pos = new Vector3(0, 0);
         if (angleType == ANGLE_TYPE.FLAT)
         {
-            p3_pos = new Vector3(100, 0);
+            p3_pos = new Vector3(200, 0);
         }
         else if (angleType == ANGLE_TYPE.UPHILL)
         {
-            p3_pos = new Vector3(100, 100);
+            p3_pos = new Vector3(200, 200);
         }
         else if (angleType == ANGLE_TYPE.DOWNHILL)
         {
-            p3_pos = new Vector3(100, -100);
+            p3_pos = new Vector3(200, -200);
         }
     }
 #endregion

@@ -65,6 +65,7 @@ public class GroundGeneration : MonoBehaviour
         chunkGenParent.parent = this.transform;
 
         // start generation
+        generationFinished = false;
         StartCoroutine( NewGeneration(generationStyle) );
     }
 
@@ -382,6 +383,7 @@ public class GroundGeneration : MonoBehaviour
         // create new bezierCurveGeneration and store reference to script
         GameObject newCurveObject = Instantiate(bezierCurvePrefab, newGenPosParentPos, Quaternion.identity);
         BezierCurveGeneration bezierGroundGen = newCurveObject.GetComponent<BezierCurveGeneration>();
+        bezierGroundGen.debugMode = false;
 
         newCurveObject.SetActive(true); // set curve gen as active
         newCurveObject.transform.parent = chunkGenParent.transform; // set parent
@@ -394,7 +396,11 @@ public class GroundGeneration : MonoBehaviour
         // set uphill, downhill, or flat
         bezierGroundGen.SetAngleType();
 
-        bezierGroundGen.chunkStyle = style;
+        // set chunk styles
+        bezierGroundGen.SetChunkStyle(style);
+
+        // generate curve
+        bezierGroundGen.GenerateCurve();
 
         return bezierGroundGen;
     }
@@ -452,6 +458,7 @@ public class GroundGeneration : MonoBehaviour
         //get positions from point lists in each chunk
         foreach (GameObject chunk in chunks)
         {
+            allGroundPoints.AddRange(chunk.GetComponent<BezierCurveGeneration>().generatedPoints);
             allGroundRotations.AddRange(chunk.GetComponent<BezierCurveGeneration>().generatedRotations);
         }
 
