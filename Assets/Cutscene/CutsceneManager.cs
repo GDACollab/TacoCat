@@ -9,6 +9,12 @@ public class CutsceneManager : MonoBehaviour
     public TextMeshProUGUI phoneText;
     public bool endOfCutscene;
 
+    //testbubble text variables
+    public GameObject alexBubble;
+    public GameObject jamieBubble;
+
+    [Range(0.0f, 10.0f)]
+    private float scroll;
 
     [Tooltip("[WIP] Max charcters per line.\nWon't move the whole word to the next line currently")]
     public int characterLimit;
@@ -66,6 +72,10 @@ public class CutsceneManager : MonoBehaviour
         
         counter = 0;
 
+        //testing
+        Instantiate(alexBubble, alexBubble.transform.position, transform.rotation);
+        Instantiate(jamieBubble, jamieBubble.transform.position, transform.rotation);
+
         StartCoroutine(begin());
 
     }
@@ -77,6 +87,7 @@ public class CutsceneManager : MonoBehaviour
             if (a.person == 0)
             {
                 //Alex
+
 
                 phoneText.text += "Alex: ";
                 yield return StartCoroutine(Typeline(a.texts));
@@ -94,6 +105,8 @@ public class CutsceneManager : MonoBehaviour
                 yield return StartCoroutine(PrintText(a.texts));
             }
 
+            //scroll all texts
+            //increase all y values of instances by scroll
         }
 
         endOfCutscene = true;
@@ -107,7 +120,9 @@ public class CutsceneManager : MonoBehaviour
 
         foreach (string l in characterText)
             {
+                //insert instance of jamiebubble text += l + "\n"
                 phoneText.text += l + "\n";
+                //Instantiate(jamieBubble);
 
                 yield return new WaitForSeconds(messageDelayJamie);
             }
@@ -126,6 +141,7 @@ public class CutsceneManager : MonoBehaviour
                 //Add each element from phone_texts to phoneText
                 foreach (char c in s.ToCharArray())
                 {
+                    //insert instance of alexbubble text += c
                     phoneText.text += c;
 
                     counter++;
@@ -133,19 +149,19 @@ public class CutsceneManager : MonoBehaviour
                     yield return new WaitForSeconds(textSpeedAlex);
                     if (counter == characterLimit)
                     {
+                        //insert instance of alexbubble text += "\n"
                         phoneText.text += "\n";
                         counter = 0;
                     }
 
                 }
+                //insert instance of alexbubble text += "\n"
                 phoneText.text += "\n";
                 yield return new WaitForSeconds(messageDelayAlex);
             
         }
     }
 
-    //for printing the entire message at once
-    
    
 
     // Update is called once per frame
