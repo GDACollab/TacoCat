@@ -16,6 +16,7 @@ public class Customer: MonoBehaviour
 
     public enum species {Fish,Raven,Sheep,Frog,Capybara}; //species selectable by CreateCustomerOrder
     public List<ingredientType> order; //ingredients in the order
+    public int difficulty = 1;
 
     [HideInInspector] public Vector3 prevPos;
     [HideInInspector] public Vector3 targetPos;
@@ -45,7 +46,7 @@ public class Customer: MonoBehaviour
     {
         orderUI.gameObject.SetActive(false);
 
-        order = CreateCustomerOrder(3, 4);
+        order = CreateCustomerOrder(Mathf.Min(3, difficulty));
 
         // ShowBubbleOrder(order);
     }
@@ -56,7 +57,7 @@ public class Customer: MonoBehaviour
         MoveCustomer();
     }
 
-    public List<ingredientType> CreateCustomerOrder(int minOrderLength, int maxOrderLength) 
+    public List<ingredientType> CreateCustomerOrder(int difficulty) 
     {
 
         Debug.Log("Created Customer Order");
@@ -66,8 +67,26 @@ public class Customer: MonoBehaviour
         custSpecies = (species)Random.Range(0,4); //Selects random species from the range of possible options
 
         // get menu from bench manager
-        List<ingredientType> menu = tacoGameManager.benchManager.menu;        
-        int orderLength = Random.Range(minOrderLength, maxOrderLength + 1); // randomize order length
+        List<ingredientType> menu = tacoGameManager.benchManager.menu;
+        
+        List<int> orderLengths = new List<int>();
+        switch (difficulty)
+        {
+            case 1:
+                orderLengths = new List<int> {3, 4};
+                break;
+            case 2:
+                orderLengths = new List<int> {3, 4, 4, 4, 5, 5};
+                break;
+            case 3:
+                orderLengths = new List<int> {3, 4, 5, 5, 5, 6, 6};
+                break;
+            default:
+                orderLengths = new List<int> {3, 4};
+                break;
+        }
+        
+        int orderLength = orderLengths[Random.Range(0, orderLengths.Count)]; // randomize order length
 
         // To be returned
         List<ingredientType> s_order = new List<ingredientType>(orderLength);

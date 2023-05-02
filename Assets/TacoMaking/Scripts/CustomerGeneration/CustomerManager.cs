@@ -12,6 +12,7 @@ public class CustomerManager : MonoBehaviour
     public float transitionTime;       //How long it takes in seconds for the customer to transition between positions
     public List<Transform> positionList = new List<Transform>(); //Used as the points the customer transitions to/from 
     public List<Customer> customerList = new List<Customer>();
+    [HideInInspector] public int difficulty = 1;
 
 
     //before calling check if customers left to generate == 0
@@ -38,6 +39,7 @@ public class CustomerManager : MonoBehaviour
         customerScript.transform.position = positionList[5].position;
         customerScript.transitionTime = transitionTime;
         customerScript.currPosition = -1;
+        customerScript.difficulty = difficulty;
         customerList.Add(customerScript);
         UpdateCustomers();
 
