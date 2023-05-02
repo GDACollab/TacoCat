@@ -18,10 +18,10 @@ public class GroundGeneration : MonoBehaviour
      * ===================================================================================================
      */
 
-    public enum GENERATION_STYLES { consistent, sine, random };
+    public enum GENERATION_STYLES { consistent, sine, custom_sine, random };
     public enum CHUNK_STYLES { random, rounded, straight, flat };
 
-    public GameObject curveGenerationPrefab;
+    public GameObject bezierCurvePrefab;
     public GameObject chunkParent;
     public EnvironmentGenerator envGenerator;
 
@@ -49,6 +49,10 @@ public class GroundGeneration : MonoBehaviour
     [Header("Full Generation Values ==============================")]
     [Tooltip("Choose the style of the full generation")]
     public GENERATION_STYLES generationStyle = GENERATION_STYLES.random;
+
+    public Vector2 chunkLengthRange = new Vector2(200, 500);
+    public Vector2 chunkHeightRange = new Vector2(200, 500);
+
     [Tooltip("Set the transform of beginning point of generation")]
     public Transform begGenerationPoint;
     [Tooltip("Set the transform of end point of generation")]
@@ -84,7 +88,7 @@ public class GroundGeneration : MonoBehaviour
     public List<GameObject> chunks = new List<GameObject>();
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         undergroundMeshCreator = undergroundMeshObj.GetComponent<MeshCreator>();
 
@@ -93,6 +97,8 @@ public class GroundGeneration : MonoBehaviour
         endGenerationPoint.GetComponent<SpriteRenderer>().enabled = false;
 
         // create new generation
+
+        Debug.Log(">> CALLED NEW GENERATION", this.gameObject);
         NewGeneration(generationStyle);
 
         InvokeRepeating("StaggeredUpdate", 1, 1);
@@ -117,9 +123,14 @@ public class GroundGeneration : MonoBehaviour
             // adjust object to offset
             gameObject.transform.position += fullGenerationPosOffset;
 
+            // destroy all gameobject chunks and keep the mesh
+            DestroyAll(chunks);
+
             setGenOffset = true;
+
         }
 
+        /*
         if (editMode)
         {
             // update size of sprites
@@ -148,12 +159,12 @@ public class GroundGeneration : MonoBehaviour
                 newGenerationStarted = false;
             }
         }
-        else
-        {
-            // disable end point sprites
-            begGenerationPoint.GetComponent<SpriteRenderer>().enabled = false;
-            endGenerationPoint.GetComponent<SpriteRenderer>().enabled = false;
-        }
+    
+        */
+        // disable end point sprites
+        begGenerationPoint.GetComponent<SpriteRenderer>().enabled = false;
+        endGenerationPoint.GetComponent<SpriteRenderer>().enabled = false;
+        
     }
 
     #region GENERATION ====================================================
@@ -178,7 +189,6 @@ public class GroundGeneration : MonoBehaviour
         // clear references to chunks in list
         chunks.Clear();
 
-
         StartIslandGenerator();
 
         if (style == GENERATION_STYLES.consistent)
@@ -192,6 +202,10 @@ public class GroundGeneration : MonoBehaviour
         else if (style == GENERATION_STYLES.sine)
         {
             SineChunkGenerator();
+        }
+        else if (style == GENERATION_STYLES.custom_sine)
+        {
+            CustomSineChunkGenerator(chunkLengthRange, chunkHeightRange);
         }
 
         EndIslandGenerator();
@@ -352,6 +366,61 @@ public class GroundGeneration : MonoBehaviour
         }
     }
 
+    public void CustomSineChunkGenerator(Vector2 lengthRange, Vector2 heightRange)
+    {
+
+        Debug.Log("Custom Sine Generation Style");
+        List<float> chunkLengths = new List<float>();
+
+
+        Vector2 lastChunkEndPosition = beginningGenPos; // init last chunk as the current beginning position
+
+        // << GENERATE RANDOM LENGTH VALUES >>
+        float currentDistance = 0f;
+        while (currentDistance < fullGenerationLength)
+        {
+            // get random range length of chunk
+            float newChunkLength = Random.Range(lengthRange.x, lengthRange.y);
+
+            // if next chunk will be longer than generation length, make last chunk meet full generation
+            if (currentDistance + newChunkLength > fullGenerationLength)
+            {
+                chunkLengths[chunkLengths.Count - 1] += fullGenerationLength - currentDistance;
+                currentDistance += fullGenerationLength - currentDistance;
+            }
+            // add random length to list
+            else
+            {
+                chunkLengths.Add(newChunkLength);
+                currentDistance += newChunkLength;
+            }
+
+        }
+
+        // << SPAWN SINE HILL CHUNKS BASED ON LENGTHS >>
+        for (int i = 0; i < chunkLengths.Count; i++)
+        {
+            float curChunkLength = chunkLengths[i];
+
+            float curChunkHeight = Random.Range(heightRange.x, heightRange.y);
+
+
+            // UPHILL CHUNK 
+            Vector2 uphillChunkEndPos = new Vector2(lastChunkEndPosition.x + curChunkLength/2, endGenPos.y + curChunkHeight);
+            SpawnBezierGroundChunk(lastChunkEndPosition, uphillChunkEndPos, chunkStyles[Random.Range(0, chunkStyles.Count)]);
+
+            // DOWNHILL CHUNK 
+            Vector2 downhillChunkEndPos = new Vector2(uphillChunkEndPos.x + curChunkLength/2, endGenPos.y);
+            SpawnBezierGroundChunk(uphillChunkEndPos, downhillChunkEndPos, chunkStyles[Random.Range(0, chunkStyles.Count)]);
+
+
+            // update last chunk end position
+            lastChunkEndPosition = downhillChunkEndPos;
+
+
+        }
+    }
+
     #endregion
 
     #region SPAWNING ==========================
@@ -363,7 +432,7 @@ public class GroundGeneration : MonoBehaviour
         Vector3 newGenPosParentPos = new Vector3(begPos.x + distance / 2, begPos.y);
 
         // create new bezierCurveGeneration and store reference to script
-        GameObject newCurveObject = Instantiate(curveGenerationPrefab, newGenPosParentPos, Quaternion.identity);
+        GameObject newCurveObject = Instantiate(bezierCurvePrefab, newGenPosParentPos, Quaternion.identity);
         BezierCurveGeneration bezierGroundGen = newCurveObject.GetComponent<BezierCurveGeneration>();
 
 
@@ -407,9 +476,6 @@ public class GroundGeneration : MonoBehaviour
     #endregion
 
     #region CHUNK GENERATION STYLES =======================================================================
-
-
-
     // These are deciding the position of the middle edit points to create certain types of bezier curves
     // the x position is base on distance, the y on height distance
 
@@ -555,6 +621,14 @@ public class GroundGeneration : MonoBehaviour
         chunkParent.SetActive(false); // disable chunk parent
     }
 
+    public void DestroyAll(List<GameObject> objects)
+    {
+        foreach (GameObject obj in objects)
+        {
+            Destroy(obj);
+        }
+    }
+
     public int GetClosestGroundPointIndexToPos(Vector3 pos)
     {
         int closestIndex = -1;
@@ -573,7 +647,6 @@ public class GroundGeneration : MonoBehaviour
 
         return closestIndex;
     }
-
 
     #endregion
 
@@ -595,3 +668,4 @@ public class GroundGeneration : MonoBehaviour
         Gizmos.DrawLine(endGenerationPoint.position, endOffsetPosition); // spawn
     }
 }
+
