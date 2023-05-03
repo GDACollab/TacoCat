@@ -14,10 +14,6 @@ public class GameManager : MonoBehaviour {
     public string tacoMakingIndex = "TacoMaking";
     public string drivingIndex = "SunsetDrive";
     public string cutsceneIndex = "Cutscene";
-    /*
-    public string cutsceneNoonIndex = "Cutscene_Noon";
-    public string cutsceneEveningIndex = "Cutscene_Evening";
-    */
     public string loadingSceneIndex = "LoadingScreen";
     public string randDriveIndex = "RandDrive";
     public string nightDriveIndex = "NightDrive";
@@ -48,7 +44,8 @@ public class GameManager : MonoBehaviour {
             } catch { }
         } else {
             // check if all customers submitted , if so move to driving with gas amount
-            if (tacoGameManager.endOfGame && !isLoadingScene) {
+            if (tacoGameManager.endOfGame && !isLoadingScene)
+            {
                 LoadDrivingScene();
             }
         }
@@ -60,9 +57,8 @@ public class GameManager : MonoBehaviour {
                 drivingGameManager = GameObject.FindGameObjectWithTag("DrivingGameManager").GetComponent<DrivingGameManager>();
             } catch { }
         } else {
-
             if (drivingGameManager.endOfGame && !isLoadingScene) {
-                LoadTacoMakingScene();
+                LoadCutscene();
             }
 
         }
@@ -116,7 +112,12 @@ public class GameManager : MonoBehaviour {
         StartCoroutine(LoadingCoroutine(nightDriveIndex));
         audioManager.PlaySong("DrivingMusic");
     }
-    // ********
+
+    // **** LOAD CUTSCENE ****
+    public void LoadCutscene() {
+        StartCoroutine(LoadingCoroutine(cutsceneIndex));
+        audioManager.PlaySong("StoryMusic");
+    }
 
     [HideInInspector]
     public float loadProgress;
@@ -147,24 +148,4 @@ public class GameManager : MonoBehaviour {
         SceneManager.UnloadSceneAsync(loadingSceneIndex);
         isLoadingScene = false;
     }
-
-    // **** LOAD CUTSCENES ****
-    public void LoadCutscene() {
-        SceneManager.LoadScene(cutsceneIndex);
-        audioManager.PlaySong("StoryMusic");
-    }
-    /*
-    public void LoadCutscene_Noon() {
-        SceneManager.LoadScene(cutsceneNoonIndex);
-        audioManager.PlaySong("StoryMusic");
-    }
-
-    public void LoadCutscene_Evening() {
-        SceneManager.LoadScene(cutsceneEveningIndex);
-        audioManager.PlaySong("StoryMusic");
-    }
-
-    // ********
-    */
-
 }
