@@ -73,9 +73,6 @@ public class AudioManager : MonoBehaviour {
     [Tooltip("Name of the Successful Flip event")]
     public string flipBoostSFX; //IMPLEMENTED
 
-    public string truckLandingSFX; //IMPLEMENTED
-    public string crashSFX;
-
     //TACO MAKING
 
     [Header("FMOD Taco(SFX) Event Path Strings")]

@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-[RequireComponent(typeof(StageManager))]
 public class DrivingGameManager : MonoBehaviour
 {
-    private StageManager stageManager; // manages the generation stages
     public Vehicle vehicle;
+    public GroundGeneration groundGeneration;
 
     [Space(10)]
     public bool endOfGame;
 
     [Header("Distance")]
+    public Transform beginningPoint;
+    public Transform endPoint;
     public float totalDistance;
     public float vehicleDistance;
     public float percentageTraveled;
@@ -24,14 +25,10 @@ public class DrivingGameManager : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
-        stageManager = GetComponent<StageManager>();
-
         vehicle.rb_vehicle.constraints = RigidbodyConstraints2D.FreezeAll;
-
-        totalDistance = stageManager.mainGenerationLength;
-
+        beginningPoint.position = vehicle.transform.position;
         endOfGame = false;
         stuckTime = 0;
         
@@ -40,10 +37,11 @@ public class DrivingGameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-
-        //vehicle.rb_vehicle.constraints = RigidbodyConstraints2D.None;
-
+        // << INIT SCENE >>
+        if (groundGeneration.generationFinished)
+        {
+            vehicle.rb_vehicle.constraints = RigidbodyConstraints2D.None;
+        }
 
         // Check for stuck
         if (vehicle.GetFuel() == 0 && vehicle.GetNitro() == 0 && !endOfGame) // Out of fuel & Nitro
@@ -71,19 +69,13 @@ public class DrivingGameManager : MonoBehaviour
         if (percentageTraveled >= 1 && !endOfGame)
         {
             Debug.Log("You made it to the next city. One step closer to Jamie!");
-
-            try
-            {
-                GameObject.Find("GameManager").GetComponent<GameManager>().LoadTacoMakingScene();
-            }
-            catch { Debug.LogWarning("GameManager could not be found.", this.gameObject); }
+            GameObject.Find("GameManager").GetComponent<GameManager>().LoadTacoMakingScene();
         }
 
         // << UPDATE DISTANCE TRACKER >>
-        /*
+        totalDistance = Vector2.Distance(beginningPoint.position, endPoint.position);
         vehicleDistance = Vector2.Distance(beginningPoint.position, vehicle.transform.position);
         percentageTraveled = vehicleDistance / totalDistance;
-        */
 
     }
     

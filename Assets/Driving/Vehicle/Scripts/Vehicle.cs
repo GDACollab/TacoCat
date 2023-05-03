@@ -67,9 +67,7 @@ public class Vehicle : MonoBehaviour
     void Start()
     {
         rb_vehicle.velocity = startingVelocity;
-        try{
         audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
-        }catch{}
     }
 
     // Update is called once per frame
@@ -174,12 +172,8 @@ public class Vehicle : MonoBehaviour
     }
 
     // override all states and 
-    public IEnumerator PerfectLandingBoost(Vector2 boost, float boostTime)
+    public IEnumerator PerfectLandingBoost()
     {
-        Vector2 tempLandBoost = perfectLandingBoostForce;
-        float tempBoostTime = activePerfectBoostTime;
-        perfectLandingBoostForce = boost;
-        activePerfectBoostTime = boostTime;
         state = driveState.PERFECT_LANDING;
 
         StartCoroutine(cameraHandler.Shake(activePerfectBoostTime, cameraHandler.perfect_camShakeMagnitude));
@@ -187,8 +181,6 @@ public class Vehicle : MonoBehaviour
 
         yield return new WaitForSeconds(activePerfectBoostTime);
 
-        perfectLandingBoostForce = tempLandBoost;
-        activePerfectBoostTime = tempBoostTime;
         state = driveState.GROUNDED;
     }
 

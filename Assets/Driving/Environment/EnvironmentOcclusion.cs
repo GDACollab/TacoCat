@@ -4,37 +4,42 @@ using UnityEngine;
 
 public class EnvironmentOcclusion : MonoBehaviour
 {
-    public EnvironmentGenerator envGenerator;
+    public List<EnvironmentGenerator> envGenerators;
 
-    public Transform camTransform; // the center of the range
+    public Transform targetTransform; // the center of the range
     public float range = 2.0f; // the range around the center
 
     private void Update()
     {
 
-        foreach (GameObject envObject in envGenerator.allSpawnedObjects)
+        foreach (EnvironmentGenerator envGenerator in envGenerators)
         {
-            Transform transformToCheck = envObject.transform;
-
-            // calculate the distance between the target and the transform to check
-            float distance = Vector3.Distance(camTransform.position, transformToCheck.position);
-
-            // check if the distance is within the specified range
-            if (distance <= range)
+            foreach (GameObject envObject in envGenerator.allSpawnedObjects)
             {
-                envObject.SetActive(true);
-                // Debug.Log(transformToCheck.name + " is within range of " + targetTransform.name);
-            }
-            else
-            {
-                envObject.SetActive(false);
+                Transform transformToCheck = envObject.transform;
+
+                // calculate the distance between the target and the transform to check
+                float distance = Vector3.Distance(targetTransform.position, transformToCheck.position);
+
+                // check if the distance is within the specified range
+                if (distance <= range)
+                {
+                    envObject.SetActive(true);
+                    // Debug.Log(transformToCheck.name + " is within range of " + targetTransform.name);
+                }
+                else
+                {
+                    envObject.SetActive(false);
+                }
             }
         }
+
+
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(camTransform.position, range);
+        Gizmos.DrawWireSphere(targetTransform.position, range);
     }
 }

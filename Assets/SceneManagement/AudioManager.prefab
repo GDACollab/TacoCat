@@ -49,21 +49,15 @@ MonoBehaviour:
   sfxVolume: 1
   dialogueVolume: 1
   ambianceVolume: 1
-  music:
-  - event:/Music/MenuMusic
-  - event:/Music/TacoMusic
-  - event:/Music/DrivingMusic
-  - event:/Music/StoryMusic
+  music: []
   cutsceneSFXPath: event:/SFX/Cutscene
   recieveTextSFX: Recieve Text
   sendTextSFX: Send Text
   typingSFX: Texting Clicks
   drivingSFXPath: event:/SFX/Driving
-  nitroBoostSFX: event:/SFX/Driving/Nitro Boost
-  flipBoostSFX: event:/SFX/Driving/Flip Boost
-  truckLandingSFX: 
-  crashSFX: 
+  nitroBoostSFX: Nitro Boost
+  flipBoostSFX: Flip Boost
   submitTacoSFX: Bell Ding
-  ingriPlaceSFX: event:/SFX/Taco Making/Plop Ingredients
-  pawSwipeSFX: event:/SFX/Taco Making/Swipe Ingredients
+  ingriPlaceSFX: Plop Ingredients
+  pawSwipeSFX: Swipe Ingredients
   isPaused: 0
