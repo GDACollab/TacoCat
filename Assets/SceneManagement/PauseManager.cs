@@ -9,11 +9,22 @@ public class PauseManager : MonoBehaviour
     GameObject pauseCanvas;
     AudioManager audioManager;
     protected bool isPaused = false;
+    [SerializeField] GameObject resumeButton;
+    public static PauseManager instance { get; private set; }
 
     protected List<Slider> volumeSliders = new List<Slider>();
 
     private void Awake() {
-        DontDestroyOnLoad(this);
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         pauseCanvas = GameObject.Find("PauseCanvas");
         audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
 

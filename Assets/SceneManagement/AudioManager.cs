@@ -41,6 +41,8 @@ public class AudioManager : MonoBehaviour {
     public FMOD.Studio.Bus diaBus;
     public FMOD.Studio.Bus ambiBus;
 
+    public static AudioManager instance { get; private set; }
+
     /////////////////////////MUSIC//////////////////////////////
     [Header("FMOD Music")]
 
@@ -120,7 +122,16 @@ public class AudioManager : MonoBehaviour {
     //volType {0= master, 1= music, 2 = sfx, 3 = dialogue}, volAmount = float range: [0,1]
     void Awake()
     {
-        DontDestroyOnLoad(this.gameObject);
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         masBus = FMODUnity.RuntimeManager.GetBus(masVolBusPath);
         musBus = FMODUnity.RuntimeManager.GetBus(musVolBusPath);
         sfxBus = FMODUnity.RuntimeManager.GetBus(sfxVolBusPath);

@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour {
     public string nightDriveIndex = "NightDrive";
 
     public string currentScene;
+    public static GameManager instance { get; private set; }
 
     TacoMakingGameManager tacoGameManager;
     DrivingGameManager drivingGameManager;
@@ -26,7 +27,16 @@ public class GameManager : MonoBehaviour {
     public AudioManager audioManager;
 
     void Start() {
-        DontDestroyOnLoad(this.gameObject);
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         var music = menuIndex + "Music";
         audioManager.PlaySong(music);
     }
