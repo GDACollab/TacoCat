@@ -708,7 +708,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4097053437802065197, guid: de1bc7c39c2164a4096a222376b3b43e, type: 3}
   m_PrefabInstance: {fileID: 4097053438752169190}
   m_PrefabAsset: {fileID: 0}
---- !u!43 &1312243479
+--- !u!43 &1283535873
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -928,14 +928,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3462254338527503413, guid: de1bc7c39c2164a4096a222376b3b43e, type: 3}
+      propertyPath: groundParent
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3462254338527503413, guid: de1bc7c39c2164a4096a222376b3b43e, type: 3}
+      propertyPath: treeGenParent
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3462254338527503413, guid: de1bc7c39c2164a4096a222376b3b43e, type: 3}
+      propertyPath: groundGeneration
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4097053437802065193, guid: de1bc7c39c2164a4096a222376b3b43e, type: 3}
       propertyPath: drivingUIManager
       value: 
       objectReference: {fileID: 180058915}
-    - target: {fileID: 4097053437856798264, guid: de1bc7c39c2164a4096a222376b3b43e, type: 3}
-      propertyPath: Params.Array.data[0].Value
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4097053438608915788, guid: de1bc7c39c2164a4096a222376b3b43e, type: 3}
       propertyPath: m_Name
       value: '[[ Driving Game Manager ]]'
@@ -984,33 +992,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4711253591365868547, guid: de1bc7c39c2164a4096a222376b3b43e, type: 3}
-      propertyPath: generationStyle
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4711253591365868547, guid: de1bc7c39c2164a4096a222376b3b43e, type: 3}
-      propertyPath: chunkHeightRange.x
-      value: -200
-      objectReference: {fileID: 0}
-    - target: {fileID: 4711253591365868547, guid: de1bc7c39c2164a4096a222376b3b43e, type: 3}
-      propertyPath: chunkHeightRange.y
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 4711253591365868547, guid: de1bc7c39c2164a4096a222376b3b43e, type: 3}
-      propertyPath: chunkLengthRange.x
-      value: 700
-      objectReference: {fileID: 0}
-    - target: {fileID: 4711253591365868547, guid: de1bc7c39c2164a4096a222376b3b43e, type: 3}
-      propertyPath: chunkLengthRange.y
-      value: 1000
-      objectReference: {fileID: 0}
     - target: {fileID: 8089383953131500860, guid: de1bc7c39c2164a4096a222376b3b43e, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 1312243479}
+      objectReference: {fileID: 1283535873}
     - target: {fileID: 8089383953131500860, guid: de1bc7c39c2164a4096a222376b3b43e, type: 3}
       propertyPath: m_InstanceId
-      value: -238884
+      value: -1606
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de1bc7c39c2164a4096a222376b3b43e, type: 3}

@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
+[RequireComponent(typeof(LineRenderer))]
+[RequireComponent(typeof(StageManager))]
 public class EnvironmentGenerator : MonoBehaviour
 {
 
@@ -14,7 +15,7 @@ public class EnvironmentGenerator : MonoBehaviour
      * 
      */
     
-    public GroundGeneration groundGeneration;
+    public StageManager stageManager;
     public bool environmentSpawned;
     [HideInInspector]
     public List<Vector3> groundPoints = new List<Vector3>();
@@ -93,21 +94,22 @@ public class EnvironmentGenerator : MonoBehaviour
     private void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
+        stageManager = GetComponent<StageManager>();
     }
 
     // Start is called before the first frame update
     void Update()
     {
         // if generation finished and environment not spawned
-        if (groundGeneration.generationFinished && !environmentSpawned)
+        if (stageManager.allStagesGenerated && !environmentSpawned)
         {
             SpawnAllEnvironmentObjects();
-            SpawnGroundObjects(groundGeneration.allGroundPoints, groundGeneration.allGroundRotations, pointsBetweenGroundObjs);
+            SpawnGroundObjects(stageManager.allLevelGroundPoints, stageManager.allLevelGroundRotations, pointsBetweenGroundObjs);
 
             if (drawLine) { DrawCurveLine(groundPoints, lineWidth, lineMaterial); }
         }
 
-        else if (!groundGeneration.generationFinished && environmentSpawned)
+        else if (!stageManager.allStagesGenerated && environmentSpawned)
         {
             DeleteAllEnvironmentObjects();
             DestroyAllGroundObjs();
@@ -118,8 +120,8 @@ public class EnvironmentGenerator : MonoBehaviour
     public void SpawnAllEnvironmentObjects()
     {
         // get ground points
-        groundPoints = groundGeneration.allGroundPoints;
-        groundRotations = groundGeneration.allGroundRotations;
+        groundPoints = stageManager.allLevelGroundPoints;
+        groundRotations = stageManager.allLevelGroundRotations;
 
         DeleteAllEnvironmentObjects();
 
@@ -361,14 +363,12 @@ public class EnvironmentGenerator : MonoBehaviour
     {
         lineRenderer.startWidth = width;
         lineRenderer.endWidth = width;
-        //lineRenderer.loop = true;
         lineRenderer.positionCount = points.Count;
-
 
         // add offset to points
         for (int i = 0; i < points.Count; i++)
         {
-            points[i] += lineOffset + groundGeneration.fullGenerationPosOffset;
+            points[i] += lineOffset;
         }
 
         // set points
