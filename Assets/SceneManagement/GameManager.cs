@@ -14,6 +14,10 @@ public class GameManager : MonoBehaviour {
     public string tacoMakingIndex = "TacoMaking";
     public string drivingIndex = "SunsetDrive";
     public string cutsceneIndex = "Cutscene";
+    /*
+    public string cutsceneNoonIndex = "Cutscene_Noon";
+    public string cutsceneEveningIndex = "Cutscene_Evening";
+    */
     public string loadingSceneIndex = "LoadingScreen";
     public string randDriveIndex = "RandDrive";
     public string nightDriveIndex = "NightDrive";
@@ -144,10 +148,23 @@ public class GameManager : MonoBehaviour {
         isLoadingScene = false;
     }
 
-    // **** LOAD CUTSCENE ****
+    // **** LOAD CUTSCENES ****
     public void LoadCutscene() {
         SceneManager.LoadScene(cutsceneIndex);
         audioManager.PlaySong("StoryMusic");
     }
+    /*
+    public void LoadCutscene_Noon() {
+        SceneManager.LoadScene(cutsceneNoonIndex);
+        audioManager.PlaySong("StoryMusic");
+    }
+
+    public void LoadCutscene_Evening() {
+        SceneManager.LoadScene(cutsceneEveningIndex);
+        audioManager.PlaySong("StoryMusic");
+    }
+
+    // ********
+    */
 
 }
