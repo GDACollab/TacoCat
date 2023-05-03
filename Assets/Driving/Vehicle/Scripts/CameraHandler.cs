@@ -60,7 +60,6 @@ public class CameraHandler : MonoBehaviour
             // Update the camera's position with the new z-position
             currOffset = new Vector3(xPos, yPos, zPos);
             transform.position = Vector3.Lerp(transform.position, vehicle.transform.position + currOffset, camSpeed * Time.deltaTime);
-            
         }
     }
 
