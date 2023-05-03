@@ -91,13 +91,13 @@ public class GameManager : MonoBehaviour {
         audioManager.PlaySong(menuIndex + "Music");
     }
 
+    // **** LOAD TACO MAKING SCENE ****
     public void LoadTacoMakingScene() {
-
         StartCoroutine(LoadingCoroutine(tacoMakingIndex));
         audioManager.PlaySong("TacoMusic");
-
     }
 
+    // **** LOAD DRIVING SCENES ****
     public void LoadDrivingScene() {
         StartCoroutine(LoadingCoroutine(drivingIndex));
         audioManager.PlaySong("DrivingMusic");
@@ -112,6 +112,7 @@ public class GameManager : MonoBehaviour {
         StartCoroutine(LoadingCoroutine(nightDriveIndex));
         audioManager.PlaySong("DrivingMusic");
     }
+    // ********
 
     [HideInInspector]
     public float loadProgress;
@@ -143,6 +144,7 @@ public class GameManager : MonoBehaviour {
         isLoadingScene = false;
     }
 
+    // **** LOAD CUTSCENE ****
     public void LoadCutscene() {
         SceneManager.LoadScene(cutsceneIndex);
         audioManager.PlaySong("StoryMusic");
