@@ -8,6 +8,8 @@ public enum currScene { MENU, INTRO_CUTSCENE, TACO_MAKING, DRIVING }
 
 public class GameManager : MonoBehaviour {
 
+    private static GameManager instance = null;
+
     public bool isLoadingScene;
 
     public string menuIndex = "Menu";
@@ -25,6 +27,19 @@ public class GameManager : MonoBehaviour {
     DrivingGameManager drivingGameManager;
     CutsceneManager cutsceneManager;
     public AudioManager audioManager;
+
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start() {
         DontDestroyOnLoad(this.gameObject);

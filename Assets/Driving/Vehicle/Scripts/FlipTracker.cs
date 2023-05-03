@@ -14,7 +14,16 @@ public class FlipTracker : MonoBehaviour
     float initTruckRotation;
 
     public bool jumpStarted = false;
+    
+    [Space(10)]
+    [Header("Multiple Flip Values")]
+    public int flipCap = 10;
+    public float percentBoost = 0.1f;
+    public float timeBoost = 0.05f;
+    public GameObject boostSprite;
+    float boostSpriteY;
 
+    
     [Space(10)]
     public int flipCount;
     private bool flipCounted;
@@ -38,7 +47,10 @@ public class FlipTracker : MonoBehaviour
         vehicle = GetComponent<Vehicle>();
         animHandler = GetComponent<TruckAnimationHandler>();
         initTruckRotation = transform.rotation.eulerAngles.z;
-        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+
+            audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+      
+        boostSpriteY = boostSprite.transform.localScale.y;
     }
 
     // Update is called once per frame
@@ -78,9 +90,16 @@ public class FlipTracker : MonoBehaviour
 
             if (IsPerfectLanding(endJumpRot, groundPointRotation) && flipCount > 0) 
             {
-                StartCoroutine(vehicle.PerfectLandingBoost());
+                int flips = Mathf.Min(flipCount, flipCap);
+                float flipBoost=flips*percentBoost;
+                Vector2 newBoost = new Vector2(((flipBoost)+1)*vehicle.perfectLandingBoostForce.x, 0f);
+                float newTime = ((flips*timeBoost)+1)*vehicle.activePerfectBoostTime;
+                boostSprite.transform.localScale = new Vector3(boostSprite.transform.localScale.x, boostSpriteY*((flips*percentBoost)+1), boostSprite.transform.localScale.z);
+                StartCoroutine(vehicle.PerfectLandingBoost(newBoost, newTime));
                 audioManager.Play(audioManager.flipBoostSFX);
             }
+            audioManager.Play(audioManager.truckLandingSFX);
+            //PLAY AUDIO MANAGER REG LANDING
         }
 
         // track in air time
