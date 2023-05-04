@@ -103,9 +103,7 @@ public class DrivingUIManager : MonoBehaviour
         fuelAmount = fuel;
         numNitro = (nitro>3) ? 3: nitro;
         updateFuel();
-        for(int i=0; i<numNitro;i++){
-            nitroCharges[i].gameObject.SetActive(true);
-        }
+        updateNitro();
     }
     
     // Function to update the fuel gauge
@@ -118,6 +116,24 @@ public class DrivingUIManager : MonoBehaviour
     }
     
     // Function to update the nitro charges
+
+    public void updateNitro() // Called in Vehicle.cs when nitro is updated
+    {
+        // Gather nitro count
+        numNitro = (vehicle_script.GetNitro() > 3) ? 3 : vehicle_script.GetNitro();
+        
+        for (int i = 2; i >= 0; i--)
+        {
+            if (i >= numNitro)
+            {
+                nitroCharges[i].gameObject.SetActive(false);
+            }
+            else
+            {
+                nitroCharges[i].gameObject.SetActive(true);
+            }
+        }
+    }
 
     public void decrementNitro(){ //called in Vehicle.cs when nitro is decremented
     //removes the proper nitro fill 

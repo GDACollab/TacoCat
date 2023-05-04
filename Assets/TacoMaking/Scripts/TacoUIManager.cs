@@ -46,7 +46,7 @@ public class TacoUIManager : MonoBehaviour
         customerManager = tacoGameManager.customerManager;
 
         DisplayGas(0);
-        DisplayNitro(0);
+        DisplayNitro(Vehicle.nitroCharges);
 
         DisplayScore(scoreType.FAILED);
 
@@ -65,14 +65,13 @@ public class TacoUIManager : MonoBehaviour
 
         // Update Gas Amount (to be deleted later)
         //DisplayGas(fuelAmount, maxFuelAmount);
-        //DisplayNitro(numNitroCharges);
+        //DisplayNitro(Vehicle.nitroCharges);
 
 
     }
     
     // Call this function to display the score. Takes in the score.
     public void DisplayScore(scoreType score){
-
         ClearDisplayScore();
 
         float starSpacing = 1.2f;
@@ -176,21 +175,21 @@ public class TacoUIManager : MonoBehaviour
         fuelBar.fillAmount = Mathf.Clamp(percent, 0, 1f); // Fill the bar according to the given fuel amount
     }
     public void DisplayNitro(int nitro){ // Switch between the 4 possible states of nitro charges
-        switch(nitro){
+        switch (nitro){
         case 1:
-            nCharge1.color = Color.HSVToRGB(236f/360, 0.71f, 0.96f, true);
+            nCharge1.color = Color.HSVToRGB(236f/360, 0.0f, 0.96f, true);
             nCharge2.color = Color.black;
             nCharge3.color = Color.black;
             break;
         case 2:
-            nCharge1.color = Color.HSVToRGB(236f/360, 0.71f, 0.96f, true);
-            nCharge2.color = Color.HSVToRGB(236f/360, 0.71f, 0.96f, true);
+            nCharge1.color = Color.HSVToRGB(236f/360, 0.0f, 0.96f, true);
+            nCharge2.color = Color.HSVToRGB(236f/360, 0.0f, 0.96f, true);
             nCharge3.color = Color.black;
             break;
         case 3:
-            nCharge1.color = Color.HSVToRGB(236f/360, 0.71f, 0.96f, true);
-            nCharge2.color = Color.HSVToRGB(236f/360, 0.71f, 0.96f, true);
-            nCharge3.color = Color.HSVToRGB(236f/360, 0.71f, 0.96f, true);
+            nCharge1.color = Color.HSVToRGB(236f/360, 0.0f, 0.96f, true);
+            nCharge2.color = Color.HSVToRGB(236f/360, 0.0f, 0.96f, true);
+            nCharge3.color = Color.HSVToRGB(236f/360, 0.0f, 0.96f, true);
             break;
         default:
             nCharge1.color = Color.black;

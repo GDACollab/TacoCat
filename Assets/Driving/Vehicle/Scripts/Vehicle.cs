@@ -44,7 +44,7 @@ public class Vehicle : MonoBehaviour
     public float rotationSpeed = 50f;
 
     [Header("Nitro")]
-    public int nitroCharges = 3;
+    public static int nitroCharges = 3; // Note: Static variables do not show up in inspector
     public Vector2 nitroForce;
     public float activeNitroTime = 5; // how long each charge lasts
 
@@ -181,7 +181,7 @@ public class Vehicle : MonoBehaviour
     {
         state = driveState.NITRO;
         nitroCharges--;
-        drivingUIManager.decrementNitro();
+        drivingUIManager.updateNitro();
 
 
         yield return new WaitForSeconds(activeNitroTime);
