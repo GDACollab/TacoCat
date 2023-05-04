@@ -131,7 +131,7 @@ public class GameManager : MonoBehaviour {
         {
             if (drivingGameManager.endOfGame && !isLoadingScene)
             {
-                LoadTacoMakingScene();
+                LoadCutscene();
             }
         }
 

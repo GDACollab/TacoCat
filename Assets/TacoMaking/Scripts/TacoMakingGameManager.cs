@@ -48,7 +48,11 @@ public class TacoMakingGameManager : MonoBehaviour
 
 
         customerCreationTimer = customerManager.transitionTime;
+
+        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        audioManager = gameManager.audioManager;
         benchManager = GetComponentInChildren<IngredientBenchManager>();
+        
 
 
         CreateNewSubmissionTaco();

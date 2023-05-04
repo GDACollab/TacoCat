@@ -4,10 +4,14 @@ using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
 [RequireComponent(typeof(StageManager))]
+[RequireComponent(typeof(EnvironmentGenerator))]
+[RequireComponent(typeof(EnvironmentOcclusion))]
 public class DrivingGameManager : MonoBehaviour
 {
-    private GameManager gameManager;
-    private StageManager stageManager; // manages the generation stages
+    GameManager gameManager;
+    StageManager stageManager; // manages the generation stages
+    public DrivingUIManager uiManager;
+
     public Vehicle vehicle;
 
     [Space(10)]
@@ -81,11 +85,7 @@ public class DrivingGameManager : MonoBehaviour
         {
             Debug.Log("You made it to the next city. One step closer to Jamie!");
 
-            try
-            {
-                GameObject.Find("GameManager").GetComponent<GameManager>().LoadTacoMakingScene();
-            }
-            catch { Debug.LogWarning("GameManager could not be found.", this.gameObject); }
+            endOfGame = true;
         }
 
         // << UPDATE DISTANCE TRACKER >>

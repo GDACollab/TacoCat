@@ -1,9 +1,9 @@
-using FMOD.Studio;
-using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using FMOD.Studio;
+using FMODUnity;
 
 //EVENTS W/ PARAMETERS
 //music events, isPaused
@@ -110,6 +110,18 @@ public class AudioManager : MonoBehaviour {
 	}
 
     public void Play(string path) {
+
+        EventDescription eventDescription;
+        FMOD.RESULT result = RuntimeManager.StudioSystem.getEvent(path, out eventDescription);
+        if (result != FMOD.RESULT.OK)
+        {
+            string errorPath;
+            eventDescription.getPath(out errorPath);
+            Debug.LogWarning("FMOD event path does not exist: " + errorPath.ToString());
+
+            return;
+        }
+
         var instance = RuntimeManager.CreateInstance(path);
         instance.start();
         instance.release();
@@ -120,7 +132,6 @@ public class AudioManager : MonoBehaviour {
     //volType {0= master, 1= music, 2 = sfx, 3 = dialogue}, volAmount = float range: [0,1]
     void Awake()
     {
-        DontDestroyOnLoad(this.gameObject);
         masBus = FMODUnity.RuntimeManager.GetBus(masVolBusPath);
         musBus = FMODUnity.RuntimeManager.GetBus(musVolBusPath);
         sfxBus = FMODUnity.RuntimeManager.GetBus(sfxVolBusPath);

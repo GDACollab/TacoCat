@@ -17,7 +17,6 @@ public class StageManager : MonoBehaviour
     public int startIslandYOffset = -1000;
     [Space(10)]
     public int endIslandXOffset = 1000;
-    public int endIslandYOffset = 1000;
 
     [Header("[[ GROUND GENERATION ]]")]
     public int numStages = 3;
@@ -64,7 +63,6 @@ public class StageManager : MonoBehaviour
                 { 
                     groundGen.endIsland = true;
                     groundGen.endIslandXOffset = endIslandXOffset;
-                    groundGen.endIslandYOffset = endIslandYOffset;
                 }
 
                 // start generation

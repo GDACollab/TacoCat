@@ -6,10 +6,15 @@ public enum driveState { NONE, START_DRIVE, GROUNDED, IN_AIR, NITRO, PERFECT_LAN
 
 public class Vehicle : MonoBehaviour
 {
+    GameManager gameManager;
+    AudioManager audioManager;
     public CameraHandler cameraHandler;
+    DrivingGameManager drivingGameManager;
+    DrivingUIManager drivingUIManager;
+
+
     public Rigidbody2D rb_vehicle;
-    public AudioManager audioManager;
-    public DrivingUIManager drivingUIManager;
+
 
     [Space(10)]
     public LayerMask groundLayer;
@@ -61,18 +66,21 @@ public class Vehicle : MonoBehaviour
     public float minRPM = 0;
     public float maxRPM = 2000;
 
-    
-    
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
+        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        audioManager = gameManager.audioManager;
+        cameraHandler = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraHandler>();
+        drivingGameManager = GameObject.FindGameObjectWithTag("DrivingGameManager").GetComponent<DrivingGameManager>();
+        drivingUIManager = drivingGameManager.uiManager;
+        
+        
+        
         rb_vehicle.velocity = startingVelocity;
-        try
-        {
-            audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
-        }
-        catch { Debug.LogWarning("Could not find AudioManager", this.gameObject); }
+
+
     }
+
 
     // Update is called once per frame
     void Update()
