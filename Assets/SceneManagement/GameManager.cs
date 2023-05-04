@@ -127,21 +127,11 @@ public class GameManager : MonoBehaviour {
         }
 
         // << DRIVING GAME MANAGER >>
-<<<<<<< HEAD
         if (currGame == currGame.DRIVING && drivingGameManager != null)
         {
             if (drivingGameManager.endOfGame && !isLoadingScene)
             {
                 LoadTacoMakingScene();
-=======
-        if (drivingGameManager == null) {
-            try {
-                drivingGameManager = GameObject.FindGameObjectWithTag("DrivingGameManager").GetComponent<DrivingGameManager>();
-            } catch { }
-        } else {
-            if (drivingGameManager.endOfGame && !isLoadingScene) {
-                LoadCutscene();
->>>>>>> Sooin-SceneOperation
             }
         }
 
@@ -163,13 +153,9 @@ public class GameManager : MonoBehaviour {
 
     // **** LOAD TACO MAKING SCENE ****
     public void LoadTacoMakingScene() {
-<<<<<<< HEAD
 
         currGame = currGame.TACO_MAKING;
         StartCoroutine(LoadingCoroutine(tacoMakingScene));
-=======
-        StartCoroutine(LoadingCoroutine(tacoMakingIndex));
->>>>>>> Sooin-SceneOperation
         audioManager.PlaySong("TacoMusic");
     }
 
@@ -193,10 +179,6 @@ public class GameManager : MonoBehaviour {
     }
 
     // **** LOAD CUTSCENE ****
-    public void LoadCutscene() {
-        StartCoroutine(LoadingCoroutine(cutsceneIndex));
-        audioManager.PlaySong("StoryMusic");
-    }
 
     [HideInInspector]
     public float loadProgress;
@@ -228,11 +210,6 @@ public class GameManager : MonoBehaviour {
         SceneManager.UnloadSceneAsync(loadingScene);
         isLoadingScene = false;
     }
-<<<<<<< HEAD
-
-
-
-
 #region >> SCENE OBJECT (( allows for drag / dropping scenes into inspector ))
     [System.Serializable]
     public class SceneObject
@@ -306,7 +283,4 @@ public class GameManager : MonoBehaviour {
 
 
 #endregion
-
-=======
->>>>>>> Sooin-SceneOperation
 }

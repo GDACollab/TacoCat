@@ -729,6 +729,10 @@ PrefabInstance:
       value: TacoUIManager
       objectReference: {fileID: 0}
     - target: {fileID: 7277452623187438658, guid: 8bdc26fc693360d4499aa43fd2bc0433, type: 3}
+      propertyPath: ingredientScale
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7277452623187438658, guid: 8bdc26fc693360d4499aa43fd2bc0433, type: 3}
       propertyPath: tacoGameManager
       value: 
       objectReference: {fileID: 6584911828293743365}
@@ -1150,6 +1154,10 @@ PrefabInstance:
     - target: {fileID: 567059905770462073, guid: b75fe25cc9aaded4b8efe0158ef3a504, type: 3}
       propertyPath: approximateProximity.y
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3069740285195380986, guid: b75fe25cc9aaded4b8efe0158ef3a504, type: 3}
+      propertyPath: m_SortingLayer
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3354342240746308266, guid: b75fe25cc9aaded4b8efe0158ef3a504, type: 3}
       propertyPath: m_RootOrder
@@ -1905,9 +1913,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bab324d6be6ea47538aeb7f61d617012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  audioManager: {fileID: 0}
   uiManager: {fileID: 1404059662}
   benchManager: {fileID: 0}
-  audioManager: {fileID: 0}
   endOfGame: 0
   submissionTaco: {fileID: 0}
   hand: {fileID: 1957027083}
