@@ -23,7 +23,7 @@ public class StageManager : MonoBehaviour
     int stageLength; // set based on mainGenerationLength / stages
 
     // ground generation values
-    public List<GroundGeneration> groundGenerations;
+    public List<GroundGeneration> stages;
     [HideInInspector]
     public List<Vector3> allLevelGroundPoints = new List<Vector3>(); // all ground points of the chunks
     [HideInInspector]
@@ -44,13 +44,13 @@ public class StageManager : MonoBehaviour
         stageLength = mainGenerationLength / numStages;
 
         // [[ GENERATE EACH STAGE ]]
-        if (groundGenerations.Count > 0)
+        if (stages.Count > 0)
         {
             Vector3 newStageBeginningPos = this.transform.position;
 
-            for (int i = 0; i < groundGenerations.Count; i++)
+            for (int i = 0; i < stages.Count; i++)
             {
-                GroundGeneration groundGen = groundGenerations[i];
+                GroundGeneration groundGen = stages[i];
                 
                 // set end islands
                 if (i == 0) 
@@ -59,7 +59,7 @@ public class StageManager : MonoBehaviour
                     groundGen.startIslandXOffset = startIslandXOffset;
                     groundGen.startIslandYOffset = startIslandYOffset;
                 }
-                if (i == groundGenerations.Count - 1) 
+                if (i == stages.Count - 1) 
                 { 
                     groundGen.endIsland = true;
                     groundGen.endIslandXOffset = endIslandXOffset;

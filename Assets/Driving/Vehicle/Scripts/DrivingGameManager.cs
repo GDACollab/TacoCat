@@ -11,7 +11,6 @@ public class DrivingGameManager : MonoBehaviour
     GameManager gameManager;
     StageManager stageManager; // manages the generation stages
     public DrivingUIManager uiManager;
-
     public Vehicle vehicle;
 
     [Space(10)]
@@ -51,9 +50,6 @@ public class DrivingGameManager : MonoBehaviour
         vehicle.rb_vehicle.constraints = RigidbodyConstraints2D.None;
 
     }
-
-
-
 
     // Update is called once per frame
     void Update()

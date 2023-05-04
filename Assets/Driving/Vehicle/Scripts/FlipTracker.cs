@@ -48,8 +48,7 @@ public class FlipTracker : MonoBehaviour
         animHandler = GetComponent<TruckAnimationHandler>();
         stageManager = GetComponentInParent<StageManager>();
         initTruckRotation = transform.rotation.eulerAngles.z;
-
-            audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
       
         boostSpriteY = boostSprite.transform.localScale.y;
     }
@@ -95,7 +94,7 @@ public class FlipTracker : MonoBehaviour
                 Vector2 newBoost = new Vector2(((flipBoost)+1)*vehicle.perfectLandingBoostForce.x, 0f);
                 float newTime = ((flips*timeBoost)+1)*vehicle.activePerfectBoostTime;
                 boostSprite.transform.localScale = new Vector3(boostSprite.transform.localScale.x, boostSpriteY*((flips*percentBoost)+1), boostSprite.transform.localScale.z);
-                StartCoroutine(vehicle.PerfectLandingBoost(newBoost, newTime));
+                StartCoroutine(vehicle.PerfectLandingBoost());
                 audioManager.Play(audioManager.flipBoostSFX);
             }
             audioManager.Play(audioManager.truckLandingSFX);
@@ -143,7 +142,7 @@ public class FlipTracker : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (stageManager != null)
+        if (stageManager != null && stageManager.allLevelGroundPoints.Count > 1)
         {
             Gizmos.color = Color.green;
             Gizmos.DrawSphere(stageManager.allLevelGroundPoints[hitPointIndex], 4);
