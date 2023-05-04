@@ -80,12 +80,18 @@ public class DrivingGameManager : MonoBehaviour
         if (percentageTraveled >= 1 && !endOfGame)
         {
             Debug.Log("You made it to the next city. One step closer to Jamie!");
+<<<<<<< HEAD
 
             try
             {
                 GameObject.Find("GameManager").GetComponent<GameManager>().LoadTacoMakingScene();
             }
             catch { Debug.LogWarning("GameManager could not be found.", this.gameObject); }
+=======
+            // GameObject.Find("GameManager").GetComponent<GameManager>().LoadCutscene();
+            //  Don't need to use this code. Just set true to endOfGame makes the game progress to the next scene. 
+            endOfGame = true;
+>>>>>>> Sooin-SceneOperation
         }
 
         // << UPDATE DISTANCE TRACKER >>

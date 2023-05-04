@@ -127,11 +127,21 @@ public class GameManager : MonoBehaviour {
         }
 
         // << DRIVING GAME MANAGER >>
+<<<<<<< HEAD
         if (currGame == currGame.DRIVING && drivingGameManager != null)
         {
             if (drivingGameManager.endOfGame && !isLoadingScene)
             {
                 LoadTacoMakingScene();
+=======
+        if (drivingGameManager == null) {
+            try {
+                drivingGameManager = GameObject.FindGameObjectWithTag("DrivingGameManager").GetComponent<DrivingGameManager>();
+            } catch { }
+        } else {
+            if (drivingGameManager.endOfGame && !isLoadingScene) {
+                LoadCutscene();
+>>>>>>> Sooin-SceneOperation
             }
         }
 
@@ -151,14 +161,19 @@ public class GameManager : MonoBehaviour {
         //audioManager.PlaySong(menuIndex + "Music");
     }
 
+    // **** LOAD TACO MAKING SCENE ****
     public void LoadTacoMakingScene() {
+<<<<<<< HEAD
 
         currGame = currGame.TACO_MAKING;
         StartCoroutine(LoadingCoroutine(tacoMakingScene));
+=======
+        StartCoroutine(LoadingCoroutine(tacoMakingIndex));
+>>>>>>> Sooin-SceneOperation
         audioManager.PlaySong("TacoMusic");
-
     }
 
+    // **** LOAD DRIVING SCENES ****
     public void LoadDrivingScene() {
         currGame = currGame.DRIVING;
         StartCoroutine(LoadingCoroutine(drivingScene));
@@ -175,6 +190,12 @@ public class GameManager : MonoBehaviour {
     public void Quit()
     {
         Application.Quit();
+    }
+
+    // **** LOAD CUTSCENE ****
+    public void LoadCutscene() {
+        StartCoroutine(LoadingCoroutine(cutsceneIndex));
+        audioManager.PlaySong("StoryMusic");
     }
 
     [HideInInspector]
@@ -207,6 +228,7 @@ public class GameManager : MonoBehaviour {
         SceneManager.UnloadSceneAsync(loadingScene);
         isLoadingScene = false;
     }
+<<<<<<< HEAD
 
 
 
@@ -285,4 +307,6 @@ public class GameManager : MonoBehaviour {
 
 #endregion
 
+=======
+>>>>>>> Sooin-SceneOperation
 }
