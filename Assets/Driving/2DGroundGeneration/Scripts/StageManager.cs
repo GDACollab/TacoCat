@@ -17,7 +17,6 @@ public class StageManager : MonoBehaviour
     public int startIslandYOffset = -1000;
     [Space(10)]
     public int endIslandXOffset = 1000;
-    public int endIslandYOffset = 1000;
 
     [Header("[[ GROUND GENERATION ]]")]
     public int numStages = 3;
@@ -64,7 +63,6 @@ public class StageManager : MonoBehaviour
                 { 
                     groundGen.endIsland = true;
                     groundGen.endIslandXOffset = endIslandXOffset;
-                    groundGen.endIslandYOffset = endIslandYOffset;
                 }
 
                 // start generation
@@ -94,6 +92,25 @@ public class StageManager : MonoBehaviour
         }
 
 
+    }
+
+    public int GetClosestGroundPointIndexToPos(Vector3 pos)
+    {
+        int closestIndex = -1;
+        float closestDistance = float.MaxValue;
+
+        for (int i = 0; i < allLevelGroundPoints.Count; i++)
+        {
+            float distance = Vector3.Distance(pos, allLevelGroundPoints[i]);
+
+            if (distance < closestDistance)
+            {
+                closestIndex = i;
+                closestDistance = distance;
+            }
+        }
+
+        return closestIndex;
     }
 
     private void OnDrawGizmos()

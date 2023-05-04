@@ -6,11 +6,12 @@ public enum scoreType { NONE, PERFECT, GOOD, OKAY, FAILED } // possible scores a
 
 public class TacoMakingGameManager : MonoBehaviour
 {
-    public TacoUIManager uiManager;
     [HideInInspector]
-    public IngredientBenchManager benchManager;
-
+    public GameManager gameManager;
+    [HideInInspector]
     public AudioManager audioManager;
+    public TacoUIManager uiManager;
+    public IngredientBenchManager benchManager;
 
     public bool endOfGame;
 
@@ -43,10 +44,16 @@ public class TacoMakingGameManager : MonoBehaviour
 
     public void Start()
     {
-        customerCreationTimer = customerManager.transitionTime;
-        benchManager = GetComponentInChildren<IngredientBenchManager>();
 
-        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+
+
+        customerCreationTimer = customerManager.transitionTime;
+
+        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        audioManager = gameManager.audioManager;
+        benchManager = GetComponentInChildren<IngredientBenchManager>();
+        
+
 
         CreateNewSubmissionTaco();
 
@@ -124,7 +131,11 @@ public class TacoMakingGameManager : MonoBehaviour
             if (perfectCounter % 3 == 0 && perfectCounter != 0)
             {
                 comboCounter++;
-                uiManager.DisplayNitro(comboCounter); //updates the nitro display
+                if (Vehicle.nitroCharges < 3)
+                {
+                    Vehicle.nitroCharges++;
+                }
+                uiManager.DisplayNitro(Vehicle.nitroCharges); //updates the nitro display
             }
         }
         else
