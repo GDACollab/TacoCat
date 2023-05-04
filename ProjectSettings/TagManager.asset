@@ -13,6 +13,7 @@ TagManager:
   - DrivingGameManager
   - CutsceneManager
   - AudioManager
+  - Main Menu
   layers:
   - Default
   - TransparentFX
@@ -64,4 +65,7 @@ TagManager:
     locked: 0
   - name: Foreground
     uniqueID: 2322967701
+    locked: 0
+  - name: UI
+    uniqueID: 2117569185
     locked: 0

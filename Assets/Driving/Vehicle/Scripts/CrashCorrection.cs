@@ -6,6 +6,7 @@ public class CrashCorrection : MonoBehaviour
     Vehicle vehicle;
     Rigidbody2D rb;
     public BoxCollider2D collisionTrigger;
+    public AudioManager audioManager;
 
     public float resetAngle = 0;
     public float rotationSpeed = 2;
@@ -16,6 +17,9 @@ public class CrashCorrection : MonoBehaviour
     {
         vehicle = GetComponentInParent<Vehicle>();
         rb = GetComponentInParent<Rigidbody2D>();
+        try{
+            audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+        }catch{};
     }
 
     public void Update()
@@ -29,6 +33,9 @@ public class CrashCorrection : MonoBehaviour
         {
             Debug.Log("Truck Crash with " + collision.name);
             StartCoroutine(CorrectCrash());
+
+            //START AUDIO EVENT FOR CRASH
+            audioManager.Play(audioManager.crashSFX);
         }
     }
 

@@ -6,10 +6,15 @@ public enum driveState { NONE, START_DRIVE, GROUNDED, IN_AIR, NITRO, PERFECT_LAN
 
 public class Vehicle : MonoBehaviour
 {
+    GameManager gameManager;
+    AudioManager audioManager;
     public CameraHandler cameraHandler;
+    DrivingGameManager drivingGameManager;
+    DrivingUIManager drivingUIManager;
+
+
     public Rigidbody2D rb_vehicle;
-    public AudioManager audioManager;
-    public DrivingUIManager drivingUIManager;
+
 
     [Space(10)]
     public LayerMask groundLayer;
@@ -39,7 +44,7 @@ public class Vehicle : MonoBehaviour
     public float rotationSpeed = 50f;
 
     [Header("Nitro")]
-    public int nitroCharges = 3;
+    public static int nitroCharges = 3; // Note: Static variables do not show up in inspector
     public Vector2 nitroForce;
     public float activeNitroTime = 5; // how long each charge lasts
 
@@ -61,14 +66,21 @@ public class Vehicle : MonoBehaviour
     public float minRPM = 0;
     public float maxRPM = 2000;
 
-    
-    
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
+        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        audioManager = gameManager.audioManager;
+        cameraHandler = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraHandler>();
+        drivingGameManager = GameObject.FindGameObjectWithTag("DrivingGameManager").GetComponent<DrivingGameManager>();
+        drivingUIManager = drivingGameManager.uiManager;
+        
+        
+        
         rb_vehicle.velocity = startingVelocity;
-        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+
+
     }
+
 
     // Update is called once per frame
     void Update()
@@ -142,8 +154,14 @@ public class Vehicle : MonoBehaviour
         if (state != driveState.NITRO && Input.GetKeyDown(nitroInputKey) && nitroCharges > 0)
         {
             StartCoroutine(NitroBoost());
-            audioManager.Play(audioManager.nitroBoostSFX); //NITRO BOOST SOUND EFFECT
             StartCoroutine(cameraHandler.Shake(activeNitroTime, cameraHandler.nitro_camShakeMagnitude));
+
+            try
+            {
+                audioManager.Play(audioManager.nitroBoostSFX); //NITRO BOOST SOUND EFFECT
+            }
+            catch { Debug.LogWarning("nitroBoostSFX :: Could not find AudioManager", this.gameObject); }
+
         }
     }
 
@@ -163,7 +181,7 @@ public class Vehicle : MonoBehaviour
     {
         state = driveState.NITRO;
         nitroCharges--;
-        drivingUIManager.decrementNitro();
+        drivingUIManager.updateNitro();
 
 
         yield return new WaitForSeconds(activeNitroTime);
@@ -172,12 +190,8 @@ public class Vehicle : MonoBehaviour
     }
 
     // override all states and 
-    public IEnumerator PerfectLandingBoost(Vector2 boost, float boostTime)
+    public IEnumerator PerfectLandingBoost()
     {
-        Vector2 tempLandBoost = perfectLandingBoostForce;
-        float tempBoostTime = activePerfectBoostTime;
-        perfectLandingBoostForce = boost;
-        activePerfectBoostTime = boostTime;
         state = driveState.PERFECT_LANDING;
 
         StartCoroutine(cameraHandler.Shake(activePerfectBoostTime, cameraHandler.perfect_camShakeMagnitude));
@@ -185,8 +199,6 @@ public class Vehicle : MonoBehaviour
 
         yield return new WaitForSeconds(activePerfectBoostTime);
 
-        perfectLandingBoostForce = tempLandBoost;
-        activePerfectBoostTime = tempBoostTime;
         state = driveState.GROUNDED;
     }
 
