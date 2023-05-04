@@ -61,26 +61,26 @@ public class EnvironmentGenerator : MonoBehaviour
     public List<GameObject> treePrefabs = new List<GameObject>();
 
 
-    private void Start()
+    private void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
         stageManager = GetComponent<StageManager>();
+
+        StartCoroutine(Generate());
     }
 
     // Start is called before the first frame update
-    void Update()
+    public IEnumerator Generate()
     {
+        if (stageManager == null) { yield return null; }
+        yield return new WaitUntil(() => stageManager.allStagesGenerated);
+
         // if generation finished and environment not spawned
-        if (stageManager.allStagesGenerated && !environmentSpawned)
+        if (!environmentSpawned)
         {
             SpawnAllEnvironmentObjects();
 
             if (drawLine) { DrawCurveLine(groundPoints, lineWidth, lineMaterial); }
-        }
-
-        else if (!stageManager.allStagesGenerated && environmentSpawned)
-        {
-            DeleteAllEnvironmentObjects();
         }
 
     }
@@ -238,151 +238,5 @@ public class EnvironmentGenerator : MonoBehaviour
 
     #endregion
 
-
-
-    #region old code
-    /*
-    public void SpawnEnvironment()
-    {
-        //SORTING LAYERS
-        /*
-         *      Front Trees => 5 4
-         *      Mid Trees => 3 2
-         *      Back Trees => 1 0
-         * 
-         */
-    /*
-   GameObject newTree;
-   //foreach row
-   for (int zRow = 0; zRow < 3; zRow++ )
-   {
-       print("zRow : " + zRow);
-
-       //TODO: Fix Index out of range problem
-       //TODO: sort sorting order of trees by depth compared to last tree depth
-
-
-       //ROW 0
-       if (zRow == 0)
-       {
-           int index = 10;
-           int sortingOrder = 4;
-
-           for (int i = 0; i < 20; i++)
-           {
-               print("index: " + index);
-
-               newTree = Instantiate(tree1, groundPoints[index] + new Vector3(0, 0, Random.Range(0.02f, 0.05f)), Quaternion.Euler(new Vector3(0, 0, groundRotations[index])));
-
-               newTree.transform.parent = treeGenParent.transform; //set parent
-
-               // randomly face left or right
-               int randomFacing = Random.Range(0, 2) * 2 - 1;
-               newTree.transform.localScale = new Vector3(randomFacing, 1);
-
-               newTree.GetComponentInChildren<SortingGroup>().sortingLayerName = "Back Environment";
-
-
-               //SORTING ORDER 4 / 5, very front
-               newTree.GetComponentInChildren<SortingGroup>().sortingOrder = sortingOrder;
-
-               if (sortingOrder == 4) { sortingOrder = 5; } else if (sortingOrder == 5) { sortingOrder = 4; } //switch back and forth so that trees on this layer dont overlap
-
-
-               //if index + max space < end of groundPoints, give random index amount
-               if (index + maxSpace < groundPoints.Count )
-               {
-                   index += Random.Range(minSpace, maxSpace + 1);
-               }
-               //else add last bit of count to index
-               else
-               {
-                   index += groundPoints.Count - 1 - index;
-               }
-           }
-       }
-
-       //ROW 1
-       if (zRow == 1)
-       {
-
-           int index = 10;
-           int sortingOrder = 2;
-
-           for (int i = 0; i < 20; i++)
-           {
-               newTree = Instantiate(tree1, groundPoints[index] + new Vector3(0, 0, Random.Range(farthestZpos * 0.3f, farthestZpos * 0.6f)), Quaternion.Euler(new Vector3(0, 0, groundRotations[index])));
-
-               newTree.transform.parent = treeGenParent.transform; //set parent
-
-               // randomly face left or right
-               int randomFacing = Random.Range(0, 2) * 2 - 1;
-               newTree.transform.localScale = new Vector3(randomFacing, 1);
-
-               newTree.GetComponentInChildren<SortingGroup>().sortingLayerName = "Back Environment";
-
-               //SORTING ORDER 2 / 3, mid
-               newTree.GetComponentInChildren<SortingGroup>().sortingOrder = sortingOrder;
-
-               if (sortingOrder == 2) { sortingOrder = 3; } else if (sortingOrder == 3) { sortingOrder = 2; } //switch back and forth so that trees on this layer dont overlap
-
-               newTree.GetComponentInChildren<SpriteRenderer>().enabled = false; //disable sprite renderer
-
-               //if index + max space < end of groundPoints, give random index amount
-               if (index + maxSpace < groundPoints.Count)
-               {
-                   index += Random.Range(minSpace, maxSpace + 1);
-               }
-               //else add last bit of count to index
-               else
-               {
-                   index += groundPoints.Count - 1 - index;
-               }
-           }
-       }
-
-       if (zRow == 2)
-       {
-           int index = 10;
-           int sortingOrder = 0;
-
-           for (int i = 0; i < 20; i++)
-           {
-               newTree = Instantiate(tree1, groundPoints[index] + new Vector3(0, 0, Random.Range(farthestZpos * 0.6f, farthestZpos)), Quaternion.Euler(new Vector3(0, 0, groundRotations[index])));
-
-               newTree.transform.parent = treeGenParent.transform; //set parent
-
-               // randomly face left or right
-               int randomFacing = Random.Range(0, 2) * 2 - 1;
-               newTree.transform.localScale = new Vector3(randomFacing, 1);
-
-               // SORTING LAYERS 0 1, farthest back
-               newTree.GetComponentInChildren<SortingGroup>().sortingLayerName = "Back Environment";
-               newTree.GetComponentInChildren<SortingGroup>().sortingOrder = sortingOrder;
-               if (sortingOrder == 0) { sortingOrder = 1; } else if (sortingOrder == 1) { sortingOrder = 0; } //switch back and forth so that trees on this layer dont overlap
-
-
-               newTree.GetComponentInChildren<SpriteRenderer>().enabled = false; //disable sprite renderer
-
-               //if index + max space < end of groundPoints, give random index amount
-               if (index + maxSpace < groundPoints.Count)
-               {
-                   index += Random.Range(minSpace, maxSpace + 1);
-               }
-               //else add last bit of count to index
-               else
-               {
-                   index += groundPoints.Count - 1 - index;
-               }
-           }
-
-       }
-
-   }
-
-
-}
-*/
-    #endregion
 
 }

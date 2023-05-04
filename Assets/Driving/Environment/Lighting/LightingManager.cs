@@ -94,18 +94,10 @@ public class LightingManager : MonoBehaviour
     [Range(0, 5000)]
     public float skyboxSpacing = 3000f;
 
-    private void Start()
-    {
-        SetZPositions();
-
-    }
-
     // Update is called once per frame
     void Update()
     {
         UpdateLightColors(timeOfDay);
-
-        SetZPositions();
     }
 
     public void UpdateLightColors(float curTime)
@@ -119,7 +111,6 @@ public class LightingManager : MonoBehaviour
         backgroundLight.color = Color.Lerp(backgroundLight.color, toPalette[2], lightColorAdjustSpeed * Time.deltaTime);
         skyboxLight.color = Color.Lerp(skyboxLight.color, toPalette[3], lightColorAdjustSpeed * Time.deltaTime);
         sunLight.color = Color.Lerp(sunLight.color, toPalette[4], lightColorAdjustSpeed * Time.deltaTime);
-
 
         float curSunIntensity = 0;
 

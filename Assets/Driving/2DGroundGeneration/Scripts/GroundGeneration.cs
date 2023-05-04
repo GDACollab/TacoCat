@@ -129,6 +129,7 @@ public class GroundGeneration : MonoBehaviour
         yield return new WaitUntil(() => generationFinished);
 
         Debug.Log(">> " + this.gameObject.name + " Generation Finished [ " + chunks.Count + " chunks ]", this.gameObject);
+        DestroyGenerationObjects();
     }
 
     public void DestroyGenerationObjects()
