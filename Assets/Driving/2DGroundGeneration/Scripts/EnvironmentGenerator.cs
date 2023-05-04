@@ -66,7 +66,7 @@ public class EnvironmentGenerator : MonoBehaviour
     [Tooltip("Parent for the spawned signs")]
     public Transform signGenParent;
     [Tooltip("Base scale of the Sign Objects")]
-    public float signScale = 50;
+    public float signScale = 40;
     [Tooltip("Number of signs to spawn")]
     public int numSigns = 4;
 
@@ -178,7 +178,9 @@ public class EnvironmentGenerator : MonoBehaviour
     }
 
     public GameObject SpawnSign(int pointIndex){
-        GameObject newSignObject = Instantiate(signPrefab, groundPoints[pointIndex], Quaternion.Euler(new Vector3(0,0,0)));
+        Vector3 signLoc = findNearestPeak(pointIndex);
+        Debug.Log(groundPoints[pointIndex] + "       " + signLoc);
+        GameObject newSignObject = Instantiate(signPrefab, signLoc, Quaternion.Euler(new Vector3(0,0,0)));
         newSignObject.transform.parent = signGenParent;
         
         newSignObject.transform.localScale = newSignObject.transform.localScale * signScale;
@@ -228,6 +230,53 @@ public class EnvironmentGenerator : MonoBehaviour
     }
 
     #region HELPER FUNCTIONS =================================================================
+
+    //Given a groundPoint, find the nearest peak
+    public Vector3 findNearestPeak(int pointIndex){
+        Vector3 workingPoint = groundPoints[pointIndex];
+        float curY = workingPoint.y;
+
+        int leftIter  = pointIndex - 1;    
+        int rightIter = pointIndex + 1;
+        Vector3 leftNeighbor  = groundPoints[leftIter];
+        Vector3 rightNeighbor = groundPoints[rightIter];
+
+        //First check if we're already on a peak
+        if (leftNeighbor.y <= curY && rightNeighbor.y <= curY){
+            Debug.Log("Sign-gen case 1");
+            return workingPoint;
+        }
+
+        //Now check left
+        while(leftNeighbor.y > curY){
+            workingPoint = leftNeighbor;
+            curY = workingPoint.y;
+            leftIter--;
+            leftNeighbor = groundPoints[leftIter]; 
+            if(leftNeighbor.y <= curY){
+                Debug.Log("Sign-gen case 2");
+                return workingPoint;
+            }
+        }
+
+        //And right
+        while(rightNeighbor.y > curY){
+            workingPoint = rightNeighbor;
+            curY = workingPoint.y;
+            rightIter++;
+            rightNeighbor = groundPoints[rightIter]; 
+            if(rightNeighbor.y <= curY){
+                Debug.Log("Sign-gen case 3");
+                return workingPoint;
+            }
+        }
+
+        //Something went wrong if you're here
+        Debug.Log("Sign-gen - Nearest peak not found");
+        return workingPoint;
+    }
+
+
     public void DestroyListObjects(List<GameObject> list)
     {
         foreach (GameObject obj in list)
