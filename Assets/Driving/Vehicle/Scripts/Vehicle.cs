@@ -66,7 +66,7 @@ public class Vehicle : MonoBehaviour
     public float minRPM = 0;
     public float maxRPM = 2000;
 
-    private void Awake()
+    private void Start()
     {
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         audioManager = gameManager.audioManager;
@@ -74,13 +74,8 @@ public class Vehicle : MonoBehaviour
         drivingGameManager = GameObject.FindGameObjectWithTag("DrivingGameManager").GetComponent<DrivingGameManager>();
         drivingUIManager = drivingGameManager.uiManager;
         
-        
-        
         rb_vehicle.velocity = startingVelocity;
-
-
     }
-
 
     // Update is called once per frame
     void Update()
