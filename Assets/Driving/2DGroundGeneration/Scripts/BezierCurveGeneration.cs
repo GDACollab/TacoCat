@@ -1,7 +1,13 @@
+using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+public enum CHUNK_STYLES { random, rounded, straight, flat };
 
+[RequireComponent(typeof(LineRenderer))]
+[ExecuteAlways]
 public class BezierCurveGeneration : MonoBehaviour
 {
     /* ================
@@ -22,209 +28,113 @@ public class BezierCurveGeneration : MonoBehaviour
      * 
      * =======================================*/
 
-    public LineRenderer lineRenderer;
-    public MeshCreator meshCreator;
+    public enum ANGLE_TYPE { UPHILL, DOWNHILL, FLAT }
 
-    [Header("Generation Debug Tools ===========================================")]
+    public bool debugMode;
+    public ANGLE_TYPE angleType;
+    public CHUNK_STYLES chunkStyle;
 
-    [Tooltip("Select edit mode to adjust the bezier curve." +
-        "If edit mode is turned on when entering Play Mode, the current positions of the edit points will be used." +
-        "Otherwise, the line will default to the script edit point positions")]
-    public bool editMode = false;
-    [Tooltip("Allows the generation to update every frame to show value changes")]
-    public bool generationEditUpdate;
-
-    [Range(1, 10), Tooltip("Change the size of the edit point")]
-    public float editPointScale = 1f;
-
-    [Tooltip("Shows outline of the full chunk")]
-    public bool showEdgeLines;
-
-    [Tooltip("Shows line renderer")]
-    public bool showBezierLine;
-
-    [Range(0.1f, 100), Tooltip("Width of the Bezier Line")]
-    public float bezierLineWidth = 0.1f;
-
-    [Tooltip("Shows math visuals")]
-    public bool showBezierMath;
-
-    [Tooltip("Shows tangent at a specific point t")]
-    public bool showBezierTangent;
-
-    [Range(0, 1), Tooltip("Adjustable point t")]
-    public float t;
-
-
-
-
-    [Space(10)]
-    [Header("Generation States ===========================================")]
-    [Tooltip("Shows the current angle type :: flat / downhill / uphill." +
-        "Shown in the Inspector for visual purposes only.")]
-    public string generationAngleType;
     [HideInInspector]
     public bool generationFinished;
     [HideInInspector]
-    public bool first_generation; //gatekeeps new generation
-
-
-
-
-    [Header("Render States ===========================================")]
-    [Tooltip("If in camera range, render objects and mesh")]
-    public bool inCameraRange;
-
-    [Tooltip("Override and show objects and mesh even if not in camera range")]
-    public bool cameraRangeOverride;
-
-    [Header("Generation Editing ===========================================")]
-    [Space(10)]
-    [Range(0.001f, 0.1f), Tooltip("Distance between points in bezier curve")]
-    public float spaceBetweenPoints = 0.1f;
-
-    [Header("Curve Points ===========================================")]
-    [Tooltip("List of all generated curve points")]
-    public List<Vector3> generatedCurvePoints = new List<Vector3>();
-    [Tooltip("List of all rotations of index corresponding points")]
-    public List<float> generatedCurvePointRotations = new List<float>();
-
-
-    [Header("Mesh Creation ===========================================")]
-    [Tooltip("Determine if mesh gets generated")]
-    public bool generateMesh;
-
-    [Tooltip("Object for underground mesh")]
-    public GameObject undergroundMeshObj;
-
-    [Tooltip("Object for depth mesh")]
-    public GameObject depthMeshObj;
-
-    [Header("Edit Points"), Tooltip("Change the Bezier Curve with these points")]
-    public Transform p0;
-    public Vector3 p0_pos;
-
-    [Space(5)]
-    public Transform p1;
-    public Vector3 p1_pos;
-
-    [Space(5)]
-    public Transform p2;
-    public Vector3 p2_pos;
-
-    [Space(5)]
-    public Transform p3;
-    public Vector3 p3_pos;
-
+    private LineRenderer lineRenderer;
+    [HideInInspector]
+    public List<Vector3> generatedPoints = new List<Vector3>();
+    [HideInInspector]
+    public List<float> generatedRotations = new List<float>();
     [HideInInspector]
     public List<Transform> bezierPoints = new List<Transform>();
+    [HideInInspector]
+    public Vector3 p0_pos, p1_pos, p2_pos, p3_pos;
 
-    //needed for gizmos
-    Vector3 demo_a;
-    Vector3 demo_b;
-    Vector3 demo_c;
-    Vector3 demo_d;
-    Vector3 demo_e;
+    [Header("Generation Editing ===========================================")]
+    [Range(0.01f, 0.1f), Tooltip("Distance between points in bezier curve")]
+    public float spaceBetweenPoints = 0.1f;
 
-    public void Start()
+    public Vector2 rounded_p1_offset = new Vector2(3, 1);
+    public Vector2 rounded_p2_offset = new Vector2(3, 1);
+
+    public Vector2 straight_p1_offset = new Vector2(2, 1);
+    public Vector2 straight_p2_offset = new Vector2(5, 2);
+
+    public Vector2 flat_p1_offset = new Vector2(30, 20);
+    public Vector2 flat_p2_offset = new Vector2(30, 20);
+
+    private void Start()
     {
-        lineRenderer = GetComponent<LineRenderer>();
-        meshCreator = undergroundMeshObj.GetComponent<MeshCreator>();
-
-        // add points to list
-        bezierPoints.Add(p0);
-        bezierPoints.Add(p1);
-        bezierPoints.Add(p2);
-        bezierPoints.Add(p3);
-
-
-        // << EDIT MODE SAVES THE POSITION OF THE TRANSFORMS >>
-        if (editMode)
-        {
-            // sets script values to point positions
-            p0_pos = p0.position;
-            p1_pos = p1.position;
-            p2_pos = p2.position;
-            p3_pos = p3.position;
-
-        }
-        else
-        {
-            // sets points to script values
-            p0.position = p0_pos;
-            p1.position = p1_pos;
-            p2.position = p2_pos;
-            p3.position = p3_pos;
-        }
-
-
-        // set underground mesh
-        //undergroundMesh = new Mesh();
-        //undergroundMeshObj.GetComponent<MeshFilter>().mesh = undergroundMesh;
-
-        // set depth mesh
-        //depthMesh = new Mesh();
-        //depthMeshObj.GetComponent<MeshFilter>().mesh = depthMesh;
-
-
-        SetAngleType(); // sets the angle type
-
-
     }
 
     public void Update()
     {
-        Main(editMode);
 
-        //changes the scale of the edit points
-        p0.transform.localScale = new Vector3(editPointScale, editPointScale);
-        p1.transform.localScale = new Vector3(editPointScale, editPointScale);
-        p2.transform.localScale = new Vector3(editPointScale, editPointScale);
-        p3.transform.localScale = new Vector3(editPointScale, editPointScale);
-
-    }
-
-    public void Main(bool edit_mode)
-    {
-        EditModeEnabled(edit_mode);
-
-        // << GENERATION >>
-        if (first_generation || generationEditUpdate)
+        // [[ DEBUG MODE ]]
+        if (debugMode)
         {
-            generationFinished = false;
-
-            SetAngleType(); // sets the angle type
-
-            generatedCurvePoints = GenerateCurvePointPositions(spaceBetweenPoints); //create list of point positions
-            generatedCurvePointRotations = GenerateCurvePointRotations(spaceBetweenPoints); //createt list of point rotations
-
-            first_generation = false; //not first gen anymore
-
-            if (generateMesh)
+            if (lineRenderer == null)
             {
-                // create undergound mesh
-                meshCreator.CreateUnderground(generatedCurvePoints);
-                //undergroundMeshObj.GetComponent<MeshRenderer>().enabled = false;
+                lineRenderer = GetComponent<LineRenderer>();
 
-                /*
-                CreateGroundDepth(generatedCurvePoints, meshDistBetweenPoints, depth_length);
-                depthMeshObj.GetComponent<MeshRenderer>().enabled = false;
-                */
             }
+            lineRenderer.enabled = true;
 
-            generationFinished = true;
+            GenerateCurve();
+            UpdateDebugPositions();
+
+            if (generatedPoints.Count > 0)
+            {
+                DrawCurveLine(generatedPoints);
+            }
+        }
+        else
+        {
+            if (lineRenderer != null)
+            {
+                lineRenderer.enabled = false;
+            }
         }
 
-        CameraRendering();
     }
 
-    #region POINT GENERATION =================================================================================
+    public void GenerateCurve()
+    {
+        // reset curve
+        generationFinished = false;
+        generatedPoints.Clear();
+        generatedRotations.Clear();
+
+        SetAngleType();
+
+        if (chunkStyle == CHUNK_STYLES.random)
+        {
+            int enumLength = System.Enum.GetValues(typeof(CHUNK_STYLES)).Length;
+            chunkStyle = (CHUNK_STYLES)Random.Range(1, enumLength);
+        }
+
+        SetChunkStyle(chunkStyle);
+
+        // update transform points
+        for (int i = 0; i < bezierPoints.Count; i++)
+        {
+            if (i == 0) { bezierPoints[0].position = p0_pos; }
+            else if (i == 1) { bezierPoints[1].position = p1_pos; }
+            else if (i == 2) { bezierPoints[2].position = p2_pos; }
+            else if (i == 3) { bezierPoints[3].position = p3_pos; }
+        }
+
+        // [[ GENERATION ]]
+        generatedPoints = GenerateCurvePositions(spaceBetweenPoints); //create list of point positions
+        generatedRotations = GenerateCurveRotations(spaceBetweenPoints); //createt list of point rotations
+
+        generationFinished = true;
+    }
+
+#region POINT GENERATION =================================================================================
     public Vector3 GetPointOnCurve(float t)
     {
         //first set of lerps
-        Vector3 a = Vector3.Lerp(p0.position, p1.position, t);
-        Vector3 b = Vector3.Lerp(p1.position, p2.position, t);
-        Vector3 c = Vector3.Lerp(p2.position, p3.position, t);
+        Vector3 a = Vector3.Lerp(p0_pos, p1_pos, t);
+        Vector3 b = Vector3.Lerp(p1_pos, p2_pos, t);
+        Vector3 c = Vector3.Lerp(p2_pos, p3_pos, t);
 
         //second set of lerps
         Vector3 d = Vector3.Lerp(a, b, t);
@@ -236,10 +146,9 @@ public class BezierCurveGeneration : MonoBehaviour
         return pointOnCurve;
     }
 
-    public List<Vector3> GenerateCurvePointPositions(float intervalBetweenPoints)
+    public List<Vector3> GenerateCurvePositions(float adjustedSpacing)
     {
         List<Vector3> point_positions = new List<Vector3>();
-        float adjustedSpacing = spaceBetweenPoints; // init the object spacing as the adjusted spacing
         // adjusted spacing changes the spacing between the points based on the tangent of the line
 
         // for all points
@@ -250,16 +159,14 @@ public class BezierCurveGeneration : MonoBehaviour
 
             // save current point position
             point_positions.Add(GetPointOnCurve(x)); //add position to list
-
         }
 
         return point_positions;
     }
 
-    public List<float> GenerateCurvePointRotations(float intervalBetweenPoints)
+    public List<float> GenerateCurveRotations(float adjustedSpacing)
     {
         List<float> point_rotations = new List<float>();
-        float adjustedSpacing = spaceBetweenPoints; // init the object spacing as the adjusted spacing
         // adjusted spacing changes the spacing between the points based on the tangent of the line
 
         for (float x = 0; x < 1; x += adjustedSpacing)
@@ -268,32 +175,35 @@ public class BezierCurveGeneration : MonoBehaviour
             adjustedSpacing = SetSpaceBetweenObjs(x);
 
             // save current point rotation ( the curve's normal at the given point )
-            point_rotations.Add(GetNormalRotationAngle(x, p0.position, p1.position, p2.position, p3.position));
+            point_rotations.Add(GetNormalRotationAngle(x, p0_pos, p1_pos, p2_pos, p3_pos));
         }
 
         return point_rotations;
     }
-    #endregion
+#endregion
 
-    #region BEZIER MATH ====================================================================
+#region BEZIER MATH ====================================================================
     public float SetSpaceBetweenObjs(float t)
     {
-        float pointYTangent = ComputeBezierDerivative(t, p0.position.y, p1.position.y, p2.position.y, p3.position.y);
+        float pointYTangent = ComputeBezierDerivative(t, p0_pos.y, p1_pos.y, p2_pos.y, p3_pos.y);
         float objSpace = spaceBetweenPoints;
 
-        /*
         // if ground slope is steep then make space between smaller based on how steep
-        if (Mathf.Abs(pointYTangent) >= 6f) 
+        if (Mathf.Abs(pointYTangent) >= 6f)
         {
-            // subtracts a percentage from spaceBetween so that steep slopes spawn thier objects closer together
-            objSpace = spaceBetweenPoints - (spaceBetweenPoints / pointYTangent);
-        }
-        */
+            // Calculate the angle of the tangent
+            Vector2 tangent = new Vector2(ComputeBezierDerivative(t, p0_pos.x, p1_pos.x, p2_pos.x, p3_pos.x), pointYTangent);
+            float angle = Mathf.Atan2(tangent.y, tangent.x) * Mathf.Rad2Deg;
 
+            // Calculate a scaling factor based on the angle
+            float scale = Mathf.Clamp01((angle - 45f) / 45f); // scale from 0 (shallow) to 1 (steep)
+
+            // Adjust the space between points based on the scaling factor
+            objSpace = spaceBetweenPoints * (1f - 0.5f * scale); // decrease space by up to 50%
+        }
 
         return objSpace;
     }
-
 
     // finds the derivative
     public float ComputeBezierDerivative(float t, float a, float b, float c, float d)
@@ -317,240 +227,101 @@ public class BezierCurveGeneration : MonoBehaviour
         float angle = Mathf.Atan2(normal.y, normal.x) * Mathf.Rad2Deg - 90f; //calculating the corresponding angle
         return angle;
     }
-    #endregion
+#endregion
 
-    #region DEBUG VISUALS ====================================================================
+#region CHUNK STYLE =======================
 
-    private void EditModeEnabled(bool enabled)
+    public void SetChunkStyle(CHUNK_STYLES chunkStyle)
     {
-        //disables edit point sprites
-        p0.gameObject.GetComponent<SpriteRenderer>().enabled = enabled;
-        p1.gameObject.GetComponent<SpriteRenderer>().enabled = enabled;
-        p2.gameObject.GetComponent<SpriteRenderer>().enabled = enabled;
-        p3.gameObject.GetComponent<SpriteRenderer>().enabled = enabled;
+        // get beg and end pos
+        Vector2 begPos = p0_pos;
+        Vector2 endPos = p3_pos;
 
-        if (enabled)
-        {                  
-            DrawBezierCurves(generatedCurvePoints, bezierLineWidth); //draw line renderer
-        }
-    }
+        // get distances
+        float horzDistance = Mathf.Abs(endPos.x - begPos.x);
+        float vertDistance = Mathf.Abs(endPos.y - begPos.y);
 
-    void DrawBezierCurves(List<Vector3> vertex_pos, float width)
-    {
-        lineRenderer.startWidth = width;
-        lineRenderer.endWidth = width;
-        //lineRenderer.loop = true;
-        lineRenderer.positionCount = vertex_pos.Count;
-        lineRenderer.SetPositions(vertex_pos.ToArray());
-    }
+        // default offset
+        Vector2 p1Offset = new Vector2(1, 1);
+        Vector2 p2Offset = new Vector2(1, 1);
 
-    private void DisplayBezierMath()
-    {
-        Vector3 pointOnCurve = GetPointOnCurve(t);
-        
-        /*
-        //first set of lines
-        Handles.color = Color.black;
-        Handles.DrawLine(p0.position, p1.position, 3f);
-        Handles.DrawLine(p1.position, p2.position, 3f);
-        Handles.DrawLine(p2.position, p3.position, 3f);
-
-        //second set
-        Handles.color = Color.yellow;
-        Handles.DrawLine(demo_a, demo_b);
-        Handles.DrawLine(demo_b, demo_c);
-
-        //final line
-        Handles.color = Color.red;
-        Handles.DrawLine(demo_d, demo_e);
-
-        //point
-        Handles.color = Color.black;
-        Handles.DrawSolidDisc(pointOnCurve, Vector3.forward, 0.05f);
-        */
-
-    }
-
-    private void DisplayBezierTangent()
-    {
-        Vector3 pointOnCurve = GetPointOnCurve(t);
-
-        /*
-        Handles.color = Color.white;
-        Vector3 tangent = new Vector3(ComputeBezierDerivative(t, p0.position.x, p1.position.x, p2.position.x, p3.position.x), ComputeBezierDerivative(t, p0.position.y, p1.position.y, p2.position.y, p3.position.y));
-        Handles.DrawSolidDisc(tangent, Vector3.forward, 0.05f);
-        
-
-        Debug.DrawRay(pointOnCurve, new Vector3(tangent.x, tangent.y, 0)); //tangent
-        Debug.DrawRay(pointOnCurve, new Vector3(-tangent.y * 0.2f, tangent.x * 0.2f, 0)); //normal
-
-        print("Tangent at point t: " + tangent.x + "/" + tangent.y);
-
-    */
-    }
-
-    private void DisplayEdgeLines()
-    {
-
-        List<Vector3> point_positions = new List<Vector3>();
-
-
-        point_positions.Add(p0.position);
-        point_positions.Add(p1.position);
-        point_positions.Add(p2.position);
-        point_positions.Add(p3.position);
-
-        //find the lowest point out of all points in the bezier
-        float lowestYpoint = -1.00069f; //fake value
-        foreach (Vector3 point in point_positions)
+        if (chunkStyle == CHUNK_STYLES.rounded)
         {
-            //print(point.y);
+            p1Offset = rounded_p1_offset;
+            p2Offset = rounded_p2_offset;
 
-            if (lowestYpoint == -1.00069f)
+
+            if (angleType == ANGLE_TYPE.UPHILL)
             {
-                lowestYpoint = point.y; //set first point value as lowest
+                p1_pos = new Vector3(begPos.x + (horzDistance / p1Offset.x), begPos.y);
+                p2_pos = new Vector3(endPos.x - (horzDistance / p2Offset.x), endPos.y);
             }
-            else if (point.y < lowestYpoint)
+            else
             {
-                lowestYpoint = point.y; //sort through points
+                p1_pos = new Vector3(begPos.x + (horzDistance / p1Offset.x), begPos.y);
+                p2_pos = new Vector3(endPos.x - (horzDistance / p2Offset.x), endPos.y);
+            }
+        }
+        else if (chunkStyle == CHUNK_STYLES.straight)
+        {
+            p1Offset = straight_p1_offset;
+            p2Offset = straight_p2_offset;
+
+
+            if (angleType == ANGLE_TYPE.UPHILL)
+            {
+                p1_pos = new Vector3(begPos.x + (horzDistance / p1Offset.x), begPos.y);
+                p2_pos = new Vector3(endPos.x - (horzDistance / p2Offset.x), endPos.y - (vertDistance / p2Offset.y));
+            }
+            else
+            {
+                p1_pos = new Vector3(begPos.x + (horzDistance / p1Offset.x), begPos.y);
+                p2_pos = new Vector3(endPos.x - (horzDistance / p2Offset.x), endPos.y + (vertDistance / p2Offset.y));
+            }
+        }
+        else if (chunkStyle == CHUNK_STYLES.flat)
+        {
+            p1Offset = flat_p1_offset;
+            p2Offset = flat_p2_offset;
+
+            if (angleType == ANGLE_TYPE.UPHILL)
+            {
+                p1_pos = new Vector3(begPos.x + (horzDistance / p1Offset.x), begPos.y + (vertDistance / p1Offset.y));
+                p2_pos = new Vector3(endPos.x - (horzDistance / p2Offset.x), endPos.y - (vertDistance / p2Offset.y));
+            }
+            else
+            {
+                p1_pos = new Vector3(begPos.x + (horzDistance / p1Offset.x), begPos.y - (vertDistance / p1Offset.y));
+                p2_pos = new Vector3(endPos.x - (horzDistance / p2Offset.x), endPos.y + (vertDistance / p2Offset.y));
             }
         }
 
-        //print("Lowest Y point: " + lowestYpoint);
-
-        /*
-        //draw line to lowest point y
-        Handles.color = Color.blue;
-
-        //left end point
-        Vector3 p0_base_position = new Vector3(p0_pos.x, p0_pos.y - (p0_pos.y - lowestYpoint), 0);
-        Handles.DrawLine(p0_pos, p0_base_position);
-
-        //right end point
-        Vector3 p3_base_position = new Vector3(p3_pos.x, p3_pos.y - (p3_pos.y - lowestYpoint), 0);
-        Handles.DrawLine(p3_pos, p3_base_position);
-
-        //draw horizontal line across
-        Handles.DrawLine(p0_base_position, p3_base_position);
-        */
-    }
-
-    private void OnDrawGizmos()
-    {
-        // show start point of curve
-        if (generatedCurvePoints.Count > 0)
-        {
-            /*
-            Handles.color = Color.black;
-            Handles.DrawSolidDisc(generatedCurvePoints[0], Vector3.forward, 0.1f);
-            */
-        }
-
-        //show visual math
-        if (showBezierMath)
-        {
-            DisplayBezierMath();
-        }
-
-        //show tangent
-        if (showBezierTangent)
-        {
-            DisplayBezierTangent();
-        }
-
-        
-        //show line renderer
-        if (showBezierLine)
-        {
-            lineRenderer.enabled = true;
-
-            //get curve points for line renderer
-            List<Vector3> points = new List<Vector3>();
-            for (float x = 0; x < 1; x += spaceBetweenPoints)
-            {
-                //first set of lerps
-                Vector3 aa = Vector3.Lerp(p0.position, p1.position, x);
-                Vector3 bb = Vector3.Lerp(p1.position, p2.position, x);
-                Vector3 cc = Vector3.Lerp(p2.position, p3.position, x);
-
-                //second set of lerps
-                Vector3 dd = Vector3.Lerp(aa, bb, x);
-                Vector3 ee = Vector3.Lerp(bb, cc, x);
-
-                Vector3 point = Vector3.Lerp(dd, ee, x);
-
-                points.Add(point); //add position to list
-
-            }
-
-            DrawBezierCurves(points, bezierLineWidth);
-            points.Clear();
-        }
-        else
-        {
-            lineRenderer.enabled = false;
-        }
-        
-
-        //show edge lines
-        if (showEdgeLines)
-        {
-
-            DisplayEdgeLines();
-
-        }
 
     }
+#endregion
 
-    #endregion
-
-    #region HELPER FUNCTIONS =====================================================================
+#region HELPER FUNCTIONS =====================================================================
     public void SetAngleType()
     {
         //if downhill
         if (p0_pos.y > p3_pos.y)
         {
-            generationAngleType = "downhill";
+            angleType = ANGLE_TYPE.DOWNHILL;
         }
         //if uphill
         else if (p0_pos.y < p3_pos.y)
         {
-            generationAngleType = "uphill";
+            angleType = ANGLE_TYPE.UPHILL;
+
         }
         // if flat
         else
         {
-            generationAngleType = "flat";
+            angleType = ANGLE_TYPE.FLAT;
         }
     }
 
-    public void CameraRendering()
-    {
-        // << CAMERA RENDERING >>
-        // if within range and generation is not made, make generation
-        if ((inCameraRange || cameraRangeOverride) && !generationFinished)
-        {
-            first_generation = true;
-        }
-        // if in range and generation is made
-        else if (inCameraRange || cameraRangeOverride)
-        {
-            // enable mesh
-            undergroundMeshObj.GetComponent<MeshRenderer>().enabled = true;
-            depthMeshObj.GetComponent<MeshRenderer>().enabled = true;
-        }
-        // if not in range, destroy all generated objects
-        else if (!inCameraRange && !cameraRangeOverride)
-        {
-            // disable mesh
-            undergroundMeshObj.GetComponent<MeshRenderer>().enabled = false;
-            depthMeshObj.GetComponent<MeshRenderer>().enabled = false;
-
-            generationFinished = false;
-        }
-    }
-
-    public void DestroyListObjects(List<GameObject> list)
+    public void DestroyAll(List<GameObject> list)
     {
         foreach (GameObject obj in list)
         {
@@ -559,7 +330,83 @@ public class BezierCurveGeneration : MonoBehaviour
 
         list.Clear();
     }
-    #endregion
+
+    public void DestroyAll(List<Transform> list)
+    {
+        foreach (Transform obj in list)
+        {
+            Destroy(obj);
+        }
+
+        list.Clear();
+    }
+
+    public void DrawCurveLine(List<Vector3> points)
+    {
+        if (lineRenderer == null) { lineRenderer = GetComponent<LineRenderer>(); }
+
+        lineRenderer.positionCount = 0; // Clear existing points first
+        lineRenderer.positionCount = points.Count;
+
+        // set points
+        lineRenderer.SetPositions(points.ToArray());
+    }
+
+    public void UpdateDebugPositions()
+    {
+
+        p0_pos = new Vector3(0, 0);
+        if (angleType == ANGLE_TYPE.FLAT)
+        {
+            p3_pos = new Vector3(200, 0);
+        }
+        else if (angleType == ANGLE_TYPE.UPHILL)
+        {
+            p3_pos = new Vector3(200, 200);
+        }
+        else if (angleType == ANGLE_TYPE.DOWNHILL)
+        {
+            p3_pos = new Vector3(200, -200);
+        }
+    }
+#endregion
+
+
+#if UNITY_EDITOR
+
+    private void OnDrawGizmos()
+    {
+        float lineThickness = 2;
+
+        //first set of lines
+        Handles.color = Color.black;
+        Handles.DrawLine(p0_pos, p1_pos, lineThickness);
+        Handles.DrawLine(p1_pos, p2_pos, lineThickness);
+        Handles.DrawLine(p2_pos, p3_pos, lineThickness);
+
+        //second set
+        Handles.color = Color.blue;
+        Vector3 demo_a = GetPointOnCurve(0f);
+        Vector3 demo_b = GetPointOnCurve(0.33f);
+        Vector3 demo_c = GetPointOnCurve(0.66f);
+        Handles.DrawLine(demo_a, demo_b, lineThickness);
+        Handles.DrawLine(demo_b, demo_c, lineThickness);
+        Handles.DrawLine(demo_c, generatedPoints[generatedPoints.Count-1], lineThickness);
+
+        // Draw gizmos for generated points and rotations
+        for (int i = 0; i < generatedPoints.Count; i++)
+        {
+            Vector3 point = generatedPoints[i];
+            float rotation = generatedRotations[i];
+
+            Handles.color = Color.white;
+            Handles.DrawSolidDisc(point, Vector3.forward, 1f);
+        }
+
+    }
+
+#endif
 
 }
+
 
