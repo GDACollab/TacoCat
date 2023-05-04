@@ -98,7 +98,9 @@ public class FlipTracker : MonoBehaviour
                 StartCoroutine(vehicle.PerfectLandingBoost());
                 audioManager.Play(audioManager.flipBoostSFX);
             }
-            audioManager.Play(audioManager.truckLandingSFX);
+            if(audioManager != null){
+                audioManager.Play(audioManager.truckLandingSFX);
+            }
             //PLAY AUDIO MANAGER REG LANDING
         }
 

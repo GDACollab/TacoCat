@@ -170,8 +170,9 @@ public class EnvironmentGenerator : MonoBehaviour
             }
         }
 
+        Debug.Log("groundPoints.count = " + groundPoints.Count + " numSigns = " + numSigns + " iter= " + groundPoints.Count/(numSigns + 1));
         // << SPAWN SIGNS >>
-        for (int signPointIter=groundPoints.Count/(numSigns + 1); signPointIter >= groundPoints.Count; signPointIter += groundPoints.Count/(numSigns+1)){
+        for (int signPointIter=groundPoints.Count/(numSigns + 1); signPointIter < groundPoints.Count; signPointIter += groundPoints.Count/(numSigns+1)){
             SpawnSign(signPointIter); 
         }
     }
@@ -219,7 +220,8 @@ public class EnvironmentGenerator : MonoBehaviour
         else
         {
             // set sorting order of sprite renderer
-            newTreeObject.GetComponentInChildren<SpriteRenderer>().sortingOrder = sortingOrder;
+            SpriteRenderer treeSpriteRend = newTreeObject.GetComponentInChildren<SpriteRenderer>();
+            treeSpriteRend.sortingOrder = sortingOrder;
         }
 
         return newTreeObject;
