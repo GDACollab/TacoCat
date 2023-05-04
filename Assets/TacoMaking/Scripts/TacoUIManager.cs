@@ -175,22 +175,18 @@ public class TacoUIManager : MonoBehaviour
         fuelBar.fillAmount = Mathf.Clamp(percent, 0, 1f); // Fill the bar according to the given fuel amount
     }
     public void DisplayNitro(int nitro){ // Switch between the 4 possible states of nitro charges
-        Debug.Log("Nitro Display Update to Level " + nitro);
         switch (nitro){
         case 1:
-            Debug.Log("Nitro Display Updated to Level 1");
             nCharge1.color = Color.HSVToRGB(236f/360, 0.71f, 0.96f, true);
             nCharge2.color = Color.black;
             nCharge3.color = Color.black;
             break;
         case 2:
-            Debug.Log("Nitro Display Updated to Level 2");
             nCharge1.color = Color.HSVToRGB(236f/360, 0.71f, 0.96f, true);
             nCharge2.color = Color.HSVToRGB(236f/360, 0.71f, 0.96f, true);
             nCharge3.color = Color.black;
             break;
         case 3:
-            Debug.Log("Nitro Display Updated to Level 3");
             nCharge1.color = Color.HSVToRGB(236f/360, 0.71f, 0.96f, true);
             nCharge2.color = Color.HSVToRGB(236f/360, 0.71f, 0.96f, true);
             nCharge3.color = Color.HSVToRGB(236f/360, 0.71f, 0.96f, true);
