@@ -115,10 +115,7 @@ public class AudioManager : MonoBehaviour {
         FMOD.RESULT result = RuntimeManager.StudioSystem.getEvent(path, out eventDescription);
         if (result != FMOD.RESULT.OK)
         {
-            string errorPath;
-            eventDescription.getPath(out errorPath);
-            Debug.LogWarning("FMOD event path does not exist: " + errorPath.ToString());
-
+            Debug.LogWarning("FMOD event path does not exist: " + path);
             return;
         }
 
