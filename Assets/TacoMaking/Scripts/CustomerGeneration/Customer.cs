@@ -23,7 +23,7 @@ public class Customer: MonoBehaviour
     [HideInInspector] public float transitionTime; //How long it takes in seconds for the customer to move between positions
     private float currTransitionTime; //Used for keeping track of time during transitions
     [HideInInspector] public float transitionOffset; //The most that a customers transition time can be randomly offset (used to make customers move at diff speeds)
-    [HideInInspector] private float offsetTransitionTime;
+    [HideInInspector] private float transitionOffsetTimer;
     [HideInInspector] public int currPosition;
     private Coroutine lastRoutine = null;
     [HideInInspector] public bool hasEndingDialogue;
@@ -218,8 +218,7 @@ public class Customer: MonoBehaviour
     {
         interpolater = 0;
         currTransitionTime = 0;
-        offsetTransitionTime = transitionTime + transitionOffset;
-        transitionOffset = 0;
+        transitionOffsetTimer = 0;
         prevPos = transform.position;
         targetPos = newPosition;
         if (lastRoutine != null)
@@ -229,19 +228,27 @@ public class Customer: MonoBehaviour
         lastRoutine = StartCoroutine(MovePosition());
     }
 
-    IEnumerator MovePosition()
+    private IEnumerator MovePosition()
     {
+        //Buffer for customers have dialogue
         while (dialoguePause > 0)
         {
             dialoguePause -= Time.deltaTime;
             yield return null;
         }
 
+        //Buffer between different customers moving
+        while (transitionOffsetTimer < transitionOffset)
+        {
+            transitionOffsetTimer += Time.deltaTime;
+            yield return null;
+        }
+
         //Stops moving customer once they are at their new position
-        while (currTransitionTime < offsetTransitionTime)
+        while (currTransitionTime < transitionTime)
         {
             //Math to make the transition ease in and out
-            interpolater = currTransitionTime / offsetTransitionTime;
+            interpolater = currTransitionTime / transitionTime;
             interpolater = interpolater * interpolater * (3f - 2f * interpolater);
             transform.position = Vector3.Lerp(prevPos, targetPos, interpolater);
             currTransitionTime += Time.deltaTime;

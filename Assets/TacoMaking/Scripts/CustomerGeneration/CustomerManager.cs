@@ -42,22 +42,8 @@ public class CustomerManager : MonoBehaviour
         customerScript.transitionTime = transitionTime;
         customerScript.currPosition = -1;
         //Temp for testing
-        if (Random.Range(0f, 1f) < 0.5f)
-        {
-            customerScript.hasIntroDialgue = true;
-        }
-        else
-        {
-            customerScript.hasIntroDialgue = false;
-        }
-        if (Random.Range(0f, 1f) < 0.5f)
-        {
-            customerScript.hasEndingDialogue = true;
-        }
-        else
-        {
-            customerScript.hasEndingDialogue = false;
-        }
+        customerScript.hasEndingDialogue = false;
+        customerScript.hasIntroDialgue = false;
 
         customerList.Add(customerScript);
         UpdateCustomers();
@@ -73,6 +59,7 @@ public class CustomerManager : MonoBehaviour
         {
             //Delays the destruction of the customer so that they have time to move offscreen
             currCustomer.MoveCustomer(positionList[0].position);
+            currCustomer.transitionOffset = 0;
             if (customerList[0].hasEndingDialogue)
             {
                 dialogueDelayTime = dialogueDelay;
