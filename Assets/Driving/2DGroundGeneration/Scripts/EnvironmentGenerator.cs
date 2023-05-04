@@ -170,7 +170,6 @@ public class EnvironmentGenerator : MonoBehaviour
             }
         }
 
-        Debug.Log("groundPoints.count = " + groundPoints.Count + " numSigns = " + numSigns + " iter= " + groundPoints.Count/(numSigns + 1));
         // << SPAWN SIGNS >>
         for (int signPointIter=groundPoints.Count/(numSigns + 1); signPointIter < groundPoints.Count; signPointIter += groundPoints.Count/(numSigns+1)){
             SpawnSign(signPointIter); 
@@ -179,7 +178,7 @@ public class EnvironmentGenerator : MonoBehaviour
 
     public GameObject SpawnSign(int pointIndex){
         Vector3 signLoc = findNearestPeak(pointIndex);
-        Debug.Log(groundPoints[pointIndex] + "       " + signLoc);
+        //Debug.Log(groundPoints[pointIndex] + "       " + signLoc);
         GameObject newSignObject = Instantiate(signPrefab, signLoc, Quaternion.Euler(new Vector3(0,0,0)));
         newSignObject.transform.parent = signGenParent;
         
@@ -243,7 +242,7 @@ public class EnvironmentGenerator : MonoBehaviour
 
         //First check if we're already on a peak
         if (leftNeighbor.y <= curY && rightNeighbor.y <= curY){
-            Debug.Log("Sign-gen case 1");
+            //Debug.Log("Sign-gen case 1");
             return workingPoint;
         }
 
@@ -254,7 +253,7 @@ public class EnvironmentGenerator : MonoBehaviour
             leftIter--;
             leftNeighbor = groundPoints[leftIter]; 
             if(leftNeighbor.y <= curY){
-                Debug.Log("Sign-gen case 2");
+                //Debug.Log("Sign-gen case 2");
                 return workingPoint;
             }
         }
@@ -266,13 +265,13 @@ public class EnvironmentGenerator : MonoBehaviour
             rightIter++;
             rightNeighbor = groundPoints[rightIter]; 
             if(rightNeighbor.y <= curY){
-                Debug.Log("Sign-gen case 3");
+                //Debug.Log("Sign-gen case 3");
                 return workingPoint;
             }
         }
 
         //Something went wrong if you're here
-        Debug.Log("Sign-gen - Nearest peak not found");
+        //Debug.Log("Sign-gen - Nearest peak not found");
         return workingPoint;
     }
 
