@@ -292,6 +292,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &550427974 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1451182995425309478, guid: 8bdc26fc693360d4499aa43fd2bc0433, type: 3}
+  m_PrefabInstance: {fileID: 1948827671}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &889484488
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -303,6 +314,22 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -1240414454, guid: 4eba278e776838940916c596d102d85f, type: 3}
+    - target: {fileID: 1434043564655159264, guid: 0f53c9ae0f7cec44db14b19b4360f2ff, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2180264, guid: ee6c058c3bb67cb49ba76ec0e81f1c92, type: 2}
+    - target: {fileID: 1843290166259627152, guid: 0f53c9ae0f7cec44db14b19b4360f2ff, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2180264, guid: ee6c058c3bb67cb49ba76ec0e81f1c92, type: 2}
+    - target: {fileID: 3717219884548258901, guid: 0f53c9ae0f7cec44db14b19b4360f2ff, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2180264, guid: ee6c058c3bb67cb49ba76ec0e81f1c92, type: 2}
+    - target: {fileID: 4254044610933895909, guid: 0f53c9ae0f7cec44db14b19b4360f2ff, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2180264, guid: ee6c058c3bb67cb49ba76ec0e81f1c92, type: 2}
     - target: {fileID: 6584911828108904396, guid: 0f53c9ae0f7cec44db14b19b4360f2ff, type: 3}
       propertyPath: m_Name
       value: TacoMakingGameManager
@@ -359,8 +386,23 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8669462709195437865, guid: 0f53c9ae0f7cec44db14b19b4360f2ff, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2180264, guid: ee6c058c3bb67cb49ba76ec0e81f1c92, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f53c9ae0f7cec44db14b19b4360f2ff, type: 3}
+--- !u!114 &979421052 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5515548795903364538, guid: 8bdc26fc693360d4499aa43fd2bc0433, type: 3}
+  m_PrefabInstance: {fileID: 1948827671}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1389148912
 GameObject:
   m_ObjectHideFlags: 0
@@ -545,6 +587,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1653065744 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3467683191857143423, guid: 8bdc26fc693360d4499aa43fd2bc0433, type: 3}
+  m_PrefabInstance: {fileID: 1948827671}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1791657181 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6584911828108904397, guid: 0f53c9ae0f7cec44db14b19b4360f2ff, type: 3}
@@ -618,6 +671,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: TacoUIManager
       objectReference: {fileID: 0}
+    - target: {fileID: 7277452623187438658, guid: 8bdc26fc693360d4499aa43fd2bc0433, type: 3}
+      propertyPath: nCharge1
+      value: 
+      objectReference: {fileID: 1653065744}
+    - target: {fileID: 7277452623187438658, guid: 8bdc26fc693360d4499aa43fd2bc0433, type: 3}
+      propertyPath: nCharge2
+      value: 
+      objectReference: {fileID: 979421052}
+    - target: {fileID: 7277452623187438658, guid: 8bdc26fc693360d4499aa43fd2bc0433, type: 3}
+      propertyPath: nCharge3
+      value: 
+      objectReference: {fileID: 550427974}
     - target: {fileID: 7277452623187438658, guid: 8bdc26fc693360d4499aa43fd2bc0433, type: 3}
       propertyPath: tacoGameManager
       value: 
