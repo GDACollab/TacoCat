@@ -96,6 +96,25 @@ public class StageManager : MonoBehaviour
 
     }
 
+    public int GetClosestGroundPointIndexToPos(Vector3 pos)
+    {
+        int closestIndex = -1;
+        float closestDistance = float.MaxValue;
+
+        for (int i = 0; i < allLevelGroundPoints.Count; i++)
+        {
+            float distance = Vector3.Distance(pos, allLevelGroundPoints[i]);
+
+            if (distance < closestDistance)
+            {
+                closestIndex = i;
+                closestDistance = distance;
+            }
+        }
+
+        return closestIndex;
+    }
+
     private void OnDrawGizmos()
     {
         // show stage areas

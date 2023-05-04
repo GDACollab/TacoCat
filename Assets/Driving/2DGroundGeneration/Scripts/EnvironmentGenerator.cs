@@ -61,36 +61,6 @@ public class EnvironmentGenerator : MonoBehaviour
     public List<GameObject> treePrefabs = new List<GameObject>();
 
 
-
-    [Header("Ground Objects ===========================================")]
-
-    [Tooltip("Toggle ground object spawning")]
-    public bool spawnGroundObjects;
-
-    [Tooltip("Parent of all spawned ground objects")]
-    public GameObject groundParent;
-
-    [Tooltip("Ground object prefabs")]
-    public List<GameObject> groundObjectPrefabs = new List<GameObject>();
-
-    [Tooltip("Special 'connector' object prefabs")]
-    public List<GameObject> endPointObjectPrefabs = new List<GameObject>();
-
-    [Tooltip("active ground objects")]
-    public List<GameObject> genGroundObjs = new List<GameObject>();
-
-    [Tooltip("Scale of the Ground Objects")]
-    public float groundObjScale = 20;
-
-    [Tooltip("Z offset of the ground")]
-    public int groundZOffest = -10;
-
-    [Range(1, 100), Tooltip("The amount of points between spawned ground objects")]
-    public int pointsBetweenGroundObjs = 40;
-
-    [Range(0, 0.2f), Tooltip("Makes the ground objects more randomly placed so it looks more natural")]
-    public float positionNoise = 0.1f;
-
     private void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
@@ -104,7 +74,6 @@ public class EnvironmentGenerator : MonoBehaviour
         if (stageManager.allStagesGenerated && !environmentSpawned)
         {
             SpawnAllEnvironmentObjects();
-            SpawnGroundObjects(stageManager.allLevelGroundPoints, stageManager.allLevelGroundRotations, pointsBetweenGroundObjs);
 
             if (drawLine) { DrawCurveLine(groundPoints, lineWidth, lineMaterial); }
         }
@@ -112,7 +81,6 @@ public class EnvironmentGenerator : MonoBehaviour
         else if (!stageManager.allStagesGenerated && environmentSpawned)
         {
             DeleteAllEnvironmentObjects();
-            DestroyAllGroundObjs();
         }
 
     }
@@ -231,116 +199,6 @@ public class EnvironmentGenerator : MonoBehaviour
 
         return newEnvObject;
     }
-
-    #region GROUND OBJECT GENERATION ===================================================================
-
-    void SpawnGroundObjects(List<Vector3> genPoints, List<float> genPointRots, int pointsBetweenObjs)
-    {
-        if (!spawnGroundObjects) { return; }
-
-        // pointsBetweenObjs can't be 0
-        if (pointsBetweenObjs == 0)
-        {
-            Debug.LogWarning("pointsBetweenObjs cannot be set to 0");
-
-            pointsBetweenObjs = 1;
-        }
-
-        // return if no ground prefabs
-        if (groundObjectPrefabs.Count == 0)
-        {
-            Debug.LogError("Generation does not have any ground object prefabs", this.gameObject);
-            return;
-        }
-
-        // notify if no endpoint prefabs
-        if (endPointObjectPrefabs.Count == 0)
-        {
-            Debug.LogWarning("Generation does not have any endpoint prefabs", this.gameObject);
-        }
-
-        DestroyListObjects(genGroundObjs);
-
-
-        int sortingOrder = 0; // sorting order of the object to be spawned
-
-        // for each generation point, spawn object
-        for (int i = 0; i < genPoints.Count - 1; i += pointsBetweenObjs)
-        {
-            GameObject groundObj;
-
-
-            //if either end point, choose from small ground points
-            if ((i < genPoints.Count && i >= genPoints.Count * 0.8f))
-            {
-                // make sure end points exist
-                if (endPointObjectPrefabs.Count > 0)
-                {
-                    groundObj = endPointObjectPrefabs[(int)Random.Range(0, endPointObjectPrefabs.Count)];
-                }
-                else { continue; }
-            }
-            else
-            {
-                //get random grass object in list
-                groundObj = groundObjectPrefabs[(int)Random.Range(0, groundObjectPrefabs.Count)];
-            }
-
-            // << SORTING ORDER >>
-            // toggle sorting order so that objects on this layer dont overlap
-            if (sortingOrder == 0)
-            {
-                sortingOrder = 1;
-            }
-            else if (sortingOrder == 1)
-            {
-                sortingOrder = 0;
-            }
-
-            //TOP GROUND
-            SpawnNewGround(groundObj, genPoints[i] + new Vector3(0, 0.5f, 0f), genPointRots[i], sortingOrder);
-        }
-    }
-
-    void SpawnNewGround(GameObject obj, Vector3 position, float rotation, int sortingOrder)
-    {
-        //print("ground spawned at : " + position);
-        float randomYPos = Random.Range(-positionNoise * 0.9f, positionNoise * 0.9f) + position.y; //set randomY
-
-        obj = Instantiate(obj, new Vector3(position.x, randomYPos, 0), Quaternion.identity);
-
-        //obj = Instantiate(obj, position, Quaternion.identity); //just in case you dont want the random y pos
-        obj.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, rotation));
-
-        //add to generated objects list
-        genGroundObjs.Add(obj);
-
-        obj.transform.parent = groundParent.transform;
-        obj.transform.localScale = new Vector2(groundObjScale, groundObjScale);
-
-        obj.transform.localPosition = SetZ(obj.transform.localPosition, groundZOffest); // set z position
-
-        // << SET SORTING ORDER >>
-        if (!obj.GetComponentInChildren<SpriteRenderer>())
-        {
-            Debug.LogError("Env Object doesn't have SpriteRenderer component", obj);
-        }
-        else
-        {
-            // set sorting order of sprite renderer
-            obj.GetComponentInChildren<SpriteRenderer>().sortingOrder = sortingOrder;
-        }
-    }
-
-    void DestroyAllGroundObjs()
-    {
-        foreach (GameObject o in genGroundObjs)
-        {
-            DestroyImmediate(o);
-        }
-        genGroundObjs.Clear();
-    }
-    #endregion
 
     #region HELPER FUNCTIONS =================================================================
     public void DestroyListObjects(List<GameObject> list)

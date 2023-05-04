@@ -6,6 +6,7 @@ using UnityEngine.Rendering.Universal;
 [RequireComponent(typeof(StageManager))]
 public class DrivingGameManager : MonoBehaviour
 {
+    private GameManager gameManager;
     private StageManager stageManager; // manages the generation stages
     public Vehicle vehicle;
 
@@ -26,25 +27,33 @@ public class DrivingGameManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        stageManager = GetComponent<StageManager>();
 
+        stageManager = GetComponent<StageManager>();
         vehicle.rb_vehicle.constraints = RigidbodyConstraints2D.FreezeAll;
 
         totalDistance = stageManager.mainGenerationLength;
 
         endOfGame = false;
         stuckTime = 0;
+
+        StartCoroutine(Initialize());
         
     }
+
+    public IEnumerator Initialize()
+    {
+        yield return new WaitUntil(() => stageManager.allStagesGenerated);
+
+        vehicle.rb_vehicle.constraints = RigidbodyConstraints2D.None;
+
+    }
+
+
+
 
     // Update is called once per frame
     void Update()
     {
-
-
-        //vehicle.rb_vehicle.constraints = RigidbodyConstraints2D.None;
-
-
         // Check for stuck
         if (vehicle.GetFuel() == 0 && vehicle.GetNitro() == 0 && !endOfGame) // Out of fuel & Nitro
         {

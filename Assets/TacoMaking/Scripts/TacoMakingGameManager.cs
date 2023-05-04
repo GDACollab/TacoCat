@@ -6,11 +6,12 @@ public enum scoreType { NONE, PERFECT, GOOD, OKAY, FAILED } // possible scores a
 
 public class TacoMakingGameManager : MonoBehaviour
 {
-    public TacoUIManager uiManager;
     [HideInInspector]
-    public IngredientBenchManager benchManager;
-
+    public GameManager gameManager;
+    [HideInInspector]
     public AudioManager audioManager;
+    public TacoUIManager uiManager;
+    public IngredientBenchManager benchManager;
 
     public bool endOfGame;
 
@@ -43,10 +44,12 @@ public class TacoMakingGameManager : MonoBehaviour
 
     public void Start()
     {
+
+
+
         customerCreationTimer = customerManager.transitionTime;
         benchManager = GetComponentInChildren<IngredientBenchManager>();
 
-        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
 
         CreateNewSubmissionTaco();
 
