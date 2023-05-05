@@ -42,7 +42,9 @@ public class GroundGeneration : MonoBehaviour
     public GENERATION_STYLES generationStyle = GENERATION_STYLES.sine;
 
     // >> CUSTOM SINE RANGES
+    [VectorLabels("Min", "Max")]
     public Vector2 chunkLengthRange = new Vector2(200, 500);
+    [VectorLabels("Min", "Max")]
     public Vector2 chunkHeightRange = new Vector2(200, 500);
 
     // >> DEFAULT MAX CHUNK VALUES

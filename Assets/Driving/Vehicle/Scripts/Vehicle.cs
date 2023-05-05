@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum driveState { NONE, START_DRIVE, GROUNDED, IN_AIR, NITRO, PERFECT_LANDING, CRASH, END_DRIVE }
+public enum DRIVE_STATE { NONE, GROUNDED, IN_AIR, NITRO, PERFECT_LANDING, CRASH, END_DRIVE }
 
 public class Vehicle : MonoBehaviour
 {
@@ -23,7 +23,7 @@ public class Vehicle : MonoBehaviour
     public float groundColliderHeightOffset = -2;
 
     [Header("States")]
-    public driveState state = driveState.START_DRIVE;
+    public DRIVE_STATE state;
     public bool gasPressed; // increase gravity force on truck
     public int rotationDir;
 
@@ -75,6 +75,7 @@ public class Vehicle : MonoBehaviour
         drivingUIManager = drivingGameManager.uiManager;
         
         rb_vehicle.velocity = startingVelocity;
+        state = DRIVE_STATE.NONE;
     }
 
     // Update is called once per frame
@@ -97,13 +98,13 @@ public class Vehicle : MonoBehaviour
         if (gasPressed && fuelAmount > 0)
         {
             // in air force
-            if (state == driveState.IN_AIR)
+            if (state == DRIVE_STATE.IN_AIR)
             {
                 //Debug.Log("airForce");
                 rb_vehicle.AddForce(inAirForce * rb_vehicle.mass);
             }
             // on ground force
-            else if (state == driveState.GROUNDED)
+            else if (state == DRIVE_STATE.GROUNDED)
             {
                 //Debug.Log("groundForce");
                 rb_vehicle.AddForce(groundedForce * rb_vehicle.mass);
@@ -115,13 +116,13 @@ public class Vehicle : MonoBehaviour
         }
 
         // << NITRO STATE >>
-        if (state == driveState.NITRO)
+        if (state == DRIVE_STATE.NITRO)
         {
             rb_vehicle.AddForce(nitroForce * rb_vehicle.mass);
         }
 
         // << PERFECT BOOST STATE >>
-        if (state == driveState.PERFECT_LANDING)
+        if (state == DRIVE_STATE.PERFECT_LANDING)
         {
             rb_vehicle.AddForce(perfectLandingBoostForce * rb_vehicle.mass);
         }
@@ -146,7 +147,7 @@ public class Vehicle : MonoBehaviour
 
         // << NITRO INPUT >>
         // if not in nitro ,, key is pressed && nitro charge left
-        if (state != driveState.NITRO && Input.GetKeyDown(nitroInputKey) && nitroCharges > 0)
+        if (state != DRIVE_STATE.NITRO && Input.GetKeyDown(nitroInputKey) && nitroCharges > 0)
         {
             StartCoroutine(NitroBoost());
             StartCoroutine(cameraHandler.Shake(activeNitroTime, cameraHandler.nitro_camShakeMagnitude));
@@ -162,39 +163,45 @@ public class Vehicle : MonoBehaviour
 
     public void StateMachine()
     {
-        // if not in nitro mode
-        if (state != driveState.NITRO && state != driveState.CRASH && state != driveState.PERFECT_LANDING)
+        switch (state)
         {
-            // set in air / ground drive
-            if (groundColliderList.Count > 0) { state = driveState.GROUNDED; }
-            else { state = driveState.IN_AIR; }
+            case DRIVE_STATE.NONE:
+            case DRIVE_STATE.IN_AIR:
+            case DRIVE_STATE.GROUNDED:
+
+                // update in air / ground drive
+                if (groundColliderList.Count > 0) { state = DRIVE_STATE.GROUNDED; }
+                else { state = DRIVE_STATE.IN_AIR; }
+                break;
+            default:
+                break;
         }
     }
 
     // override all states and 
     public IEnumerator NitroBoost()
     {
-        state = driveState.NITRO;
+        state = DRIVE_STATE.NITRO;
         nitroCharges--;
         drivingUIManager.updateNitro();
 
 
         yield return new WaitForSeconds(activeNitroTime);
 
-        state = driveState.IN_AIR;
+        state = DRIVE_STATE.NONE;
     }
 
     // override all states and 
     public IEnumerator PerfectLandingBoost()
     {
-        state = driveState.PERFECT_LANDING;
+        state = DRIVE_STATE.PERFECT_LANDING;
 
         StartCoroutine(cameraHandler.Shake(activePerfectBoostTime, cameraHandler.perfect_camShakeMagnitude));
 
 
         yield return new WaitForSeconds(activePerfectBoostTime);
 
-        state = driveState.GROUNDED;
+        state = DRIVE_STATE.NONE;
     }
 
     public float GetFuel() {

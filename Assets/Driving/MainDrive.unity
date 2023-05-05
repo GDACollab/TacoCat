@@ -478,7 +478,7 @@ MonoBehaviour:
   startingVelocity: {x: 0, y: 0}
   inAirForce: {x: 30, y: -700}
   groundedForce: {x: 100, y: -100}
-  velocityClamp: 800
+  velocityClamp: 2000
   rotationSpeed: 500
   nitroForce: {x: 500, y: 0}
   activeNitroTime: 1.5
@@ -16535,7 +16535,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8771345538298886059, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: chunkHeightRange.y
-      value: 200
+      value: -1000
       objectReference: {fileID: 0}
     - target: {fileID: 8771345538298886059, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: chunkLengthRange.x
@@ -16543,7 +16543,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8771345538298886059, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: chunkLengthRange.y
-      value: 1000
+      value: 2000
       objectReference: {fileID: 0}
     - target: {fileID: 8771345538298886060, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: m_RootOrder
@@ -16625,14 +16625,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vehicle: {fileID: 996258251}
   ground: {fileID: 143532458}
+  groundLineY: 500
+  vehicleHeight: 0
+  margin: 1
+  height: 10
+  minZ: -200
+  maxZ: -1000
+  smoothTime: 10
   camSpeed: 5
   perfect_camShakeMagnitude: 0.5
   nitro_camShakeMagnitude: 1
-  velocityRange: {x: 100, y: 700}
+  velocityRange: {x: 100, y: 1000}
   heightRange: {x: 200, y: 1000}
   xPosRange: {x: 20, y: 500}
   yPosRange: {x: 0, y: 100}
-  zPosRange: {x: -400, y: -600}
+  zPosRange: {x: -400, y: -1000}
   currOffset: {x: 20, y: 51.560783, z: -200}
 --- !u!20 &1440028596
 Camera:
@@ -17207,7 +17214,7 @@ MonoBehaviour:
   meshCreated: 0
   collisionMesh: 1
   groundMaterial: {fileID: 2100000, guid: 4df2c0c0a8b01c84e9e0c8f780f24e4e, type: 2}
-  underground_height: -1000
+  underground_height: -3000
   debugMarker: {fileID: 0}
   debugMarkerList: []
 --- !u!4 &956864685049405561

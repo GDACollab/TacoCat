@@ -4,10 +4,22 @@ using UnityEngine;
 
 public class CameraHandler : MonoBehaviour
 {
+    private Camera cam;
     private Rigidbody2D vehicleRb;
 
     public GameObject vehicle;
     public GameObject ground;
+
+    [Range(-1000, 1000)]
+    public float groundLineY = 0;
+    public float vehicleHeight;
+
+    public float margin = 2f;
+    public float height = 10f;
+    public float minZ = -20f;
+    public float maxZ = -5f;
+    public float smoothTime = 0.3f;
+
 
     [Space(10)]
     public float camSpeed = 0.2f;
@@ -33,15 +45,20 @@ public class CameraHandler : MonoBehaviour
 
     private void Start()
     {
+        cam = GetComponent<Camera>();
         vehicleRb = vehicle.GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        
         // if vehicle  is found
         if(vehicle) 
         {
+            BoundingTracker();
+
+            /*
             // Calculate the current velocity as a percentage of the velocityRange
             float velocityPercent = Mathf.InverseLerp(velocityRange.x, velocityRange.y, vehicleRb.velocity.magnitude);
             var emitter = vehicle.GetComponent<FMODUnity.StudioEventEmitter>();
@@ -58,7 +75,28 @@ public class CameraHandler : MonoBehaviour
             // Update the camera's position with the new z-position
             currOffset = new Vector3(xPos, yPos, zPos);
             transform.position = Vector3.Lerp(transform.position, vehicle.transform.position + currOffset, camSpeed * Time.deltaTime);
+            */    
         }
+        
+    }
+
+    private void BoundingTracker()
+    {
+        // Get the screen positions of the targets
+        Vector3 screenPos1 = cam.WorldToScreenPoint(vehicleRb.position);
+        Vector3 screenPos2 = cam.WorldToScreenPoint(new Vector3(vehicleRb.position.x, groundLineY));
+
+        // Calculate the desired camera position
+        Vector3 desiredPos = vehicleRb.position;
+        desiredPos.y = groundLineY + ((vehicleRb.position.y - groundLineY) / 2);
+
+        vehicleHeight = Mathf.Abs(vehicleRb.position.y - groundLineY);
+        desiredPos.z = Mathf.Lerp(zPosRange.x, zPosRange.y, vehicleHeight / 1000);
+
+
+
+        // Smoothly move the camera towards the desired position
+        transform.position = Vector3.Lerp(transform.position, desiredPos, smoothTime * Time.deltaTime);
     }
 
     public IEnumerator Shake(float duration, float magnitude)
@@ -74,5 +112,11 @@ public class CameraHandler : MonoBehaviour
             elapsed += Time.deltaTime;
             yield return 0;
         }
+    }
+
+    public void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(new Vector2(-10000, groundLineY), new Vector2(10000, groundLineY));
     }
 }

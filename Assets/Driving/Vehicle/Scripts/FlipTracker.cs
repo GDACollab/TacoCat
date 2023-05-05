@@ -67,7 +67,7 @@ public class FlipTracker : MonoBehaviour
         hitPointIndex = stageManager.GetClosestGroundPointIndexToPos(hit.point);
 
         // << TRIGGER WHEN IN AIR >>
-        if (vehicle.state == driveState.IN_AIR && !jumpStarted)
+        if (vehicle.state == DRIVE_STATE.IN_AIR && !jumpStarted)
         {
             // reset
             startJumpRot = 0;
@@ -79,7 +79,7 @@ public class FlipTracker : MonoBehaviour
         }
 
         // << TRIGGER WHEN GROUNDED >>
-        if (vehicle.state == driveState.GROUNDED && jumpStarted)
+        if (vehicle.state == DRIVE_STATE.GROUNDED && jumpStarted)
         {
             // set values
             jumpStarted = false;
@@ -102,7 +102,7 @@ public class FlipTracker : MonoBehaviour
         }
 
         // track in air time
-        if (jumpStarted && vehicle.state == driveState.IN_AIR)
+        if (jumpStarted && vehicle.state == DRIVE_STATE.IN_AIR)
         {
             currAirTime += Time.deltaTime;
 
@@ -117,7 +117,7 @@ public class FlipTracker : MonoBehaviour
 
     public bool IsPerfectLanding(float landPointRot, float groundPointRot)
     {
-        if (vehicle.state == driveState.CRASH) { return false; }
+        if (vehicle.state == DRIVE_STATE.CRASH) { return false; }
 
         // if rotation is within bound and enough time has passed and landing downhill
         if (Mathf.Abs(groundPointRot - landPointRot) < perfectLandingRotationBound && currAirTime > perfectLandingMinAirTime)
