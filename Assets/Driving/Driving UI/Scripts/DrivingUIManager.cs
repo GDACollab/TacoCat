@@ -26,6 +26,7 @@ public class DrivingUIManager : MonoBehaviour
     public Transform fuelSlider;
 
     public List<Image> nitroCharges;
+    public GameObject warningMessages;
 
     [Header("Debugging UI objects")]
     public TMP_Text velocityText;
@@ -70,6 +71,7 @@ public class DrivingUIManager : MonoBehaviour
     {
         updateFuel();
         //updateNitro();
+        isFuelEmpty();
         
         velocityText.text = "Velocity: " + vehicle.GetComponent<Rigidbody2D>().velocity.x;
 
@@ -145,6 +147,25 @@ public class DrivingUIManager : MonoBehaviour
                 //Debug.Log(i);
                 nitroCharges[i].gameObject.SetActive(false);
                 break;
+            }
+        }
+    }
+    
+    void isFuelEmpty(){
+        if(vehicle_script.GetFuel()<=0){
+            for(int i = 0; i < warningMessages.transform.childCount; i++){
+                Transform child = warningMessages.transform.GetChild(i);
+                if(vehicle_script.GetNitro()<=0 && child.gameObject.name.Contains("Nitro")){
+                    child.gameObject.SetActive(false);
+                }
+                else{
+                    child.gameObject.SetActive(true);
+                }
+            }
+        }
+        else{
+            for(int i = 0; i < warningMessages.transform.childCount; i++){
+                warningMessages.transform.GetChild(i).gameObject.SetActive(false);
             }
         }
     }
