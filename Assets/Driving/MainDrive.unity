@@ -472,18 +472,17 @@ MonoBehaviour:
   state: 1
   gasPressed: 0
   rotationDir: 0
-  grounded_gravity: 15000
-  inAir_gravity: 17000
+  gravity: 20000
   fuelAmount: 4000
   maxFuel: 4000
   startingVelocity: {x: 0, y: 0}
   inAirForce: {x: 30, y: -1200}
-  groundedForce: {x: 100, y: -250}
+  groundedForce: {x: 400, y: -500}
   velocityClamp: 2000
   rotationSpeed: 500
-  nitroForce: {x: 500, y: 0}
+  nitroForce: {x: 500, y: -250}
   activeNitroTime: 1.5
-  perfectLandingBoostForce: {x: 250, y: 0}
+  perfectLandingBoostForce: {x: 250, y: -250}
   activePerfectBoostTime: 0.5
   gasInputKey: 32
   nitroInputKey: 304
@@ -16532,23 +16531,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8771345538298886059, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: chunkHeightRange.x
-      value: -2000
+      value: -500
       objectReference: {fileID: 0}
     - target: {fileID: 8771345538298886059, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: chunkHeightRange.y
-      value: 200
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8771345538298886059, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: chunkLengthRange.x
-      value: 4000
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 8771345538298886059, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: chunkLengthRange.y
-      value: 5000
+      value: 3000
+      objectReference: {fileID: 0}
+    - target: {fileID: 8771345538298886059, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
+      propertyPath: chunkStyles.Array.size
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8771345538298886059, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: chunkStyles.Array.data[2]
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8771345538298886060, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: m_RootOrder
@@ -16638,7 +16641,7 @@ MonoBehaviour:
   nitro_camShakeMagnitude: 1
   velocityRange: {x: 100, y: 1000}
   xPosRange: {x: 20, y: 500}
-  zPosRange: {x: -600, y: -1000}
+  zPosRange: {x: -600, y: -1500}
   currOffset: {x: 20, y: 51.560783, z: -200}
 --- !u!20 &1440028596
 Camera:
@@ -16745,7 +16748,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attenuationObject: {fileID: 0}
---- !u!43 &1887139645
+--- !u!43 &1754276246
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -17719,11 +17722,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8771345538298886059, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: maxChunkHeight
-      value: 100
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 8771345538298886059, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
+      propertyPath: maxChunkLength
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 8771345538298886059, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: generationStyle
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8771345538298886060, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: m_RootOrder
@@ -17869,8 +17876,8 @@ MonoBehaviour:
   - {x: 7.1903625, y: -3.2995179, z: 8.2784224e-11}
   - {x: -4.2184334, y: -3.4624546, z: 0.00000067891347}
   m_ShapePathHash: 1675360583
-  m_Mesh: {fileID: 1887139645}
-  m_InstanceId: 761514
+  m_Mesh: {fileID: 1754276246}
+  m_InstanceId: 1585812
 --- !u!114 &5231190167739477842
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -118,12 +118,12 @@ MonoBehaviour:
   endGenPos: {x: 200, y: 30, z: 0}
   fullGenerationLength: 0
   fullGenerationHeight: 0
-  generationStyle: 2
-  chunkLengthRange: {x: 700, y: 1000}
-  chunkHeightRange: {x: 100, y: 400}
   maxChunkLength: 500
   maxChunkHeight: 250
-  chunkStyles: 0100000002000000
+  generationStyle: 2
+  chunkStyles: 0100000003000000
+  chunkLengthRange: {x: 700, y: 1000}
+  chunkHeightRange: {x: 100, y: 400}
   startIslandXOffset: -700
   startIslandYOffset: -700
   endIslandXOffset: 700
