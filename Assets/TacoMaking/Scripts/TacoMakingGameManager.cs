@@ -6,11 +6,12 @@ public enum scoreType { NONE, PERFECT, GOOD, OKAY, FAILED } // possible scores a
 
 public class TacoMakingGameManager : MonoBehaviour
 {
-    public TacoUIManager uiManager;
     [HideInInspector]
-    public IngredientBenchManager benchManager;
-
+    public GameManager gameManager;
+    [HideInInspector]
     public AudioManager audioManager;
+    public TacoUIManager uiManager;
+    public IngredientBenchManager benchManager;
 
     public bool endOfGame;
 
@@ -44,11 +45,18 @@ public class TacoMakingGameManager : MonoBehaviour
 
     public void Start()
     {
+
+
+
         customerCreationTimer = customerManager.transitionTime;
         customerManager.difficulty = difficulty;
-        benchManager = GetComponentInChildren<IngredientBenchManager>();
 
-        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        audioManager = gameManager.audioManager;
+        benchManager = GetComponentInChildren<IngredientBenchManager>();
+        uiManager = GetComponentInChildren<TacoUIManager>();
+        
+
 
         CreateNewSubmissionTaco();
 
@@ -89,7 +97,8 @@ public class TacoMakingGameManager : MonoBehaviour
                 customerCreationTimer = 0;
                 customersLeftToGenerate--;
                 //The ID passed in for each customer starts at 1 and counts up to totalCustomers
-                var customer = customerManager.CreateNewCustomer(totalCustomers - customersLeftToGenerate).GetComponent<Customer>();
+                Customer customer = customerManager.CreateNewCustomer(totalCustomers - customersLeftToGenerate).GetComponent<Customer>();
+
             }
         }
         customerCreationTimer += Time.deltaTime;
@@ -126,7 +135,11 @@ public class TacoMakingGameManager : MonoBehaviour
             if (perfectCounter % 3 == 0 && perfectCounter != 0)
             {
                 comboCounter++;
-                uiManager.DisplayNitro(comboCounter); //updates the nitro display
+                if (Vehicle.nitroCharges < 3)
+                {
+                    Vehicle.nitroCharges++;
+                }
+                uiManager.DisplayNitro(Vehicle.nitroCharges); //updates the nitro display
             }
         }
         else

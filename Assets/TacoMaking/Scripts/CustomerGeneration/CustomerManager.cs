@@ -18,7 +18,7 @@ public class CustomerManager : MonoBehaviour
     //before calling check if customers left to generate == 0
     private void Start()
     {
-        //DebugSpawnCustomers(10);
+        tacoGameManager = GetComponentInParent<TacoMakingGameManager>();
     }
 
     private void FixedUpdate()
@@ -67,6 +67,8 @@ public class CustomerManager : MonoBehaviour
         if (currCustomer == null && customerList.Count > 0)
         {
             currCustomer = customerList[0];
+            tacoGameManager.uiManager.newOrderTaken = false;
+            Debug.Log("display order");
 
             //tacoAudioManager.OrderAudio(); //needs to be edited later
         }

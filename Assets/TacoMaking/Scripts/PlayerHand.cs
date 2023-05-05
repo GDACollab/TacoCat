@@ -31,6 +31,7 @@ public class PlayerHand : MonoBehaviour
 
     // this is going to be the speed of the hand
     public float speed = 5;
+    public float handDelay = 0.5f;
 
     //How close the hand must be to the position to be 'touching'
     public Vector3 approximateProximity = new Vector3(0.02f, 0.02f, 0f);
@@ -54,12 +55,15 @@ public class PlayerHand : MonoBehaviour
 
 
     // >>>> NOTE:
-        // I used this framework to add onto what you were achieving with the old code.
-        // But now, the hand only moves to the target that it's given through input!
-        // We need the hand to pick up the ingredient and move back to the home before placing the ingredient onf the taco
-        // I placed the framework for you , but it's up to you to figure out how to finish it :)
+    // I used this framework to add onto what you were achieving with the old code.
+    // But now, the hand only moves to the target that it's given through input!
+    // We need the hand to pick up the ingredient and move back to the home before placing the ingredient onf the taco
+    // I placed the framework for you , but it's up to you to figure out how to finish it :)
 
-
+    public void Start()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+    }
 
     public void Update()
     {
@@ -156,11 +160,15 @@ public class PlayerHand : MonoBehaviour
         if (state == handState.PICK_FROM_BIN && TransformProximity())
         {
             target = submissionTaco.transform;
-            state = handState.PLACE_INGR;
+            StartCoroutine(DelayedStateChange(0.25f, handState.PLACE_INGR));
         }
     }
 
-    public void Start(){
-        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+    public IEnumerator DelayedStateChange(float delay, handState newState)
+    {
+        yield return new WaitForSeconds(delay);
+
+        state = newState;
     }
+
 }

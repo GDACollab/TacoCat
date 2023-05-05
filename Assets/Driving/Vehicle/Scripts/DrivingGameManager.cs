@@ -4,9 +4,13 @@ using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
 [RequireComponent(typeof(StageManager))]
+[RequireComponent(typeof(EnvironmentGenerator))]
+[RequireComponent(typeof(EnvironmentOcclusion))]
 public class DrivingGameManager : MonoBehaviour
 {
-    private StageManager stageManager; // manages the generation stages
+    GameManager gameManager;
+    StageManager stageManager; // manages the generation stages
+    public DrivingUIManager uiManager;
     public Vehicle vehicle;
 
     [Space(10)]
@@ -26,25 +30,30 @@ public class DrivingGameManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        stageManager = GetComponent<StageManager>();
 
+        stageManager = GetComponent<StageManager>();
         vehicle.rb_vehicle.constraints = RigidbodyConstraints2D.FreezeAll;
 
         totalDistance = stageManager.mainGenerationLength;
 
         endOfGame = false;
         stuckTime = 0;
+
+        StartCoroutine(Initialize());
         
+    }
+
+    public IEnumerator Initialize()
+    {
+        yield return new WaitUntil(() => stageManager.allStagesGenerated);
+
+        vehicle.rb_vehicle.constraints = RigidbodyConstraints2D.None;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-
-
-        //vehicle.rb_vehicle.constraints = RigidbodyConstraints2D.None;
-
-
         // Check for stuck
         if (vehicle.GetFuel() == 0 && vehicle.GetNitro() == 0 && !endOfGame) // Out of fuel & Nitro
         {
@@ -72,11 +81,7 @@ public class DrivingGameManager : MonoBehaviour
         {
             Debug.Log("You made it to the next city. One step closer to Jamie!");
 
-            try
-            {
-                GameObject.Find("GameManager").GetComponent<GameManager>().LoadTacoMakingScene();
-            }
-            catch { Debug.LogWarning("GameManager could not be found.", this.gameObject); }
+            endOfGame = true;
         }
 
         // << UPDATE DISTANCE TRACKER >>

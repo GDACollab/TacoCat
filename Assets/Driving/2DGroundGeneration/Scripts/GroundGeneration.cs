@@ -55,8 +55,6 @@ public class GroundGeneration : MonoBehaviour
     public int startIslandXOffset = -700;
     public int startIslandYOffset = -700;
     public int endIslandXOffset = 700;
-    public int endIslandYOffset = 700;
-
 
     public void CreateGeneration()
     {
@@ -131,6 +129,7 @@ public class GroundGeneration : MonoBehaviour
         yield return new WaitUntil(() => generationFinished);
 
         Debug.Log(">> " + this.gameObject.name + " Generation Finished [ " + chunks.Count + " chunks ]", this.gameObject);
+        DestroyGenerationObjects();
     }
 
     public void DestroyGenerationObjects()
@@ -143,7 +142,7 @@ public class GroundGeneration : MonoBehaviour
 
     public void StartIslandGenerator()
     {
-        Vector2 offsetPos = begGenPos + new Vector3(startIslandXOffset, maxChunkHeight); // init last chunk as the current beginning position
+        Vector2 offsetPos = begGenPos + new Vector3(startIslandXOffset, startIslandYOffset); // init last chunk as the current beginning position
 
         // << FLAT START ZONE >>
         SpawnBezierGroundChunk(offsetPos + new Vector2(startIslandXOffset, 0), offsetPos, CHUNK_STYLES.flat); // spawn flat beginning
