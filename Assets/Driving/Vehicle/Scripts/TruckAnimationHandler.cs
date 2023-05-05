@@ -10,6 +10,7 @@ public class TruckAnimationHandler : MonoBehaviour
     [Space(10)]
     public GameObject crashEffectPrefab;
     private GameObject spawnedCrashEffect;
+    public ParticleSystem nitroParty;
     public ParticleSystem flipParty;
 
     public GameObject nitroEffect;
@@ -28,14 +29,14 @@ public class TruckAnimationHandler : MonoBehaviour
         {
             EnableNitroEffect(true);
         } 
-        else { EnableNitroEffect(false); }
+        // else { EnableNitroEffect(false); }
 
         if (vehicle.state == driveState.CRASH)
         {
             TriggerCrashEffect(2);
         }
 
-        else if (vehicle.state == driveState.PERFECT_LANDING)
+        if (vehicle.state == driveState.PERFECT_LANDING)
         {
             EnablePerfectBoostEffect(true);
         }
@@ -49,19 +50,24 @@ public class TruckAnimationHandler : MonoBehaviour
         // spawnedCrashEffect = Instantiate(crashEffectPrefab, vehicle.transform.position, Quaternion.identity);
 
         // Destroy(spawnedCrashEffect, destroyTimer);
-        ParticleSystem party = vehicle.GetComponent<ParticleSystem>();
-        party.Play();
+        ParticleSystem crashParty = vehicle.GetComponent<ParticleSystem>();
+        crashParty.Play(false);
     }
 
     public void EnableNitroEffect(bool enabled)
     {
 
-        nitroEffect.SetActive(enabled);
+        // nitroEffect.SetActive(enabled);
+        // If you can get the nitro particle system in velocity truck's children, then please do.
+        // ParticleSystem nitroParty = vehicle.gameObject.GetComponentInChildren<ParticleSystem>();
+        nitroParty.Play(false);
     }
 
     public void EnablePerfectBoostEffect(bool enabled)
     {
         // perfectLandingEffect.SetActive(enabled);
-        flipParty.Play();
+        // If you can get the flip particle system in velocity truck's children, then please do.
+        // ParticleSystem flipParty = vehicle.gameObject.GetComponentInChildren<ParticleSystem>();
+        flipParty.Play(false);
     }
 }
