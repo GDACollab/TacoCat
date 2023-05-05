@@ -37,7 +37,7 @@ public class CameraHandler : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void OldUpdate()
     {
         // if vehicle  is found
         if(vehicle) {
@@ -124,7 +124,19 @@ public class CameraHandler : MonoBehaviour
     //Runs the equation to determine that determines the current 'zero' point
     float CalculateZero(Vector3 car_pos) 
     {
-        return slope * Mathf.Cos(car_pos.x * Mathf.PI / b_x_pos) + constant;
+        //Check if car is within range of list
+        if (bezierPointsListTracker < 0)
+        {//If not, the zero is the y of the closest point
+            return bezierPoints[0].y;
+        }
+        else if (bezierPointsListTracker >= bezierPoints.Count - 1)
+        {
+            return bezierPoints[bezierPoints.Count - 1].y;
+        }
+        else
+        {//If so, perform equation
+            return slope * Mathf.Cos(car_pos.x * Mathf.PI / b_x_pos) + constant;
+        }
     }
 
     float GetCurrentZero()
@@ -144,8 +156,25 @@ public class CameraHandler : MonoBehaviour
                 {
                     bezierPointsListTracker += 1;
                 }
-                //And then form a new equation for 0!
-                MakeEquation(bezierPoints[bezierPointsListTracker], bezierPoints[bezierPointsListTracker + 1]);
+
+                //Check to make sure that the car is within range of the points
+                if (bezierPointsListTracker < 0)
+                {//If not, the zero is the y of the closest point
+                    a_x_pos = float.NegativeInfinity;
+                    b_x_pos = bezierPoints[0].x;
+                    return bezierPoints[0].y;
+                }
+                else if(bezierPointsListTracker >= bezierPoints.Count - 1)
+                {
+                    a_x_pos = bezierPoints[bezierPoints.Count - 1].x;
+                    b_x_pos = float.PositiveInfinity;
+                    return bezierPoints[bezierPoints.Count - 1].y;
+                }
+                else
+                {
+                    //And then form a new equation for 0!
+                    MakeEquation(bezierPoints[bezierPointsListTracker], bezierPoints[bezierPointsListTracker + 1]);
+                }
             }
             //Then we calculate and return a 'zero' point using the current (whether new or old) equation
             return CalculateZero(vehicle.transform.position);
@@ -153,5 +182,36 @@ public class CameraHandler : MonoBehaviour
         //If no vehicle was grabbed, defaults to 0
         return 0.0f;
     }
-    
+
+    // Additional value added (technically subtracted) to the zero point
+    public float cameraForgiveness = 1.0f;
+
+    // Modified fixedUpdate() to work with the Zero point code
+    void FixedUpdate()
+    {
+        // if vehicle  is found
+        if (vehicle)
+        {
+
+            // Calculate the current velocity as a percentage of the velocityRange
+            float velocityPercent = Mathf.InverseLerp(velocityRange.x, velocityRange.y, vehicleRb.velocity.magnitude);
+
+            //Set zPos based on car's Y position from the zero, and the camera's FOV (60 in this case) divided by 2 (so, 30)
+            float zPos = Mathf.Min(zPosRange.x, -((vehicle.transform.position.y-GetCurrentZero()) / Mathf.Tan(30)));
+
+            // Linearly interpolate the camera's x-position based on the velocityPercent
+            float xPos = Mathf.Lerp(xPosRange.x, xPosRange.y, velocityPercent);
+
+            // Linearly interpolate the camera's y-position based on the height
+            float heightPercent = Mathf.InverseLerp(heightRange.x, heightRange.y, vehicle.transform.position.y - ground.transform.position.y);
+
+            float yPos = Mathf.Lerp(yPosRange.x, yPosRange.y, heightPercent);
+
+            // Update the camera's position with the new z-position
+            currOffset = new Vector3(xPos, yPos, zPos);
+            transform.position = Vector3.Lerp(transform.position, vehicle.transform.position + currOffset, camSpeed * Time.deltaTime);
+
+        }
+    }
+
 }
