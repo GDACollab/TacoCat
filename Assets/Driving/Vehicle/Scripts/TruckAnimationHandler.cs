@@ -43,11 +43,13 @@ public class TruckAnimationHandler : MonoBehaviour
 
     public void TriggerCrashEffect(float destroyTimer = 2)
     {
-        if (spawnedCrashEffect != null) { return; } // don't spawn if spawned already 
+        // if (spawnedCrashEffect != null) { return; } // don't spawn if spawned already 
 
-        spawnedCrashEffect = Instantiate(crashEffectPrefab, vehicle.transform.position, Quaternion.identity);
+        // spawnedCrashEffect = Instantiate(crashEffectPrefab, vehicle.transform.position, Quaternion.identity);
 
-        Destroy(spawnedCrashEffect, destroyTimer);
+        // Destroy(spawnedCrashEffect, destroyTimer);
+        ParticleSystem party = GetComponent<ParticleSystem>();
+        party.Play();
     }
 
     public void EnableNitroEffect(bool enabled)
