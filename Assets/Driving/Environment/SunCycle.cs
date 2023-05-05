@@ -24,10 +24,14 @@ public class SunCycle : MonoBehaviour
     private Vector3 s_vecToStartPos;
     private float s_angleFromStartToEnd;
 
+    private void Start()
+    {
+        SetUpSunPath();
+    }
+
     // Update is called once per frame
     void Update()
     {
-        SetUpSunPath();
         UpdateSunPos();
     }
 
@@ -45,8 +49,6 @@ public class SunCycle : MonoBehaviour
         // Calculate the angle that the sun needs to rotate around the circle to reach the end position.
         s_angleFromStartToEnd = Vector3.Angle(s_vecToStartPos, vecToEndPos);
 
-        // Update the sun's position based on the newly calculated path.
-        UpdateSunPos();
     }
 
     // Updates the sun's position based on pathProgress
