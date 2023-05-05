@@ -48,8 +48,9 @@ public class FlipTracker : MonoBehaviour
         animHandler = GetComponent<TruckAnimationHandler>();
         stageManager = GetComponentInParent<StageManager>();
         initTruckRotation = transform.rotation.eulerAngles.z;
-        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
-      
+        if(audioManager != null){
+            audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+        } 
         boostSpriteY = boostSprite.transform.localScale.y;
     }
 
@@ -97,7 +98,9 @@ public class FlipTracker : MonoBehaviour
                 StartCoroutine(vehicle.PerfectLandingBoost());
                 audioManager.Play(audioManager.flipBoostSFX);
             }
-            audioManager.Play(audioManager.truckLandingSFX);
+            if(audioManager != null){
+                audioManager.Play(audioManager.truckLandingSFX);
+            }
             //PLAY AUDIO MANAGER REG LANDING
         }
 

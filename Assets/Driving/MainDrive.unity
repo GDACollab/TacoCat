@@ -278,6 +278,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &433354810 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4524890476220449985, guid: f7a147aa2d90cc44fb63a3c4b4def4aa, type: 3}
+  m_PrefabInstance: {fileID: 6358171098650451142}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &932836660
 GameObject:
   m_ObjectHideFlags: 0
@@ -16748,7 +16753,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attenuationObject: {fileID: 0}
---- !u!43 &1754276246
+--- !u!1 &1473964995
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1473964996}
+  m_Layer: 0
+  m_Name: Sign Gen Parent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1473964996
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1473964995}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4145558052554466742}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!43 &1485018585
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -17134,6 +17170,10 @@ MonoBehaviour:
   treeZPosition: 10
   treePrefabs:
   - {fileID: 3369474761770153936, guid: 98f3305ed9766834c91d1bed13271dad, type: 3}
+  signPrefab: {fileID: 433354810}
+  signGenParent: {fileID: 1473964996}
+  signScale: 40
+  numSigns: 4
 --- !u!4 &760297305392505591
 Transform:
   m_ObjectHideFlags: 0
@@ -17698,6 +17738,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7736978145719334173}
+  - {fileID: 1473964996}
   m_Father: {fileID: 143532459}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -17876,8 +17917,8 @@ MonoBehaviour:
   - {x: 7.1903625, y: -3.2995179, z: 8.2784224e-11}
   - {x: -4.2184334, y: -3.4624546, z: 0.00000067891347}
   m_ShapePathHash: 1675360583
-  m_Mesh: {fileID: 1754276246}
-  m_InstanceId: 1585812
+  m_Mesh: {fileID: 1485018585}
+  m_InstanceId: 1600156
 --- !u!114 &5231190167739477842
 MonoBehaviour:
   m_ObjectHideFlags: 0

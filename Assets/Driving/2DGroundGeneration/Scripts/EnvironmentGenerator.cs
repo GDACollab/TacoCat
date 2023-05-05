@@ -60,6 +60,15 @@ public class EnvironmentGenerator : MonoBehaviour
     [Tooltip("List of tree prefabs to spawn")]
     public List<GameObject> treePrefabs = new List<GameObject>();
 
+    [Header("Signs")]
+    [Tooltip("Base sign prefab")]
+    public GameObject signPrefab;
+    [Tooltip("Parent for the spawned signs")]
+    public Transform signGenParent;
+    [Tooltip("Base scale of the Sign Objects")]
+    public float signScale = 40;
+    [Tooltip("Number of signs to spawn")]
+    public int numSigns = 4;
 
     private void Awake()
     {
@@ -127,13 +136,13 @@ public class EnvironmentGenerator : MonoBehaviour
         int sortingOrder = 0; // sorting order of the object to be spawned
         int spacing = minSpaceBetweenObjects; // minimum spacing between objects
 
-        // << SPAWN OBJECTS >>
+        // << SPAWN TREES >>
         for (int currPointIndex = 10; currPointIndex < groundPoints.Count - 1; currPointIndex += spacing)
         {
             // spawn new environment object
             int facing = Random.Range(0, 2)*2 - 1; 
             float thisScale = scale + (Random.Range(0, treeScaleVariance * 2) - treeScaleVariance); //this will have to be changed once we are spawning objects besides trees
-            SpawnEnvObj(prefabs[Random.Range(0, prefabs.Count)], currPointIndex, thisScale, facing, sortingOrder, zposition);
+            SpawnTree(prefabs[Random.Range(0, prefabs.Count)], currPointIndex, thisScale, facing, sortingOrder, zposition);
 
             /* ===============================
              *  << SET UP FOR NEXT ENVIRONMENT OBJECT >>
@@ -160,47 +169,113 @@ public class EnvironmentGenerator : MonoBehaviour
                 break;
             }
         }
+
+        // << SPAWN SIGNS >>
+        for (int signPointIter=groundPoints.Count/(numSigns + 1); signPointIter < groundPoints.Count; signPointIter += groundPoints.Count/(numSigns+1)){
+            SpawnSign(signPointIter); 
+        }
     }
 
-    public GameObject SpawnEnvObj(GameObject prefab, int pointIndex, float scale, int facing, int sortingOrder, int zposition = 0)
+    public GameObject SpawnSign(int pointIndex){
+        Vector3 signLoc = findNearestPeak(pointIndex);
+        //Debug.Log(groundPoints[pointIndex] + "       " + signLoc);
+        GameObject newSignObject = Instantiate(signPrefab, signLoc, Quaternion.Euler(new Vector3(0,0,0)));
+        newSignObject.transform.parent = signGenParent;
+        
+        newSignObject.transform.localScale = newSignObject.transform.localScale * signScale;
+
+        allSpawnedObjects.Add(newSignObject);
+        
+        return newSignObject;
+    }
+
+    public GameObject SpawnTree(GameObject prefab, int pointIndex, float scale, int facing, int sortingOrder, int zposition = 0)
     {
         // create a random environment object at indexed groundPoint and with rotation
-        GameObject newEnvObject = Instantiate(prefab, groundPoints[pointIndex], Quaternion.Euler(new Vector3(0, 0, 0)));
+        GameObject newTreeObject = Instantiate(prefab, groundPoints[pointIndex], Quaternion.Euler(new Vector3(0, 0, 0)));
 
         //set parent
-        newEnvObject.transform.parent = treeGenParent;
-        allSpawnedObjects.Add(newEnvObject);
+        newTreeObject.transform.parent = treeGenParent;
+        allSpawnedObjects.Add(newTreeObject);
 
         // randomly face left or right
         Vector3 facingVector = new Vector3( facing,  1 );
-        newEnvObject.transform.localScale = facingVector * scale;
+        newTreeObject.transform.localScale = facingVector * scale;
 
         // set z position
-        newEnvObject.transform.position = SetZ(newEnvObject.transform.position, zposition);
+        newTreeObject.transform.position = SetZ(newTreeObject.transform.position, zposition);
 
         // Move down slightly 
-        newEnvObject.transform.position = new Vector3(newEnvObject.transform.position.x, newEnvObject.transform.position.y + treeYOffset, newEnvObject.transform.position.z);
+        newTreeObject.transform.position = new Vector3(newTreeObject.transform.position.x, newTreeObject.transform.position.y + treeYOffset, newTreeObject.transform.position.z);
 
         //Apply rotation 
         if(treeRotationEnabled){
-            newEnvObject.transform.Rotate(new Vector3(0, 0, groundRotations[pointIndex] * (treeRotScalar / 100)));
+            newTreeObject.transform.Rotate(new Vector3(0, 0, groundRotations[pointIndex] * (treeRotScalar / 100)));
         }
 
         // << SET SORTING ORDER >>
-        if (!newEnvObject.GetComponentInChildren<SpriteRenderer>())
+        if (!newTreeObject.GetComponentInChildren<SpriteRenderer>())
         {
-            Debug.LogError("Env Object doesn't have SpriteRenderer component", newEnvObject);
+            Debug.LogError("Env Object doesn't have SpriteRenderer component", newTreeObject);
         }
         else
         {
             // set sorting order of sprite renderer
-            newEnvObject.GetComponentInChildren<SpriteRenderer>().sortingOrder = sortingOrder;
+            SpriteRenderer treeSpriteRend = newTreeObject.GetComponentInChildren<SpriteRenderer>();
+            treeSpriteRend.sortingOrder = sortingOrder;
         }
 
-        return newEnvObject;
+        return newTreeObject;
     }
 
     #region HELPER FUNCTIONS =================================================================
+
+    //Given a groundPoint, find the nearest peak
+    public Vector3 findNearestPeak(int pointIndex){
+        Vector3 workingPoint = groundPoints[pointIndex];
+        float curY = workingPoint.y;
+
+        int leftIter  = pointIndex - 1;    
+        int rightIter = pointIndex + 1;
+        Vector3 leftNeighbor  = groundPoints[leftIter];
+        Vector3 rightNeighbor = groundPoints[rightIter];
+
+        //First check if we're already on a peak
+        if (leftNeighbor.y <= curY && rightNeighbor.y <= curY){
+            //Debug.Log("Sign-gen case 1");
+            return workingPoint;
+        }
+
+        //Now check left
+        while(leftNeighbor.y > curY){
+            workingPoint = leftNeighbor;
+            curY = workingPoint.y;
+            leftIter--;
+            leftNeighbor = groundPoints[leftIter]; 
+            if(leftNeighbor.y <= curY){
+                //Debug.Log("Sign-gen case 2");
+                return workingPoint;
+            }
+        }
+
+        //And right
+        while(rightNeighbor.y > curY){
+            workingPoint = rightNeighbor;
+            curY = workingPoint.y;
+            rightIter++;
+            rightNeighbor = groundPoints[rightIter]; 
+            if(rightNeighbor.y <= curY){
+                //Debug.Log("Sign-gen case 3");
+                return workingPoint;
+            }
+        }
+
+        //Something went wrong if you're here
+        //Debug.Log("Sign-gen - Nearest peak not found");
+        return workingPoint;
+    }
+
+
     public void DestroyListObjects(List<GameObject> list)
     {
         foreach (GameObject obj in list)
