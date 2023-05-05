@@ -28,7 +28,8 @@ public class Vehicle : MonoBehaviour
     public int rotationDir;
 
     [Header("General Driving")]
-    public float gravity;
+    public float grounded_gravity;
+    public float inAir_gravity;
 
     [Space(10)]
     public int fuelAmount;
@@ -87,8 +88,17 @@ public class Vehicle : MonoBehaviour
 
     void FixedUpdate() {
 
-        // << CONSTANT GRAVITY >>
-        rb_vehicle.AddForce(Vector2.down * gravity * rb_vehicle.mass * Time.deltaTime);
+        // << GROUNDED GRAVITY >>
+        if (state == DRIVE_STATE.NONE || state == DRIVE_STATE.GROUNDED)
+        {
+            rb_vehicle.AddForce(Vector2.down * grounded_gravity * rb_vehicle.mass * Time.deltaTime);
+        }
+
+        // << IN AIR GRAVITY >>
+        else if (state == DRIVE_STATE.IN_AIR)
+        {
+            rb_vehicle.AddForce(Vector2.down * inAir_gravity * rb_vehicle.mass * Time.deltaTime);
+        }
 
         // << CHECK FOR GROUND COLLIDERS >>
         Collider2D[] groundColliders = Physics2D.OverlapCircleAll(transform.position + new Vector3(0, groundColliderHeightOffset), groundColliderSize, groundLayer);

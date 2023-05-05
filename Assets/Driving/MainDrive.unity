@@ -440,9 +440,9 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 300
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_Mass: 1000
+  m_LinearDrag: 0.2
+  m_AngularDrag: 0.8
   m_GravityScale: 1
   m_Material: {fileID: 6200000, guid: 2c3db7d76249d44788ad1fef54974be9, type: 2}
   m_Interpolate: 0
@@ -467,17 +467,18 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   groundColliderList: []
-  groundColliderSize: 15
-  groundColliderHeightOffset: -5
+  groundColliderSize: 30
+  groundColliderHeightOffset: -20
   state: 1
   gasPressed: 0
   rotationDir: 0
-  gravity: 15000
+  grounded_gravity: 15000
+  inAir_gravity: 17000
   fuelAmount: 4000
   maxFuel: 4000
   startingVelocity: {x: 0, y: 0}
-  inAirForce: {x: 30, y: -700}
-  groundedForce: {x: 100, y: -100}
+  inAirForce: {x: 30, y: -1200}
+  groundedForce: {x: 100, y: -250}
   velocityClamp: 2000
   rotationSpeed: 500
   nitroForce: {x: 500, y: 0}
@@ -499,8 +500,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 996258251}
   m_LocalRotation: {x: 0, y: -0, z: 0.7071068, w: -0.7071068}
-  m_LocalPosition: {x: -2333, y: 497, z: -0.2}
-  m_LocalScale: {x: 30, y: 30, z: 30}
+  m_LocalPosition: {x: -3033, y: 130, z: -0.2}
+  m_LocalScale: {x: 50, y: 50, z: 50}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6499430364615741960}
@@ -16531,19 +16532,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8771345538298886059, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: chunkHeightRange.x
-      value: -100
+      value: -2000
       objectReference: {fileID: 0}
     - target: {fileID: 8771345538298886059, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: chunkHeightRange.y
-      value: -1000
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 8771345538298886059, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: chunkLengthRange.x
-      value: 1000
+      value: 4000
       objectReference: {fileID: 0}
     - target: {fileID: 8771345538298886059, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: chunkLengthRange.y
-      value: 2000
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 8771345538298886059, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
+      propertyPath: chunkStyles.Array.data[2]
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8771345538298886060, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: m_RootOrder
@@ -16625,21 +16630,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vehicle: {fileID: 996258251}
   ground: {fileID: 143532458}
-  groundLineY: 500
   vehicleHeight: 0
-  margin: 1
-  height: 10
-  minZ: -200
-  maxZ: -1000
+  groundLineY: 500
   smoothTime: 10
   camSpeed: 5
   perfect_camShakeMagnitude: 0.5
   nitro_camShakeMagnitude: 1
   velocityRange: {x: 100, y: 1000}
-  heightRange: {x: 200, y: 1000}
   xPosRange: {x: 20, y: 500}
-  yPosRange: {x: 0, y: 100}
-  zPosRange: {x: -400, y: -1000}
+  zPosRange: {x: -600, y: -1000}
   currOffset: {x: 20, y: 51.560783, z: -200}
 --- !u!20 &1440028596
 Camera:
@@ -17525,6 +17524,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EndSceneTrigger
       objectReference: {fileID: 0}
+    - target: {fileID: 3973607376355647755, guid: 6658646cae70c2542af9e64ba3033b62, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7552461678641208363, guid: 6658646cae70c2542af9e64ba3033b62, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -17715,8 +17718,12 @@ PrefabInstance:
       value: '[[ Stage 2 ]]'
       objectReference: {fileID: 0}
     - target: {fileID: 8771345538298886059, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
+      propertyPath: maxChunkHeight
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8771345538298886059, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: generationStyle
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8771345538298886060, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: m_RootOrder
@@ -17950,8 +17957,32 @@ PrefabInstance:
       value: '[[ Stage 3 ]]'
       objectReference: {fileID: 0}
     - target: {fileID: 8771345538298886059, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
+      propertyPath: endGenPos.x
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 8771345538298886059, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
+      propertyPath: endGenPos.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8771345538298886059, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: generationStyle
-      value: 3
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8771345538298886059, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
+      propertyPath: chunkHeightRange.x
+      value: -400
+      objectReference: {fileID: 0}
+    - target: {fileID: 8771345538298886059, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
+      propertyPath: chunkHeightRange.y
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 8771345538298886059, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
+      propertyPath: chunkLengthRange.x
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 8771345538298886059, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
+      propertyPath: chunkLengthRange.y
+      value: 2000
       objectReference: {fileID: 0}
     - target: {fileID: 8771345538298886060, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: m_RootOrder

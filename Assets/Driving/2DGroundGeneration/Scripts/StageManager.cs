@@ -133,6 +133,20 @@ public class StageManager : MonoBehaviour
 
         }
 
+        Gizmos.color = Color.green;
+        // manually placed starting hill
+        Vector3 begGenPos = stages[0].begGenPos;
+        Vector3 xOffset = new Vector3(startIslandXOffset, 0);
+        Vector3 yOffset = new Vector3(0, startIslandYOffset);
+        // << FLAT START ZONE >>
+        Gizmos.DrawLine(begGenPos + (5 * xOffset), begGenPos + (3 * xOffset));
+
+        // << DOWNHILL TO GAIN SPEED >>
+        Gizmos.DrawLine(begGenPos + (3 * xOffset), begGenPos + xOffset + yOffset);
+
+        // << UPHILL TO LAUNCH >>
+        Gizmos.DrawLine(begGenPos + xOffset + yOffset, begGenPos);
+
     }
 
 #if UNITY_EDITOR

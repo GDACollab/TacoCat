@@ -12,15 +12,17 @@ public class GroundGenerationEditor : Editor
     SerializedProperty chunkStyles;
     SerializedProperty chunkLengthRange;
     SerializedProperty chunkHeightRange;
-    SerializedProperty chunkCount;
+    SerializedProperty maxChunkLength;
+    SerializedProperty maxChunkHeight;
 
     private void OnEnable()
     {
         generationStyle = serializedObject.FindProperty("generationStyle");
         chunkStyles = serializedObject.FindProperty("chunkStyles");
+        maxChunkLength = serializedObject.FindProperty("maxChunkLength");
+        maxChunkHeight = serializedObject.FindProperty("maxChunkHeight");
         chunkLengthRange = serializedObject.FindProperty("chunkLengthRange");
         chunkHeightRange = serializedObject.FindProperty("chunkHeightRange");
-        chunkCount = serializedObject.FindProperty("chunkCount");
     }
 
     public override void OnInspectorGUI()
@@ -28,6 +30,9 @@ public class GroundGenerationEditor : Editor
         serializedObject.Update();
 
         EditorGUILayout.PropertyField(generationStyle);
+
+        #region ChunkStyles
+        EditorGUILayout.Space(10);
 
         // Display the chunkStyles list as EnumPopups
         for (int i = 0; i < chunkStyles.arraySize; i++)
@@ -60,31 +65,26 @@ public class GroundGenerationEditor : Editor
         GUILayout.EndHorizontal();
 
         EditorGUILayout.Space(10);
+        #endregion
 
         if ((GroundGeneration.GENERATION_STYLES)generationStyle.enumValueIndex == GroundGeneration.GENERATION_STYLES.custom_sine)
         {
-            if (chunkLengthRange != null)
-            {
-                EditorGUILayout.PropertyField(chunkLengthRange);
+            EditorGUILayout.PropertyField(chunkLengthRange);
 
-                // Clamp the x and y values to 1000
-                Vector2 clampedChunkLengthRange = new Vector2(Mathf.Clamp(chunkLengthRange.vector2Value.x, 100f, 5000f), Mathf.Clamp(chunkLengthRange.vector2Value.y, 100f, 5000f));
-                chunkLengthRange.vector2Value = clampedChunkLengthRange;
-            }
+            // Clamp the x and y values to 1000
+            Vector2 clampedChunkLengthRange = new Vector2(Mathf.Clamp(chunkLengthRange.vector2Value.x, 100f, 5000f), Mathf.Clamp(chunkLengthRange.vector2Value.y, 100f, 5000f));
+            chunkLengthRange.vector2Value = clampedChunkLengthRange;
 
-            if (chunkHeightRange != null)
-            {
-                EditorGUILayout.PropertyField(chunkHeightRange);
+            EditorGUILayout.PropertyField(chunkHeightRange);
 
-                // Clamp the x and y values to 1000
-                Vector2 clampedChunkHeightRange = new Vector2(Mathf.Clamp(chunkHeightRange.vector2Value.x, -5000f, 5000f), Mathf.Clamp(chunkHeightRange.vector2Value.y, -5000f, 50000f));
-                chunkHeightRange.vector2Value = clampedChunkHeightRange;
-            }
+            // Clamp the x and y values to 1000
+            Vector2 clampedChunkHeightRange = new Vector2(Mathf.Clamp(chunkHeightRange.vector2Value.x, -5000f, 5000f), Mathf.Clamp(chunkHeightRange.vector2Value.y, -5000f, 50000f));
+            chunkHeightRange.vector2Value = clampedChunkHeightRange;
         }
-
-        if (chunkCount != null)
+        else
         {
-            EditorGUILayout.PropertyField(chunkCount);
+            EditorGUILayout.PropertyField(maxChunkHeight);
+            EditorGUILayout.PropertyField(maxChunkLength);
         }
 
         serializedObject.ApplyModifiedProperties();

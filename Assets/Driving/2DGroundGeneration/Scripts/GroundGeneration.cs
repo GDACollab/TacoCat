@@ -38,21 +38,24 @@ public class GroundGeneration : MonoBehaviour
     [HideInInspector]
     public float fullGenerationLength, fullGenerationHeight;  // store full generation length and height
 
+    // >> DEFAULT MAX CHUNK VALUES
+    public int maxChunkLength = 700;
+    public int maxChunkHeight = 300;
+
     // [[ GENERATION STYLE ]]
     public GENERATION_STYLES generationStyle = GENERATION_STYLES.sine;
 
+    [Tooltip("Choose the style of each chunk")]
+    public List<CHUNK_STYLES> chunkStyles = new List<CHUNK_STYLES>();
     // >> CUSTOM SINE RANGES
     [VectorLabels("Min", "Max")]
     public Vector2 chunkLengthRange = new Vector2(200, 500);
     [VectorLabels("Min", "Max")]
     public Vector2 chunkHeightRange = new Vector2(200, 500);
 
-    // >> DEFAULT MAX CHUNK VALUES
-    public int maxChunkLength = 700;
-    public int maxChunkHeight = 300;
 
-    [Tooltip("Choose the style of each chunk")]
-    public List<CHUNK_STYLES> chunkStyles = new List<CHUNK_STYLES>();
+
+
     // [[ END ISLAND OFFSETS ]]
     public int startIslandXOffset = -700;
     public int startIslandYOffset = -700;
@@ -149,10 +152,10 @@ public class GroundGeneration : MonoBehaviour
         // manually placed starting hill
 
         // << FLAT START ZONE >>
-        SpawnBezierGroundChunk(begGenPos + (3*xOffset), begGenPos + (2 *xOffset), CHUNK_STYLES.flat); // spawn flat beginning
+        SpawnBezierGroundChunk(begGenPos + (5*xOffset), begGenPos + (3*xOffset), CHUNK_STYLES.flat); // spawn flat beginning
 
         // << DOWNHILL TO GAIN SPEED >>
-        SpawnBezierGroundChunk(begGenPos + (2*xOffset), begGenPos + xOffset + yOffset, CHUNK_STYLES.rounded); // spawn
+        SpawnBezierGroundChunk(begGenPos + (3*xOffset), begGenPos + xOffset + yOffset, CHUNK_STYLES.rounded); // spawn
         
         // << UPHILL TO LAUNCH >>
         SpawnBezierGroundChunk(begGenPos + xOffset + yOffset, begGenPos, CHUNK_STYLES.straight); // spawn
@@ -503,6 +506,9 @@ public class GroundGeneration : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+
+
+
 
     }
 }

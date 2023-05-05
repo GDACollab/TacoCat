@@ -9,17 +9,12 @@ public class CameraHandler : MonoBehaviour
 
     public GameObject vehicle;
     public GameObject ground;
-
-    [Range(-1000, 1000)]
-    public float groundLineY = 0;
     public float vehicleHeight;
 
-    public float margin = 2f;
-    public float height = 10f;
-    public float minZ = -20f;
-    public float maxZ = -5f;
+    [Space(10)]
+    [Range(-1000, 1000)]
+    public float groundLineY = 0;
     public float smoothTime = 0.3f;
-
 
     [Space(10)]
     public float camSpeed = 0.2f;
@@ -33,14 +28,11 @@ public class CameraHandler : MonoBehaviour
 
     [Header("Parameters")]
     public Vector2 velocityRange = new Vector2(300, 1000); //the range of velocity the camera should adjust for
-    public Vector2 heightRange = new Vector2(300, 1000);
     
     [Space(30)]
     [Header("Adjustment Ranges")]
     public Vector2 xPosRange = new Vector2(0, -100); // the range of z positions the camera should adjust between
-    public Vector2 yPosRange = new Vector2(0, -200);
     public Vector2 zPosRange = new Vector2(-200, -500); // the range of z positions the camera should adjust between
-
     public Vector3 currOffset;
 
     private void Start()
@@ -82,16 +74,16 @@ public class CameraHandler : MonoBehaviour
 
     private void BoundingTracker()
     {
-        // Get the screen positions of the targets
-        Vector3 screenPos1 = cam.WorldToScreenPoint(vehicleRb.position);
-        Vector3 screenPos2 = cam.WorldToScreenPoint(new Vector3(vehicleRb.position.x, groundLineY));
 
         // Calculate the desired camera position
         Vector3 desiredPos = vehicleRb.position;
+
+        float velocityPercent = Mathf.InverseLerp(velocityRange.x, velocityRange.y, vehicleRb.velocity.magnitude);
+        desiredPos.x = desiredPos.x + Mathf.Lerp(xPosRange.x, xPosRange.y, velocityPercent);
         desiredPos.y = groundLineY + ((vehicleRb.position.y - groundLineY) / 2);
 
         vehicleHeight = Mathf.Abs(vehicleRb.position.y - groundLineY);
-        desiredPos.z = Mathf.Lerp(zPosRange.x, zPosRange.y, vehicleHeight / 1000);
+        desiredPos.z = desiredPos.z + Mathf.Lerp(zPosRange.x, zPosRange.y, velocityPercent);
 
 
 
