@@ -10,6 +10,7 @@ public class TruckAnimationHandler : MonoBehaviour
     [Space(10)]
     public GameObject crashEffectPrefab;
     private GameObject spawnedCrashEffect;
+    public ParticleSystem flipParty;
 
     public GameObject nitroEffect;
 
@@ -34,11 +35,11 @@ public class TruckAnimationHandler : MonoBehaviour
             TriggerCrashEffect(2);
         }
 
-        if (vehicle.state == driveState.PERFECT_LANDING)
+        else if (vehicle.state == driveState.PERFECT_LANDING)
         {
             EnablePerfectBoostEffect(true);
         }
-        else { EnablePerfectBoostEffect(false); }
+        // else { EnablePerfectBoostEffect(false); }
     }
 
     public void TriggerCrashEffect(float destroyTimer = 2)
@@ -48,7 +49,7 @@ public class TruckAnimationHandler : MonoBehaviour
         // spawnedCrashEffect = Instantiate(crashEffectPrefab, vehicle.transform.position, Quaternion.identity);
 
         // Destroy(spawnedCrashEffect, destroyTimer);
-        ParticleSystem party = GetComponent<ParticleSystem>();
+        ParticleSystem party = vehicle.GetComponent<ParticleSystem>();
         party.Play();
     }
 
@@ -60,6 +61,7 @@ public class TruckAnimationHandler : MonoBehaviour
 
     public void EnablePerfectBoostEffect(bool enabled)
     {
-        perfectLandingEffect.SetActive(enabled);
+        // perfectLandingEffect.SetActive(enabled);
+        flipParty.Play();
     }
 }
