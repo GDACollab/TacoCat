@@ -6,15 +6,13 @@ using UnityEngine.UI;
 public class PauseManager : MonoBehaviour
 {
     public KeyCode pauseKey = KeyCode.Escape;
-    GameObject pauseCanvas;
+    public GameObject pauseCanvas;
     AudioManager audioManager;
     protected bool isPaused = false;
 
     protected List<Slider> volumeSliders = new List<Slider>();
 
     private void Awake() {
-        DontDestroyOnLoad(this);
-        pauseCanvas = GameObject.Find("PauseCanvas");
         audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
 
         var sliderTransform = pauseCanvas.transform.GetChild(0).GetChild(1);
