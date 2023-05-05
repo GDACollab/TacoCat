@@ -171,12 +171,13 @@ public class EnvironmentGenerator : MonoBehaviour
         }
 
         // << SPAWN SIGNS >>
+        int signNum = 1;
         for (int signPointIter=groundPoints.Count/(numSigns + 1); signPointIter < groundPoints.Count; signPointIter += groundPoints.Count/(numSigns+1)){
-            SpawnSign(signPointIter); 
+            SpawnSign(signPointIter, signNum++); 
         }
     }
 
-    public GameObject SpawnSign(int pointIndex){
+    public GameObject SpawnSign(int pointIndex, int signNum){
         Vector3 signLoc = findNearestPeak(pointIndex);
         //Debug.Log(groundPoints[pointIndex] + "       " + signLoc);
         GameObject newSignObject = Instantiate(signPrefab, signLoc, Quaternion.Euler(new Vector3(0,0,0)));
@@ -184,8 +185,10 @@ public class EnvironmentGenerator : MonoBehaviour
         
         newSignObject.transform.localScale = newSignObject.transform.localScale * signScale;
 
+        TMPro.TextMeshProUGUI textBox = newSignObject.GetComponentInChildren<TMPro.TextMeshProUGUI>();
+        textBox.text = System.Math.Floor((100.0f / numSigns) * signNum) + "%";
+
         allSpawnedObjects.Add(newSignObject);
-        
         return newSignObject;
     }
 
