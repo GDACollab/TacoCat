@@ -135,20 +135,25 @@ public class GroundGeneration : MonoBehaviour
     public void DestroyGenerationObjects()
     {
         DestroyAllChunks();
-        Destroy(this.gameObject);
     }
 
     #region GENERATION ====================================================
 
     public void StartIslandGenerator()
     {
-        Vector2 offsetPos = begGenPos + new Vector3(startIslandXOffset, startIslandYOffset); // init last chunk as the current beginning position
+        Vector3 xOffset = new Vector3(startIslandXOffset, 0); 
+        Vector3 yOffset = new Vector3(0, startIslandYOffset); 
+
+        // manually placed starting hill
 
         // << FLAT START ZONE >>
-        SpawnBezierGroundChunk(offsetPos + new Vector2(startIslandXOffset, 0), offsetPos, CHUNK_STYLES.flat); // spawn flat beginning
+        SpawnBezierGroundChunk(begGenPos + (3*xOffset), begGenPos + (2 *xOffset), CHUNK_STYLES.flat); // spawn flat beginning
 
-        // << HILL TO GAIN SPEED >>
-        SpawnBezierGroundChunk(offsetPos, begGenPos, CHUNK_STYLES.rounded); // spawn
+        // << DOWNHILL TO GAIN SPEED >>
+        SpawnBezierGroundChunk(begGenPos + (2*xOffset), begGenPos + xOffset + yOffset, CHUNK_STYLES.rounded); // spawn
+        
+        // << UPHILL TO LAUNCH >>
+        SpawnBezierGroundChunk(begGenPos + xOffset + yOffset, begGenPos, CHUNK_STYLES.straight); // spawn
 
         startIslandGenerated = true;
 

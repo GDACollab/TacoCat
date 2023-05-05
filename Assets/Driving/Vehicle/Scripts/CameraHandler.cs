@@ -31,8 +31,6 @@ public class CameraHandler : MonoBehaviour
 
     public Vector3 currOffset;
 
-    
-
     private void Start()
     {
         vehicleRb = vehicle.GetComponent<Rigidbody2D>();
@@ -42,8 +40,8 @@ public class CameraHandler : MonoBehaviour
     void FixedUpdate()
     {
         // if vehicle  is found
-        if(vehicle) {
-
+        if(vehicle) 
+        {
             // Calculate the current velocity as a percentage of the velocityRange
             float velocityPercent = Mathf.InverseLerp(velocityRange.x, velocityRange.y, vehicleRb.velocity.magnitude);
             var emitter = vehicle.GetComponent<FMODUnity.StudioEventEmitter>();
@@ -62,7 +60,6 @@ public class CameraHandler : MonoBehaviour
             transform.position = Vector3.Lerp(transform.position, vehicle.transform.position + currOffset, camSpeed * Time.deltaTime);
         }
     }
-
 
     public IEnumerator Shake(float duration, float magnitude)
     {

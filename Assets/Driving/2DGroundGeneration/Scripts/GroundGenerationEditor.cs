@@ -34,7 +34,7 @@ public class GroundGenerationEditor : Editor
                 EditorGUILayout.PropertyField(chunkLengthRange);
 
                 // Clamp the x and y values to 1000
-                Vector2 clampedChunkLengthRange = new Vector2(Mathf.Clamp(chunkLengthRange.vector2Value.x, 100f, 1000f), Mathf.Clamp(chunkLengthRange.vector2Value.y, 100f, 1000f));
+                Vector2 clampedChunkLengthRange = new Vector2(Mathf.Clamp(chunkLengthRange.vector2Value.x, 100f, 2000f), Mathf.Clamp(chunkLengthRange.vector2Value.y, 100f, 1000f));
                 chunkLengthRange.vector2Value = clampedChunkLengthRange;
             }
 
@@ -43,7 +43,7 @@ public class GroundGenerationEditor : Editor
                 EditorGUILayout.PropertyField(chunkHeightRange);
 
                 // Clamp the x and y values to 1000
-                Vector2 clampedChunkHeightRange = new Vector2(Mathf.Clamp(chunkHeightRange.vector2Value.x, -1000f, 1000f), Mathf.Clamp(chunkHeightRange.vector2Value.y, -1000f, 1000f));
+                Vector2 clampedChunkHeightRange = new Vector2(Mathf.Clamp(chunkHeightRange.vector2Value.x, -2000f, 2000f), Mathf.Clamp(chunkHeightRange.vector2Value.y, -1000f, 1000f));
                 chunkHeightRange.vector2Value = clampedChunkHeightRange;
             }
         }

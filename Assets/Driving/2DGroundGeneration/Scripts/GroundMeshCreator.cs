@@ -16,6 +16,8 @@ public class GroundMeshCreator : MonoBehaviour
     public Material groundMaterial;
     Vector3 begPos, endPos, middleOfMesh, scaleOfGeneration, safeGenTextureScale;
 
+    public int underground_height = -500;
+
     [Header("Debug")]
     public GameObject debugMarker;
     public List<GameObject> debugMarkerList = new List<GameObject>();
@@ -31,7 +33,7 @@ public class GroundMeshCreator : MonoBehaviour
         edgeCollider = GetComponent<EdgeCollider2D>();
     }
 
-    public void GenerateUndergroundMesh(List<Vector3> genGroundPoints, float underground_height = -100)
+    public void GenerateUndergroundMesh(List<Vector3> genGroundPoints)
     {
         // get mesh values
         begPos = genGroundPoints[0];
