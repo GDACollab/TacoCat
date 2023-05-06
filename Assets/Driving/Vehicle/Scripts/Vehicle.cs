@@ -12,6 +12,7 @@ public class Vehicle : MonoBehaviour
     DrivingGameManager drivingGameManager;
     DrivingUIManager drivingUIManager;
 
+    FMODUnity.StudioEventEmitter emitter;
 
     public Rigidbody2D rb_vehicle;
 
@@ -65,6 +66,7 @@ public class Vehicle : MonoBehaviour
     [Header("RPM (AUDIO)")]
     public float minRPM = 0;
     public float maxRPM = 2000;
+    public float rpm;
 
     private void Start()
     {
@@ -75,6 +77,9 @@ public class Vehicle : MonoBehaviour
         drivingUIManager = drivingGameManager.uiManager;
         
         rb_vehicle.velocity = startingVelocity;
+
+        var target = GameObject.Find("VelocityTruck");
+        emitter = target.GetComponent<FMODUnity.StudioEventEmitter>();
     }
 
     // Update is called once per frame
@@ -82,6 +87,9 @@ public class Vehicle : MonoBehaviour
     {
         Inputs();
         StateMachine();
+
+        rpm = rb_vehicle.velocity.x;
+        emitter.SetParameter("RPM", rpm);
     }
 
     void FixedUpdate() {

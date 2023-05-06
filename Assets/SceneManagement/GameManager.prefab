@@ -4698,6 +4698,10 @@ PrefabInstance:
       value: Music
       objectReference: {fileID: 0}
     - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: crashSFX
+      value: event:/SFX/Driving/Car Crashes
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
       propertyPath: typingSFX
       value: Texting Clicks
       objectReference: {fileID: 0}
@@ -4728,6 +4732,10 @@ PrefabInstance:
     - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
       propertyPath: recieveTextSFX
       value: Recieve Text
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: truckLandingSFX
+      value: event:/SFX/Driving/Car Lands
       objectReference: {fileID: 0}
     - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
       propertyPath: music.Array.size
