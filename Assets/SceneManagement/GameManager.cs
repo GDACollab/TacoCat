@@ -4,6 +4,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using FMODUnity;
+
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -52,6 +54,7 @@ public class GameManager : MonoBehaviour {
     [Header("--SCENE VARIABLE TRANSFER--")]
     public int nitroCharges;
     public int gasAmount;
+
 
     private void Awake()
     {

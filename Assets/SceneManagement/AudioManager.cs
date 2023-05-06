@@ -93,8 +93,19 @@ public class AudioManager : MonoBehaviour {
     //FMODUnity.RuntimeManager.StudioSystem.setParameterByName("", x);
 
 
-    
-    //Mathf.Clamp(percent, 0,1);
+    public void InitializeBanks()
+    {
+        // Load the FMOD banks
+        RuntimeManager.LoadBank("Master");
+        RuntimeManager.LoadBank("SFX");
+        RuntimeManager.LoadBank("Music");
+        RuntimeManager.LoadBank("Dialogue");
+        RuntimeManager.LoadBank("Ambience");
+
+    }
+
+
+
 
     //plays a one shot given the fmod event path
     public void Play(string path, Dictionary<string, float> parameters = null)
