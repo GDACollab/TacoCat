@@ -136,8 +136,6 @@ public class GroundGenerationEditor : Editor
 #endregion
 
 
-
-
 #region lengths
                     EditorGUILayout.Space(10);
 
