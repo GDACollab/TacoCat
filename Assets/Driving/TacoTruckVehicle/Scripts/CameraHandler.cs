@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -68,8 +69,8 @@ public class CameraHandler : MonoBehaviour
 
         while (elapsed < duration)
         {
-            float x = Random.Range(-1f, 1f) * magnitude;
-            float y = Random.Range(-1f, 1f) * magnitude;
+            float x = UnityEngine.Random.Range(-1f, 1f) * magnitude;
+            float y = UnityEngine.Random.Range(-1f, 1f) * magnitude;
 
             transform.position += new Vector3(x, y, 0);
             elapsed += Time.deltaTime;
@@ -127,15 +128,25 @@ public class CameraHandler : MonoBehaviour
         //Check if car is within range of list
         if (bezierPointsListTracker < 0)
         {//If not, the zero is the y of the closest point
+            Debug.Log("Calculate A");
             return bezierPoints[0].y;
         }
         else if (bezierPointsListTracker >= bezierPoints.Count - 1)
         {
+            Debug.Log("Calculate B");
             return bezierPoints[bezierPoints.Count - 1].y;
         }
         else
         {//If so, perform equation
-            return slope * Mathf.Cos(car_pos.x * Mathf.PI / b_x_pos) + constant;
+            Debug.Log("Calculate C");
+            Debug.Log(a_x_pos);
+            Debug.Log(b_x_pos);
+            float test = slope * Mathf.Cos(car_pos.x * Mathf.PI / b_x_pos) + constant;
+            Debug.Log(test);
+            Debug.Log("Calculate C DONE");
+      
+            return test;
+            
         }
     }
 
@@ -162,12 +173,14 @@ public class CameraHandler : MonoBehaviour
                 {//If not, the zero is the y of the closest point
                     a_x_pos = float.NegativeInfinity;
                     b_x_pos = bezierPoints[0].x;
+                    Debug.Log("A RETURN");
                     return bezierPoints[0].y;
                 }
                 else if(bezierPointsListTracker >= bezierPoints.Count - 1)
                 {
                     a_x_pos = bezierPoints[bezierPoints.Count - 1].x;
                     b_x_pos = float.PositiveInfinity;
+                    Debug.Log("B RETURN");
                     return bezierPoints[bezierPoints.Count - 1].y;
                 }
                 else
@@ -177,9 +190,11 @@ public class CameraHandler : MonoBehaviour
                 }
             }
             //Then we calculate and return a 'zero' point using the current (whether new or old) equation
+            Debug.Log("C RETURN");
             return CalculateZero(vehicle.transform.position);
         }
         //If no vehicle was grabbed, defaults to 0
+        Debug.Log("D RETURN");
         return 0.0f;
     }
 
@@ -197,11 +212,12 @@ public class CameraHandler : MonoBehaviour
             float velocityPercent = Mathf.InverseLerp(velocityRange.x, velocityRange.y, vehicleRb.velocity.magnitude);
 
             //Set zPos based on car's Y position from the zero, and the camera's FOV (60 in this case) divided by 2 (so, 30)
-            float zPos = Mathf.Min(zPosRange.x, -((vehicle.transform.position.y-GetCurrentZero()) / Mathf.Tan(30*Mathf.Deg2Rad)));
-            if(zPos == float.NaN)
-            {
-                Debug.Log(vehicle.transform.position.y+" "+ GetCurrentZero()+" "+ Mathf.Tan(30 * Mathf.Deg2Rad));
-            }
+            float testa = GetCurrentZero();
+            float test = -((vehicle.transform.position.y - testa) / Mathf.Tan(30 * Mathf.Deg2Rad));
+            Debug.Log("Actual Math: " + test);
+            Debug.Log("Get Current Zero: " + testa);
+            Debug.Log("Points! " + bezierPointsListTracker);
+            float zPos = Mathf.Min(zPosRange.x, test);
 
             // Set camera x to car x
             float xPos = vehicle.transform.position.x;
