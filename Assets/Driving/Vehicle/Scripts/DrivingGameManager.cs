@@ -88,6 +88,7 @@ public class DrivingGameManager : MonoBehaviour
         vehicleDistance = Vector2.Distance(stageManager.main_begPos, vehicle.transform.position);
         totalDistance = stageManager.mainGenerationLength;
         percentageTraveled = vehicleDistance / totalDistance;
+        if (percentageTraveled <= 0) { percentageTraveled = 0; }
 
         lightingManager.timeOfDay = percentageTraveled;
 
