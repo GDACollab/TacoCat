@@ -79,6 +79,7 @@ public class Vehicle : MonoBehaviour
         rb_vehicle.velocity = startingVelocity;
 
         var target = GameObject.Find("VelocityTruck");
+        Debug.Log(target);
         emitter = target.GetComponent<FMODUnity.StudioEventEmitter>();
     }
 
