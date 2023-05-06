@@ -237,6 +237,13 @@ public class EnvironmentGenerator : MonoBehaviour
 
         int leftIter  = pointIndex - 1;    
         int rightIter = pointIndex + 1;
+
+        if (leftIter >= groundPoints.Count || rightIter >= groundPoints.Count)
+        {
+            Debug.LogWarning("Tried to reach ground point that doesn't exist");
+            return workingPoint;
+        }
+
         Vector3 leftNeighbor  = groundPoints[leftIter];
         Vector3 rightNeighbor = groundPoints[rightIter];
 

@@ -2,17 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum DRIVE_STATE { NONE, GROUNDED, IN_AIR, NITRO, PERFECT_LANDING, CRASH, END_DRIVE }
+public enum DRIVE_STATE { NONE, GROUNDED, UPHILL_GROUNDED, IN_AIR, NITRO, PERFECT_LANDING, CRASH, END_DRIVE }
 
 public class Vehicle : MonoBehaviour
 {
     GameManager gameManager;
     AudioManager audioManager;
+    StageManager stageManager;
     public CameraHandler cameraHandler;
     DrivingGameManager drivingGameManager;
     DrivingUIManager drivingUIManager;
-
-
     public Rigidbody2D rb_vehicle;
 
 
@@ -36,6 +35,12 @@ public class Vehicle : MonoBehaviour
     public Vector2 startingVelocity; // initial velocity
     public Vector2 inAirForce; // input based force on truck
     public Vector2 groundedForce; // input based force on truck
+
+    [Space(10)]
+    public float uphillActivationAngle = 45;
+    public float currGroundSlopeAngle;
+    public Vector2 uphillForce; 
+
 
     [Space(20)]
     public float velocityClamp = 500;
@@ -70,6 +75,7 @@ public class Vehicle : MonoBehaviour
     {
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         audioManager = gameManager.audioManager;
+        stageManager = GetComponentInParent<StageManager>();
         cameraHandler = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraHandler>();
         drivingGameManager = GameObject.FindGameObjectWithTag("DrivingGameManager").GetComponent<DrivingGameManager>();
         drivingUIManager = drivingGameManager.uiManager;
@@ -104,10 +110,23 @@ public class Vehicle : MonoBehaviour
                 rb_vehicle.AddForce(inAirForce * rb_vehicle.mass);
             }
             // on ground force
-            else if (state == DRIVE_STATE.GROUNDED)
+            else if (state == DRIVE_STATE.GROUNDED || state == DRIVE_STATE.UPHILL_GROUNDED)
             {
-                //Debug.Log("groundForce");
-                rb_vehicle.AddForce(groundedForce * rb_vehicle.mass);
+
+                int curGroundPointIndex = stageManager.GetClosestGroundPointIndexToPos(rb_vehicle.position);
+                currGroundSlopeAngle = stageManager.allLevelGroundRotations[curGroundPointIndex];
+
+                if ( currGroundSlopeAngle >= uphillActivationAngle)
+                {
+                    state = DRIVE_STATE.UPHILL_GROUNDED;
+                    rb_vehicle.AddForce(uphillForce * rb_vehicle.mass);
+                }
+                else
+                {
+                    //Debug.Log("groundForce");
+                    state = DRIVE_STATE.GROUNDED;
+                    rb_vehicle.AddForce(groundedForce * rb_vehicle.mass);
+                }
 
             }
 
