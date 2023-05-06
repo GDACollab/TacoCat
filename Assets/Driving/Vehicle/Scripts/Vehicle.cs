@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
+using FMOD.Studio;
 
 public enum DRIVE_STATE { NONE, GROUNDED, UPHILL_GROUNDED, IN_AIR, NITRO, PERFECT_LANDING, CRASH, END_DRIVE }
 
@@ -12,6 +14,9 @@ public class Vehicle : MonoBehaviour
     public CameraHandler cameraHandler;
     DrivingGameManager drivingGameManager;
     DrivingUIManager drivingUIManager;
+
+    FMODUnity.StudioEventEmitter emitter;
+
     public Rigidbody2D rb_vehicle;
 
 
@@ -41,7 +46,6 @@ public class Vehicle : MonoBehaviour
     public float currGroundSlopeAngle;
     public Vector2 uphillForce;
 
-
     [Space(20)]
     public float velocityClamp = 500;
 
@@ -70,6 +74,7 @@ public class Vehicle : MonoBehaviour
     [Header("RPM (AUDIO)")]
     public float minRPM = 0;
     public float maxRPM = 2000;
+    public float rpm;
 
     private void Start()
     {
@@ -82,6 +87,15 @@ public class Vehicle : MonoBehaviour
 
         rb_vehicle.velocity = startingVelocity;
         state = DRIVE_STATE.NONE;
+
+        //var instance = RuntimeManager.CreateInstance("event:/SFX/Driving/Truck Engine");
+
+    }
+
+    void Awake(){
+        //instance = RuntimeManager.CreateInstance("event:/SFX/Driving/Truck Engine");
+        // instance.start();
+        // instance.release();
     }
 
     // Update is called once per frame
@@ -89,10 +103,17 @@ public class Vehicle : MonoBehaviour
     {
         Inputs();
         StateMachine();
+
+        rpm = rb_vehicle.velocity.x;
+        GetComponent<StudioEventEmitter>().SetParameter("RPM", rpm);
+        //Debug.Log(emitter.Params[0].Value);
     }
 
     void FixedUpdate()
     {
+    void FixedUpdate() {
+
+        // << CONSTANT GRAVITY >>
         rb_vehicle.AddForce(Vector2.down * gravity * rb_vehicle.mass * Time.deltaTime);
 
         // << CHECK FOR GROUND COLLIDERS >>
@@ -109,9 +130,7 @@ public class Vehicle : MonoBehaviour
                 rb_vehicle.AddForce(inAirForce * rb_vehicle.mass);
             }
             // on ground force
-            else if (state == DRIVE_STATE.GROUNDED || state == DRIVE_STATE.UPHILL_GROUNDED)
             {
-
                 int curGroundPointIndex = stageManager.PosToGroundPointIndex(rb_vehicle.position);
                 currGroundSlopeAngle = stageManager.allLevelGroundRotations[curGroundPointIndex];
 
@@ -206,7 +225,7 @@ public class Vehicle : MonoBehaviour
 
         yield return new WaitForSeconds(activeNitroTime);
 
-        state = DRIVE_STATE.NONE;
+        state = DRIVE_STATE.IN_AIR;
     }
 
     // override all states and 
@@ -219,7 +238,7 @@ public class Vehicle : MonoBehaviour
 
         yield return new WaitForSeconds(activePerfectBoostTime);
 
-        state = DRIVE_STATE.NONE;
+        state = DRIVE_STATE.GROUNDED;
     }
 
     public float GetFuel()
