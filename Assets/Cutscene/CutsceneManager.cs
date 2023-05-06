@@ -97,7 +97,7 @@ public class CutsceneManager : MonoBehaviour
                 //Alex
 
 
-                //phoneText.text += "Alex: ";
+                phoneText.text += "<align=right><b><color=#0000ffff>Alex</b></color> \n";
                 yield return StartCoroutine(Typeline(a.texts));
                 
 
@@ -112,14 +112,14 @@ public class CutsceneManager : MonoBehaviour
                 //scroll all texts
                 //increase all y values of instances by scroll
 
-                phoneText.text += "Jamie is typing...";
+                phoneText.text += "<align=left><b><color=#ff00ffff>Jamie</b></color> \n";
                 yield return StartCoroutine(PrintText(a.texts));
-                phoneText.text = "";
+               // phoneText.text = "";
             }
 
         }
 
-        endOfCutscene = true;
+        //endOfCutscene = true;
     }
     
 
@@ -130,10 +130,10 @@ public class CutsceneManager : MonoBehaviour
 
         foreach (string l in characterText)
         {
-            //phoneText.text += l + "\n";
+            phoneText.text += l + "\n";
 
             //insert instance of jamiebubble text += l + "\n"
-            GameObject JBubble = Instantiate(jamieBubble, new Vector3(-5,startingPosition,0), Quaternion.identity);
+            //GameObject JBubble = Instantiate(jamieBubble, new Vector3(-5,startingPosition,0), Quaternion.identity);
             startingPosition += scroll;
             yield return new WaitForSeconds(messageDelayJamie);
         }
@@ -147,32 +147,46 @@ public class CutsceneManager : MonoBehaviour
     {
         foreach (string s in l)
         {
-           
-            //Add each element from phone_texts to phoneText
-            foreach (char c in s.ToCharArray())
+
+            string[] words = s.Split(" ");
+
+            foreach(string word in words)
             {
-                //insert instance of alexbubble text += c
-                phoneText.text += c;
-
-                counter++;
-
-                yield return new WaitForSeconds(textSpeedAlex);
-                if (counter == characterLimit)
+                if (counter >= characterLimit)
                 {
                     //insert instance of alexbubble text += "\n"
                     phoneText.text += "\n";
                     counter = 0;
                 }
 
+                //Add each element from phone_texts to phoneText
+                foreach (char c in word)
+                {
+                    //insert instance of alexbubble text += c
+                    phoneText.text += c;
+
+                    counter++;
+
+                    yield return new WaitForSeconds(textSpeedAlex);
+
+
+                }
+                phoneText.text += " ";
             }
+
+            phoneText.text += "\n";
+            counter = 0;
+
+
+
             //insert instance of alexbubble text += "\n"
 
             //phoneText.text += "\n";
-            phoneText.text = "";
+            //phoneText.text = "";
 
             //scroll all texts
             //increase all y values of instances by scroll
-            GameObject ABubble = Instantiate(alexBubble, new Vector3(5, startingPosition, 0), Quaternion.identity);
+            //GameObject ABubble = Instantiate(alexBubble, new Vector3(5, startingPosition, 0), Quaternion.identity);
             startingPosition += scroll;
             yield return new WaitForSeconds(messageDelayAlex);
             
