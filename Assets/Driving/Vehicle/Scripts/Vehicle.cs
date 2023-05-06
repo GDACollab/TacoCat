@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
+using FMOD.Studio;
 
 public enum driveState { NONE, START_DRIVE, GROUNDED, IN_AIR, NITRO, PERFECT_LANDING, CRASH, END_DRIVE }
 
@@ -78,9 +80,14 @@ public class Vehicle : MonoBehaviour
         
         rb_vehicle.velocity = startingVelocity;
 
-        var target = GameObject.Find("VelocityTruck");
-        Debug.Log(target);
-        emitter = target.GetComponent<FMODUnity.StudioEventEmitter>();
+        //var instance = RuntimeManager.CreateInstance("event:/SFX/Driving/Truck Engine");
+
+    }
+
+    void Awake(){
+        //instance = RuntimeManager.CreateInstance("event:/SFX/Driving/Truck Engine");
+        // instance.start();
+        // instance.release();
     }
 
     // Update is called once per frame
@@ -90,7 +97,8 @@ public class Vehicle : MonoBehaviour
         StateMachine();
 
         rpm = rb_vehicle.velocity.x;
-        emitter.SetParameter("RPM", rpm);
+        GetComponent<StudioEventEmitter>().SetParameter("RPM", rpm);
+        //Debug.Log(emitter.Params[0].Value);
     }
 
     void FixedUpdate() {

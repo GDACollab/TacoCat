@@ -17,7 +17,7 @@ https://www.fmod.com/docs/studio/authoring-events.html#automation-and-modulation
 Recordings by David Nichols of Track Time Audio. Engine is a 1988 Craftsman II 16HP lawnmower.</value>
 		</property>
 		<property name="name">
-			<value>Truck Engine</value>
+			<value>Truck Engine (old)</value>
 		</property>
 		<property name="outputFormat">
 			<value>2</value>
@@ -62,7 +62,6 @@ Recordings by David Nichols of Track Time Audio. Engine is a 1988 Craftsman II 1
 		</relationship>
 		<relationship name="parameters">
 			<destination>{6bcb1436-dcaf-4a0f-930f-ecda5e6e25ce}</destination>
-			<destination>{836622e3-1f3d-4377-b7c4-435d291c07f3}</destination>
 		</relationship>
 		<relationship name="banks">
 			<destination>{ad52fdca-ce5c-46d9-a998-88b429aaffe5}</destination>
@@ -148,11 +147,6 @@ Recordings by David Nichols of Track Time Audio. Engine is a 1988 Craftsman II 1
 		</relationship>
 		<relationship name="preset">
 			<destination>{476d16ca-9b28-48e2-b4e6-cce73df17939}</destination>
-		</relationship>
-	</object>
-	<object class="ParameterProxy" id="{836622e3-1f3d-4377-b7c4-435d291c07f3}">
-		<relationship name="preset">
-			<destination>{a3396888-0b90-4da5-8b53-2add9674ed94}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{6dc399c8-30fe-4b81-a1e4-cd52c54983b9}">
