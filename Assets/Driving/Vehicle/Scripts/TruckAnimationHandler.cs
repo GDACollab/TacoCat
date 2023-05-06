@@ -10,6 +10,8 @@ public class TruckAnimationHandler : MonoBehaviour
     [Space(10)]
     public GameObject crashEffectPrefab;
     private GameObject spawnedCrashEffect;
+    public ParticleSystem nitroParty;
+    public ParticleSystem flipParty;
 
     public GameObject nitroEffect;
 
@@ -27,7 +29,7 @@ public class TruckAnimationHandler : MonoBehaviour
         {
             EnableNitroEffect(true);
         } 
-        else { EnableNitroEffect(false); }
+        // else { EnableNitroEffect(false); }
 
         if (vehicle.state == DRIVE_STATE.CRASH)
         {
@@ -38,26 +40,34 @@ public class TruckAnimationHandler : MonoBehaviour
         {
             EnablePerfectBoostEffect(true);
         }
-        else { EnablePerfectBoostEffect(false); }
+        // else { EnablePerfectBoostEffect(false); }
     }
 
     public void TriggerCrashEffect(float destroyTimer = 2)
     {
-        if (spawnedCrashEffect != null) { return; } // don't spawn if spawned already 
+        // if (spawnedCrashEffect != null) { return; } // don't spawn if spawned already 
 
-        spawnedCrashEffect = Instantiate(crashEffectPrefab, vehicle.transform.position, Quaternion.identity);
+        // spawnedCrashEffect = Instantiate(crashEffectPrefab, vehicle.transform.position, Quaternion.identity);
 
-        Destroy(spawnedCrashEffect, destroyTimer);
+        // Destroy(spawnedCrashEffect, destroyTimer);
+        ParticleSystem crashParty = vehicle.GetComponent<ParticleSystem>();
+        crashParty.Play(false);
     }
 
     public void EnableNitroEffect(bool enabled)
     {
 
-        nitroEffect.SetActive(enabled);
+        // nitroEffect.SetActive(enabled);
+        // If you can get the nitro particle system in velocity truck's children, then please do.
+        // ParticleSystem nitroParty = vehicle.gameObject.GetComponentInChildren<ParticleSystem>();
+        nitroParty.Play(false);
     }
 
     public void EnablePerfectBoostEffect(bool enabled)
     {
-        perfectLandingEffect.SetActive(enabled);
+        // perfectLandingEffect.SetActive(enabled);
+        // If you can get the flip particle system in velocity truck's children, then please do.
+        // ParticleSystem flipParty = vehicle.gameObject.GetComponentInChildren<ParticleSystem>();
+        flipParty.Play(false);
     }
 }
