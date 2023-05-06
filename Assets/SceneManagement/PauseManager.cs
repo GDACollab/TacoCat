@@ -8,7 +8,7 @@ public class PauseManager : MonoBehaviour
     public KeyCode pauseKey = KeyCode.Escape;
     public GameObject pauseCanvas;
     AudioManager audioManager;
-    protected bool isPaused = false;
+    public bool isPaused = false;
 
     protected List<Slider> volumeSliders = new List<Slider>();
 

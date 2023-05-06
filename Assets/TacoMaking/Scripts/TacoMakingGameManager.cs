@@ -133,9 +133,11 @@ public class TacoMakingGameManager : MonoBehaviour
             if (perfectCounter % 3 == 0 && perfectCounter != 0)
             {
                 comboCounter++;
+                // Increment nitro charge
                 if (Vehicle.nitroCharges < 3)
                 {
                     Vehicle.nitroCharges++;
+                    Debug.Log("Nitro charge gained!");
                 }
                 uiManager.DisplayNitro(Vehicle.nitroCharges); //updates the nitro display
             }
