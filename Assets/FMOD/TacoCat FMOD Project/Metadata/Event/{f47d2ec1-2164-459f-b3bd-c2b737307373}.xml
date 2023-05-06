@@ -5,7 +5,7 @@
 			<value>Meow Button</value>
 		</property>
 		<property name="outputFormat">
-			<value>0</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{03882267-427b-4114-a378-fc33360d0f5e}</destination>
@@ -31,6 +31,9 @@
 		<relationship name="parameters">
 			<destination>{36b77060-e65a-4820-a822-67580c7ab6cb}</destination>
 		</relationship>
+		<relationship name="banks">
+			<destination>{ad52fdca-ce5c-46d9-a998-88b429aaffe5}</destination>
+		</relationship>
 	</object>
 	<object class="EventMixer" id="{64c93236-95a3-474c-b6b6-6b94eafe664d}">
 		<relationship name="masterBus">
@@ -53,7 +56,7 @@
 			<destination>{0b0fae37-de8f-4965-99bf-27b8c2b37606}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{07a570cc-d266-4bac-a259-183a1c4567c9}</destination>
+			<destination>{70f8b16a-137d-4059-81c0-e4d11f239e4d}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{bd205d77-3744-4ef3-bec2-c04374eeb467}" />
@@ -96,7 +99,22 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{ee925526-2478-4530-a896-eaa82146f252}" />
-	<object class="MultiSound" id="{769d15b2-4518-40ca-994f-12b91fd9c493}" />
+	<object class="MultiSound" id="{769d15b2-4518-40ca-994f-12b91fd9c493}">
+		<relationship name="sounds">
+			<destination>{5c8f9e84-d43d-496e-98c3-26638f002371}</destination>
+			<destination>{f0a683c1-b017-4c9e-99af-3b5a1623e333}</destination>
+		</relationship>
+	</object>
 	<object class="MixerBusFader" id="{09bf5175-71ae-4d31-9e92-6acf3be1b754}" />
 	<object class="MixerBusFader" id="{6baf4a53-df1e-487f-8190-d815d24f8f9f}" />
+	<object class="SingleSound" id="{5c8f9e84-d43d-496e-98c3-26638f002371}">
+		<relationship name="audioFile">
+			<destination>{e1f819c1-9b41-4b8c-bdae-6b4a86993f75}</destination>
+		</relationship>
+	</object>
+	<object class="SingleSound" id="{f0a683c1-b017-4c9e-99af-3b5a1623e333}">
+		<relationship name="audioFile">
+			<destination>{2808f4fe-c635-465f-b557-8f6bba5ee00a}</destination>
+		</relationship>
+	</object>
 </objects>
