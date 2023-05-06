@@ -185,6 +185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46a9765300acfe741a6ddca8da692c5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lightingManager: {fileID: 4940512051417130367}
   uiManager: {fileID: 4716956757654117349}
   vehicle: {fileID: 996258255}
   endOfGame: 0
@@ -478,9 +479,6 @@ MonoBehaviour:
   startingVelocity: {x: 0, y: 0}
   inAirForce: {x: 30, y: -1200}
   groundedForce: {x: 400, y: -500}
-  uphillActivationAngle: 30
-  currGroundSlopeAngle: 0
-  uphillForce: {x: 600, y: -100}
   velocityClamp: 2000
   rotationSpeed: 500
   nitroForce: {x: 500, y: -250}
@@ -17188,9 +17186,10 @@ MonoBehaviour:
   environmentSpawned: 0
   groundPoints: []
   groundRotations: []
+  mainGenerationPoints: []
   allSpawnedObjects: []
   minSpaceBetweenObjects: 4
-  maxSpaceBetweenObjects: 20
+  maxSpaceBetweenObjects: 10
   drawLine: 1
   lineWidth: 100
   lineOffset: {x: 5, y: -50, z: 0}
@@ -17749,6 +17748,8 @@ MonoBehaviour:
   allStagesGenerated: 0
   meshCreator: {fileID: 906872887464592665}
   mainGenerationLength: 30000
+  main_begPos: {x: 0, y: 500, z: 0}
+  main_endPos: {x: 30000, y: 500, z: 0}
   startIslandXOffset: -1000
   startIslandYOffset: -500
   endIslandXOffset: 1000
@@ -17960,6 +17961,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6155609679398230003, guid: a5012e14d0ecae046a4eff53490eea94, type: 3}
   m_PrefabInstance: {fileID: 1296236159453491853}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4940512051417130367 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6155609679398230000, guid: a5012e14d0ecae046a4eff53490eea94, type: 3}
+  m_PrefabInstance: {fileID: 1296236159453491853}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9401a9290ea57a54eb116824c5b52cd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4992803421426955819
 GameObject:
   m_ObjectHideFlags: 0
