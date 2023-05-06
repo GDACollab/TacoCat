@@ -4216,6 +4216,7 @@ MonoBehaviour:
   currGame: 2
   currScene:
     m_SceneName: Cutscene
+  cutsceneIndex: 0
   isLoadingScene: 0
   menuScene:
     m_SceneName: Menu
@@ -4227,6 +4228,8 @@ MonoBehaviour:
     m_SceneName: TacoMaking
   cutscene:
     m_SceneName: Cutscene
+  nitroCharges: 0
+  gasAmount: 0
   loadProgress: 0
 --- !u!1 &7004250954087519486
 GameObject:
@@ -4703,7 +4706,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
       propertyPath: typingSFX
-      value: Texting Clicks
+      value: event:/SFX/Cutscene/Texting Clicks
       objectReference: {fileID: 0}
     - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
       propertyPath: pawSwipeSFX
@@ -4711,7 +4714,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
       propertyPath: sendTextSFX
-      value: Send Text
+      value: event:/SFX/Cutscene/Send Text
       objectReference: {fileID: 0}
     - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
       propertyPath: flipBoostSFX
@@ -4731,7 +4734,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
       propertyPath: recieveTextSFX
-      value: Recieve Text
+      value: event:/SFX/Cutscene/Receive Text
       objectReference: {fileID: 0}
     - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
       propertyPath: truckLandingSFX

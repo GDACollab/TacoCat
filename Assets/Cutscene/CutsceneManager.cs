@@ -13,6 +13,8 @@ public class CutsceneManager : MonoBehaviour
     public GameObject alexBubble;
     public GameObject jamieBubble;
 
+    AudioManager audioManager;
+
     private float startingPosition;
 
     public float positionX = 1.0f;
@@ -78,7 +80,7 @@ public class CutsceneManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
         // clear text in phoneText.text
         phoneText.text = string.Empty;
         
@@ -160,6 +162,8 @@ public class CutsceneManager : MonoBehaviour
             //insert instance of jamiebubble text += l + "\n"
             //GameObject JBubble = Instantiate(jamieBubble, new Vector3(-5,startingPosition,0), Quaternion.identity);
             startingPosition += scroll;
+            audioManager.Play(audioManager.recieveTextSFX);
+            Debug.Log("ReceiveTextSFX");
             yield return new WaitForSeconds(messageDelayJamie);
         }
             
@@ -191,10 +195,9 @@ public class CutsceneManager : MonoBehaviour
                     phoneText.text += c;
 
                     counter++;
-
                     yield return new WaitForSeconds(textSpeedAlex);
 
-
+                    audioManager.Play(audioManager.typingSFX);
                 }
                 phoneText.text += " ";
             }
@@ -213,6 +216,7 @@ public class CutsceneManager : MonoBehaviour
             //increase all y values of instances by scroll
             //GameObject ABubble = Instantiate(alexBubble, new Vector3(5, startingPosition, 0), Quaternion.identity);
             startingPosition += scroll;
+            audioManager.Play(audioManager.sendTextSFX);
             yield return new WaitForSeconds(messageDelayAlex);
             
         }
