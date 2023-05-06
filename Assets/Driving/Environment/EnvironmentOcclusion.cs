@@ -47,11 +47,11 @@ public class EnvironmentOcclusion : MonoBehaviour
         {
             Transform transformToCheck = envObject.transform;
 
-            // calculate the distance between the target and the transform to check
-            float distance = Vector3.Distance(camTransform.position, transformToCheck.position);
+            // calculate the x distance between the target and the transform to check
+            float xDistance = Mathf.Abs(camTransform.position.x - transformToCheck.position.x);
 
             // check if the distance is within the specified range
-            if (distance <= range)
+            if (xDistance <= range)
             {
                 envObject.SetActive(true);
                 // Debug.Log(transformToCheck.name + " is within range of " + targetTransform.name);
