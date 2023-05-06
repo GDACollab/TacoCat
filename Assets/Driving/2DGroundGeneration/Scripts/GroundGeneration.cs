@@ -14,7 +14,7 @@ public class GroundGeneration : MonoBehaviour
      * ===================================================================================================
      */
 
-    public enum GENERATION_STYLES { consistent, sine, custom_sine, random };
+    public enum GENERATION_STYLES { consistent, sine, custom_sine, random, chunk_bucket, chunk_pattern };
 
     [Header("Generation References")]
     public GameObject bezierCurvePrefab;
@@ -38,19 +38,28 @@ public class GroundGeneration : MonoBehaviour
     [HideInInspector]
     public float fullGenerationLength, fullGenerationHeight;  // store full generation length and height
 
-    // [[ GENERATION STYLE ]]
-    public GENERATION_STYLES generationStyle = GENERATION_STYLES.sine;
-
-    // >> CUSTOM SINE RANGES
-    public Vector2 chunkLengthRange = new Vector2(200, 500);
-    public Vector2 chunkHeightRange = new Vector2(200, 500);
-
     // >> DEFAULT MAX CHUNK VALUES
     public int maxChunkLength = 700;
     public int maxChunkHeight = 300;
 
+    // [[ GENERATION STYLE ]]
+    public GENERATION_STYLES generationStyle = GENERATION_STYLES.sine;
+
     [Tooltip("Choose the style of each chunk")]
     public List<CHUNK_STYLES> chunkStyles = new List<CHUNK_STYLES>();
+    // >> CUSTOM SINE RANGES
+    [VectorLabels("Min", "Max")]
+    public Vector2 chunkLengthRange = new Vector2(200, 500);
+    [VectorLabels("Min", "Max")]
+    public Vector2 chunkHeightRange = new Vector2(200, 500);
+
+    // CHUNK BUCKET >>>
+    public List<int> chunkBucketLengths = new List<int>();
+    public List<int> chunkBucketHeights = new List<int>();
+
+    // CHUNK PATTERN >>>
+    public List<Vector2> chunkPattern = new List<Vector2>();
+
     // [[ END ISLAND OFFSETS ]]
     public int startIslandXOffset = -700;
     public int startIslandYOffset = -700;
@@ -113,6 +122,12 @@ public class GroundGeneration : MonoBehaviour
         {
             CustomSineChunkGenerator(chunkLengthRange, chunkHeightRange);
         }
+        else if (style == GENERATION_STYLES.chunk_bucket)
+        {
+            ChunkBucketGenerator();
+        }
+        else { Debug.LogError("Generation Style function not found"); }
+
         yield return new WaitUntil(() => mainGroundGenerated);
         Debug.Log("----> Main Ground Generated", this.gameObject);
 
@@ -135,20 +150,25 @@ public class GroundGeneration : MonoBehaviour
     public void DestroyGenerationObjects()
     {
         DestroyAllChunks();
-        Destroy(this.gameObject);
     }
 
     #region GENERATION ====================================================
 
     public void StartIslandGenerator()
     {
-        Vector2 offsetPos = begGenPos + new Vector3(startIslandXOffset, startIslandYOffset); // init last chunk as the current beginning position
+        Vector3 xOffset = new Vector3(startIslandXOffset, 0); 
+        Vector3 yOffset = new Vector3(0, startIslandYOffset); 
+
+        // manually placed starting hill
 
         // << FLAT START ZONE >>
-        SpawnBezierGroundChunk(offsetPos + new Vector2(startIslandXOffset, 0), offsetPos, CHUNK_STYLES.flat); // spawn flat beginning
+        SpawnBezierGroundChunk(begGenPos + (5*xOffset), begGenPos + (3*xOffset), CHUNK_STYLES.flat); // spawn flat beginning
 
-        // << HILL TO GAIN SPEED >>
-        SpawnBezierGroundChunk(offsetPos, begGenPos, CHUNK_STYLES.rounded); // spawn
+        // << DOWNHILL TO GAIN SPEED >>
+        SpawnBezierGroundChunk(begGenPos + (3*xOffset), begGenPos + xOffset + yOffset, CHUNK_STYLES.rounded); // spawn
+        
+        // << UPHILL TO LAUNCH >>
+        SpawnBezierGroundChunk(begGenPos + xOffset + yOffset, begGenPos, CHUNK_STYLES.straight); // spawn
 
         startIslandGenerated = true;
 
@@ -369,6 +389,97 @@ public class GroundGeneration : MonoBehaviour
 
     }
 
+    public void ChunkBucketGenerator()
+    {
+        Debug.Log("Chunk Bucket Generation Style");
+
+        if (chunkBucketHeights.Count == 0 || chunkBucketLengths.Count == 0) { Debug.LogError("A Chunk Bucket Lists is empty"); return; }
+
+        // estimated chunks needed
+        float leftoverLength = fullGenerationLength;
+
+        // store end and beginning of current chunk
+        Vector2 hillEndPos;
+        Vector2 hillMidPos;
+        Vector2 lastChunkEndPosition = begGenPos;
+
+        /* ======================================
+         *  SPAWN CHUNKS WITH RANDOMIZED VALUES
+         * ====================================== */
+        while (leftoverLength > 0)
+        {
+            // check if leftover length is smaller than smallest length in list
+            bool atEnd = false;
+            foreach (int length in chunkBucketLengths)
+            {
+                if (length > leftoverLength)
+                {
+                    atEnd = true;
+                }
+            }
+
+            // END VALUE
+            float randomLength = leftoverLength;
+            float randomHeight = endGenPos.y;
+
+            // IF NOT AT END 
+            if (!atEnd)
+            {
+                // get random values from list
+                randomHeight = chunkBucketHeights[Random.Range(0, chunkBucketHeights.Count)];
+                randomLength = chunkBucketLengths[Random.Range(0, chunkBucketLengths.Count)];
+
+                // create hill with random values
+                // [[ CHUNK 1 ]] 
+                hillMidPos = new Vector2(lastChunkEndPosition.x + (randomLength / 2), lastChunkEndPosition.y + randomHeight);
+
+                // spawn ground with values
+                SpawnBezierGroundChunk(lastChunkEndPosition, hillMidPos, chunkStyles[Random.Range(0, chunkStyles.Count)]); // use random chunk style from list
+
+                // [[ CHUNK 2 ]] 
+                // set end position based off random height
+                hillEndPos = new Vector2(lastChunkEndPosition.x + randomLength, lastChunkEndPosition.y);
+
+                // spawn ground with values
+                SpawnBezierGroundChunk(hillMidPos, hillEndPos, chunkStyles[Random.Range(0, chunkStyles.Count)]); // use random chunk style from list
+
+                // set last chunk pos to current end
+                lastChunkEndPosition = hillEndPos;
+                leftoverLength -= randomLength;
+
+
+            }
+            // IF AT END
+            else
+            {
+                // create hill with random values
+                // [[ CHUNK 1 ]] 
+                hillMidPos = new Vector2(lastChunkEndPosition.x + (randomLength/2), lastChunkEndPosition.y);
+
+                // spawn ground with values
+                SpawnBezierGroundChunk(lastChunkEndPosition, hillMidPos, chunkStyles[Random.Range(0, chunkStyles.Count)]); // use random chunk style from list
+
+                // [[ CHUNK 2 ]] 
+                // set end position based off random height
+                hillEndPos = new Vector2(lastChunkEndPosition.x + randomLength, lastChunkEndPosition.y);
+
+                // spawn ground with values
+                SpawnBezierGroundChunk(hillMidPos, hillEndPos, chunkStyles[Random.Range(0, chunkStyles.Count)]); // use random chunk style from list
+
+                // set last chunk pos to current end
+                lastChunkEndPosition = hillEndPos;
+                leftoverLength -= randomLength;
+            }
+
+
+
+
+
+        }
+
+        mainGroundGenerated = true;
+
+    }
     #endregion
 
     #region SPAWNING ==========================
@@ -496,6 +607,9 @@ public class GroundGeneration : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+
+
+
 
     }
 }
