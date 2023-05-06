@@ -48,7 +48,7 @@ public class TacoUIManager : MonoBehaviour
         customerManager = tacoGameManager.customerManager;
 
         DisplayGas(0);
-        DisplayNitro(Vehicle.nitroCharges);
+        DisplayNitro(tacoGameManager.earnedNitroCharges);
 
         DisplayScore(scoreType.FAILED);
 

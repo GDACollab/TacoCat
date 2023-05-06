@@ -15,6 +15,8 @@ public class TacoMakingGameManager : MonoBehaviour
 
     public bool endOfGame;
 
+    public int earnedNitroCharges;
+
     [Header("Submission Taco")]
     public Taco submissionTaco;
 
@@ -44,18 +46,12 @@ public class TacoMakingGameManager : MonoBehaviour
 
     public void Start()
     {
-
-
-
         customerCreationTimer = customerManager.transitionTime;
 
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         audioManager = gameManager.audioManager;
         benchManager = GetComponentInChildren<IngredientBenchManager>();
-        uiManager = GetComponentInChildren<TacoUIManager>();
         
-
-
         CreateNewSubmissionTaco();
 
         customersLeftToGenerate = totalCustomers;
@@ -83,7 +79,6 @@ public class TacoMakingGameManager : MonoBehaviour
         taco.transform.parent = transform;
     }
 
-
     // continue through remaining customers
     public void CustomerRotation()
     {
@@ -95,8 +90,7 @@ public class TacoMakingGameManager : MonoBehaviour
                 customerCreationTimer = 0;
                 customersLeftToGenerate--;
                 //The ID passed in for each customer starts at 1 and counts up to totalCustomers
-                Customer customer = customerManager.CreateNewCustomer(totalCustomers - customersLeftToGenerate).GetComponent<Customer>();
-
+                customerManager.CreateNewCustomer(totalCustomers - customersLeftToGenerate).GetComponent<Customer>();
             }
         }
         customerCreationTimer += Time.deltaTime;
@@ -133,11 +127,11 @@ public class TacoMakingGameManager : MonoBehaviour
             if (perfectCounter % 3 == 0 && perfectCounter != 0)
             {
                 comboCounter++;
-                if (Vehicle.nitroCharges < 3)
+                if (earnedNitroCharges < 3)
                 {
-                    Vehicle.nitroCharges++;
+                    earnedNitroCharges++;
                 }
-                uiManager.DisplayNitro(Vehicle.nitroCharges); //updates the nitro display
+                uiManager.DisplayNitro(earnedNitroCharges); //updates the nitro display
             }
         }
         else

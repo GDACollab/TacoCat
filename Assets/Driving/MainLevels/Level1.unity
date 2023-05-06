@@ -484,6 +484,7 @@ MonoBehaviour:
   uphillForce: {x: 0, y: 0}
   velocityClamp: 2000
   rotationSpeed: 500
+  nitroCharges: 3
   nitroForce: {x: 500, y: -250}
   activeNitroTime: 1.5
   perfectLandingBoostForce: {x: 250, y: -250}
@@ -16845,7 +16846,7 @@ MonoBehaviour:
   nitro_camShakeMagnitude: 1
   velocityRange: {x: 100, y: 1000}
   xPosRange: {x: 20, y: 500}
-  zPosRange: {x: -600, y: -1500}
+  zPosRange: {x: -600, y: -1000}
   currOffset: {x: 20, y: 51.560783, z: -200}
 --- !u!20 &1440028596
 Camera:

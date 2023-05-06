@@ -49,7 +49,7 @@ public class Vehicle : MonoBehaviour
     public float rotationSpeed = 50f;
 
     [Header("Nitro")]
-    public static int nitroCharges = 3; // Note: Static variables do not show up in inspector
+    public int nitroCharges = 3; // Note: Static variables do not show up in inspector
     public Vector2 nitroForce;
     public float activeNitroTime = 5; // how long each charge lasts
 
@@ -93,8 +93,6 @@ public class Vehicle : MonoBehaviour
 
     void FixedUpdate()
     {
-
-
         rb_vehicle.AddForce(Vector2.down * gravity * rb_vehicle.mass * Time.deltaTime);
 
         // << CHECK FOR GROUND COLLIDERS >>
