@@ -33,7 +33,14 @@ public class GameManager : MonoBehaviour {
     [Header("Scenes")]
     public SceneObject menuScene;
     public SceneObject loadingScene;
-    public SceneObject drivingScene;
+
+    [Space(10)]
+    public SceneObject driving1;
+    public SceneObject driving2;
+    public SceneObject driving3;
+
+
+    [Space(10)]
     public SceneObject tacoMakingScene;
     public SceneObject cutscene;
 
@@ -166,7 +173,7 @@ public class GameManager : MonoBehaviour {
     // **** LOAD DRIVING SCENES ****
     public void LoadDrivingScene() {
         currGame = currGame.DRIVING;
-        StartCoroutine(LoadingCoroutine(drivingScene));
+        StartCoroutine(LoadingCoroutine(driving1));
         audioManager.PlaySong("DrivingMusic");
     }
 
