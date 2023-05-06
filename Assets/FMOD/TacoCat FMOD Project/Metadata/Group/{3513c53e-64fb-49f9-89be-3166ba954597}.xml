@@ -42,7 +42,11 @@
 		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{b32ff0b6-732b-4ccd-bb88-9e6d91163e65}" />
-	<object class="Sidechain" id="{84e94dcc-b076-424b-a601-717f3ab1cab1}" />
+	<object class="Sidechain" id="{84e94dcc-b076-424b-a601-717f3ab1cab1}">
+		<property name="level">
+			<value>3</value>
+		</property>
+	</object>
 	<object class="AutomationPoint" id="{5b34d12a-63f9-4315-a506-a3ad482d3fea}">
 		<property name="position">
 			<value>0</value>

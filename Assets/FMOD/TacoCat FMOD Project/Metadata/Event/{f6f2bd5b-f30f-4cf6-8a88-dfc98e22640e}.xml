@@ -104,6 +104,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{e1380307-1f08-415b-a210-9b8bd605da41}">
+		<property name="volume">
+			<value>4</value>
+		</property>
 		<property name="name">
 			<value>Swipes</value>
 		</property>
@@ -162,6 +165,7 @@
 		<relationship name="effects">
 			<destination>{28fe98ca-2c0c-4bc2-a702-fc9cc8873cb4}</destination>
 			<destination>{3ad7786c-f3b3-4194-8f78-cbd99008389a}</destination>
+			<destination>{28f55b39-c955-4953-94e7-d22b0951e5a6}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{03b0f0f7-1bd1-494e-95be-36e024d078ef}" />
@@ -203,6 +207,14 @@
 		</property>
 		<property name="qualityA">
 			<value>0.419999987</value>
+		</property>
+	</object>
+	<object class="CompressorEffect" id="{28f55b39-c955-4953-94e7-d22b0951e5a6}">
+		<property name="threshold">
+			<value>-24</value>
+		</property>
+		<property name="ratio">
+			<value>50</value>
 		</property>
 	</object>
 </objects>
