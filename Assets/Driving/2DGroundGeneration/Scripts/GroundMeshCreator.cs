@@ -16,6 +16,8 @@ public class GroundMeshCreator : MonoBehaviour
     public Material groundMaterial;
     Vector3 begPos, endPos, middleOfMesh, scaleOfGeneration, safeGenTextureScale;
 
+    public int underground_height = -500;
+
     [Header("Debug")]
     public GameObject debugMarker;
     public List<GameObject> debugMarkerList = new List<GameObject>();
@@ -31,7 +33,7 @@ public class GroundMeshCreator : MonoBehaviour
         edgeCollider = GetComponent<EdgeCollider2D>();
     }
 
-    public void GenerateUndergroundMesh(List<Vector3> genGroundPoints, float underground_height = -100)
+    public void GenerateUndergroundMesh(List<Vector3> genGroundPoints)
     {
         // get mesh values
         begPos = genGroundPoints[0];
@@ -64,7 +66,7 @@ public class GroundMeshCreator : MonoBehaviour
         //if (chunkCount <= 0) { chunkCount = Mathf.FloorToInt(genCurvePoints.Count * 0.99f); } // what the fuck why idk
 
         int chunkCount = genCurvePoints.Count - 1;
-        if (underground_height <= 0) { underground_height = Mathf.Abs((endPos.y - begPos.y)) * 3; }
+        if (underground_height <= 0) { underground_height *= -1; }
 
         int triSize = Mathf.FloorToInt(genCurvePoints.Count / chunkCount); //get number of chunks based on chunk size
 

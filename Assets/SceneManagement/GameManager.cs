@@ -12,7 +12,7 @@ public enum currGame { NONE, MENU, CUTSCENE, TACO_MAKING, DRIVING }
 
 public class GameManager : MonoBehaviour {
 
-    private static GameManager instance = null;
+    public static GameManager instance = null;
 
     [HideInInspector]
     public AudioManager audioManager;
@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour {
     // track game state
     public currGame currGame = currGame.NONE;
     public SceneObject currScene;
+    public int cutsceneIndex = 0;
     [Space(5)]
     public bool isLoadingScene;
 
@@ -36,6 +37,10 @@ public class GameManager : MonoBehaviour {
     public SceneObject drivingScene;
     public SceneObject tacoMakingScene;
     public SceneObject cutscene;
+
+    [Header("--SCENE VARIABLE TRANSFER--")]
+    public int nitroCharges;
+    public int gasAmount;
 
     private void Awake()
     {

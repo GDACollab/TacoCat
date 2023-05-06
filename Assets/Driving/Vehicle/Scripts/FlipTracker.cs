@@ -49,7 +49,6 @@ public class FlipTracker : MonoBehaviour
         stageManager = GetComponentInParent<StageManager>();
         initTruckRotation = transform.rotation.eulerAngles.z;
         audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
-      
         boostSpriteY = boostSprite.transform.localScale.y;
     }
 
@@ -67,7 +66,7 @@ public class FlipTracker : MonoBehaviour
         hitPointIndex = stageManager.GetClosestGroundPointIndexToPos(hit.point);
 
         // << TRIGGER WHEN IN AIR >>
-        if (vehicle.state == driveState.IN_AIR && !jumpStarted)
+        if (vehicle.state == DRIVE_STATE.IN_AIR && !jumpStarted)
         {
             // reset
             startJumpRot = 0;
@@ -79,7 +78,7 @@ public class FlipTracker : MonoBehaviour
         }
 
         // << TRIGGER WHEN GROUNDED >>
-        if (vehicle.state == driveState.GROUNDED && jumpStarted)
+        if (vehicle.state == DRIVE_STATE.GROUNDED && jumpStarted)
         {
             // set values
             jumpStarted = false;
@@ -90,19 +89,16 @@ public class FlipTracker : MonoBehaviour
             if (IsPerfectLanding(endJumpRot, groundPointRotation) && flipCount > 0) 
             {
                 int flips = Mathf.Min(flipCount, flipCap);
-                float flipBoost=flips*percentBoost;
-                Vector2 newBoost = new Vector2(((flipBoost)+1)*vehicle.perfectLandingBoostForce.x, 0f);
-                float newTime = ((flips*timeBoost)+1)*vehicle.activePerfectBoostTime;
                 boostSprite.transform.localScale = new Vector3(boostSprite.transform.localScale.x, boostSpriteY*((flips*percentBoost)+1), boostSprite.transform.localScale.z);
                 StartCoroutine(vehicle.PerfectLandingBoost());
                 audioManager.Play(audioManager.flipBoostSFX);
             }
-            audioManager.Play(audioManager.truckLandingSFX);
             //PLAY AUDIO MANAGER REG LANDING
+            audioManager.Play(audioManager.truckLandingSFX);
         }
 
         // track in air time
-        if (jumpStarted && vehicle.state == driveState.IN_AIR)
+        if (jumpStarted && vehicle.state == DRIVE_STATE.IN_AIR)
         {
             currAirTime += Time.deltaTime;
 
@@ -117,7 +113,7 @@ public class FlipTracker : MonoBehaviour
 
     public bool IsPerfectLanding(float landPointRot, float groundPointRot)
     {
-        if (vehicle.state == driveState.CRASH) { return false; }
+        if (vehicle.state == DRIVE_STATE.CRASH) { return false; }
 
         // if rotation is within bound and enough time has passed and landing downhill
         if (Mathf.Abs(groundPointRot - landPointRot) < perfectLandingRotationBound && currAirTime > perfectLandingMinAirTime)

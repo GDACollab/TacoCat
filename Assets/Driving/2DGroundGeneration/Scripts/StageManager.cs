@@ -9,7 +9,6 @@ public class StageManager : MonoBehaviour
 
     [Header("[[ GENERATION LENGTHS ]]")]
     public int mainGenerationLength = 30000;
-    public int undergroundHeight = -1000;
     private Vector3 main_begPos, main_endPos;
 
     [Header("End Island Offsets")]
@@ -84,7 +83,7 @@ public class StageManager : MonoBehaviour
             // [[ CREATE MESH ]]
             if (meshCreator != null)
             {
-                meshCreator.GenerateUndergroundMesh(allLevelGroundPoints, undergroundHeight);
+                meshCreator.GenerateUndergroundMesh(allLevelGroundPoints);
             }
             else { Debug.LogError("ERROR:: Mesh Creator is null", this.gameObject); }
 
@@ -134,20 +133,20 @@ public class StageManager : MonoBehaviour
 
         }
 
-        // [[ START ISLAND ]]
-        // << FLAT START ZONE >>
         Gizmos.color = Color.green;
-        Vector3 offsetPos = main_begPos + new Vector3(startIslandXOffset, startIslandYOffset); // init last chunk as the current beginning position
-        Gizmos.DrawLine(offsetPos + new Vector3(startIslandXOffset, 0), offsetPos); // spawn flat beginning
+        // manually placed starting hill
+        Vector3 begGenPos = stages[0].begGenPos;
+        Vector3 xOffset = new Vector3(startIslandXOffset, 0);
+        Vector3 yOffset = new Vector3(0, startIslandYOffset);
+        // << FLAT START ZONE >>
+        Gizmos.DrawLine(begGenPos + (5 * xOffset), begGenPos + (3 * xOffset));
 
-        // << HILL TO GAIN SPEED >>
-        Gizmos.DrawLine(offsetPos, main_begPos); // spawn
+        // << DOWNHILL TO GAIN SPEED >>
+        Gizmos.DrawLine(begGenPos + (3 * xOffset), begGenPos + xOffset + yOffset);
 
-        // [[ END ISLAND ]]
-        // << END OFFSET >>
-        Gizmos.color = Color.red;
-        Vector3 endOffsetPosition = main_endPos + new Vector3(endIslandXOffset, 0); ; // init last chunk as the current beginning position
-        Gizmos.DrawLine(main_endPos, endOffsetPosition); // spawn
+        // << UPHILL TO LAUNCH >>
+        Gizmos.DrawLine(begGenPos + xOffset + yOffset, begGenPos);
+
     }
 
 #if UNITY_EDITOR
