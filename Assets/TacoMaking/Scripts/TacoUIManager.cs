@@ -14,8 +14,9 @@ public class TacoUIManager : MonoBehaviour
     public bool endOfGame;
 
     [Header("Score UI")]
-    public Image star;
+    public GameObject starPrefab;
     public float starScale = 1;
+    public float starSpacing = 10;
     public Transform starPosition;
     public TMP_Text scoreText;
     public Color emptyStarColor = Color.black;
@@ -24,6 +25,7 @@ public class TacoUIManager : MonoBehaviour
     public float ingredientScale = 0.1f;
     public float ingredientSpacing = 2f;
     public Transform ingredientPointParent;
+    public bool newOrderTaken;
     [Header("Test Order Window UI")]
     public List<ingredientType> testIngredients = new List<ingredientType>(4);
     
@@ -37,7 +39,7 @@ public class TacoUIManager : MonoBehaviour
     public int numNitroCharges = 0;
     
     
-    public List<Image> starTracker = new List<Image>();
+    public List<GameObject> starTracker = new List<GameObject>();
     private List<GameObject> orderIngredientObjects = new List<GameObject>();
     
     // Start is called before the first frame update
@@ -57,16 +59,15 @@ public class TacoUIManager : MonoBehaviour
     {
         // Score gets updated in Game Manager
 
-        // Update Order
-        if (customerManager.currCustomer != null)
-        {
-            DisplayOrder(customerManager.currCustomer.order, ingredientSpacing);
-        }
-
         // Update Gas Amount (to be deleted later)
         //DisplayGas(fuelAmount, maxFuelAmount);
         //DisplayNitro(Vehicle.nitroCharges);
 
+        if (customerManager.currCustomer != null && !newOrderTaken)
+        {
+            DisplayOrder(customerManager.currCustomer.order);
+            newOrderTaken = true;
+        }
 
     }
     
@@ -74,60 +75,72 @@ public class TacoUIManager : MonoBehaviour
     public void DisplayScore(scoreType score){
         ClearDisplayScore();
 
-        float starSpacing = 1.2f;
-        // Display 3 stars and "Perfect Taco!" text
-        if(score == scoreType.PERFECT){
+        // Display stars and set text based on score
+        if (score == scoreType.PERFECT)
+        {
             scoreText.text = "Perfect Taco!";
-            List<Image> starImg = new List<Image>(5);
-            starImg.Add(Instantiate(star, starPosition.position, transform.rotation));
-            starImg.Add(Instantiate(star, new Vector3(starPosition.position.x+star.rectTransform.lossyScale.x*starSpacing, starPosition.position.y, starPosition.position.z), transform.rotation));
-            starImg.Add(Instantiate(star, new Vector3(starPosition.position.x-star.rectTransform.lossyScale.x*starSpacing, starPosition.position.y, starPosition.position.z), transform.rotation));
-            foreach(Image img in starImg){
-                img.rectTransform.SetParent(starPosition);
-                img.transform.localScale = Vector3.one*starScale;
-                starTracker.Add(img);
-            }
+            SpawnStars(3, starPosition);
         }
-        // Display 2 stars and "Good Taco!" text
-        else if(score == scoreType.GOOD){
+        else if (score == scoreType.GOOD)
+        {
             scoreText.text = "Good Taco!";
-            List<Image> starImg = new List<Image>(5);
-            starImg.Add(Instantiate(star, new Vector3(starPosition.position.x+star.rectTransform.lossyScale.x*starSpacing/2, starPosition.position.y, starPosition.position.z), transform.rotation));
-            starImg.Add(Instantiate(star, new Vector3(starPosition.position.x-star.rectTransform.lossyScale.x*starSpacing/2, starPosition.position.y, starPosition.position.z), transform.rotation));
-            foreach(Image img in starImg){
-                img.rectTransform.SetParent(starPosition);
-                img.transform.localScale = Vector3.one*starScale;
-                starTracker.Add(img);
-            }
+            SpawnStars(2, starPosition);
         }
-        // Display 1 star and "Okay Taco" text
-        else if(score == scoreType.OKAY){
+        else if (score == scoreType.OKAY)
+        {
             scoreText.text = "Okay Taco...";
-            Image img = Instantiate(star, starPosition.position, transform.rotation);
-            img.rectTransform.SetParent(starPosition);
-            img.transform.localScale = Vector3.one*starScale;
-            starTracker.Add(img);
+            SpawnStars(1, starPosition);
         }
-        // Display 3 black stars and "Failed Taco" text
-        else if(score == scoreType.FAILED){
+        else if (score == scoreType.FAILED)
+        {
             scoreText.text = "Failed Taco...";
-            List<Image> starImg = new List<Image>(5);
-            starImg.Add(Instantiate(star, starPosition.position, transform.rotation));
-            starImg.Add(Instantiate(star, new Vector3(starPosition.position.x+star.rectTransform.lossyScale.x*starSpacing, starPosition.position.y, starPosition.position.z), transform.rotation));
-            starImg.Add(Instantiate(star, new Vector3(starPosition.position.x-star.rectTransform.lossyScale.x*starSpacing, starPosition.position.y, starPosition.position.z), transform.rotation));
-            foreach(Image img in starImg){
-                img.rectTransform.SetParent(starPosition);
-                img.transform.localScale = Vector3.one*starScale;
-                img.color = emptyStarColor;
-                starTracker.Add(img);
+            SpawnStars(3, starPosition);
+            foreach (GameObject star in starTracker)
+            {
+                star.GetComponent<SpriteRenderer>().color = emptyStarColor;
             }
         }
     }
-    
+
+    public void SpawnStars(int numStars, Transform parentTransform)
+    {
+        // Clear existing stars
+        foreach (GameObject star in starTracker)
+        {
+            Destroy(star.gameObject);
+        }
+        starTracker.Clear();
+
+        // Spawn new stars
+        for (int i = 0; i < numStars; i++)
+        {
+            GameObject star = Instantiate(starPrefab, parentTransform);
+            star.transform.localScale = Vector3.one * starScale;
+            starTracker.Add(star);
+        }
+
+        // Position stars
+        if (numStars == 1)
+        {
+            starTracker[0].transform.localPosition = Vector3.zero;
+        }
+        else if (numStars == 2)
+        {
+            starTracker[0].transform.localPosition = new Vector3(-starSpacing / 2f, 0f, 0f);
+            starTracker[1].transform.localPosition = new Vector3(starSpacing / 2f, 0f, 0f);
+        }
+        else if (numStars == 3)
+        {
+            starTracker[0].transform.localPosition = new Vector3(-starSpacing, 0f, 0f);
+            starTracker[1].transform.localPosition = Vector3.zero;
+            starTracker[2].transform.localPosition = new Vector3(starSpacing, 0f, 0f);
+        }
+    }
+
     // Clears the displayed score
     public void ClearDisplayScore(){
         if(starTracker.Count>0){
-            foreach(Image img in starTracker){
+            foreach(GameObject img in starTracker){
                 Destroy(img.gameObject);
             }
 
@@ -136,17 +149,17 @@ public class TacoUIManager : MonoBehaviour
     }
     
     // Call this to display the order. Takes in the order as a list of ingredients. 
-    public void DisplayOrder(List<ingredientType> order, float spacing)
+    public void DisplayOrder(List<ingredientType> order)
     {
         ClearDisplayOrder();
 
         // Calculate the starting y position
-        float startY = ingredientPointParent.position.y - ((order.Count - 1) * spacing) / 2;
+        float startY = ingredientPointParent.position.y - ((order.Count - 1) * ingredientSpacing) / 2;
 
         // Spawn each object at the appropriate position
         for (int i = 0; i < order.Count; i++)
         {
-            Vector3 position = new Vector3(ingredientPointParent.position.x, startY + i * spacing, ingredientPointParent.position.z);
+            Vector3 position = new Vector3(ingredientPointParent.position.x, startY + i * ingredientSpacing, ingredientPointParent.position.z);
 
             GameObject ingredient = tacoGameManager.GetIngredientObject(order[i]);
 
@@ -154,6 +167,8 @@ public class TacoUIManager : MonoBehaviour
             newIngredient.transform.parent = ingredientPointParent;
             newIngredient.transform.localScale = Vector3.one * ingredientScale;
 
+            newIngredient.GetComponent<SpriteRenderer>().sortingLayerName = "PlayArea";
+            newIngredient.GetComponent<SpriteRenderer>().sortingOrder = 2;
 
             orderIngredientObjects.Add(newIngredient);
         }
@@ -168,7 +183,7 @@ public class TacoUIManager : MonoBehaviour
         }
         orderIngredientObjects.Clear();
     }
-    
+
     // Call this to display the fuel and nitro amounts. 
     // It takes in the fuel amount, the maximum amount of fuel, and the number of nitro charges
     public void DisplayGas(float percent){

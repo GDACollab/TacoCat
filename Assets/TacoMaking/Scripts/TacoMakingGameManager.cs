@@ -52,6 +52,7 @@ public class TacoMakingGameManager : MonoBehaviour
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         audioManager = gameManager.audioManager;
         benchManager = GetComponentInChildren<IngredientBenchManager>();
+        uiManager = GetComponentInChildren<TacoUIManager>();
         
 
 
@@ -94,7 +95,8 @@ public class TacoMakingGameManager : MonoBehaviour
                 customerCreationTimer = 0;
                 customersLeftToGenerate--;
                 //The ID passed in for each customer starts at 1 and counts up to totalCustomers
-                var customer = customerManager.CreateNewCustomer(totalCustomers - customersLeftToGenerate).GetComponent<Customer>();
+                Customer customer = customerManager.CreateNewCustomer(totalCustomers - customersLeftToGenerate).GetComponent<Customer>();
+
             }
         }
         customerCreationTimer += Time.deltaTime;
