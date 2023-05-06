@@ -109,8 +109,6 @@ public class Vehicle : MonoBehaviour
         //Debug.Log(emitter.Params[0].Value);
     }
 
-    void FixedUpdate()
-    {
     void FixedUpdate() {
 
         // << CONSTANT GRAVITY >>

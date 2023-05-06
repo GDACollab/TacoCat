@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour {
 
     // track game state
     public currGame currGame = currGame.NONE;
+    public int currLevel = 1;
     public SceneObject currScene;
     public int cutsceneIndex = 0;
     [Space(5)]
@@ -134,7 +135,7 @@ public class GameManager : MonoBehaviour {
             // check if all customers submitted , if so move to driving with gas amount
             if (tacoGameManager.endOfGame && !isLoadingScene)
             {
-                LoadDrivingScene();
+                LoadDrivingScene(currLevel);
             }
         }
 
@@ -144,6 +145,8 @@ public class GameManager : MonoBehaviour {
             if (drivingGameManager.endOfGame && !isLoadingScene)
             {
                 LoadCutscene();
+                currLevel++;
+                if (currLevel > 3) { LoadMenu(); }  // end of game
             }
         }
 
@@ -172,9 +175,21 @@ public class GameManager : MonoBehaviour {
     }
 
     // **** LOAD DRIVING SCENES ****
-    public void LoadDrivingScene() {
+    public void LoadDrivingScene(int levelNum) {
         currGame = currGame.DRIVING;
-        StartCoroutine(LoadingCoroutine(driving1));
+
+        if (levelNum == 1)
+        {
+            StartCoroutine(LoadingCoroutine(driving1));
+        }
+        else if (levelNum == 2)
+        {
+            StartCoroutine(LoadingCoroutine(driving2));
+        }
+        else if (levelNum == 3)
+        {
+            StartCoroutine(LoadingCoroutine(driving2));
+        }
         audioManager.PlaySong("DrivingMusic");
     }
 
