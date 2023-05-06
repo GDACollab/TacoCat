@@ -42,7 +42,7 @@ public class CrashCorrection : MonoBehaviour
     // correct crash coroutine
     public IEnumerator CorrectCrash()
     {
-        vehicle.state = driveState.CRASH; // set state
+        vehicle.state = DRIVE_STATE.CRASH; // set state
 
         // stop velocity ,, disable trigger
         rb.velocity = Vector3.zero;
@@ -63,7 +63,7 @@ public class CrashCorrection : MonoBehaviour
         collisionTrigger.enabled = true;
         isCorrecting = false;
 
-        vehicle.state = driveState.GROUNDED;
+        vehicle.state = DRIVE_STATE.GROUNDED;
     }
 
     // constantly rotate the truck to reset angle

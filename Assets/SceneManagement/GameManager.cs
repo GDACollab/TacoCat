@@ -37,6 +37,10 @@ public class GameManager : MonoBehaviour {
     public SceneObject tacoMakingScene;
     public SceneObject cutscene;
 
+    [Header("--SCENE VARIABLE TRANSFER--")]
+    public int nitroCharges;
+    public int gasAmount;
+
     private void Awake()
     {
         // only allow for one version of the gamemanager in a scene

@@ -23,18 +23,18 @@ public class TruckAnimationHandler : MonoBehaviour
 
     public void Update()
     {
-        if (vehicle.state == driveState.NITRO)
+        if (vehicle.state == DRIVE_STATE.NITRO)
         {
             EnableNitroEffect(true);
         } 
         else { EnableNitroEffect(false); }
 
-        if (vehicle.state == driveState.CRASH)
+        if (vehicle.state == DRIVE_STATE.CRASH)
         {
             TriggerCrashEffect(2);
         }
 
-        if (vehicle.state == driveState.PERFECT_LANDING)
+        if (vehicle.state == DRIVE_STATE.PERFECT_LANDING)
         {
             EnablePerfectBoostEffect(true);
         }
