@@ -59,7 +59,7 @@ public class Customer: MonoBehaviour
 
         order = CreateCustomerOrder(3, 4);
 
-        // ShowBubbleOrder(order);
+        ShowBubbleOrder(order);
 
     }
 
@@ -124,7 +124,7 @@ public class Customer: MonoBehaviour
 
     public SpeciesType RandomizeSpecies()    //Generates a Random Species
     {
-        return (SpeciesType)Random.Range(0,4);
+        return (SpeciesType)Random.Range(0,5);
     }
 
     // << SPAWN ORDER UI BOX >>

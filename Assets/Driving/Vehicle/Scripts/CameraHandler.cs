@@ -102,7 +102,7 @@ public class CameraHandler : MonoBehaviour
 
             transform.position += new Vector3(x, y, 0);
             elapsed += Time.deltaTime;
-            yield return 0;
+            yield return null;
         }
     }
 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 #if UNITY_EDITOR
@@ -13,6 +14,8 @@ public enum currGame { NONE, MENU, CUTSCENE, TACO_MAKING, DRIVING }
 public class GameManager : MonoBehaviour {
 
     public static GameManager instance = null;
+    public static EventSystem eventSystemInstance = null;
+
 
     [HideInInspector]
     public AudioManager audioManager;
@@ -144,9 +147,9 @@ public class GameManager : MonoBehaviour {
         {
             if (drivingGameManager.endOfGame && !isLoadingScene)
             {
-                LoadCutscene();
+                if (currLevel == 3) { LoadMenu(); }  // end of game
                 currLevel++;
-                if (currLevel > 3) { LoadMenu(); }  // end of game
+                LoadCutscene();
             }
         }
 
@@ -162,6 +165,7 @@ public class GameManager : MonoBehaviour {
 
     public void LoadMenu() {
         currGame = currGame.MENU;
+        currLevel = 0;
         SceneManager.LoadScene(menuScene);
         //audioManager.PlaySong(menuIndex + "Music");
     }
@@ -180,15 +184,18 @@ public class GameManager : MonoBehaviour {
 
         if (levelNum == 1)
         {
+            currLevel = 1;
             StartCoroutine(LoadingCoroutine(driving1));
         }
         else if (levelNum == 2)
         {
+            currLevel = 2;
             StartCoroutine(LoadingCoroutine(driving2));
         }
         else if (levelNum == 3)
         {
-            StartCoroutine(LoadingCoroutine(driving2));
+            currLevel = 3;
+            StartCoroutine(LoadingCoroutine(driving3));
         }
         audioManager.PlaySong("DrivingMusic");
     }
@@ -237,6 +244,9 @@ public class GameManager : MonoBehaviour {
         SceneManager.UnloadSceneAsync(loadingScene);
         isLoadingScene = false;
     }
+
+
+
 #region >> SCENE OBJECT (( allows for drag / dropping scenes into inspector ))
     [System.Serializable]
     public class SceneObject

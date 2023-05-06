@@ -129,21 +129,16 @@ public class Vehicle : MonoBehaviour
             }
             // on ground force
             {
-                int curGroundPointIndex = stageManager.PosToGroundPointIndex(rb_vehicle.position);
-                currGroundSlopeAngle = stageManager.allLevelGroundRotations[curGroundPointIndex];
-
-                if (currGroundSlopeAngle >= uphillActivationAngle)
+                // uphill ground force
+                if (state == DRIVE_STATE.UPHILL_GROUNDED)
                 {
-                    state = DRIVE_STATE.UPHILL_GROUNDED;
                     rb_vehicle.AddForce(uphillForce * rb_vehicle.mass);
                 }
-                else
+                else if (state == DRIVE_STATE.GROUNDED)
                 {
                     //Debug.Log("groundForce");
-                    state = DRIVE_STATE.GROUNDED;
                     rb_vehicle.AddForce(groundedForce * rb_vehicle.mass);
                 }
-
             }
 
             // subtract fuel amount
@@ -185,7 +180,9 @@ public class Vehicle : MonoBehaviour
         if (state != DRIVE_STATE.NITRO && Input.GetKeyDown(nitroInputKey) && nitroCharges > 0)
         {
             StartCoroutine(NitroBoost());
-            StartCoroutine(cameraHandler.Shake(activeNitroTime, cameraHandler.nitro_camShakeMagnitude));
+            //StartCoroutine(cameraHandler.Shake(activeNitroTime, 5));
+            //StartCoroutine(cameraHandler.Shake(activeNitroTime, cameraHandler.nitro_camShakeMagnitude));
+
 
             try
             {
@@ -203,9 +200,27 @@ public class Vehicle : MonoBehaviour
             case DRIVE_STATE.NONE:
             case DRIVE_STATE.IN_AIR:
             case DRIVE_STATE.GROUNDED:
+            case DRIVE_STATE.UPHILL_GROUNDED:
+
+                // get current point under truck
+                int curGroundPointIndex = stageManager.PosToGroundPointIndex(rb_vehicle.position);
+                if (stageManager.allLevelGroundPoints.Count > curGroundPointIndex && curGroundPointIndex != -1)
+                {
+                    currGroundSlopeAngle = stageManager.allLevelGroundRotations[curGroundPointIndex]; // get angle of that point
+                }
 
                 // update in air / ground drive
-                if (groundColliderList.Count > 0) { state = DRIVE_STATE.GROUNDED; }
+                if (groundColliderList.Count > 0)
+                {
+                    if (currGroundSlopeAngle >= uphillActivationAngle)
+                    {
+                        state = DRIVE_STATE.UPHILL_GROUNDED;
+                    }
+                    else
+                    {
+                        state = DRIVE_STATE.GROUNDED;
+                    }
+                }
                 else { state = DRIVE_STATE.IN_AIR; }
                 break;
             default:
@@ -223,7 +238,7 @@ public class Vehicle : MonoBehaviour
 
         yield return new WaitForSeconds(activeNitroTime);
 
-        state = DRIVE_STATE.IN_AIR;
+        state = DRIVE_STATE.NONE;
     }
 
     // override all states and 
@@ -231,12 +246,12 @@ public class Vehicle : MonoBehaviour
     {
         state = DRIVE_STATE.PERFECT_LANDING;
 
-        StartCoroutine(cameraHandler.Shake(activePerfectBoostTime, cameraHandler.perfect_camShakeMagnitude));
+        //StartCoroutine(cameraHandler.Shake(activePerfectBoostTime, cameraHandler.perfect_camShakeMagnitude));
 
 
         yield return new WaitForSeconds(activePerfectBoostTime);
 
-        state = DRIVE_STATE.GROUNDED;
+        state = DRIVE_STATE.NONE;
     }
 
     public float GetFuel()
