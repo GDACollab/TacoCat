@@ -2,16 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum DRIVE_STATE { NONE, GROUNDED, UPHILL_GROUNDED, IN_AIR, NITRO, PERFECT_LANDING, CRASH, END_DRIVE }
+public enum DRIVE_STATE { NONE, START_DRIVE, GROUNDED, IN_AIR, NITRO, PERFECT_LANDING, CRASH, END_DRIVE }
 
 public class Vehicle : MonoBehaviour
 {
     GameManager gameManager;
     AudioManager audioManager;
-    StageManager stageManager;
     public CameraHandler cameraHandler;
     DrivingGameManager drivingGameManager;
     DrivingUIManager drivingUIManager;
+
+
     public Rigidbody2D rb_vehicle;
 
 
@@ -22,7 +23,7 @@ public class Vehicle : MonoBehaviour
     public float groundColliderHeightOffset = -2;
 
     [Header("States")]
-    public DRIVE_STATE state;
+    public DRIVE_STATE state = DRIVE_STATE.START_DRIVE;
     public bool gasPressed; // increase gravity force on truck
     public int rotationDir;
 
@@ -35,12 +36,6 @@ public class Vehicle : MonoBehaviour
     public Vector2 startingVelocity; // initial velocity
     public Vector2 inAirForce; // input based force on truck
     public Vector2 groundedForce; // input based force on truck
-
-    [Space(10)]
-    public float uphillActivationAngle = 45;
-    public float currGroundSlopeAngle;
-    public Vector2 uphillForce; 
-
 
     [Space(20)]
     public float velocityClamp = 500;
@@ -71,18 +66,21 @@ public class Vehicle : MonoBehaviour
     public float minRPM = 0;
     public float maxRPM = 2000;
 
-    private void Start()
+    private void Awake()
     {
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         audioManager = gameManager.audioManager;
-        stageManager = GetComponentInParent<StageManager>();
         cameraHandler = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraHandler>();
         drivingGameManager = GameObject.FindGameObjectWithTag("DrivingGameManager").GetComponent<DrivingGameManager>();
         drivingUIManager = drivingGameManager.uiManager;
         
+        
+        
         rb_vehicle.velocity = startingVelocity;
-        state = DRIVE_STATE.NONE;
+
+
     }
+
 
     // Update is called once per frame
     void Update()
@@ -93,7 +91,7 @@ public class Vehicle : MonoBehaviour
 
     void FixedUpdate() {
 
-
+        // << CONSTANT GRAVITY >>
         rb_vehicle.AddForce(Vector2.down * gravity * rb_vehicle.mass * Time.deltaTime);
 
         // << CHECK FOR GROUND COLLIDERS >>
@@ -110,23 +108,10 @@ public class Vehicle : MonoBehaviour
                 rb_vehicle.AddForce(inAirForce * rb_vehicle.mass);
             }
             // on ground force
-            else if (state == DRIVE_STATE.GROUNDED || state == DRIVE_STATE.UPHILL_GROUNDED)
+            else if (state == DRIVE_STATE.GROUNDED)
             {
-
-                int curGroundPointIndex = stageManager.GetClosestGroundPointIndexToPos(rb_vehicle.position);
-                currGroundSlopeAngle = stageManager.allLevelGroundRotations[curGroundPointIndex];
-
-                if ( currGroundSlopeAngle >= uphillActivationAngle)
-                {
-                    state = DRIVE_STATE.UPHILL_GROUNDED;
-                    rb_vehicle.AddForce(uphillForce * rb_vehicle.mass);
-                }
-                else
-                {
-                    //Debug.Log("groundForce");
-                    state = DRIVE_STATE.GROUNDED;
-                    rb_vehicle.AddForce(groundedForce * rb_vehicle.mass);
-                }
+                //Debug.Log("groundForce");
+                rb_vehicle.AddForce(groundedForce * rb_vehicle.mass);
 
             }
 
@@ -182,18 +167,12 @@ public class Vehicle : MonoBehaviour
 
     public void StateMachine()
     {
-        switch (state)
+        // if not in nitro mode
+        if (state != DRIVE_STATE.NITRO && state != DRIVE_STATE.CRASH && state != DRIVE_STATE.PERFECT_LANDING)
         {
-            case DRIVE_STATE.NONE:
-            case DRIVE_STATE.IN_AIR:
-            case DRIVE_STATE.GROUNDED:
-
-                // update in air / ground drive
-                if (groundColliderList.Count > 0) { state = DRIVE_STATE.GROUNDED; }
-                else { state = DRIVE_STATE.IN_AIR; }
-                break;
-            default:
-                break;
+            // set in air / ground drive
+            if (groundColliderList.Count > 0) { state = DRIVE_STATE.GROUNDED; }
+            else { state = DRIVE_STATE.IN_AIR; }
         }
     }
 
@@ -207,7 +186,7 @@ public class Vehicle : MonoBehaviour
 
         yield return new WaitForSeconds(activeNitroTime);
 
-        state = DRIVE_STATE.NONE;
+        state = DRIVE_STATE.IN_AIR;
     }
 
     // override all states and 
@@ -220,7 +199,7 @@ public class Vehicle : MonoBehaviour
 
         yield return new WaitForSeconds(activePerfectBoostTime);
 
-        state = DRIVE_STATE.NONE;
+        state = DRIVE_STATE.GROUNDED;
     }
 
     public float GetFuel() {

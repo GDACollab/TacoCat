@@ -9,7 +9,8 @@ public class StageManager : MonoBehaviour
 
     [Header("[[ GENERATION LENGTHS ]]")]
     public int mainGenerationLength = 30000;
-    private Vector3 main_begPos, main_endPos;
+    [HideInInspector]
+    public Vector3 main_begPos, main_endPos;
 
     [Header("End Island Offsets")]
     public int startIslandXOffset = -1000;
@@ -93,7 +94,7 @@ public class StageManager : MonoBehaviour
 
     }
 
-    public int GetClosestGroundPointIndexToPos(Vector3 pos)
+    public int PosToGroundPointIndex(Vector3 pos)
     {
         int closestIndex = -1;
         float closestDistance = float.MaxValue;

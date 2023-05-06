@@ -63,7 +63,7 @@ public class FlipTracker : MonoBehaviour
 
         // get point underneath truck
         if (stageManager == null) { Debug.LogError("ERROR: Stage Manager is null");  return; }
-        hitPointIndex = stageManager.GetClosestGroundPointIndexToPos(hit.point);
+        hitPointIndex = stageManager.PosToGroundPointIndex(hit.point);
 
         // << TRIGGER WHEN IN AIR >>
         if (vehicle.state == DRIVE_STATE.IN_AIR && !jumpStarted)
@@ -89,12 +89,17 @@ public class FlipTracker : MonoBehaviour
             if (IsPerfectLanding(endJumpRot, groundPointRotation) && flipCount > 0) 
             {
                 int flips = Mathf.Min(flipCount, flipCap);
+                float flipBoost=flips*percentBoost;
+                Vector2 newBoost = new Vector2(((flipBoost)+1)*vehicle.perfectLandingBoostForce.x, 0f);
+                float newTime = ((flips*timeBoost)+1)*vehicle.activePerfectBoostTime;
                 boostSprite.transform.localScale = new Vector3(boostSprite.transform.localScale.x, boostSpriteY*((flips*percentBoost)+1), boostSprite.transform.localScale.z);
                 StartCoroutine(vehicle.PerfectLandingBoost());
                 audioManager.Play(audioManager.flipBoostSFX);
             }
+            if(audioManager != null){
+                audioManager.Play(audioManager.truckLandingSFX);
+            }
             //PLAY AUDIO MANAGER REG LANDING
-            audioManager.Play(audioManager.truckLandingSFX);
         }
 
         // track in air time

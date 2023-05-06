@@ -16530,7 +16530,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8771345538298886059, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: generationStyle
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8771345538298886059, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
       propertyPath: chunkHeightRange.x
@@ -16638,7 +16638,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 80ee9dcba8bda874ba67c5611101a924, type: 3}
---- !u!43 &1252659427
+--- !u!43 &1422889153
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -17192,8 +17192,8 @@ MonoBehaviour:
   minSpaceBetweenObjects: 4
   maxSpaceBetweenObjects: 20
   drawLine: 1
-  lineWidth: 40
-  lineOffset: {x: 5, y: -20, z: 0}
+  lineWidth: 100
+  lineOffset: {x: 5, y: -50, z: 0}
   lineMaterial: {fileID: 2100000, guid: 95b160534129f2647b82dc53f6777085, type: 2}
   treeGenParent: {fileID: 7736978145719334173}
   treeScale: 50
@@ -17204,7 +17204,7 @@ MonoBehaviour:
   treeZPosition: 10
   treePrefabs:
   - {fileID: 3369474761770153936, guid: 98f3305ed9766834c91d1bed13271dad, type: 3}
-  signPrefab: {fileID: 8239327790096649362, guid: cea5ed8ac6aa2cf4994de16bda11ce03, type: 3}
+  signPrefab: {fileID: 7292054314515768603, guid: 9473524ecdb6d4fd5ab1dbc038ec454b, type: 3}
   signGenParent: {fileID: 1473964996}
   signScale: 40
   numSigns: 4
@@ -18011,8 +18011,8 @@ MonoBehaviour:
   - {x: 7.1903625, y: -3.2995179, z: 8.2784224e-11}
   - {x: -4.2184334, y: -3.4624546, z: 0.00000067891347}
   m_ShapePathHash: 1675360583
-  m_Mesh: {fileID: 1252659427}
-  m_InstanceId: 114152
+  m_Mesh: {fileID: 1422889153}
+  m_InstanceId: 837258
 --- !u!114 &5231190167739477842
 MonoBehaviour:
   m_ObjectHideFlags: 0
