@@ -15,6 +15,11 @@ public class CutsceneManager : MonoBehaviour
 
     private float startingPosition;
 
+    public float positionX = 1.0f;
+    public float positionY = 1.0f;
+
+    
+
     [Range(0.0f, 10.0f)]
     public float scroll;
 
