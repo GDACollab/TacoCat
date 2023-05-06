@@ -34,7 +34,12 @@ public class CutsceneManager : MonoBehaviour
         public List<string> texts;
     }
 
-    public List<TextList> Dialoge;
+    public List<TextList> CutsceneOneDialogue;
+    public List<TextList> CutsceneTwoDialogue;
+    public List<TextList> CutsceneThreeDialogue;
+
+    private List<TextList> chosenDialogue;
+
     private TextList list;
 
     
@@ -90,7 +95,25 @@ public class CutsceneManager : MonoBehaviour
     
     public IEnumerator begin()
     {
-        foreach (TextList a in Dialoge)
+        switch (GameManager.instance.cutsceneIndex)
+        {
+            case 0:
+                chosenDialogue = CutsceneOneDialogue;
+                GameManager.instance.cutsceneIndex++;
+                break;
+            case 1:
+                chosenDialogue = CutsceneTwoDialogue;
+                GameManager.instance.cutsceneIndex++;
+                break;
+            case 2:
+                chosenDialogue = CutsceneThreeDialogue;
+                break;
+            default:
+                chosenDialogue = CutsceneOneDialogue;
+                break;
+        }
+
+        foreach (TextList a in chosenDialogue)
         {
             if (a.person == 0)
             {
@@ -119,7 +142,9 @@ public class CutsceneManager : MonoBehaviour
 
         }
 
-        //endOfCutscene = true;
+        yield return new WaitForSeconds(4);
+
+        endOfCutscene = true;
     }
     
 

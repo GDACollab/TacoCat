@@ -328,6 +328,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: cutsceneIndex
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7004250954060202135, guid: b98e17472161422409ce954e519a82b5, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -487,32 +491,18 @@ MonoBehaviour:
   positionY: 1
   scroll: 1.1
   characterLimit: 25
-  Dialoge:
+  CutsceneOneDialogue:
   - person: 0
     texts:
-    - ' hellp this is alex i typing oidfjbnf'
-    - OIAEFBSJOFIAHGSFawi
-    - OIAEFBSJOFIAHGSFawi
-  - person: 1
-    texts:
-    - OIAEFBSJOFIAHGSFawi
-    - OIAEFBSJOFIAHGSFawi
+    - yeah
+  CutsceneTwoDialogue:
   - person: 0
     texts:
-    - OIAEFBSJOFIAHGSFawi
-  - person: 1
-    texts:
-    - OIAEFBSJOFIAHGSFawi
-    - OIAEFBSJOFIAHGSFawi
+    - no
+  CutsceneThreeDialogue:
   - person: 0
     texts:
-    - DId you see the fireworks last night? THey were kinda crazy! Have you seen
-      the latest Overwatch update and the new hero!!!?!??!
-    - OIAEFBSJOFIAHGSFawi
-  - person: 1
-    texts:
-    - Nah
-    - OIAEFBSJOFIAHGSFawi
+    - maybe so
   messageDelayAlex: 0.057
   textSpeedAlex: 0.076
   messageDelayJamie: 1.14
