@@ -24,6 +24,7 @@
 		</relationship>
 		<relationship name="markerTracks">
 			<destination>{ac6965df-b726-4fec-9104-f9d60f06605b}</destination>
+			<destination>{95619801-f8ae-4339-9ac8-73aa7059aa2c}</destination>
 		</relationship>
 		<relationship name="groupTracks">
 			<destination>{8f04ad97-c4c5-4f22-baa8-e6d7408b5e5c}</destination>
@@ -33,7 +34,6 @@
 		</relationship>
 		<relationship name="parameters">
 			<destination>{7b6148cc-d305-40e2-ac02-839eb761e1ff}</destination>
-			<destination>{95f5ecd9-275d-4e60-82b3-98066dae66c4}</destination>
 		</relationship>
 		<relationship name="banks">
 			<destination>{309c3ab3-989d-4b75-86a0-67234e55bf9d}</destination>
@@ -66,6 +66,7 @@
 	</object>
 	<object class="EventAutomatableProperties" id="{54eb4504-6d7b-442e-b819-6e6151025f3f}" />
 	<object class="MarkerTrack" id="{ac6965df-b726-4fec-9104-f9d60f06605b}" />
+	<object class="MarkerTrack" id="{95619801-f8ae-4339-9ac8-73aa7059aa2c}" />
 	<object class="GroupTrack" id="{8f04ad97-c4c5-4f22-baa8-e6d7408b5e5c}">
 		<relationship name="modules">
 			<destination>{48f73203-c6fa-4b10-8275-ac1637deb479}</destination>
@@ -80,16 +81,14 @@
 		</relationship>
 		<relationship name="markers">
 			<destination>{b2cf0c22-451f-4046-825f-3b6e39b8b13a}</destination>
+			<destination>{0dbc0c5a-4a59-4930-9b45-b689bdc663ae}</destination>
+			<destination>{b26ed3d2-55e8-4699-a73c-a22049abcf1d}</destination>
+			<destination>{b54017ba-6e8b-4c9c-bf4e-2a086e0211ee}</destination>
 		</relationship>
 	</object>
 	<object class="ParameterProxy" id="{7b6148cc-d305-40e2-ac02-839eb761e1ff}">
 		<relationship name="preset">
 			<destination>{9f6a3f8b-712b-4352-bf68-09593e505b5a}</destination>
-		</relationship>
-	</object>
-	<object class="ParameterProxy" id="{95f5ecd9-275d-4e60-82b3-98066dae66c4}">
-		<relationship name="preset">
-			<destination>{426420ad-82db-4250-8960-2c3f593977bd}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{18a054c8-fa8a-4efd-9302-1c71ed01d6a0}">
@@ -153,6 +152,48 @@
 		</property>
 		<property name="length">
 			<value>88.632000000000232</value>
+		</property>
+		<relationship name="timeline">
+			<destination>{07fb982e-b9e4-4df1-b354-8aa3ca633da4}</destination>
+		</relationship>
+		<relationship name="markerTrack">
+			<destination>{95619801-f8ae-4339-9ac8-73aa7059aa2c}</destination>
+		</relationship>
+	</object>
+	<object class="NamedMarker" id="{0dbc0c5a-4a59-4930-9b45-b689bdc663ae}">
+		<property name="position">
+			<value>0</value>
+		</property>
+		<property name="name">
+			<value>Just Guitar</value>
+		</property>
+		<relationship name="timeline">
+			<destination>{07fb982e-b9e4-4df1-b354-8aa3ca633da4}</destination>
+		</relationship>
+		<relationship name="markerTrack">
+			<destination>{ac6965df-b726-4fec-9104-f9d60f06605b}</destination>
+		</relationship>
+	</object>
+	<object class="NamedMarker" id="{b26ed3d2-55e8-4699-a73c-a22049abcf1d}">
+		<property name="position">
+			<value>45</value>
+		</property>
+		<property name="name">
+			<value>Guitar and Shaker</value>
+		</property>
+		<relationship name="timeline">
+			<destination>{07fb982e-b9e4-4df1-b354-8aa3ca633da4}</destination>
+		</relationship>
+		<relationship name="markerTrack">
+			<destination>{ac6965df-b726-4fec-9104-f9d60f06605b}</destination>
+		</relationship>
+	</object>
+	<object class="NamedMarker" id="{b54017ba-6e8b-4c9c-bf4e-2a086e0211ee}">
+		<property name="position">
+			<value>89.280000000000001</value>
+		</property>
+		<property name="name">
+			<value>Congas</value>
 		</property>
 		<relationship name="timeline">
 			<destination>{07fb982e-b9e4-4df1-b354-8aa3ca633da4}</destination>
@@ -229,6 +270,9 @@
 		<relationship name="automators">
 			<destination>{cccc4592-70c3-4882-96ae-0471cecd6ead}</destination>
 		</relationship>
+		<relationship name="modulators">
+			<destination>{6e22b387-6678-45f0-b1f3-7733fe16bf0b}</destination>
+		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{9fd0390a-62e7-4d9d-9f76-e6a39fd89dd1}" />
 	<object class="AutomationPoint" id="{67534370-c3be-4bb0-97ba-56e746eff761}">
@@ -254,6 +298,11 @@
 		<relationship name="automationCurves">
 			<destination>{de8d984f-dd85-4b2c-a076-19fa04ca13ac}</destination>
 		</relationship>
+	</object>
+	<object class="ADSRModulator" id="{6e22b387-6678-45f0-b1f3-7733fe16bf0b}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>frequencyA</value>
+		</property>
 	</object>
 	<object class="AutomationCurve" id="{de8d984f-dd85-4b2c-a076-19fa04ca13ac}">
 		<relationship name="parameter">

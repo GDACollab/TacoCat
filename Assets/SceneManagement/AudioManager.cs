@@ -52,13 +52,11 @@ public class AudioManager : MonoBehaviour {
     // CUTSCENE
     [Header("FMOD Cutscene(SFX) Event Path Strings")]
     
-    [Tooltip("FMOD Event Path for the folder that contains all the Cutscene SFX")]
-    public string cutsceneSFXPath;
-    [Tooltip("Name of receieve text event")]
+    [Tooltip("path of receieve text event")]
     public string recieveTextSFX;
-    [Tooltip("Name of the sending text event")]
+    [Tooltip("path of the sending text event")]
     public string sendTextSFX;
-    [Tooltip("Name of the typing event")]
+    [Tooltip("path of the typing event")]
     public string typingSFX;
 
     // DRIVING
@@ -86,7 +84,6 @@ public class AudioManager : MonoBehaviour {
     public string ingriPlaceSFX; //IMPLEMENTED
     [Tooltip("Name of the paw swiping event")]
     public string pawSwipeSFX; //IMPLEMENTED
-
     public bool isPaused;
 
     //FMODUnity.RuntimeManager.StudioSystem.setParameterByName("isPaused", isPaused);
