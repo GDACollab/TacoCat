@@ -15,8 +15,6 @@ public class TacoMakingGameManager : MonoBehaviour
 
     public bool endOfGame;
 
-    public int earnedNitroCharges;
-
     [Header("Submission Taco")]
     public Taco submissionTaco;
 
@@ -38,6 +36,7 @@ public class TacoMakingGameManager : MonoBehaviour
     public float gameScore = 0; // max score is 3 * numOfCustomers served
     public float maxGameScore;
     public float gasAmount = 0;
+    public int nitroCharges;
 
     [Header("Prefabs")]
     public GameObject tacoPrefab;
@@ -46,12 +45,18 @@ public class TacoMakingGameManager : MonoBehaviour
 
     public void Start()
     {
+
+
+
         customerCreationTimer = customerManager.transitionTime;
 
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         audioManager = gameManager.audioManager;
         benchManager = GetComponentInChildren<IngredientBenchManager>();
+        uiManager = GetComponentInChildren<TacoUIManager>();
         
+
+
         CreateNewSubmissionTaco();
 
         customersLeftToGenerate = totalCustomers;
@@ -79,6 +84,7 @@ public class TacoMakingGameManager : MonoBehaviour
         taco.transform.parent = transform;
     }
 
+
     // continue through remaining customers
     public void CustomerRotation()
     {
@@ -90,7 +96,8 @@ public class TacoMakingGameManager : MonoBehaviour
                 customerCreationTimer = 0;
                 customersLeftToGenerate--;
                 //The ID passed in for each customer starts at 1 and counts up to totalCustomers
-                customerManager.CreateNewCustomer(totalCustomers - customersLeftToGenerate).GetComponent<Customer>();
+                Customer customer = customerManager.CreateNewCustomer(totalCustomers - customersLeftToGenerate).GetComponent<Customer>();
+
             }
         }
         customerCreationTimer += Time.deltaTime;
@@ -127,11 +134,11 @@ public class TacoMakingGameManager : MonoBehaviour
             if (perfectCounter % 3 == 0 && perfectCounter != 0)
             {
                 comboCounter++;
-                if (earnedNitroCharges < 3)
+                if (nitroCharges < 3)
                 {
-                    earnedNitroCharges++;
+                    nitroCharges++;
                 }
-                uiManager.DisplayNitro(earnedNitroCharges); //updates the nitro display
+                uiManager.DisplayNitro(nitroCharges); //updates the nitro display
             }
         }
         else

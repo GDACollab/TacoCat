@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum SpeciesType {Fish, Ravens, Sheep, Frogs, Capybaras};
+public enum SpeciesType {Fish, Raven, Sheep, Frog, Capybara};
 
 public class Customer: MonoBehaviour
 {
@@ -14,7 +14,7 @@ public class Customer: MonoBehaviour
     [Header("Order UI")]
     public OrderBubble orderUI;
 
-    public enum species {Fish,Raven,Sheep,Frog,Capybara}; //species selectable by CreateCustomerOrder
+    public SpeciesType species; //species selectable by CreateCustomerOrder
     public List<ingredientType> order; //ingredients in the order
 
     [HideInInspector] public Vector3 prevPos;
@@ -23,6 +23,14 @@ public class Customer: MonoBehaviour
     [HideInInspector] public float transitionTime;     //How long it takes in seconds for the customer to move between positions
     [HideInInspector] public float currTransitionTime; //Used for keeping track of time during transitions
     [HideInInspector] public int currPosition;
+
+    [Header("CustomerRigs")]
+    public GameObject fishRig;
+    public GameObject ravenRig;
+    public GameObject sheepRig;
+    public GameObject frogRig;
+    public GameObject capybaraRig;
+
 
     // List of possible colors to tint this customer's sprite once their taco is finished.
     // Elements correspond to the values in the scoreType enum in TacoMakingGameManager.cs .
@@ -45,9 +53,14 @@ public class Customer: MonoBehaviour
     {
         orderUI.gameObject.SetActive(false);
 
+        // Decide on customer species
+        species = RandomizeSpecies(); //Selects random species from the range of possible options
+        EnableSpeciesRig();
+
         order = CreateCustomerOrder(3, 4);
 
         // ShowBubbleOrder(order);
+
     }
 
     private void LateUpdate()
@@ -61,10 +74,6 @@ public class Customer: MonoBehaviour
 
         Debug.Log("Created Customer Order");
 
-        // Decide on customer species
-        species custSpecies;
-        custSpecies = (species)Random.Range(0,4); //Selects random species from the range of possible options
-
         // get menu from bench manager
         List<ingredientType> menu = tacoGameManager.benchManager.menu;        
         int orderLength = Random.Range(minOrderLength, maxOrderLength + 1); // randomize order length
@@ -76,21 +85,21 @@ public class Customer: MonoBehaviour
         List<int> custPreference = new List<int> { 0, 1, 2, 3, 4 };
         // I would like to switch this with calling for the required value (ie getting fish.value)
         // but afaik we don't have that implemented, and I don't want to risk messing with it rn
-        switch (custSpecies)
+        switch (species)
         {
-            case species.Fish: //No fish, 2x sour cream
+            case SpeciesType.Fish: //No fish, 2x sour cream
                 custPreference = new List<int> { 0, 1, 3, 4, 4 };
                 break;
-            case species.Raven: //2x fish
+            case SpeciesType.Raven: //2x fish
                 custPreference = new List<int> { 0, 1, 2, 2, 3, 4 };
                 break;
-            case species.Sheep: //2x cabbage
+            case SpeciesType.Sheep: //2x cabbage
                 custPreference = new List<int> { 0, 0, 1, 2, 3, 4 };
                 break;
-            case species.Frog: // 1/2x fish, 2x jalapenos
+            case SpeciesType.Frog: // 1/2x fish, 2x jalapenos
                 custPreference = new List<int> { 0, 0, 1, 1, 2, 3, 3, 3, 3, 4, 4 };
                 break;
-            case species.Capybara: // 1/2x Pico
+            case SpeciesType.Capybara: // 1/2x Pico
                 custPreference = new List<int> { 0, 0, 1, 2, 2, 3, 3, 4, 4 };
                 break;
         }
@@ -233,5 +242,37 @@ public class Customer: MonoBehaviour
     {
         SpriteRenderer mySpriteRenderer = GetComponent<SpriteRenderer>();
         mySpriteRenderer.color = colorAfterTacoFinished[(int)tacoScore];
+    }
+
+
+    public void EnableSpeciesRig()
+    {
+        fishRig.SetActive(false);
+        ravenRig.SetActive(false);
+        sheepRig.SetActive(false);
+        frogRig.SetActive(false);
+        capybaraRig.SetActive(false);
+
+        switch (species)
+        {
+            case SpeciesType.Fish:
+                fishRig.SetActive(true);
+                break;
+            case SpeciesType.Raven:
+                ravenRig.SetActive(true);
+                break;
+            case SpeciesType.Sheep:
+                sheepRig.SetActive(true);
+                break;
+            case SpeciesType.Frog:
+                frogRig.SetActive(true);
+                break;
+            case SpeciesType.Capybara:
+                capybaraRig.SetActive(true);
+                break;
+            default:
+                fishRig.SetActive(true);
+                break;
+        }
     }
 }

@@ -18,7 +18,7 @@ public class TacoUIManager : MonoBehaviour
     public float starScale = 1;
     public float starSpacing = 10;
     public Transform starPosition;
-    public TMP_Text scoreText;
+    //public TMP_Text scoreText;
     public Color emptyStarColor = Color.black;
     
     [Header("Order Window UI")]
@@ -48,7 +48,7 @@ public class TacoUIManager : MonoBehaviour
         customerManager = tacoGameManager.customerManager;
 
         DisplayGas(0);
-        DisplayNitro(tacoGameManager.earnedNitroCharges);
+        DisplayNitro(tacoGameManager.nitroCharges);
 
         DisplayScore(scoreType.FAILED);
 
@@ -78,22 +78,22 @@ public class TacoUIManager : MonoBehaviour
         // Display stars and set text based on score
         if (score == scoreType.PERFECT)
         {
-            scoreText.text = "Perfect Taco!";
+            //scoreText.text = "Perfect Taco!";
             SpawnStars(3, starPosition);
         }
         else if (score == scoreType.GOOD)
         {
-            scoreText.text = "Good Taco!";
+            //scoreText.text = "Good Taco!";
             SpawnStars(2, starPosition);
         }
         else if (score == scoreType.OKAY)
         {
-            scoreText.text = "Okay Taco...";
+            //scoreText.text = "Okay Taco...";
             SpawnStars(1, starPosition);
         }
         else if (score == scoreType.FAILED)
         {
-            scoreText.text = "Failed Taco...";
+            //scoreText.text = "Failed Taco...";
             SpawnStars(3, starPosition);
             foreach (GameObject star in starTracker)
             {
