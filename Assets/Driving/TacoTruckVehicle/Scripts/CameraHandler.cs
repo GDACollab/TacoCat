@@ -197,19 +197,21 @@ public class CameraHandler : MonoBehaviour
             float velocityPercent = Mathf.InverseLerp(velocityRange.x, velocityRange.y, vehicleRb.velocity.magnitude);
 
             //Set zPos based on car's Y position from the zero, and the camera's FOV (60 in this case) divided by 2 (so, 30)
-            float zPos = Mathf.Min(zPosRange.x, -((vehicle.transform.position.y-GetCurrentZero()) / Mathf.Tan(30)));
+            float zPos = Mathf.Min(zPosRange.x, -((vehicle.transform.position.y-GetCurrentZero()) / Mathf.Tan(30*Mathf.Deg2Rad)));
+            if(zPos == float.NaN)
+            {
+                Debug.Log(vehicle.transform.position.y+" "+ GetCurrentZero()+" "+ Mathf.Tan(30 * Mathf.Deg2Rad));
+            }
 
-            // Linearly interpolate the camera's x-position based on the velocityPercent
-            float xPos = Mathf.Lerp(xPosRange.x, xPosRange.y, velocityPercent);
+            // Set camera x to car x
+            float xPos = vehicle.transform.position.x;
 
-            // Linearly interpolate the camera's y-position based on the height
-            float heightPercent = Mathf.InverseLerp(heightRange.x, heightRange.y, vehicle.transform.position.y - ground.transform.position.y);
+            // Set camera y to car y
 
-            float yPos = Mathf.Lerp(yPosRange.x, yPosRange.y, heightPercent);
+            float yPos = vehicle.transform.position.y;
 
-            // Update the camera's position with the new z-position
-            currOffset = new Vector3(xPos, yPos, zPos);
-            transform.position = Vector3.Lerp(transform.position, vehicle.transform.position + currOffset, camSpeed * Time.deltaTime);
+            // Update the camera's position with the new x/y/z-position
+            transform.position = new Vector3(xPos, yPos, zPos);
 
         }
     }
