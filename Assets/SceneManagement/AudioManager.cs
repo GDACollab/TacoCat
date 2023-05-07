@@ -27,12 +27,11 @@ public class AudioManager : MonoBehaviour {
     public float ambianceVolume;
 
     [Header("Bus Paths")]
-    [SerializeField]
-    static public string masVolBusPath = "bus:/";
-    static public string musVolBusPath = "bus:/Music";
-    static public string sfxVolBusPath = "bus:/SFX";
-    static public string diaVolBusPath = "bus:/Dialogue";
-    static public string ambiVolBusPath = "bus:/Ambience";
+    public string masVolBusPath = "bus:/";
+    public string musVolBusPath = "bus:/Music";
+    public string sfxVolBusPath = "bus:/SFX";
+    public string diaVolBusPath = "bus:/Dialogue";
+    public string ambiVolBusPath = "bus:/Ambience";
 
     //BUSES
     public FMOD.Studio.Bus masBus;
@@ -45,8 +44,11 @@ public class AudioManager : MonoBehaviour {
     [Header("FMOD Music")]
 
     [Tooltip("FMOD Event Path for the folder that contains all the music")]
-    public List<string> music;
-    protected Dictionary<string, string> musicList = new Dictionary<string, string>();
+    public string menuMusicPath = "event:/Music/MenuMusic";
+    public string storyMusicPath = "event:/Music/StoryMusic";
+    public string tacoMusicPath = "event:/Music/TacoMusic";
+    public string drivingMusicPath = "event:/Music/DrivingMusic";
+
     /////////////////////////SFX//////////////////////////////
 
     // CUTSCENE
@@ -92,8 +94,7 @@ public class AudioManager : MonoBehaviour {
     // FOR GLOBAL PARAMETERS FMOD Parameter name, variable name
     //FMODUnity.RuntimeManager.StudioSystem.setParameterByName("", x);
 
-
-    public void InitializeBanks()
+    void Awake()
     {
         // Load the FMOD banks
         RuntimeManager.LoadBank("Master");
@@ -102,9 +103,21 @@ public class AudioManager : MonoBehaviour {
         RuntimeManager.LoadBank("Dialogue");
         RuntimeManager.LoadBank("Ambience");
 
+        masBus = FMODUnity.RuntimeManager.GetBus(masVolBusPath);
+        musBus = FMODUnity.RuntimeManager.GetBus(musVolBusPath);
+        sfxBus = FMODUnity.RuntimeManager.GetBus(sfxVolBusPath);
+        diaBus = FMODUnity.RuntimeManager.GetBus(diaVolBusPath);
+        ambiBus = FMODUnity.RuntimeManager.GetBus(ambiVolBusPath);
+
+        /*menuMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + menuMusic);
+
+        cutsceneMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + cutsceneMusic);
+        tacoMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + tacoMusic);
+        drivingMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + drivingMusic);*/
+
     }
 
-
+    protected EventInstance currentPlaying;
 
 
     //plays a one shot given the fmod event path
@@ -138,43 +151,29 @@ public class AudioManager : MonoBehaviour {
     //a little more complicated! DO MATH to give sound 1 variable to work with
 
     //volType {0= master, 1= music, 2 = sfx, 3 = dialogue}, volAmount = float range: [0,1]
-    void Awake()
-    {
-        masBus = FMODUnity.RuntimeManager.GetBus(masVolBusPath);
-        musBus = FMODUnity.RuntimeManager.GetBus(musVolBusPath);
-        sfxBus = FMODUnity.RuntimeManager.GetBus(sfxVolBusPath);
-        diaBus = FMODUnity.RuntimeManager.GetBus(diaVolBusPath);
-        ambiBus = FMODUnity.RuntimeManager.GetBus(ambiVolBusPath);
 
-        // Load music:
-        
-        foreach (string fullPath in music) {
-            var name = Regex.Match(fullPath, @"[^\\/]*$");
-            musicList.Add(name.Value, fullPath);
-        }
-
-        /*menuMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + menuMusic);
-
-        cutsceneMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + cutsceneMusic);
-        tacoMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + tacoMusic);
-        drivingMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + drivingMusic);*/
-
-    }
-
-    protected EventInstance currentPlaying;
 
     /////////////////////////VOLUME//////////////////////////////
-    public void PlaySong(string name){
-        Debug.Log("[Audio Manager] Playing Song: " + name);
+    public void PlaySong(string path){
+        Debug.Log("[Audio Manager] Playing Song: " + path);
         if (currentPlaying.isValid()) {
             currentPlaying.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         }
 
-        EventInstance song = RuntimeManager.CreateInstance(musicList[name]);
+        EventDescription eventDescription;
+        FMOD.RESULT result = RuntimeManager.StudioSystem.getEvent(path, out eventDescription);
+        if (result != FMOD.RESULT.OK)
+        {
+            Debug.LogWarning("FMOD SONG event path does not exist: " + path);
+            return;
+        }
+
+        EventInstance song = RuntimeManager.CreateInstance(path);
         currentPlaying = song;
         song.start();
         song.release();
     }
+
 
     // Update is called once per frame
     void Update()

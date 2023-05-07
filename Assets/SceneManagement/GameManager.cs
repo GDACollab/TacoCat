@@ -128,8 +128,16 @@ public class GameManager : MonoBehaviour {
             {
                 Debug.LogWarning("Cannot determine Scene Type");
             }
-
             yield return null;
+        }
+
+        // wait till music is loaded
+        yield return new WaitForSeconds(2);
+
+        // Start Menu Music
+        if (currGame == currGame.MENU)
+        {
+            audioManager.PlaySong(audioManager.menuMusicPath);
         }
     }
 
@@ -170,7 +178,7 @@ public class GameManager : MonoBehaviour {
         currGame = currGame.MENU;
         currLevel = 0;
         SceneManager.LoadScene(menuScene);
-        //audioManager.PlaySong(menuIndex + "Music");
+        audioManager.PlaySong(audioManager.menuMusicPath);
     }
 
     // **** LOAD TACO MAKING SCENE ****
@@ -178,7 +186,7 @@ public class GameManager : MonoBehaviour {
 
         currGame = currGame.TACO_MAKING;
         StartCoroutine(LoadingCoroutine(tacoMakingScene));
-        audioManager.PlaySong("TacoMusic");
+        audioManager.PlaySong(audioManager.tacoMusicPath);
     }
 
     // **** LOAD DRIVING SCENES ****
@@ -200,14 +208,14 @@ public class GameManager : MonoBehaviour {
             currLevel = 3;
             StartCoroutine(LoadingCoroutine(driving3));
         }
-        audioManager.PlaySong("DrivingMusic");
+        audioManager.PlaySong(audioManager.drivingMusicPath);
     }
 
     public void LoadCutscene()
     {
         currGame = currGame.CUTSCENE;
         SceneManager.LoadScene(cutscene);
-        audioManager.PlaySong("StoryMusic");
+        audioManager.PlaySong(audioManager.storyMusicPath);
     }
 
     public void Quit()

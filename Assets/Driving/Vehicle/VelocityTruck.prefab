@@ -121,7 +121,7 @@ MonoBehaviour:
   - {x: -4.2184334, y: -3.4624546, z: 0.00000067891347}
   m_ShapePathHash: 1675360583
   m_Mesh: {fileID: 0}
-  m_InstanceId: 74180
+  m_InstanceId: 51126
 --- !u!1 &3986610690755736411
 GameObject:
   m_ObjectHideFlags: 0
@@ -378,6 +378,7 @@ MonoBehaviour:
   gizmoSize: 1
   minRPM: 0
   maxRPM: 2000
+  rpm: 0
 --- !u!50 &5231190167668380749
 Rigidbody2D:
   serializedVersion: 4
@@ -515,17 +516,18 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: -1586190589
-      Data2: 1218736270
-      Data3: -1038978159
-      Data4: -1449645814
-    Path: event:/SFX/Driving/Truck Engine [Placeholder]
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   Event: 
-  PlayEvent: 1
-  StopEvent: 2
+  PlayEvent: 0
+  StopEvent: 0
   AllowFadeout: 1
   TriggerOnce: 0
   Preload: 0
+  AllowNonRigidbodyDoppler: 0
   Params:
   - Name: RPM
     Value: 0
