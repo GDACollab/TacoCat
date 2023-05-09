@@ -160,6 +160,12 @@ public class Vehicle : MonoBehaviour
         // << PERFECT BOOST STATE >>
         if (state == DRIVE_STATE.PERFECT_LANDING)
         {
+            float pyoro = 1000;
+            if (rb_vehicle.velocity.magnitude < pyoro)
+            {
+                rb_vehicle.velocity =  transform.up * pyoro;
+            }
+
             rb_vehicle.AddForce(perfectLandingBoostForce * rb_vehicle.mass);
         }
 
