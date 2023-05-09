@@ -148,6 +148,12 @@ public class Vehicle : MonoBehaviour
         // << NITRO STATE >>
         if (state == DRIVE_STATE.NITRO)
         {
+            float andrewBranch = 1000;
+            if (rb_vehicle.velocity.magnitude < andrewBranch)
+            {
+                rb_vehicle.velocity =  transform.up * andrewBranch;
+            }
+
             rb_vehicle.AddForce(nitroForce * rb_vehicle.mass);
         }
 

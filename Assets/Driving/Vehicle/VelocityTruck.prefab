@@ -355,22 +355,22 @@ MonoBehaviour:
   state: 1
   gasPressed: 0
   rotationDir: 0
-  gravity: 25000
+  gravity: 50000
   fuelAmount: 2000
   maxFuel: 2000
   startingVelocity: {x: 0, y: 0}
-  inAirForce: {x: 30, y: -1300}
-  groundedForce: {x: 500, y: -500}
+  inAirForce: {x: 30, y: -4000}
+  groundedForce: {x: 700, y: -500}
   uphillActivationAngle: 30
   currGroundSlopeAngle: 0
-  uphillForce: {x: 1000, y: -100}
-  velocityClamp: 3000
+  uphillForce: {x: 1200, y: -100}
+  velocityClamp: 4500
   rotationSpeed: 1200
   nitroCharges: 3
-  nitroForce: {x: 800, y: -250}
-  activeNitroTime: 1.5
-  perfectLandingBoostForce: {x: 600, y: -250}
-  activePerfectBoostTime: 0.5
+  nitroForce: {x: 1200, y: -250}
+  activeNitroTime: 2
+  perfectLandingBoostForce: {x: 1000, y: -250}
+  activePerfectBoostTime: 1
   gasInputKey: 32
   nitroInputKey: 304
   rotateRight: 276
@@ -496,7 +496,7 @@ MonoBehaviour:
   flipCount: 0
   currAirTime: 0
   perfectLandingRotationBound: 30
-  perfectLandingMinAirTime: 0.75
+  perfectLandingMinAirTime: 0.25
   currRot: 0
   startJumpRot: 0
   endJumpRot: 0
