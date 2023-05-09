@@ -360,12 +360,12 @@ MonoBehaviour:
   maxFuel: 2000
   startingVelocity: {x: 0, y: 0}
   inAirForce: {x: 30, y: -1300}
-  groundedForce: {x: 400, y: -500}
+  groundedForce: {x: 500, y: -500}
   uphillActivationAngle: 30
   currGroundSlopeAngle: 0
-  uphillForce: {x: 700, y: -100}
-  velocityClamp: 2000
-  rotationSpeed: 600
+  uphillForce: {x: 1000, y: -100}
+  velocityClamp: 3000
+  rotationSpeed: 1200
   nitroCharges: 3
   nitroForce: {x: 800, y: -250}
   activeNitroTime: 1.5

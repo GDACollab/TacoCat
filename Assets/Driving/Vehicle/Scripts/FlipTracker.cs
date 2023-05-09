@@ -84,6 +84,9 @@ public class FlipTracker : MonoBehaviour
             jumpStarted = false;
             endJumpRot = currRot;
 
+            //Reset truck's velocity to prevent extra-bouncy landings
+            vehicle.GetComponent<Rigidbody2D>().angularVelocity = 0;
+
             groundPointRotation = stageManager.allLevelGroundRotations[hitPointIndex];
 
             if (IsPerfectLanding(endJumpRot, groundPointRotation) && flipCount > 0) 
@@ -115,7 +118,7 @@ public class FlipTracker : MonoBehaviour
             flipCount = 0;
         }
     }
-
+    
     public bool IsPerfectLanding(float landPointRot, float groundPointRot)
     {
         if (vehicle.state == DRIVE_STATE.CRASH) { return false; }
