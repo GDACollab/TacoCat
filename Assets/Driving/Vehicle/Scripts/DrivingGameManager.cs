@@ -26,6 +26,8 @@ public class DrivingGameManager : MonoBehaviour
     public int stuckMaxVelocity;
     public int stuckTimeoutDuration;
     public float stuckTime;
+    
+    public int nitroCharges = 3;
 
 
     // Start is called before the first frame update
@@ -48,7 +50,8 @@ public class DrivingGameManager : MonoBehaviour
         yield return new WaitUntil(() => stageManager.allStagesGenerated);
 
         vehicle.rb_vehicle.constraints = RigidbodyConstraints2D.None;
-
+        vehicle.nitroCharges = nitroCharges;
+        uiManager.updateNitro();
     }
 
     // Update is called once per frame

@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour {
     public SceneObject cutscene;
 
     [Header("--SCENE VARIABLE TRANSFER--")]
-    public int nitroCharges;
+    public int nitroCharges = 3;
     public int gasAmount;
 
 
@@ -115,6 +115,7 @@ public class GameManager : MonoBehaviour {
                 Debug.Log("GameManager: Setup Driving");
                 determinedSceneType = true;
                 drivingGameManager = GameObject.FindGameObjectWithTag("DrivingGameManager").GetComponent<DrivingGameManager>();
+                drivingGameManager.nitroCharges = nitroCharges;
                 currGame = currGame.DRIVING;
             }
             else if (GameObject.FindGameObjectWithTag("CutsceneManager"))
@@ -149,6 +150,7 @@ public class GameManager : MonoBehaviour {
             // check if all customers submitted , if so move to driving with gas amount
             if (tacoGameManager.endOfGame && !isLoadingScene)
             {
+                nitroCharges = tacoGameManager.nitroCharges;
                 LoadDrivingScene(currLevel);
             }
         }
