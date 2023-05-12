@@ -42,7 +42,11 @@ public class DrivingUIManager : MonoBehaviour
     [Header("Toggle Progress Bar")]
     private GameObject progressBarSlider;
     public bool viewProgressBar;
-
+    
+    [Header("Transition UI")]
+    public GameObject transitionParent;
+    public TMP_Text transitionMessage;
+    private bool endOfGame = false;
     
     // Start is called before the first frame update
     void Start()
@@ -146,6 +150,23 @@ public class DrivingUIManager : MonoBehaviour
                 nitroCharges[i].gameObject.SetActive(false);
                 break;
             }
+        }
+    }
+    
+    public void transitionStop(string message, bool end = false){
+        transitionParent.SetActive(true);
+        transitionMessage.text = message;
+        endOfGame = end;
+        Time.timeScale = 0;
+    }
+    
+    public void transitionContinue(){
+        Time.timeScale = 1;
+        if(endOfGame){
+            drivingGameManager.endOfGame = endOfGame;
+        }
+        else{
+            GameObject.Find("GameManager").GetComponent<GameManager>().LoadTacoMakingScene();
         }
     }
 }

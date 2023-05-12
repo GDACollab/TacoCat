@@ -26,6 +26,7 @@ public class DrivingGameManager : MonoBehaviour
     public int stuckMaxVelocity;
     public int stuckTimeoutDuration;
     public float stuckTime;
+    private bool endRun = false;
 
 
     // Start is called before the first frame update
@@ -60,10 +61,11 @@ public class DrivingGameManager : MonoBehaviour
 
             if (vehicle.GetVelocity().x < stuckMaxVelocity) // Truck is stuck
             {
-                if (stuckTime >= stuckTimeoutDuration && !endOfGame) // Timer is up
+                if (stuckTime >= stuckTimeoutDuration && !endOfGame && !endRun) // Timer is up
                 {
                     Debug.Log("You ran out of gas. A tow truck took you back to the prevous city");
-                    GameObject.Find("GameManager").GetComponent<GameManager>().LoadTacoMakingScene();
+                    uiManager.transitionStop("You ran out of gas. A tow truck took you back to the previous city", false);
+                    endRun = true;
                 }
                 else 
                 {
@@ -80,8 +82,7 @@ public class DrivingGameManager : MonoBehaviour
         if (percentageTraveled >= 1 && !endOfGame)
         {
             Debug.Log("You made it to the next city. One step closer to Jamie!");
-
-            endOfGame = true;
+            uiManager.transitionStop("You made it to the next city. One step closer to Jamie!", true);
         }
 
         // << UPDATE DISTANCE TRACKER >>
