@@ -34,6 +34,7 @@ public class DrivingGameManager : MonoBehaviour
     {
 
         stageManager = GetComponent<StageManager>();
+        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         vehicle.rb_vehicle.constraints = RigidbodyConstraints2D.FreezeAll;
 
 
@@ -64,7 +65,9 @@ public class DrivingGameManager : MonoBehaviour
                 if (stuckTime >= stuckTimeoutDuration && !endOfGame && !endRun) // Timer is up
                 {
                     Debug.Log("You ran out of gas. A tow truck took you back to the prevous city");
-                    uiManager.transitionStop("You ran out of gas. A tow truck took you back to the previous city", false);
+                    // uiManager.transitionStop("You ran out of gas. A tow truck took you back to the previous city", false);
+                    gameManager.deactivateScene();
+                    GameObject.Find("GameManager").GetComponent<GameManager>().LoadTacoMakingScene();
                     endRun = true;
                 }
                 else 
@@ -82,7 +85,9 @@ public class DrivingGameManager : MonoBehaviour
         if (percentageTraveled >= 1 && !endOfGame)
         {
             Debug.Log("You made it to the next city. One step closer to Jamie!");
-            uiManager.transitionStop("You made it to the next city. One step closer to Jamie!", true);
+            // uiManager.transitionStop("You made it to the next city. One step closer to Jamie!", true);
+            gameManager.deactivateScene();
+            endOfGame = true;
         }
 
         // << UPDATE DISTANCE TRACKER >>
