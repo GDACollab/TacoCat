@@ -27,6 +27,10 @@ public class DrivingGameManager : MonoBehaviour
     public int stuckTimeoutDuration;
     public float stuckTime;
     private bool endRun = false;
+    
+    [Header("Transition")]
+    public string successText = "You made it to the next city. One step closer to Jamie!";
+    public string failText = "You ran out of gas. A tow truck took you back to the prevous city";
 
 
     // Start is called before the first frame update
@@ -63,8 +67,8 @@ public class DrivingGameManager : MonoBehaviour
             {
                 if (stuckTime >= stuckTimeoutDuration && !endOfGame && !endRun) // Timer is up
                 {
-                    Debug.Log("You ran out of gas. A tow truck took you back to the prevous city");
-                    uiManager.transitionStop("You ran out of gas. A tow truck took you back to the previous city", false);
+                    Debug.Log(failText);
+                    uiManager.transitionStop(failText, false);
                     endRun = true;
                 }
                 else 
@@ -81,8 +85,8 @@ public class DrivingGameManager : MonoBehaviour
         // Check for end of level
         if (percentageTraveled >= 1 && !endOfGame)
         {
-            Debug.Log("You made it to the next city. One step closer to Jamie!");
-            uiManager.transitionStop("You made it to the next city. One step closer to Jamie!", true);
+            Debug.Log(successText);
+            uiManager.transitionStop(successText, true);
         }
 
         // << UPDATE DISTANCE TRACKER >>

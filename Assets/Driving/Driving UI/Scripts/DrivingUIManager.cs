@@ -158,16 +158,18 @@ public class DrivingUIManager : MonoBehaviour
         transitionMessage.text = message;
         endOfGame = end;
         Time.timeScale = 0;
+        GameObject.Find("GameManager").GetComponent<GameManager>().activateScene = false;
+        if(end){
+            drivingGameManager.endOfGame = end;
+        }
+        else{
+            GameObject.Find("GameManager").GetComponent<GameManager>().LoadTacoMakingScene(true);
+        }
     }
     
     public void transitionContinue(){
         Time.timeScale = 1;
-        if(endOfGame){
-            drivingGameManager.endOfGame = endOfGame;
-        }
-        else{
-            GameObject.Find("GameManager").GetComponent<GameManager>().LoadTacoMakingScene();
-        }
+        GameObject.Find("GameManager").GetComponent<GameManager>().activateScene = true;
     }
 }
  
