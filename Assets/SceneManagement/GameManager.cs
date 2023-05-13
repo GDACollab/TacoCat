@@ -17,8 +17,6 @@ public class GameManager : MonoBehaviour {
 
     public static GameManager instance = null;
     public static EventSystem eventSystemInstance = null;
-    public GameObject sceneUI;
-    private bool allowLoad = true;
 
 
     [HideInInspector]
@@ -160,7 +158,6 @@ public class GameManager : MonoBehaviour {
         {
             if (drivingGameManager.endOfGame && !isLoadingScene)
             {
-                deactivateScene();
                 if (currLevel == 3) { LoadMenu(); }  // end of game
                 currLevel++;
                 LoadCutscene();
@@ -217,8 +214,7 @@ public class GameManager : MonoBehaviour {
     public void LoadCutscene()
     {
         currGame = currGame.CUTSCENE;
-        // SceneManager.LoadScene(cutscene);
-        StartCoroutine(LoadingCoroutine(cutscene));
+        SceneManager.LoadScene(cutscene);
         audioManager.PlaySong(audioManager.storyMusicPath);
     }
 
@@ -231,17 +227,7 @@ public class GameManager : MonoBehaviour {
 
     [HideInInspector]
     public float loadProgress;
-    
-    public void deactivateScene(){
-        allowLoad = false;
-        sceneUI.SetActive(true);
-    }
-    
-    public void activateScene(){
-        sceneUI.SetActive(false);
-        allowLoad = true;
-    }
-    
+
     IEnumerator LoadingCoroutine(SceneObject scene) {
         isLoadingScene = true;
         yield return null;
@@ -261,7 +247,7 @@ public class GameManager : MonoBehaviour {
             loadProgress = newScene.progress;
 
             if (newScene.progress >= 0.9f) {
-                newScene.allowSceneActivation = allowLoad;
+                newScene.allowSceneActivation = true;
             }
             yield return new WaitForEndOfFrame();
         }
