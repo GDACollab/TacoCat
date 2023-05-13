@@ -36,7 +36,7 @@ public class TacoMakingGameManager : MonoBehaviour
     public float gameScore = 0; // max score is 3 * numOfCustomers served
     public float maxGameScore;
     public float gasAmount = 0;
-    public int nitroCharges;
+    public float minimumGasThreshold = .5f; // 0 is none, 1 is full
 
     [Header("Prefabs")]
     public GameObject tacoPrefab;
@@ -67,7 +67,8 @@ public class TacoMakingGameManager : MonoBehaviour
         CustomerRotation();
 
         // check for end
-        if (submittedCustomers == totalCustomers)
+        // if (submittedCustomers == totalCustomers)
+        if (customersLeftToGenerate <= 0)
         {
             uiManager.endText.SetActive(true);
             endOfGame = true;
@@ -98,6 +99,11 @@ public class TacoMakingGameManager : MonoBehaviour
                 //The ID passed in for each customer starts at 1 and counts up to totalCustomers
                 Customer customer = customerManager.CreateNewCustomer(totalCustomers - customersLeftToGenerate).GetComponent<Customer>();
 
+            }
+
+            if (customersLeftToGenerate < 3 && gasAmount < minimumGasThreshold) 
+            {
+                customersLeftToGenerate += 3;
             }
         }
         customerCreationTimer += Time.deltaTime;
@@ -131,7 +137,7 @@ public class TacoMakingGameManager : MonoBehaviour
             
             perfectCounter++;
    
-            if (perfectCounter % 3 == 0 && perfectCounter != 0)
+            if (perfectCounter % 3 == 0 && perfectCounter != 0 && submittedCustomers <= totalCustomers)
             {
                 comboCounter++;
                 if (nitroCharges < 3)
