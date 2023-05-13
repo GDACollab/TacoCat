@@ -20,6 +20,7 @@ public class FlipTracker : MonoBehaviour
     public int flipCap = 10;
     public float percentBoost = 0.1f;
     public float timeBoost = 0.05f;
+    public bool firstFlipCounts = true;
     public GameObject boostSprite;
     float boostSpriteY;
 
@@ -92,7 +93,8 @@ public class FlipTracker : MonoBehaviour
             if (IsPerfectLanding(endJumpRot, groundPointRotation) && flipCount > 0) 
             {
                 int flips = Mathf.Min(flipCount, flipCap);
-                float flipBoost=flips*percentBoost;
+                flips = (firstFlipCounts) ? flips : flips-1;
+                float flipBoost = flips*percentBoost;
                 Vector2 newBoost = new Vector2(((flipBoost)+1)*vehicle.perfectLandingBoostForce.x, vehicle.perfectLandingBoostForce.y);
                 float newTime = ((flips*timeBoost)+1)*vehicle.activePerfectBoostTime;
                 boostSprite.transform.localScale = new Vector3(boostSprite.transform.localScale.x, boostSpriteY*((flips*percentBoost)+1), boostSprite.transform.localScale.z);
