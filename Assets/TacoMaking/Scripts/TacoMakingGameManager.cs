@@ -88,19 +88,13 @@ public class TacoMakingGameManager : MonoBehaviour
     // continue through remaining customers
     public void CustomerRotation()
     {
-        if (customerCreationTimer > customerManager.transitionTime / 3)
+        //Calls to create a new customer as long as there are more customers to generate up to max number of customers in line at once
+        if (customersLeftToGenerate > 0 && customerManager.customerList.Count < lineSize + 1)
         {
-            //Calls to create a new customer as long as there are more customers to generate up to max number of customers in line at once
-            if (customersLeftToGenerate > 0 && customerManager.customerList.Count < lineSize + 1)
-            {
-                customerCreationTimer = 0;
-                customersLeftToGenerate--;
-                //The ID passed in for each customer starts at 1 and counts up to totalCustomers
-                Customer customer = customerManager.CreateNewCustomer(totalCustomers - customersLeftToGenerate).GetComponent<Customer>();
-
-            }
+            customersLeftToGenerate--;
+            //The ID passed in for each customer starts at 1 and counts up to totalCustomers
+            var customer = customerManager.CreateNewCustomer(totalCustomers - customersLeftToGenerate).GetComponent<Customer>();
         }
-        customerCreationTimer += Time.deltaTime;
     }
 
     // submit taco to customer to be graded
