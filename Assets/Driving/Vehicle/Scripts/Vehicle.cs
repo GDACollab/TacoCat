@@ -254,15 +254,22 @@ public class Vehicle : MonoBehaviour
     }
 
     // override all states and 
-    public IEnumerator PerfectLandingBoost()
+    public IEnumerator PerfectLandingBoost(Vector2 boost, float boostTime)
     {
+        Vector2 tempLandBoost = perfectLandingBoostForce;
+        float tempBoostTime = activePerfectBoostTime;
+        perfectLandingBoostForce = boost;
+        activePerfectBoostTime = boostTime;
+        
         state = DRIVE_STATE.PERFECT_LANDING;
 
         //StartCoroutine(cameraHandler.Shake(activePerfectBoostTime, cameraHandler.perfect_camShakeMagnitude));
 
 
         yield return new WaitForSeconds(activePerfectBoostTime);
-
+        
+        perfectLandingBoostForce = tempLandBoost;
+        activePerfectBoostTime = tempBoostTime;
         state = DRIVE_STATE.NONE;
     }
 

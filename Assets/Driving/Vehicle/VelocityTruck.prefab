@@ -121,7 +121,7 @@ MonoBehaviour:
   - {x: -4.2184334, y: -3.4624546, z: 0.00000067891347}
   m_ShapePathHash: 1675360583
   m_Mesh: {fileID: 0}
-  m_InstanceId: 51126
+  m_InstanceId: 52116
 --- !u!1 &3986610690755736411
 GameObject:
   m_ObjectHideFlags: 0
@@ -491,11 +491,11 @@ MonoBehaviour:
   jumpStarted: 0
   flipCap: 10
   percentBoost: 0.1
-  timeBoost: 1000
+  timeBoost: 0.05
   boostSprite: {fileID: 3986610690755736411}
   flipCount: 0
   currAirTime: 0
-  perfectLandingRotationBound: 30
+  perfectLandingRotationBound: 50
   perfectLandingMinAirTime: 0.25
   currRot: 0
   startJumpRot: 0

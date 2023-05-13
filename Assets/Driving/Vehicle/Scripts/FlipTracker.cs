@@ -93,10 +93,10 @@ public class FlipTracker : MonoBehaviour
             {
                 int flips = Mathf.Min(flipCount, flipCap);
                 float flipBoost=flips*percentBoost;
-                Vector2 newBoost = new Vector2(((flipBoost)+1)*vehicle.perfectLandingBoostForce.x, 0f);
+                Vector2 newBoost = new Vector2(((flipBoost)+1)*vehicle.perfectLandingBoostForce.x, vehicle.perfectLandingBoostForce.y);
                 float newTime = ((flips*timeBoost)+1)*vehicle.activePerfectBoostTime;
                 boostSprite.transform.localScale = new Vector3(boostSprite.transform.localScale.x, boostSpriteY*((flips*percentBoost)+1), boostSprite.transform.localScale.z);
-                StartCoroutine(vehicle.PerfectLandingBoost());
+                StartCoroutine(vehicle.PerfectLandingBoost(newBoost, newTime));
                 audioManager.Play(audioManager.flipBoostSFX);
             }
             if(audioManager != null){
