@@ -22,6 +22,8 @@ public class EnvironmentGenerator : MonoBehaviour
     [HideInInspector]
     public List<float> groundRotations = new List<float>();
     [HideInInspector]
+    public List<Vector3> mainGenerationPoints = new List<Vector3>();
+    [HideInInspector]
     public List<GameObject> allSpawnedObjects = new List<GameObject>(); // stores all spawned env objects
 
     [Header("Environment Generation Values ===========================")]
@@ -84,6 +86,19 @@ public class EnvironmentGenerator : MonoBehaviour
         if (stageManager == null) { yield return null; }
         yield return new WaitUntil(() => stageManager.allStagesGenerated);
 
+        groundPoints.Clear();
+        groundRotations.Clear();
+        mainGenerationPoints.Clear();
+
+        // get ground points
+        groundPoints = stageManager.allLevelGroundPoints;
+        groundRotations = stageManager.allLevelGroundRotations;
+
+        foreach (GroundGeneration stage in stageManager.stages)
+        {
+            mainGenerationPoints.AddRange(stage.allGroundPoints); // add stage points
+        }
+
         // if generation finished and environment not spawned
         if (!environmentSpawned)
         {
@@ -96,9 +111,6 @@ public class EnvironmentGenerator : MonoBehaviour
 
     public void SpawnAllEnvironmentObjects()
     {
-        // get ground points
-        groundPoints = stageManager.allLevelGroundPoints;
-        groundRotations = stageManager.allLevelGroundRotations;
 
         DeleteAllEnvironmentObjects();
 
@@ -171,21 +183,33 @@ public class EnvironmentGenerator : MonoBehaviour
         }
 
         // << SPAWN SIGNS >>
-        for (int signPointIter=groundPoints.Count/(numSigns + 1); signPointIter < groundPoints.Count; signPointIter += groundPoints.Count/(numSigns+1)){
-            SpawnSign(signPointIter); 
+        float percentage = (float)1 / (float)numSigns; // get the distance percentage
+        for (int i = 0; i < numSigns; i++)
+        {
+            // get ground point at percentage
+            int mainGenStartIndex = stageManager.PosToGroundPointIndex(stageManager.stages[0].begGenPos);
+            int distanceIndex = Mathf.FloorToInt(mainGenerationPoints.Count * percentage);
+
+            // spawn sign
+            GameObject sign = SpawnSign( (i * distanceIndex) + mainGenStartIndex , i + 1);
+            sign.name = "LandmarkSign " + i + " " + percentage;
         }
+
     }
 
-    public GameObject SpawnSign(int pointIndex){
+    public GameObject SpawnSign(int pointIndex, int signNum)
+    {
         Vector3 signLoc = findNearestPeak(pointIndex);
         //Debug.Log(groundPoints[pointIndex] + "       " + signLoc);
-        GameObject newSignObject = Instantiate(signPrefab, signLoc, Quaternion.Euler(new Vector3(0,0,0)));
+        GameObject newSignObject = Instantiate(signPrefab, signLoc, Quaternion.Euler(new Vector3(0, 0, 0)));
         newSignObject.transform.parent = signGenParent;
-        
+
         newSignObject.transform.localScale = newSignObject.transform.localScale * signScale;
 
+        TMPro.TextMeshProUGUI textBox = newSignObject.GetComponentInChildren<TMPro.TextMeshProUGUI>();
+        textBox.text = System.Math.Floor((100.0f / numSigns) * signNum) + "%";
+
         allSpawnedObjects.Add(newSignObject);
-        
         return newSignObject;
     }
 
@@ -235,14 +259,14 @@ public class EnvironmentGenerator : MonoBehaviour
         Vector3 workingPoint = groundPoints[pointIndex];
         float curY = workingPoint.y;
 
-        int leftIter  = pointIndex - 1;    
+
+        // set iteration indexes
+        int leftIter  = pointIndex - 1;
         int rightIter = pointIndex + 1;
 
-        if (leftIter >= groundPoints.Count || rightIter >= groundPoints.Count)
-        {
-            Debug.LogWarning("Tried to reach ground point that doesn't exist");
-            return workingPoint;
-        }
+        // check for edge cases
+        if (leftIter < 0) { leftIter = 0; }
+        if (rightIter > groundPoints.Count) { rightIter = groundPoints.Count; }
 
         Vector3 leftNeighbor  = groundPoints[leftIter];
         Vector3 rightNeighbor = groundPoints[rightIter];

@@ -36,6 +36,7 @@ public class TacoMakingGameManager : MonoBehaviour
     public float gameScore = 0; // max score is 3 * numOfCustomers served
     public float maxGameScore;
     public float gasAmount = 0;
+    public int nitroCharges;
 
     [Header("Prefabs")]
     public GameObject tacoPrefab;
@@ -133,13 +134,11 @@ public class TacoMakingGameManager : MonoBehaviour
             if (perfectCounter % 3 == 0 && perfectCounter != 0)
             {
                 comboCounter++;
-                // Increment nitro charge
-                if (Vehicle.nitroCharges < 3)
+                if (nitroCharges < 3)
                 {
-                    Vehicle.nitroCharges++;
-                    Debug.Log("Nitro charge gained!");
+                    nitroCharges++;
                 }
-                uiManager.DisplayNitro(Vehicle.nitroCharges); //updates the nitro display
+                uiManager.DisplayNitro(nitroCharges); //updates the nitro display
             }
         }
         else

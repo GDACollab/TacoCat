@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using FMODUnity;
+
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -12,7 +15,9 @@ public enum currGame { NONE, MENU, CUTSCENE, TACO_MAKING, DRIVING }
 
 public class GameManager : MonoBehaviour {
 
-    private static GameManager instance = null;
+    public static GameManager instance = null;
+    public static EventSystem eventSystemInstance = null;
+
 
     [HideInInspector]
     public AudioManager audioManager;
@@ -26,20 +31,30 @@ public class GameManager : MonoBehaviour {
 
     // track game state
     public currGame currGame = currGame.NONE;
+    public int currLevel = 1;
     public SceneObject currScene;
+    public int cutsceneIndex = 0;
     [Space(5)]
     public bool isLoadingScene;
 
     [Header("Scenes")]
     public SceneObject menuScene;
     public SceneObject loadingScene;
-    public SceneObject drivingScene;
+
+    [Space(10)]
+    public SceneObject driving1;
+    public SceneObject driving2;
+    public SceneObject driving3;
+
+
+    [Space(10)]
     public SceneObject tacoMakingScene;
     public SceneObject cutscene;
 
     [Header("--SCENE VARIABLE TRANSFER--")]
     public int nitroCharges;
     public int gasAmount;
+
 
     private void Awake()
     {
@@ -113,8 +128,16 @@ public class GameManager : MonoBehaviour {
             {
                 Debug.LogWarning("Cannot determine Scene Type");
             }
-
             yield return null;
+        }
+
+        // wait till music is loaded
+        yield return new WaitForSeconds(2);
+
+        // Start Menu Music
+        if (currGame == currGame.MENU)
+        {
+            audioManager.PlaySong(audioManager.menuMusicPath);
         }
     }
 
@@ -126,7 +149,7 @@ public class GameManager : MonoBehaviour {
             // check if all customers submitted , if so move to driving with gas amount
             if (tacoGameManager.endOfGame && !isLoadingScene)
             {
-                LoadDrivingScene();
+                LoadDrivingScene(currLevel);
             }
         }
 
@@ -135,6 +158,8 @@ public class GameManager : MonoBehaviour {
         {
             if (drivingGameManager.endOfGame && !isLoadingScene)
             {
+                if (currLevel == 3) { LoadMenu(); }  // end of game
+                currLevel++;
                 LoadCutscene();
             }
         }
@@ -151,8 +176,9 @@ public class GameManager : MonoBehaviour {
 
     public void LoadMenu() {
         currGame = currGame.MENU;
+        currLevel = 0;
         SceneManager.LoadScene(menuScene);
-        //audioManager.PlaySong(menuIndex + "Music");
+        audioManager.PlaySong(audioManager.menuMusicPath);
     }
 
     // **** LOAD TACO MAKING SCENE ****
@@ -160,21 +186,36 @@ public class GameManager : MonoBehaviour {
 
         currGame = currGame.TACO_MAKING;
         StartCoroutine(LoadingCoroutine(tacoMakingScene));
-        audioManager.PlaySong("TacoMusic");
+        audioManager.PlaySong(audioManager.tacoMusicPath);
     }
 
     // **** LOAD DRIVING SCENES ****
-    public void LoadDrivingScene() {
+    public void LoadDrivingScene(int levelNum) {
         currGame = currGame.DRIVING;
-        StartCoroutine(LoadingCoroutine(drivingScene));
-        audioManager.PlaySong("DrivingMusic");
+
+        if (levelNum == 1)
+        {
+            currLevel = 1;
+            StartCoroutine(LoadingCoroutine(driving1));
+        }
+        else if (levelNum == 2)
+        {
+            currLevel = 2;
+            StartCoroutine(LoadingCoroutine(driving2));
+        }
+        else if (levelNum == 3)
+        {
+            currLevel = 3;
+            StartCoroutine(LoadingCoroutine(driving3));
+        }
+        audioManager.PlaySong(audioManager.drivingMusicPath);
     }
 
     public void LoadCutscene()
     {
         currGame = currGame.CUTSCENE;
         SceneManager.LoadScene(cutscene);
-        audioManager.PlaySong("StoryMusic");
+        audioManager.PlaySong(audioManager.storyMusicPath);
     }
 
     public void Quit()
@@ -214,6 +255,9 @@ public class GameManager : MonoBehaviour {
         SceneManager.UnloadSceneAsync(loadingScene);
         isLoadingScene = false;
     }
+
+
+
 #region >> SCENE OBJECT (( allows for drag / dropping scenes into inspector ))
     [System.Serializable]
     public class SceneObject

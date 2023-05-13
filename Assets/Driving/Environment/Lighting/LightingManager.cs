@@ -6,7 +6,6 @@ using UnityEditor;
 public class HideInInspectorUnlessDebugAttribute : PropertyAttribute { }
 public enum TIME_OF_DAY { MORNING, MIDDAY, EVENING, NIGHT, ERROR }
 
-[ExecuteAlways]
 public class LightingManager : MonoBehaviour
 {
 
@@ -209,6 +208,7 @@ public class LightingManager : MonoBehaviour
         }
     }
 
+#if UNITY_EDITOR
     [CustomPropertyDrawer(typeof(HideInInspectorUnlessDebugAttribute))]
     public class HideInInspectorUnlessDebugDrawer : PropertyDrawer
     {
@@ -230,4 +230,5 @@ public class LightingManager : MonoBehaviour
             return EditorGUIUtility.hierarchyMode;
         }
     }
+#endif
 }

@@ -10,6 +10,7 @@ public class DrivingGameManager : MonoBehaviour
 {
     GameManager gameManager;
     StageManager stageManager; // manages the generation stages
+    public LightingManager lightingManager;
     public DrivingUIManager uiManager;
     public Vehicle vehicle;
 
@@ -34,7 +35,6 @@ public class DrivingGameManager : MonoBehaviour
         stageManager = GetComponent<StageManager>();
         vehicle.rb_vehicle.constraints = RigidbodyConstraints2D.FreezeAll;
 
-        totalDistance = stageManager.mainGenerationLength;
 
         endOfGame = false;
         stuckTime = 0;
@@ -85,10 +85,15 @@ public class DrivingGameManager : MonoBehaviour
         }
 
         // << UPDATE DISTANCE TRACKER >>
-        /*
-        vehicleDistance = Vector2.Distance(beginningPoint.position, vehicle.transform.position);
+        vehicleDistance = Vector2.Distance(stageManager.main_begPos, vehicle.transform.position);
+        totalDistance = stageManager.mainGenerationLength;
         percentageTraveled = vehicleDistance / totalDistance;
-        */
+        if (percentageTraveled <= 0) { percentageTraveled = 0; }
+
+        if (lightingManager != null)
+        {
+            lightingManager.timeOfDay = percentageTraveled;
+        }
 
     }
     

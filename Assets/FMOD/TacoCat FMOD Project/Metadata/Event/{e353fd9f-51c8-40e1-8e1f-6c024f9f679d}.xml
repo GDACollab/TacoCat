@@ -73,7 +73,7 @@
 	</object>
 	<object class="EventMixerMaster" id="{8f459b70-d77d-4dec-a179-08add893f00e}">
 		<property name="volume">
-			<value>6</value>
+			<value>3</value>
 		</property>
 		<relationship name="effectChain">
 			<destination>{c288ef7a-7734-43aa-8848-e39d9cdf09a3}</destination>
@@ -99,7 +99,8 @@
 	<object class="MixerBusEffectChain" id="{c288ef7a-7734-43aa-8848-e39d9cdf09a3}">
 		<relationship name="effects">
 			<destination>{fe38c40f-25e8-486b-927b-758074b0f0a4}</destination>
-			<destination>{cf1ccc6b-8a12-4a6e-a9ab-72ce405c6f18}</destination>
+			<destination>{137c5e99-4bc5-49d0-8057-f0685612932f}</destination>
+			<destination>{52b2cdbd-9491-4a60-87a8-b0b9fcda5316}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{8f674dc8-c7d6-4e72-b1ab-d51c8884bdb6}" />
@@ -108,7 +109,7 @@
 			<value>3</value>
 		</property>
 		<property name="pitch">
-			<value>2</value>
+			<value>3.60000014</value>
 		</property>
 		<relationship name="audioFile">
 			<destination>{43fe14e1-7205-491c-9e04-3a2915b5a29b}</destination>
@@ -116,15 +117,26 @@
 	</object>
 	<object class="MixerBusFader" id="{2cdfa596-1571-40eb-beb9-7e81db1cf34e}" />
 	<object class="MixerBusFader" id="{fe38c40f-25e8-486b-927b-758074b0f0a4}" />
-	<object class="DelayEffect" id="{cf1ccc6b-8a12-4a6e-a9ab-72ce405c6f18}">
-		<property name="delay">
-			<value>1</value>
+	<object class="DistortionEffect" id="{137c5e99-4bc5-49d0-8057-f0685612932f}">
+		<property name="level">
+			<value>0.435000002</value>
 		</property>
-		<property name="feedback">
-			<value>84</value>
+	</object>
+	<object class="CompressorEffect" id="{52b2cdbd-9491-4a60-87a8-b0b9fcda5316}">
+		<property name="threshold">
+			<value>-23.5</value>
 		</property>
-		<property name="dryLevel">
-			<value>-2.5</value>
+		<property name="ratio">
+			<value>50</value>
+		</property>
+		<property name="attackTime">
+			<value>9.40000057</value>
+		</property>
+		<property name="releaseTime">
+			<value>240</value>
+		</property>
+		<property name="gain">
+			<value>2.5</value>
 		</property>
 	</object>
 </objects>

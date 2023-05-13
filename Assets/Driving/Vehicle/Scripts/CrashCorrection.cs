@@ -63,7 +63,7 @@ public class CrashCorrection : MonoBehaviour
         collisionTrigger.enabled = true;
         isCorrecting = false;
 
-        vehicle.state = DRIVE_STATE.GROUNDED;
+        vehicle.state = DRIVE_STATE.NONE;
     }
 
     // constantly rotate the truck to reset angle

@@ -31,7 +31,7 @@ public class TruckAnimationHandler : MonoBehaviour
 
         if (vehicle.state == DRIVE_STATE.CRASH)
         {
-            TriggerCrashEffect(2);
+            TriggerCrashEffect();
         }
 
         if (vehicle.state == DRIVE_STATE.PERFECT_LANDING)
@@ -41,18 +41,17 @@ public class TruckAnimationHandler : MonoBehaviour
         else { EnablePerfectBoostEffect(false); }
     }
 
-    public void TriggerCrashEffect(float destroyTimer = 2)
+    public void TriggerCrashEffect()
     {
         if (spawnedCrashEffect != null) { return; } // don't spawn if spawned already 
 
         spawnedCrashEffect = Instantiate(crashEffectPrefab, vehicle.transform.position, Quaternion.identity);
 
-        Destroy(spawnedCrashEffect, destroyTimer);
+        Destroy(spawnedCrashEffect, 5);
     }
 
     public void EnableNitroEffect(bool enabled)
     {
-
         nitroEffect.SetActive(enabled);
     }
 
