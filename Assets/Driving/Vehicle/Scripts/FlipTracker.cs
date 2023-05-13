@@ -78,7 +78,7 @@ public class FlipTracker : MonoBehaviour
         }
 
         // << TRIGGER WHEN GROUNDED >>
-        if (vehicle.state == DRIVE_STATE.GROUNDED && jumpStarted)
+        if ((vehicle.state == DRIVE_STATE.UPHILL_GROUNDED || vehicle.state == DRIVE_STATE.GROUNDED) && jumpStarted)
         {
             // set values
             jumpStarted = false;

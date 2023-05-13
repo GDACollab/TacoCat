@@ -123,80 +123,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &143532458
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 143532459}
-  - component: {fileID: 143532460}
-  - component: {fileID: 4097053439081821015}
-  - component: {fileID: 637203955539065043}
-  - component: {fileID: 65408466720666371}
-  - component: {fileID: 6110360651314888872}
-  m_Layer: 0
-  m_Name: '[[ Driving Game Manager ]]'
-  m_TagString: DrivingGameManager
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &143532459
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 143532458}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 500, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 8771345537195098338}
-  - {fileID: 4895987211445618743}
-  - {fileID: 3114244621919624752}
-  - {fileID: 715781169}
-  - {fileID: 996258256}
-  - {fileID: 5495171424795704037}
-  - {fileID: 8771345538138087271}
-  - {fileID: 932836664}
-  - {fileID: 4799411138122998522}
-  - {fileID: 4064036471312834816}
-  - {fileID: 4145558052554466742}
-  - {fileID: 4940512051417130366}
-  - {fileID: 6952055856622316992}
-  - {fileID: 2056798466005639202}
-  - {fileID: 1194873407}
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &143532460
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 143532458}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46a9765300acfe741a6ddca8da692c5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lightingManager: {fileID: 4940512051417130367}
-  uiManager: {fileID: 4716956757654117349}
-  vehicle: {fileID: 996258255}
-  endOfGame: 0
-  totalDistance: 0
-  vehicleDistance: 0
-  percentageTraveled: 0
-  stuckMaxVelocity: 0
-  stuckTimeoutDuration: 0
-  stuckTime: 0
---- !u!43 &329907954
+--- !u!43 &137492456
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -360,6 +287,79 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &143532458
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 143532459}
+  - component: {fileID: 143532460}
+  - component: {fileID: 4097053439081821015}
+  - component: {fileID: 637203955539065043}
+  - component: {fileID: 65408466720666371}
+  - component: {fileID: 6110360651314888872}
+  m_Layer: 0
+  m_Name: '[[ Driving Game Manager ]]'
+  m_TagString: DrivingGameManager
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &143532459
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143532458}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 500, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8771345537195098338}
+  - {fileID: 4895987211445618743}
+  - {fileID: 3114244621919624752}
+  - {fileID: 715781169}
+  - {fileID: 996258256}
+  - {fileID: 5495171424795704037}
+  - {fileID: 8771345538138087271}
+  - {fileID: 932836664}
+  - {fileID: 4799411138122998522}
+  - {fileID: 4064036471312834816}
+  - {fileID: 4145558052554466742}
+  - {fileID: 4940512051417130366}
+  - {fileID: 6952055856622316992}
+  - {fileID: 2056798466005639202}
+  - {fileID: 1194873407}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &143532460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143532458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46a9765300acfe741a6ddca8da692c5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightingManager: {fileID: 4940512051417130367}
+  uiManager: {fileID: 4716956757654117349}
+  vehicle: {fileID: 996258255}
+  endOfGame: 0
+  totalDistance: 0
+  vehicleDistance: 0
+  percentageTraveled: 0
+  stuckMaxVelocity: 100
+  stuckTimeoutDuration: 5
+  stuckTime: 5
 --- !u!1 &648603816
 GameObject:
   m_ObjectHideFlags: 0
@@ -17618,7 +17618,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7552461678641208363, guid: 6658646cae70c2542af9e64ba3033b62, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 30891.86
+      value: 60000
       objectReference: {fileID: 0}
     - target: {fileID: 7552461678641208363, guid: 6658646cae70c2542af9e64ba3033b62, type: 3}
       propertyPath: m_LocalPosition.y
@@ -17703,9 +17703,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allStagesGenerated: 0
   meshCreator: {fileID: 906872887464592665}
-  mainGenerationLength: 30000
+  mainGenerationLength: 60000
   main_begPos: {x: 0, y: 500, z: 0}
-  main_endPos: {x: 30000, y: 500, z: 0}
+  main_endPos: {x: 60000, y: 500, z: 0}
   startIslandXOffset: -1000
   startIslandYOffset: -500
   endIslandXOffset: 3000

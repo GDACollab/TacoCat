@@ -148,10 +148,10 @@ public class Vehicle : MonoBehaviour
         // << NITRO STATE >>
         if (state == DRIVE_STATE.NITRO)
         {
-            float andrewBranch = 1000;
-            if (rb_vehicle.velocity.magnitude < andrewBranch)
+            float minimumNitroVelocity = 1000;
+            if (rb_vehicle.velocity.magnitude < minimumNitroVelocity)
             {
-                rb_vehicle.velocity =  transform.up * andrewBranch;
+                rb_vehicle.velocity =  transform.up * minimumNitroVelocity;
             }
 
             rb_vehicle.AddForce(nitroForce * rb_vehicle.mass);
@@ -160,10 +160,10 @@ public class Vehicle : MonoBehaviour
         // << PERFECT BOOST STATE >>
         if (state == DRIVE_STATE.PERFECT_LANDING)
         {
-            float pyoro = 1000;
-            if (rb_vehicle.velocity.magnitude < pyoro)
+            float minimumBoostVelocity = 1000;
+            if (rb_vehicle.velocity.magnitude < minimumBoostVelocity)
             {
-                rb_vehicle.velocity =  transform.up * pyoro;
+                rb_vehicle.velocity =  transform.up * minimumBoostVelocity;
             }
 
             rb_vehicle.AddForce(perfectLandingBoostForce * rb_vehicle.mass);

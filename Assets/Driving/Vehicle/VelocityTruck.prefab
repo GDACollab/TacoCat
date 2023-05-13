@@ -355,12 +355,12 @@ MonoBehaviour:
   state: 1
   gasPressed: 0
   rotationDir: 0
-  gravity: 50000
-  fuelAmount: 2000
-  maxFuel: 2000
+  gravity: 40000
+  fuelAmount: 1700
+  maxFuel: 1700
   startingVelocity: {x: 0, y: 0}
   inAirForce: {x: 30, y: -4000}
-  groundedForce: {x: 700, y: -500}
+  groundedForce: {x: 600, y: -500}
   uphillActivationAngle: 30
   currGroundSlopeAngle: 0
   uphillForce: {x: 1200, y: -100}
@@ -491,11 +491,11 @@ MonoBehaviour:
   jumpStarted: 0
   flipCap: 10
   percentBoost: 0.1
-  timeBoost: 0.05
+  timeBoost: 1000
   boostSprite: {fileID: 3986610690755736411}
   flipCount: 0
   currAirTime: 0
-  perfectLandingRotationBound: 20
+  perfectLandingRotationBound: 30
   perfectLandingMinAirTime: 0.25
   currRot: 0
   startJumpRot: 0
