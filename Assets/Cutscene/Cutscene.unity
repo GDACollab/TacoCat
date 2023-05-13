@@ -123,6 +123,78 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &30516518
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 30516519}
+  m_Layer: 5
+  m_Name: JamieBubbleParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &30516519
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 30516518}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1677111079}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -733, y: -302}
+  m_SizeDelta: {x: 10, y: 10}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &175954753
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 175954754}
+  m_Layer: 5
+  m_Name: AlexBubbleParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &175954754
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 175954753}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1677111079}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 738.99994, y: -412.99985}
+  m_SizeDelta: {x: 10, y: 10}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &232545248
 GameObject:
   m_ObjectHideFlags: 0
@@ -354,7 +426,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1677111079}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -585,10 +657,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 672d9db25e7644791a5e0e11d5e3f777, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  phoneText: {fileID: 1555489853}
   endOfCutscene: 0
-  alexBubble: {fileID: 2683369148513107360, guid: f87a5e81ed368244ca72350f20c3291d, type: 3}
-  jamieBubble: {fileID: 5203138811703343253, guid: e0fac139bb576f24e97f6fa246477c29, type: 3}
+  audioManager: {fileID: 0}
+  startingPosition: 0
   positionX: 1
   positionY: 1
   scroll: 1.1
@@ -712,6 +783,10 @@ MonoBehaviour:
   messageDelayAlex: 0.057
   textSpeedAlex: 0.076
   messageDelayJamie: 1.14
+  bubblePrefab: {fileID: 1265193621398757072, guid: 1bb054c86d76bb3418a3969667f3056d, type: 3}
+  currentBubbles: []
+  alexMessageParent: {fileID: 175954754}
+  jamieMessageParent: {fileID: 30516519}
 --- !u!4 &1104355424
 Transform:
   m_ObjectHideFlags: 0
@@ -760,7 +835,7 @@ RectTransform:
   m_Children:
   - {fileID: 1403703410}
   m_Father: {fileID: 1677111079}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -958,17 +1033,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4909303822951794285, guid: be635faacab3f7744b13c97549120a30, type: 3}
   m_PrefabInstance: {fileID: 4909303821403202129}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1555489853 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4909303822951794284, guid: be635faacab3f7744b13c97549120a30, type: 3}
-  m_PrefabInstance: {fileID: 4909303821403202129}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1677111075
 GameObject:
   m_ObjectHideFlags: 0
@@ -1063,6 +1127,8 @@ RectTransform:
   m_Children:
   - {fileID: 1058757334}
   - {fileID: 1555489852}
+  - {fileID: 175954754}
+  - {fileID: 30516519}
   - {fileID: 616322082}
   - {fileID: 1357507494}
   m_Father: {fileID: 0}
@@ -1083,6 +1149,10 @@ PrefabInstance:
     - target: {fileID: 4909303822951794282, guid: be635faacab3f7744b13c97549120a30, type: 3}
       propertyPath: m_Name
       value: Text (TMP)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4909303822951794282, guid: be635faacab3f7744b13c97549120a30, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4909303822951794284, guid: be635faacab3f7744b13c97549120a30, type: 3}
       propertyPath: m_text
