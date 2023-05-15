@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 
 public class TutorialManager : MonoBehaviour {
-    public float fadeSpeed = 0.1f;
+    public float fadeSpeed = 1f;
 
 
     // Store across levels:
@@ -17,30 +17,39 @@ public class TutorialManager : MonoBehaviour {
     }
 
     protected Image space;
-    protected Image arrows;
+    protected Image arrowLeft;
+    protected Image arrowRight;
     protected Image nitro;
 
     protected Vehicle truck;
+    protected DrivingGameManager drivingGameManager;
 
     private void Start() {
         space = transform.GetChild(0).GetComponent<Image>();
-        arrows = transform.GetChild(1).GetComponent<Image>();
+        arrowLeft = transform.GetChild(1).GetChild(0).GetComponent<Image>();
+        arrowRight = transform.GetChild(1).GetChild(1).GetComponent<Image>();
         nitro = transform.GetChild(2).GetComponent<Image>();
 
         space.color = new Color(1, 1, 1, 0);
-        arrows.color = new Color(1, 1, 1, 0);
+        arrowLeft.color = new Color(1, 1, 1, 0);
+        arrowRight.color = new Color(1, 1, 1, 0);
         nitro.color = new Color(1, 1, 1, 0);
 
         truck = GetComponentInParent<Vehicle>();
+        drivingGameManager = GameObject.FindGameObjectWithTag("DrivingGameManager").GetComponent<DrivingGameManager>();
     }
 
     private delegate bool AwaitTutorialCompletion();
 
     private IEnumerator ShowTutorialMessage(Image message, AwaitTutorialCompletion check) {
         message.color = Color.white;
-        yield return new WaitForSeconds(2f);
+        var timeStart = Time.time;
         while (check() == false) {
-            yield return new WaitForEndOfFrame();
+            yield return null;
+        }
+        var diff = Time.time - timeStart;
+        if (diff < 2) {
+            yield return new WaitForSeconds(2 - diff);
         }
         while (message.color.a > 0) {
             message.color = new Color(1, 1, 1, message.color.a - fadeSpeed * Time.deltaTime);
@@ -48,24 +57,28 @@ public class TutorialManager : MonoBehaviour {
         }
     }
 
+
     private void Update() {
         if (truck.rb_vehicle.velocity.x <= 0.1f) {
             if (!TutorialManagerInfo.showSpace) {
                 TutorialManagerInfo.showSpace = true;
                 StartCoroutine(ShowTutorialMessage(space, () => {
-                    return Input.GetKeyDown(KeyCode.Space);
+                    return Input.GetKey(KeyCode.Space);
                 }));
-            } else if (!TutorialManagerInfo.showNitro) {
+            } else if (truck.rb_vehicle.velocity.x < 0 && !TutorialManagerInfo.showNitro) {
                 TutorialManagerInfo.showNitro = true;
                 StartCoroutine(ShowTutorialMessage(nitro, () => {
-                    return Input.GetKeyDown(KeyCode.LeftShift);
+                    return Input.GetKey(KeyCode.LeftShift);
                 }));
             }
         }
-        if (truck.rb_vehicle.velocity.y > 0 && !TutorialManagerInfo.showArrows) {
+        if (truck.rb_vehicle.velocity.y > 10 && truck.state == DRIVE_STATE.IN_AIR && !TutorialManagerInfo.showArrows) {
             TutorialManagerInfo.showArrows = true;
-            StartCoroutine(ShowTutorialMessage(arrows, () => {
-                return Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow);
+            StartCoroutine(ShowTutorialMessage(arrowLeft, () => {
+                return Input.GetKey(KeyCode.LeftArrow);
+            }));
+            StartCoroutine(ShowTutorialMessage(arrowRight, () => {
+                return Input.GetKey(KeyCode.RightArrow);
             }));
         }
     }
