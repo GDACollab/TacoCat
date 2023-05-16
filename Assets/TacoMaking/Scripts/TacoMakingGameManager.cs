@@ -27,6 +27,7 @@ public class TacoMakingGameManager : MonoBehaviour
     public int comboCounter;   //counts the number for 3 combos in total throughout the whole minigame
     public int totalCustomers; //Total number of customers that will appear
     public int customersLeftToGenerate; //the number of customers left to generate in the scene
+    public int difficulty = 1;
     [HideInInspector]
     public int submittedCustomers;
     public int lineSize;
@@ -47,6 +48,7 @@ public class TacoMakingGameManager : MonoBehaviour
     public void Start()
     {
         customerCreationTimer = customerManager.transitionTime;
+        customerManager.difficulty = difficulty;
 
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         audioManager = gameManager.audioManager;

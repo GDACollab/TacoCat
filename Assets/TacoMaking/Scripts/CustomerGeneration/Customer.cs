@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum SpeciesType {Fish, Raven, Sheep, Frog, Capybara};
+public enum SpeciesType {Fish, Ravens, Sheep, Frogs, Capybaras};
 
 public class Customer: MonoBehaviour
 {
@@ -14,8 +14,9 @@ public class Customer: MonoBehaviour
     [Header("Order UI")]
     public OrderBubble orderUI;
 
-    public SpeciesType species; //species selectable by CreateCustomerOrder
+    public enum species {Fish,Raven,Sheep,Frog,Capybara}; //species selectable by CreateCustomerOrder
     public List<ingredientType> order; //ingredients in the order
+    public int difficulty = 1;
 
     [HideInInspector] public Vector3 prevPos;
     [HideInInspector] public Vector3 targetPos;
@@ -23,14 +24,6 @@ public class Customer: MonoBehaviour
     [HideInInspector] public float transitionTime;     //How long it takes in seconds for the customer to move between positions
     [HideInInspector] public float currTransitionTime; //Used for keeping track of time during transitions
     [HideInInspector] public int currPosition;
-
-    [Header("CustomerRigs")]
-    public GameObject fishRig;
-    public GameObject ravenRig;
-    public GameObject sheepRig;
-    public GameObject frogRig;
-    public GameObject capybaraRig;
-
 
     // List of possible colors to tint this customer's sprite once their taco is finished.
     // Elements correspond to the values in the scoreType enum in TacoMakingGameManager.cs .
@@ -53,14 +46,9 @@ public class Customer: MonoBehaviour
     {
         orderUI.gameObject.SetActive(false);
 
-        // Decide on customer species
-        species = RandomizeSpecies(); //Selects random species from the range of possible options
-        EnableSpeciesRig();
+        order = CreateCustomerOrder(Mathf.Min(3, difficulty));
 
-        order = CreateCustomerOrder(3, 4);
-
-        ShowBubbleOrder(order);
-
+        // ShowBubbleOrder(order);
     }
 
     private void LateUpdate()
@@ -69,14 +57,36 @@ public class Customer: MonoBehaviour
         MoveCustomer();
     }
 
-    public List<ingredientType> CreateCustomerOrder(int minOrderLength, int maxOrderLength) 
+    public List<ingredientType> CreateCustomerOrder(int difficulty) 
     {
 
         Debug.Log("Created Customer Order");
 
+        // Decide on customer species
+        species custSpecies;
+        custSpecies = (species)Random.Range(0,4); //Selects random species from the range of possible options
+
         // get menu from bench manager
-        List<ingredientType> menu = tacoGameManager.benchManager.menu;        
-        int orderLength = Random.Range(minOrderLength, maxOrderLength + 1); // randomize order length
+        List<ingredientType> menu = tacoGameManager.benchManager.menu;
+        
+        List<int> orderLengths = new List<int>();
+        switch (difficulty)
+        {
+            case 1:
+                orderLengths = new List<int> {3, 4};
+                break;
+            case 2:
+                orderLengths = new List<int> {3, 4, 4, 4, 5, 5};
+                break;
+            case 3:
+                orderLengths = new List<int> {3, 4, 5, 5, 5, 6, 6};
+                break;
+            default:
+                orderLengths = new List<int> {3, 4};
+                break;
+        }
+        
+        int orderLength = orderLengths[Random.Range(0, orderLengths.Count)]; // randomize order length
 
         // To be returned
         List<ingredientType> s_order = new List<ingredientType>(orderLength);
@@ -85,21 +95,21 @@ public class Customer: MonoBehaviour
         List<int> custPreference = new List<int> { 0, 1, 2, 3, 4 };
         // I would like to switch this with calling for the required value (ie getting fish.value)
         // but afaik we don't have that implemented, and I don't want to risk messing with it rn
-        switch (species)
+        switch (custSpecies)
         {
-            case SpeciesType.Fish: //No fish, 2x sour cream
+            case species.Fish: //No fish, 2x sour cream
                 custPreference = new List<int> { 0, 1, 3, 4, 4 };
                 break;
-            case SpeciesType.Raven: //2x fish
+            case species.Raven: //2x fish
                 custPreference = new List<int> { 0, 1, 2, 2, 3, 4 };
                 break;
-            case SpeciesType.Sheep: //2x cabbage
+            case species.Sheep: //2x cabbage
                 custPreference = new List<int> { 0, 0, 1, 2, 3, 4 };
                 break;
-            case SpeciesType.Frog: // 1/2x fish, 2x jalapenos
+            case species.Frog: // 1/2x fish, 2x jalapenos
                 custPreference = new List<int> { 0, 0, 1, 1, 2, 3, 3, 3, 3, 4, 4 };
                 break;
-            case SpeciesType.Capybara: // 1/2x Pico
+            case species.Capybara: // 1/2x Pico
                 custPreference = new List<int> { 0, 0, 1, 2, 2, 3, 3, 4, 4 };
                 break;
         }
@@ -124,7 +134,7 @@ public class Customer: MonoBehaviour
 
     public SpeciesType RandomizeSpecies()    //Generates a Random Species
     {
-        return (SpeciesType)Random.Range(0,5);
+        return (SpeciesType)Random.Range(0,4);
     }
 
     // << SPAWN ORDER UI BOX >>
@@ -242,37 +252,5 @@ public class Customer: MonoBehaviour
     {
         SpriteRenderer mySpriteRenderer = GetComponent<SpriteRenderer>();
         mySpriteRenderer.color = colorAfterTacoFinished[(int)tacoScore];
-    }
-
-
-    public void EnableSpeciesRig()
-    {
-        fishRig.SetActive(false);
-        ravenRig.SetActive(false);
-        sheepRig.SetActive(false);
-        frogRig.SetActive(false);
-        capybaraRig.SetActive(false);
-
-        switch (species)
-        {
-            case SpeciesType.Fish:
-                fishRig.SetActive(true);
-                break;
-            case SpeciesType.Raven:
-                ravenRig.SetActive(true);
-                break;
-            case SpeciesType.Sheep:
-                sheepRig.SetActive(true);
-                break;
-            case SpeciesType.Frog:
-                frogRig.SetActive(true);
-                break;
-            case SpeciesType.Capybara:
-                capybaraRig.SetActive(true);
-                break;
-            default:
-                fishRig.SetActive(true);
-                break;
-        }
     }
 }
