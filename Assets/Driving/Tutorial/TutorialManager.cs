@@ -4,15 +4,13 @@ using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 public class TutorialManager : MonoBehaviour {
     public float fadeSpeed = 1f;
 
-
     // Store across levels:
     public static class TutorialManagerInfo {
-        public static bool showSpace = false;
-        public static bool showArrows = false;
+        public static bool showGas = false;
+        public static bool showRotation = false;
         public static bool showNitro = false;
     }
 
@@ -57,23 +55,26 @@ public class TutorialManager : MonoBehaviour {
         }
     }
 
-
     private void Update() {
         if (truck.rb_vehicle.velocity.x <= 0.1f) {
-            if (!TutorialManagerInfo.showSpace) {
-                TutorialManagerInfo.showSpace = true;
+            if (!TutorialManagerInfo.showGas) {
+                TutorialManagerInfo.showGas = true;
                 StartCoroutine(ShowTutorialMessage(space, () => {
                     return Input.GetKey(KeyCode.Space);
                 }));
-            } else if (truck.rb_vehicle.velocity.x < 0 && !TutorialManagerInfo.showNitro) {
-                TutorialManagerInfo.showNitro = true;
-                StartCoroutine(ShowTutorialMessage(nitro, () => {
-                    return Input.GetKey(KeyCode.LeftShift);
-                }));
-            }
+            } 
+
         }
-        if (truck.rb_vehicle.velocity.y > 10 && truck.state == DRIVE_STATE.IN_AIR && !TutorialManagerInfo.showArrows) {
-            TutorialManagerInfo.showArrows = true;
+        else if (TutorialManagerInfo.showGas && truck.rb_vehicle.velocity.x > 0 && !TutorialManagerInfo.showNitro)
+        {
+            TutorialManagerInfo.showNitro = true;
+            StartCoroutine(ShowTutorialMessage(nitro, () => {
+                return Input.GetKey(KeyCode.LeftShift);
+            }));
+        }
+
+        if (truck.rb_vehicle.velocity.y > 10 && truck.state == DRIVE_STATE.IN_AIR && !TutorialManagerInfo.showRotation) {
+            TutorialManagerInfo.showRotation = true;
             StartCoroutine(ShowTutorialMessage(arrowLeft, () => {
                 return Input.GetKey(KeyCode.LeftArrow);
             }));
