@@ -57,21 +57,20 @@ public class EnvironmentGenerator : MonoBehaviour
     [Header("<< Trees >>")]
     [Tooltip("Parent for the spawned trees")]
     public Transform treeGenParent;
-    [Tooltip("Base scale of the Tree Objects")]
-    public float treeScale = 50;
+    // [Tooltip("Base scale of the Tree Objects")]
+    // public float treeScale = 50;
     [Tooltip("Amount of variance in the scales of individual tree objects")]
     public float treeScaleVariance = 10;
     [Tooltip("Whether or not the trees rotate with the ground at all")]
     public bool treeRotationEnabled = true;
     [Range(0, 100), Tooltip("From 0-100%, how closely will the trees align with the rotation of the ground")]
     public float treeRotScalar = 70;
-    [Range(-100, 100), Tooltip("Vertical offset for the trees")]
+    [Range(0, 200), Tooltip("Vertical offset for the trees")]
     public float treeYOffset = 0;
-
     public int treeZPosition = -1;
-
-    [Tooltip("List of tree prefabs to spawn")]
-    public List<GameObject> treePrefabs = new List<GameObject>();
+    
+    [Tooltip("Tree prefab")]
+    public GameObject treePrefab;
 
     [Header("<< Signs >>")]
     [Tooltip("Base sign prefab")]
@@ -126,7 +125,7 @@ public class EnvironmentGenerator : MonoBehaviour
         DeleteAllEnvironmentObjects();
 
         // spawn tree objects
-        SpawnEnvironmentObjects(treePrefabs, treeScale, treeZPosition);
+        SpawnEnvironmentObjects(treeZPosition);
 
         environmentSpawned = true;
     }
@@ -145,14 +144,10 @@ public class EnvironmentGenerator : MonoBehaviour
         environmentSpawned = false;
     }
 
-    public void SpawnEnvironmentObjects(List<GameObject> prefabs, float scale, int zposition)
+    public void SpawnEnvironmentObjects(int zposition)
     {
-        // check prefabs
-        if (prefabs.Count < 1) { Debug.LogWarning("No environment prefabs."); return; }
-
         // check ground points
         if (groundPoints.Count < 1) { Debug.LogWarning("No ground points."); return; }
-
         // check ground rotations
         if (groundRotations.Count < 1) { Debug.LogWarning("No rotation points."); return; }
 
@@ -175,8 +170,8 @@ public class EnvironmentGenerator : MonoBehaviour
         {
             // spawn new environment object
             int facing = Random.Range(0, 2)*2 - 1; 
-            float thisScale = scale + (Random.Range(0, treeScaleVariance * 2) - treeScaleVariance); //this will have to be changed once we are spawning objects besides trees
-            SpawnTree(prefabs[levelNum], currPointIndex, thisScale, facing, sortingOrder, zposition);
+            float thisScale = 1 + (Random.Range(-treeScaleVariance, treeScaleVariance)); 
+            SpawnTree(currPointIndex, thisScale, facing, sortingOrder, zposition);
 
             /* ===============================
              *  << SET UP FOR NEXT ENVIRONMENT OBJECT >>
@@ -222,7 +217,6 @@ public class EnvironmentGenerator : MonoBehaviour
     public GameObject SpawnSign(int pointIndex, int signNum)
     {
         Vector3 signLoc = findNearestPeak(pointIndex);
-        //Debug.Log(groundPoints[pointIndex] + "       " + signLoc);
         GameObject newSignObject = Instantiate(signPrefab, signLoc, Quaternion.Euler(new Vector3(0, 0, 0)));
         newSignObject.transform.parent = signGenParent;
 
@@ -235,21 +229,23 @@ public class EnvironmentGenerator : MonoBehaviour
         return newSignObject;
     }
 
-    public GameObject SpawnTree(GameObject prefab, int pointIndex, float scale, int facing, int sortingOrder, int zposition = 0)
+    public GameObject SpawnTree(int pointIndex, float scale, int facing, int sortingOrder, int zposition = 0)
     {
         // create a random environment object at indexed groundPoint and with rotation
-        GameObject newTreeObject = Instantiate(prefab, groundPoints[pointIndex], Quaternion.Euler(new Vector3(0, 0, 0)));
-
+        GameObject newTreeObject = Instantiate(treePrefab, groundPoints[pointIndex], Quaternion.Euler(new Vector3(0, 0, 0)));
+    
         //set parent
         newTreeObject.transform.parent = treeGenParent;
         allSpawnedObjects.Add(newTreeObject);
 
-        // randomly face left or right
-        Vector3 facingVector = new Vector3( facing,  1 );
-        newTreeObject.transform.localScale = facingVector * scale;
+        // randomly face left or right, then scale
+        Vector3 scaleVec = newTreeObject.transform.localScale;
+        scaleVec.x *= facing;
+        scaleVec *= scale;
+        newTreeObject.transform.localScale = scaleVec;
 
         // set z position
-        newTreeObject.transform.position = SetZ(newTreeObject.transform.position, zposition);
+        newTreeObject.transform.position = SetZ(newTreeObject.transform.position, zposition + Random.Range(-0.01f, 0.01f));
 
         // Move down slightly 
         newTreeObject.transform.position = new Vector3(newTreeObject.transform.position.x, newTreeObject.transform.position.y + treeYOffset, newTreeObject.transform.position.z);

@@ -281,7 +281,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!43 &267719905
+--- !u!43 &514848003
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -17467,17 +17467,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b98e17472161422409ce954e519a82b5, type: 3}
---- !u!114 &2053451056 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
-  m_PrefabInstance: {fileID: 2053451055}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7846e2187297056448d1c65d3f432aeb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &65408466720666371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17524,14 +17513,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stageManager: {fileID: 4097053439081821015}
-  gameManager: {fileID: 2053451056}
   environmentSpawned: 0
   groundPoints: []
   groundRotations: []
   mainGenerationPoints: []
   allSpawnedObjects: []
-  minSpaceBetweenObjects: 1
-  maxSpaceBetweenObjects: 7
+  minSpaceBetweenObjects: 12
+  maxSpaceBetweenObjects: 23
   drawLine: 1
   lineWidth: 100
   lineOffset: {x: 5, y: -50, z: 0}
@@ -17545,14 +17533,12 @@ MonoBehaviour:
   gasStationYOffset: 44
   gasStationGroundPointIndex: 23
   treeGenParent: {fileID: 7736978145719334173}
-  treeScale: 50
-  treeScaleVariance: 10
+  treeScaleVariance: 0.1
   treeRotationEnabled: 1
-  treeRotScalar: 30
-  treeYOffset: -10
+  treeRotScalar: 71
+  treeYOffset: 108
   treeZPosition: 10
-  treePrefabs:
-  - {fileID: 3369474761770153936, guid: 98f3305ed9766834c91d1bed13271dad, type: 3}
+  treePrefab: {fileID: 7554850957420714282, guid: f2b46f155eb17904c9f611ff4c2dbcac, type: 3}
   signPrefab: {fileID: 7292054314515768603, guid: 9473524ecdb6d4fd5ab1dbc038ec454b, type: 3}
   signGenParent: {fileID: 1473964996}
   signScale: 40
