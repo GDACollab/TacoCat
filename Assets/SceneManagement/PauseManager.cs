@@ -7,6 +7,7 @@ public class PauseManager : MonoBehaviour
 {
     public KeyCode pauseKey = KeyCode.Escape;
     public GameObject pauseCanvas;
+    public GameObject volumeSliderParent;
     AudioManager audioManager;
     protected bool isPaused = false;
 
@@ -15,7 +16,7 @@ public class PauseManager : MonoBehaviour
     private void Awake() {
         audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
 
-        var sliderTransform = pauseCanvas.transform.GetChild(0).GetChild(1);
+        var sliderTransform = volumeSliderParent.transform;
         for (var i = 0; i < sliderTransform.childCount; i++) {
             var child = sliderTransform.GetChild(i);
             if (child.TryGetComponent<Slider>(out var slider)) {

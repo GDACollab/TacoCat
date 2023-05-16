@@ -178,7 +178,8 @@ public class GameManager : MonoBehaviour {
 
     public void LoadMenu() {
         currGame = currGame.MENU;
-        currLevel = 0;
+        currLevel = 1;
+        cutsceneIndex = 0;
         SceneManager.LoadScene(menuScene);
         audioManager.PlaySong(audioManager.menuMusicPath);
     }

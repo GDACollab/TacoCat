@@ -871,6 +871,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5120949041775977145, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5120949042524539819, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1354788260}
+    - target: {fileID: 5120949042524539819, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 6723231710111894929, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7004250954060202129, guid: b98e17472161422409ce954e519a82b5, type: 3}
       propertyPath: m_Name
       value: GameManager
