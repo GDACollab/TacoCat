@@ -52,7 +52,7 @@ public class EnvironmentGenerator : MonoBehaviour
     [Tooltip("Y offset for the gas station objects")]
     public float gasStationYOffset;
     [Tooltip("Distance in ground points that the gas stations will spawn from each end")]
-    public int gasStationGroundPointIndex;
+    public int gasStationGroundPointIndex = 1;
 
     [Header("<< Trees >>")]
     [Tooltip("Parent for the spawned trees")]
