@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour {
     public int cutsceneIndex = 0;
     [Space(5)]
     public bool isLoadingScene;
+    public bool activateScene = true;
 
     [Header("Scenes")]
     public SceneObject menuScene;
@@ -160,7 +161,8 @@ public class GameManager : MonoBehaviour {
             {
                 if (currLevel == 3) { LoadMenu(); }  // end of game
                 currLevel++;
-                LoadCutscene();
+                StartCoroutine(ConcurrentLoadingCoroutine(cutscene));
+                // LoadCutscene();
             }
         }
 
@@ -182,10 +184,15 @@ public class GameManager : MonoBehaviour {
     }
 
     // **** LOAD TACO MAKING SCENE ****
-    public void LoadTacoMakingScene() {
+    public void LoadTacoMakingScene(bool async = false) {
 
         currGame = currGame.TACO_MAKING;
-        StartCoroutine(LoadingCoroutine(tacoMakingScene));
+        if(async){
+            StartCoroutine(ConcurrentLoadingCoroutine(tacoMakingScene));
+        }
+        else{
+            StartCoroutine(LoadingCoroutine(tacoMakingScene));
+        }
         audioManager.PlaySong(audioManager.tacoMusicPath);
     }
 
@@ -253,6 +260,33 @@ public class GameManager : MonoBehaviour {
         }
 
         SceneManager.UnloadSceneAsync(loadingScene);
+        isLoadingScene = false;
+    }
+    
+    IEnumerator ConcurrentLoadingCoroutine(SceneObject scene) {
+        isLoadingScene = true;
+        yield return null;
+
+        Scene thisScene = SceneManager.GetActiveScene();
+        currScene = scene;
+
+        AsyncOperation newScene = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Additive); // async load next scene
+
+        //Don't let the Scene activate until you allow it to
+        newScene.allowSceneActivation = false;
+        Debug.Log("Loading " + currScene + ":" + newScene.progress);
+
+        //When the load is still in progress, output the Text and progress bar
+        while (!newScene.isDone) {
+            loadProgress = newScene.progress;
+
+            if (newScene.progress >= 0.9f) {
+                newScene.allowSceneActivation = activateScene;
+            }
+            yield return new WaitForEndOfFrame();
+        }
+
+        SceneManager.UnloadSceneAsync(thisScene);
         isLoadingScene = false;
     }
 
