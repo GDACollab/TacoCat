@@ -16,6 +16,7 @@ public class EnvironmentGenerator : MonoBehaviour
      */
     
     public StageManager stageManager;
+    public GameManager gameManager;
     public bool environmentSpawned;
     [HideInInspector]
     public List<Vector3> groundPoints = new List<Vector3>();
@@ -42,6 +43,17 @@ public class EnvironmentGenerator : MonoBehaviour
     public Vector3 lineOffset;
     public Material lineMaterial;
 
+    [Header("<< Gas Stations >>")]
+    [Tooltip("Gas station prefab")]
+    public GameObject gasStationPrefab;
+    [Tooltip("List of gas station sprites")]
+    public List<Sprite> gasStationSprites = new List<Sprite>();
+    [Tooltip("Gas station object scale")]
+    public float gasStationScale;
+    [Tooltip("Y offset for the gas station objects")]
+    public float gasStationYOffset;
+    [Tooltip("Distance in ground points that the gas stations will spawn from each end")]
+    public int gasStationGroundPointIndex;
 
     [Header("<< Trees >>")]
     [Tooltip("Parent for the spawned trees")]
@@ -62,7 +74,7 @@ public class EnvironmentGenerator : MonoBehaviour
     [Tooltip("List of tree prefabs to spawn")]
     public List<GameObject> treePrefabs = new List<GameObject>();
 
-    [Header("Signs")]
+    [Header("<< Signs >>")]
     [Tooltip("Base sign prefab")]
     public GameObject signPrefab;
     [Tooltip("Parent for the spawned signs")]
@@ -147,6 +159,17 @@ public class EnvironmentGenerator : MonoBehaviour
 
         int sortingOrder = 0; // sorting order of the object to be spawned
         int spacing = minSpaceBetweenObjects; // minimum spacing between objects
+        int levelNum = gameManager.currLevel - 1;
+
+        // << SPAWN GAS STATIONS >>
+        GameObject startStation   = Instantiate(gasStationPrefab, groundPoints[gasStationGroundPointIndex] + new Vector3(0, gasStationYOffset, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
+        startStation.transform.localScale = startStation.transform.localScale * gasStationScale;
+        startStation.GetComponent<SpriteRenderer>().sprite = gasStationSprites[levelNum];
+        if(levelNum != 2){
+            GameObject endStation = Instantiate(gasStationPrefab, groundPoints[groundPoints.Count - gasStationGroundPointIndex] + new Vector3(0, gasStationYOffset, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
+            endStation.GetComponent<SpriteRenderer>().sprite = gasStationSprites[levelNum+1];
+            endStation.transform.localScale = endStation.transform.localScale * gasStationScale;
+        }
 
         // << SPAWN TREES >>
         for (int currPointIndex = 10; currPointIndex < groundPoints.Count - 1; currPointIndex += spacing)
@@ -154,7 +177,7 @@ public class EnvironmentGenerator : MonoBehaviour
             // spawn new environment object
             int facing = Random.Range(0, 2)*2 - 1; 
             float thisScale = scale + (Random.Range(0, treeScaleVariance * 2) - treeScaleVariance); //this will have to be changed once we are spawning objects besides trees
-            SpawnTree(prefabs[Random.Range(0, prefabs.Count)], currPointIndex, thisScale, facing, sortingOrder, zposition);
+            SpawnTree(prefabs[levelNum], currPointIndex, thisScale, facing, sortingOrder, zposition);
 
             /* ===============================
              *  << SET UP FOR NEXT ENVIRONMENT OBJECT >>
