@@ -8,11 +8,14 @@ public class CustomerManager : MonoBehaviour
     public TacoMakingGameManager tacoGameManager;
     public GameObject customerPrefab;
     public Customer currCustomer;
-  
+
     public float transitionTime;       //How long it takes in seconds for the customer to transition between positions
+    [SerializeField] private float dialogueDelay;
+    [SerializeField] private float transitionDelay; //The most that a customers transition time can be randomly offset (used to make customers move at diff speeds)
     public List<Transform> positionList = new List<Transform>(); //Used as the points the customer transitions to/from 
     public List<Customer> customerList = new List<Customer>();
     [HideInInspector] public int difficulty = 1;
+    private float dialogueDelayTime = 0;
 
 
     //before calling check if customers left to generate == 0
@@ -34,12 +37,16 @@ public class CustomerManager : MonoBehaviour
     {
         Debug.Log("Created Customer");
 
-       //Creates a new customer and sets all of its vars
-        Customer customerScript  = Instantiate(customerPrefab, transform).GetComponent<Customer>();
+        //Creates a new customer and sets all of its vars
+        Customer customerScript = Instantiate(customerPrefab, transform).GetComponent<Customer>();
         customerScript.transform.position = positionList[5].position;
         customerScript.transitionTime = transitionTime;
         customerScript.currPosition = -1;
         customerScript.difficulty = difficulty;
+        //Temp for testing
+        customerScript.hasEndingDialogue = false;
+        customerScript.hasIntroDialgue = false;
+
         customerList.Add(customerScript);
         UpdateCustomers();
 
@@ -53,9 +60,14 @@ public class CustomerManager : MonoBehaviour
         if (currCustomer != null)
         {
             //Delays the destruction of the customer so that they have time to move offscreen
-            UpdateCustomerPos(currCustomer, positionList[0].position);
+            currCustomer.MoveCustomer(positionList[0].position);
+            currCustomer.transitionOffset = 0;
+            if (customerList[0].hasEndingDialogue)
+            {
+                dialogueDelayTime = dialogueDelay;
+            }
             Destroy(currCustomer.gameObject, transitionTime);
-            customerList.RemoveAt(0);          
+            customerList.RemoveAt(0);
             currCustomer = null;
         }
     }
@@ -67,8 +79,6 @@ public class CustomerManager : MonoBehaviour
         if (currCustomer == null && customerList.Count > 0)
         {
             currCustomer = customerList[0];
-            tacoGameManager.uiManager.newOrderTaken = false;
-            Debug.Log("display order");
 
             //tacoAudioManager.OrderAudio(); //needs to be edited later
         }
@@ -79,19 +89,15 @@ public class CustomerManager : MonoBehaviour
             //If the customers current position has changed, then update its variables
             if (customerList[i].currPosition != i)
             {
+                //Adds a delay to subsequent customers being moved so that they don't all move at the same exact time              
+                customerList[i].transitionOffset = (i + 1) * transitionDelay;
+                Debug.Log((i + 1) * transitionDelay);
+                customerList[i].dialoguePause = dialogueDelayTime;
                 customerList[i].currPosition = i;
-                UpdateCustomerPos(customerList[i], positionList[i + 1].position);
+                customerList[i].MoveCustomer(positionList[i + 1].position);
             }
         }
-    }
-
-    //Helper function for setting the vars for transitioning to a new spot in line
-    private void UpdateCustomerPos(Customer customer, Vector3 newPosition)
-    {
-        customer.prevPos = customer.transform.position;
-        customer.targetPos = newPosition;
-        customer.interpolater = 0;
-        customer.currTransitionTime = 0;
+        dialogueDelayTime = 0;
     }
 
     // spawn a bunch of customers at once to debug order generation

@@ -21,9 +21,15 @@ public class Customer: MonoBehaviour
     [HideInInspector] public Vector3 prevPos;
     [HideInInspector] public Vector3 targetPos;
     [HideInInspector] public float interpolater;
-    [HideInInspector] public float transitionTime;     //How long it takes in seconds for the customer to move between positions
-    [HideInInspector] public float currTransitionTime; //Used for keeping track of time during transitions
+    [HideInInspector] public float transitionTime; //How long it takes in seconds for the customer to move between positions
+    private float currTransitionTime; //Used for keeping track of time during transitions
+    [HideInInspector] public float transitionOffset; //The most that a customers transition time can be randomly offset (used to make customers move at diff speeds)
+    [HideInInspector] private float transitionOffsetTimer;
     [HideInInspector] public int currPosition;
+    private Coroutine lastRoutine = null;
+    [HideInInspector] public bool hasEndingDialogue;
+    [HideInInspector] public bool hasIntroDialgue;
+    [HideInInspector] public float dialoguePause;
 
     // List of possible colors to tint this customer's sprite once their taco is finished.
     // Elements correspond to the values in the scoreType enum in TacoMakingGameManager.cs .
@@ -49,12 +55,6 @@ public class Customer: MonoBehaviour
         order = CreateCustomerOrder(Mathf.Min(3, difficulty));
 
         // ShowBubbleOrder(order);
-    }
-
-    private void LateUpdate()
-    {
-        //Update customers position every frame
-        MoveCustomer();
     }
 
     public List<ingredientType> CreateCustomerOrder(int difficulty) 
@@ -234,17 +234,47 @@ public class Customer: MonoBehaviour
     }
 
     //Moves the customer from their previous position to their new position in line
-    public void MoveCustomer()
+    public void MoveCustomer(Vector3 newPosition)
     {
+        interpolater = 0;
+        currTransitionTime = 0;
+        transitionOffsetTimer = 0;
+        prevPos = transform.position;
+        targetPos = newPosition;
+        if (lastRoutine != null)
+        {
+            StopCoroutine(lastRoutine);
+        }
+        lastRoutine = StartCoroutine(MovePosition());
+    }
+
+    private IEnumerator MovePosition()
+    {
+        //Buffer for customers have dialogue
+        while (dialoguePause > 0)
+        {
+            dialoguePause -= Time.deltaTime;
+            yield return null;
+        }
+
+        //Buffer between different customers moving
+        while (transitionOffsetTimer < transitionOffset)
+        {
+            transitionOffsetTimer += Time.deltaTime;
+            yield return null;
+        }
+
         //Stops moving customer once they are at their new position
-        if (currTransitionTime < transitionTime)
+        while (currTransitionTime < transitionTime)
         {
             //Math to make the transition ease in and out
             interpolater = currTransitionTime / transitionTime;
             interpolater = interpolater * interpolater * (3f - 2f * interpolater);
             transform.position = Vector3.Lerp(prevPos, targetPos, interpolater);
             currTransitionTime += Time.deltaTime;
+            yield return null;
         }
+        lastRoutine = null;
     }
 
     // Changes this customer's sprite appearance based on the score of their taco
