@@ -41,7 +41,6 @@ public class DrivingUIManager : MonoBehaviour
 
     [Header("Toggle Progress Bar")]
     private GameObject progressBarSlider;
-    public bool viewProgressBar;
     
     [Header("Transition UI")]
     public GameObject transitionParent;
@@ -59,14 +58,6 @@ public class DrivingUIManager : MonoBehaviour
         signs = drivingGameManager.getSignDistances(numSigns, totalMiles);
         signs.Add(0);
         signText.text = miles + " Miles Till Cat Nyansisco";
-        if (viewProgressBar)
-        {
-            progressBarSlider.SetActive(true);
-        }
-        else
-        {
-            progressBarSlider.SetActive(false);
-        }
     }
 
     // Update is called once per frame

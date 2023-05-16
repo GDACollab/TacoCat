@@ -42,6 +42,9 @@ public class Customer: MonoBehaviour
         Color.red
     };
 
+    // HARDCODED -> 1: FISH . 2: RAVEN . 3: SHEEP . 4: FROG . 5: CAPYBARA
+    public List<GameObject> customerSpriteObject = new List<GameObject>();
+
     private void Awake()
     {
         tacoGameManager = GetComponentInParent<TacoMakingGameManager>();
@@ -99,18 +102,23 @@ public class Customer: MonoBehaviour
         {
             case species.Fish: //No fish, 2x sour cream
                 custPreference = new List<int> { 0, 1, 3, 4, 4 };
+                customerSpriteObject[0].SetActive(true);
                 break;
             case species.Raven: //2x fish
                 custPreference = new List<int> { 0, 1, 2, 2, 3, 4 };
+                customerSpriteObject[1].SetActive(true);
                 break;
             case species.Sheep: //2x cabbage
                 custPreference = new List<int> { 0, 0, 1, 2, 3, 4 };
+                customerSpriteObject[3].SetActive(true);
                 break;
             case species.Frog: // 1/2x fish, 2x jalapenos
                 custPreference = new List<int> { 0, 0, 1, 1, 2, 3, 3, 3, 3, 4, 4 };
+                customerSpriteObject[4].SetActive(true);
                 break;
             case species.Capybara: // 1/2x Pico
                 custPreference = new List<int> { 0, 0, 1, 2, 2, 3, 3, 4, 4 };
+                customerSpriteObject[5].SetActive(true);
                 break;
         }
         Debug.Log(custPreference);

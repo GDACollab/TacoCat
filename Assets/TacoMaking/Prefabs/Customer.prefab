@@ -105,25 +105,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   submittedTaco: {fileID: 0}
   orderUI: {fileID: 7669438798918109656}
-  species: 0
   order: 
+  difficulty: 1
   prevPos: {x: 0, y: 0, z: 0}
   targetPos: {x: 0, y: 0, z: 0}
   interpolater: 0
   transitionTime: 0
-  currTransitionTime: 0
+  transitionOffset: 0
   currPosition: 0
-  fishRig: {fileID: 5897813708622392495}
-  ravenRig: {fileID: 9189886895019749270}
-  sheepRig: {fileID: 8077811605330598555}
-  frogRig: {fileID: 8003808394434728124}
-  capybaraRig: {fileID: 8586653028043645921}
+  hasEndingDialogue: 0
+  hasIntroDialgue: 0
+  dialoguePause: 0
   colorAfterTacoFinished:
   - {r: 0.5, g: 0.5, b: 0.5, a: 1}
   - {r: 0, g: 0.9529412, b: 0.105882354, a: 1}
   - {r: 0.7529412, g: 255, b: 0.39607844, a: 1}
   - {r: 0.9764706, g: 0.5529412, b: 0, a: 1}
   - {r: 1, g: 0, b: 0, a: 1}
+  customerSpriteObject:
+  - {fileID: 5897813708622392495}
+  - {fileID: 9189886895019749270}
+  - {fileID: 8077811605330598555}
+  - {fileID: 8003808394434728124}
+  - {fileID: 8586653028043645921}
 --- !u!1 &5897813708622392495
 GameObject:
   m_ObjectHideFlags: 0
@@ -140,7 +144,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2075094175143520232
 Transform:
   m_ObjectHideFlags: 0
@@ -224,7 +228,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5327618489701630203
 Transform:
   m_ObjectHideFlags: 0
@@ -308,7 +312,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8337284485351279888
 Transform:
   m_ObjectHideFlags: 0
@@ -392,7 +396,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9135005990667659798
 Transform:
   m_ObjectHideFlags: 0
@@ -476,7 +480,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7866023764642700521
 Transform:
   m_ObjectHideFlags: 0
