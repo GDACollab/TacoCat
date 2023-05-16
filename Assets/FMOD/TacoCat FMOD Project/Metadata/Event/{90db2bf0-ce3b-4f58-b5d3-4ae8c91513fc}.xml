@@ -68,9 +68,9 @@
 	<object class="MarkerTrack" id="{e734d47a-04f0-4a6a-b501-601b79f5a881}" />
 	<object class="GroupTrack" id="{74c3ab2d-6f39-44a8-82c8-ede1a12f065a}">
 		<relationship name="modules">
-			<destination>{5731e531-75c1-4cef-a61e-d18f5dbcdb0c}</destination>
 			<destination>{26064f8a-c405-4a8a-932e-556f7f1a6ad6}</destination>
 			<destination>{16e7752f-eb6a-475e-8681-3431ad7f6d62}</destination>
+			<destination>{4f7be28d-5aa4-4be7-98db-4566ddecbb78}</destination>
 		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{7f2fbd71-f68b-4d7f-94a4-9fa71495b077}</destination>
@@ -78,7 +78,7 @@
 	</object>
 	<object class="Timeline" id="{b86401f2-68a7-4df7-8ac9-d00e4e0bfcc4}">
 		<relationship name="modules">
-			<destination>{5731e531-75c1-4cef-a61e-d18f5dbcdb0c}</destination>
+			<destination>{4f7be28d-5aa4-4be7-98db-4566ddecbb78}</destination>
 		</relationship>
 		<relationship name="markers">
 			<destination>{d0eccc98-2b21-45be-9072-940b3bd5eba1}</destination>
@@ -129,14 +129,6 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{e20ed2aa-7a71-4bfe-a308-f5949bda6463}" />
-	<object class="SingleSound" id="{5731e531-75c1-4cef-a61e-d18f5dbcdb0c}">
-		<property name="length">
-			<value>128.06399999999999</value>
-		</property>
-		<relationship name="audioFile">
-			<destination>{b3d44e04-7388-4527-a296-d7d8e23bc90f}</destination>
-		</relationship>
-	</object>
 	<object class="TransitionSourceSound" id="{26064f8a-c405-4a8a-932e-556f7f1a6ad6}">
 		<property name="length">
 			<value>0.5</value>
@@ -153,9 +145,17 @@
 			<destination>{470ed8ae-5a85-4706-9f12-d8935ddea487}</destination>
 		</relationship>
 	</object>
+	<object class="SingleSound" id="{4f7be28d-5aa4-4be7-98db-4566ddecbb78}">
+		<property name="length">
+			<value>160.05600000000001</value>
+		</property>
+		<relationship name="audioFile">
+			<destination>{0514cc8d-e39a-4105-9ebd-1e328cf08db9}</destination>
+		</relationship>
+	</object>
 	<object class="EventMixerGroup" id="{7f2fbd71-f68b-4d7f-94a4-9fa71495b077}">
 		<property name="name">
-			<value>Audio 1</value>
+			<value>Bins &amp; Wins</value>
 		</property>
 		<relationship name="modulators">
 			<destination>{9efea3a0-3a99-40d8-96d7-f368615a4bb2}</destination>
@@ -189,7 +189,7 @@
 			<value>47.5</value>
 		</property>
 		<property name="length">
-			<value>64</value>
+			<value>112</value>
 		</property>
 		<relationship name="timeline">
 			<destination>{b86401f2-68a7-4df7-8ac9-d00e4e0bfcc4}</destination>

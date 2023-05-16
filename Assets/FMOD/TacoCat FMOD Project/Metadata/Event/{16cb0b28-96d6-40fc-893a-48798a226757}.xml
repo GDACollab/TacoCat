@@ -23,6 +23,7 @@
 			<destination>{54eb4504-6d7b-442e-b819-6e6151025f3f}</destination>
 		</relationship>
 		<relationship name="markerTracks">
+			<destination>{c1c605cd-faca-4513-89dc-15d1fcf9c283}</destination>
 			<destination>{ac6965df-b726-4fec-9104-f9d60f06605b}</destination>
 			<destination>{95619801-f8ae-4339-9ac8-73aa7059aa2c}</destination>
 		</relationship>
@@ -62,6 +63,7 @@
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{54eb4504-6d7b-442e-b819-6e6151025f3f}" />
+	<object class="MarkerTrack" id="{c1c605cd-faca-4513-89dc-15d1fcf9c283}" />
 	<object class="MarkerTrack" id="{ac6965df-b726-4fec-9104-f9d60f06605b}" />
 	<object class="MarkerTrack" id="{95619801-f8ae-4339-9ac8-73aa7059aa2c}" />
 	<object class="GroupTrack" id="{8f04ad97-c4c5-4f22-baa8-e6d7408b5e5c}">
@@ -81,6 +83,7 @@
 			<destination>{0dbc0c5a-4a59-4930-9b45-b689bdc663ae}</destination>
 			<destination>{b26ed3d2-55e8-4699-a73c-a22049abcf1d}</destination>
 			<destination>{b54017ba-6e8b-4c9c-bf4e-2a086e0211ee}</destination>
+			<destination>{a05ff1aa-cf31-415f-bf81-69dd71e387fc}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{18a054c8-fa8a-4efd-9302-1c71ed01d6a0}">
@@ -126,7 +129,7 @@
 	</object>
 	<object class="EventMixerGroup" id="{ddc5534f-2983-4a01-b01b-d22a55c4db8d}">
 		<property name="name">
-			<value>Audio 1</value>
+			<value>Music</value>
 		</property>
 		<relationship name="effectChain">
 			<destination>{6cb0e120-e76b-4b5c-a67b-44815f4722de}</destination>
@@ -194,6 +197,20 @@
 			<destination>{ac6965df-b726-4fec-9104-f9d60f06605b}</destination>
 		</relationship>
 	</object>
+	<object class="NamedMarker" id="{a05ff1aa-cf31-415f-bf81-69dd71e387fc}">
+		<property name="position">
+			<value>186</value>
+		</property>
+		<property name="name">
+			<value>Marker A</value>
+		</property>
+		<relationship name="timeline">
+			<destination>{07fb982e-b9e4-4df1-b354-8aa3ca633da4}</destination>
+		</relationship>
+		<relationship name="markerTrack">
+			<destination>{c1c605cd-faca-4513-89dc-15d1fcf9c283}</destination>
+		</relationship>
+	</object>
 	<object class="Automator" id="{4f71e5a0-5da2-4c0e-8dec-ea3e25301bf3}">
 		<property name="nameOfPropertyBeingAutomated">
 			<value>volume</value>
@@ -210,7 +227,10 @@
 			<value>60</value>
 		</property>
 		<property name="releaseTime">
-			<value>1200</value>
+			<value>3600</value>
+		</property>
+		<property name="releaseShape">
+			<value>-0.271852672</value>
 		</property>
 		<property name="finalValue">
 			<value>-80</value>
