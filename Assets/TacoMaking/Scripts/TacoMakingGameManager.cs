@@ -37,6 +37,7 @@ public class TacoMakingGameManager : MonoBehaviour
     public float maxGameScore;
     public float gasAmount = 0;
     public float minimumGasThreshold = .5f; // 0 is none, 1 is full
+    public int nitroCharges = 0;
 
     [Header("Prefabs")]
     public GameObject tacoPrefab;
@@ -45,9 +46,6 @@ public class TacoMakingGameManager : MonoBehaviour
 
     public void Start()
     {
-
-
-
         customerCreationTimer = customerManager.transitionTime;
 
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
@@ -55,8 +53,6 @@ public class TacoMakingGameManager : MonoBehaviour
         benchManager = GetComponentInChildren<IngredientBenchManager>();
         uiManager = GetComponentInChildren<TacoUIManager>();
         
-
-
         CreateNewSubmissionTaco();
 
         customersLeftToGenerate = totalCustomers;
