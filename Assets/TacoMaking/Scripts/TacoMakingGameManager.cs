@@ -103,6 +103,11 @@ public class TacoMakingGameManager : MonoBehaviour
             {
                 customersLeftToGenerate += 3;
             }
+
+            if (customersLeftToGenerate < 3 && gasAmount < minimumGasThreshold) 
+            {
+                customersLeftToGenerate += 3;
+            }
         }
         customerCreationTimer += Time.deltaTime;
     }
