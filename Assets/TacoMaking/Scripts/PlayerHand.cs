@@ -90,6 +90,9 @@ public class PlayerHand : MonoBehaviour
         {
             if (TransformProximity())
             {
+                GameObject ingr = Instantiate(tacoGameManager.GetIngredientObject(currHeldIngredient), transform);
+                ingr.transform.parent = transform;
+                ingr.GetComponent<SpriteRenderer>().sortingOrder = transform.childCount + transform.GetComponentInChildren<SpriteRenderer>(false).sortingOrder;
                 state = handState.PLACE_INGR;
             }
 
@@ -102,6 +105,7 @@ public class PlayerHand : MonoBehaviour
             if (TransformProximity())
             {
                 // taco.AddIngredient(/*ingredient*/);
+                Destroy(transform.GetChild(transform.childCount-1).gameObject);
                 tacoGameManager.AddIngredientToTaco(currHeldIngredient);
                 currHeldIngredient = new ingredientType();
                 state = handState.HOME;
@@ -143,7 +147,7 @@ public class PlayerHand : MonoBehaviour
             target = bin.transform;
             tacoTarget = submissionTaco.transform;
             currHeldIngredient = bin.ingredientType;
-
+            
             state = handState.PICK_FROM_BIN;
 
             pickBin = bin;
