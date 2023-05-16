@@ -281,7 +281,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!43 &304474363
+--- !u!43 &267719905
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -17467,6 +17467,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b98e17472161422409ce954e519a82b5, type: 3}
+--- !u!114 &2053451056 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
+  m_PrefabInstance: {fileID: 2053451055}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7846e2187297056448d1c65d3f432aeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &65408466720666371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17513,6 +17524,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stageManager: {fileID: 4097053439081821015}
+  gameManager: {fileID: 2053451056}
   environmentSpawned: 0
   groundPoints: []
   groundRotations: []
@@ -17524,6 +17536,14 @@ MonoBehaviour:
   lineWidth: 100
   lineOffset: {x: 5, y: -50, z: 0}
   lineMaterial: {fileID: 2100000, guid: 95b160534129f2647b82dc53f6777085, type: 2}
+  gasStationPrefab: {fileID: 4066191289592924326, guid: 0d92edf9460a9ba45b08ca291da21df3, type: 3}
+  gasStationSprites:
+  - {fileID: 21300000, guid: bd284b101b58d4dcab5ad1dc83a47447, type: 3}
+  - {fileID: 21300000, guid: bfff473ad307e4253beeddf15a1c20c8, type: 3}
+  - {fileID: 21300000, guid: 10b7dc315088241d4becce87210c0c43, type: 3}
+  gasStationScale: 4
+  gasStationYOffset: 44
+  gasStationGroundPointIndex: 23
   treeGenParent: {fileID: 7736978145719334173}
   treeScale: 50
   treeScaleVariance: 10

@@ -196,7 +196,7 @@ MonoBehaviour:
   stuckMaxVelocity: 0
   stuckTimeoutDuration: 0
   stuckTime: 0
---- !u!43 &329907954
+--- !u!43 &411663894
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -498,6 +498,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1801153804266685743, guid: 9c8f1c7b8e721411ca3c911ffb4570b3, type: 3}
   m_PrefabInstance: {fileID: 715781168}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &895892530 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
+  m_PrefabInstance: {fileID: 2053451055}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7846e2187297056448d1c65d3f432aeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &932836660
 GameObject:
   m_ObjectHideFlags: 0
@@ -17341,6 +17352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stageManager: {fileID: 4097053439081821015}
+  gameManager: {fileID: 895892530}
   environmentSpawned: 0
   groundPoints: []
   groundRotations: []
@@ -17352,6 +17364,14 @@ MonoBehaviour:
   lineWidth: 100
   lineOffset: {x: 5, y: -50, z: 0}
   lineMaterial: {fileID: 2100000, guid: 95b160534129f2647b82dc53f6777085, type: 2}
+  gasStationPrefab: {fileID: 4066191289592924326, guid: 0d92edf9460a9ba45b08ca291da21df3, type: 3}
+  gasStationSprites:
+  - {fileID: 21300000, guid: bd284b101b58d4dcab5ad1dc83a47447, type: 3}
+  - {fileID: 21300000, guid: bfff473ad307e4253beeddf15a1c20c8, type: 3}
+  - {fileID: 21300000, guid: 10b7dc315088241d4becce87210c0c43, type: 3}
+  gasStationScale: 4
+  gasStationYOffset: 44
+  gasStationGroundPointIndex: 23
   treeGenParent: {fileID: 7736978145719334173}
   treeScale: 50
   treeScaleVariance: 10

@@ -16,7 +16,6 @@ public class EnvironmentGenerator : MonoBehaviour
      */
     
     public StageManager stageManager;
-    public GameManager gameManager;
     public bool environmentSpawned;
     [HideInInspector]
     public List<Vector3> groundPoints = new List<Vector3>();
@@ -159,7 +158,7 @@ public class EnvironmentGenerator : MonoBehaviour
 
         int sortingOrder = 0; // sorting order of the object to be spawned
         int spacing = minSpaceBetweenObjects; // minimum spacing between objects
-        int levelNum = gameManager.currLevel - 1;
+        int levelNum = GameObject.Find("GameManager").GetComponent<GameManager>().currLevel - 1;
 
         // << SPAWN GAS STATIONS >>
         GameObject startStation   = Instantiate(gasStationPrefab, groundPoints[gasStationGroundPointIndex] + new Vector3(0, gasStationYOffset, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
