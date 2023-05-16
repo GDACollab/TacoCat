@@ -13,16 +13,16 @@ public class CutsceneManager : MonoBehaviour
 
     public float startingPosition;
 
-    public float positionX = 1.0f;
-    public float positionY = 1.0f;
+    //public float positionX = 1.0f;
+    //public float positionY = 1.0f;
 
     
 
-    [Range(0.0f, 10.0f)]
-    public float scroll;
+    //[Range(0.0f, 10.0f)]
+    //public float scroll;
 
-    [Tooltip("[WIP] Max charcters per line.\nWon't move the whole word to the next line currently")]
-    public int characterLimit;
+    //[Tooltip("[WIP] Max charcters per line.\nWon't move the whole word to the next line currently")]
+    //public int characterLimit;
 
     public enum character { ALEX, JAMIE };
     [System.Serializable]
@@ -169,8 +169,10 @@ public class CutsceneManager : MonoBehaviour
             bubble.GetComponent<RectTransform>().pivot = new Vector2(1, 0);
             bubble.transform.position = alexMessageParent.position;
             bubble.GetComponent<BubbleManager>().Init(character.ALEX, s, this);
+
             yield return StartCoroutine(bubble.GetComponent<BubbleManager>().TextCrawl(s));
             currentBubbles.Add(bubble);
+
             //insert instance of alexbubble text += "\n"
 
             //phoneText.text += "\n";

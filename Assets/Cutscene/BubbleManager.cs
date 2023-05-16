@@ -60,6 +60,7 @@ public class BubbleManager : MonoBehaviour
 
     public void UpdateBubbleHeight()
     {
+        //Debug.Log("update Bubble Height");
         int lineCount = messageText.textInfo.lineCount;
         backgroundImage.transform.localScale = new Vector3(1, lineCount * 0.25f, 1);
         float oldBubbleHeight = bubbleVerticalSize;
