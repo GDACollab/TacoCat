@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-using FMODUnity;
+//using FMODUnity;
 
 
 #if UNITY_EDITOR
@@ -138,7 +138,7 @@ public class GameManager : MonoBehaviour {
         // Start Menu Music
         if (currGame == currGame.MENU)
         {
-            audioManager.PlaySong(audioManager.menuMusicPath);
+            //audioManager.PlaySong(audioManager.menuMusicPath);
         }
     }
 
@@ -181,7 +181,7 @@ public class GameManager : MonoBehaviour {
         currLevel = 1;
         cutsceneIndex = 0;
         SceneManager.LoadScene(menuScene);
-        audioManager.PlaySong(audioManager.menuMusicPath);
+        //audioManager.PlaySong(audioManager.menuMusicPath);
     }
 
     // **** LOAD TACO MAKING SCENE ****
@@ -194,7 +194,7 @@ public class GameManager : MonoBehaviour {
         else{
             StartCoroutine(LoadingCoroutine(tacoMakingScene));
         }
-        audioManager.PlaySong(audioManager.tacoMusicPath);
+        //audioManager.PlaySong(audioManager.tacoMusicPath);
     }
 
     // **** LOAD DRIVING SCENES ****
@@ -216,14 +216,14 @@ public class GameManager : MonoBehaviour {
             currLevel = 3;
             StartCoroutine(LoadingCoroutine(driving3));
         }
-        audioManager.PlaySong(audioManager.drivingMusicPath);
+        //audioManager.PlaySong(audioManager.drivingMusicPath);
     }
 
     public void LoadCutscene()
     {
         currGame = currGame.CUTSCENE;
         SceneManager.LoadScene(cutscene);
-        audioManager.PlaySong(audioManager.storyMusicPath);
+        //audioManager.PlaySong(audioManager.storyMusicPath);
     }
 
     public void Quit()

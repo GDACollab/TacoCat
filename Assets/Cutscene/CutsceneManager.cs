@@ -181,7 +181,7 @@ public class CutsceneManager : MonoBehaviour
             //scroll all texts
             //increase all y values of instances by scroll
             //GameObject ABubble = Instantiate(alexBubble, new Vector3(5, startingPosition, 0), Quaternion.identity);
-            audioManager.Play(audioManager.sendTextSFX);
+            //audioManager.Play(audioManager.sendTextSFX);
             yield return new WaitForSeconds(messageDelayAlex);
 
         }
@@ -209,7 +209,7 @@ public class CutsceneManager : MonoBehaviour
 
             currentBubbles.Add(bubble);
 
-            audioManager.Play(audioManager.recieveTextSFX);
+            //audioManager.Play(audioManager.recieveTextSFX);
             Debug.Log("ReceiveTextSFX");
             yield return new WaitForSeconds(messageDelayJamie);
         }

@@ -665,7 +665,6 @@ GameObject:
   - component: {fileID: 1067633362}
   - component: {fileID: 7641457981194525658}
   - component: {fileID: 1067633374}
-  - component: {fileID: 4749080197011851732}
   m_Layer: 0
   m_Name: VelocityTruck
   m_TagString: Vehicle
@@ -861,39 +860,6 @@ MonoBehaviour:
   startJumpRot: 0
   endJumpRot: 0
   groundPointRotation: 0
---- !u!114 &4749080197011851732
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5231190167668380747}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollisionTag: 
-  EventReference:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  Event: 
-  PlayEvent: 0
-  StopEvent: 0
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  AllowNonRigidbodyDoppler: 0
-  Params:
-  - Name: RPM
-    Value: 0
-  OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 20
 --- !u!1 &6948660453636168244
 GameObject:
   m_ObjectHideFlags: 0

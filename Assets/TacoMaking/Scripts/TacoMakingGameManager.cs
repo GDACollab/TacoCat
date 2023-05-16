@@ -120,7 +120,7 @@ public class TacoMakingGameManager : MonoBehaviour
         
         Debug.Log("Submitted Taco! Customer Score " + score);
 
-        audioManager.Play("event:/SFX/Taco Making/Bell Ding");
+        //audioManager.Play("event:/SFX/Taco Making/Bell Ding");
 
         CreateNewSubmissionTaco();
 

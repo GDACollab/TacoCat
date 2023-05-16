@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
-using FMOD.Studio;
-using FMODUnity;
+//using FMOD.Studio;
+//using FMODUnity;
 
 //EVENTS W/ PARAMETERS
 //music events, isPaused
@@ -34,11 +34,13 @@ public class AudioManager : MonoBehaviour {
     public string ambiVolBusPath = "bus:/Ambience";
 
     //BUSES
+    /*
     public FMOD.Studio.Bus masBus;
     public FMOD.Studio.Bus musBus;
     public FMOD.Studio.Bus sfxBus;
     public FMOD.Studio.Bus diaBus;
     public FMOD.Studio.Bus ambiBus;
+    */
 
     /////////////////////////MUSIC//////////////////////////////
     [Header("FMOD Music")]
@@ -96,6 +98,7 @@ public class AudioManager : MonoBehaviour {
 
     void Awake()
     {
+        /*
         // Load the FMOD banks
         RuntimeManager.LoadBank("Master");
         RuntimeManager.LoadBank("SFX");
@@ -108,6 +111,7 @@ public class AudioManager : MonoBehaviour {
         sfxBus = FMODUnity.RuntimeManager.GetBus(sfxVolBusPath);
         diaBus = FMODUnity.RuntimeManager.GetBus(diaVolBusPath);
         ambiBus = FMODUnity.RuntimeManager.GetBus(ambiVolBusPath);
+        */
 
         /*menuMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + menuMusic);
 
@@ -117,6 +121,7 @@ public class AudioManager : MonoBehaviour {
 
     }
 
+    /*
     protected EventInstance currentPlaying;
 
 
@@ -185,4 +190,5 @@ public class AudioManager : MonoBehaviour {
         diaBus.setVolume(dialogueVolume);
         ambiBus.setVolume(ambianceVolume);
     }
+    */
 }

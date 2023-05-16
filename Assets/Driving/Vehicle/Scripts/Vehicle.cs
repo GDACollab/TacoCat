@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using FMODUnity;
-using FMOD.Studio;
+//using FMODUnity;
+//using FMOD.Studio;
 
 public enum DRIVE_STATE { NONE, GROUNDED, UPHILL_GROUNDED, IN_AIR, NITRO, PERFECT_LANDING, CRASH, END_DRIVE }
 
@@ -15,7 +15,7 @@ public class Vehicle : MonoBehaviour
     DrivingGameManager drivingGameManager;
     DrivingUIManager drivingUIManager;
 
-    FMODUnity.StudioEventEmitter emitter;
+    //FMODUnity.StudioEventEmitter emitter;
 
     public Rigidbody2D rb_vehicle;
 
@@ -105,7 +105,7 @@ public class Vehicle : MonoBehaviour
         StateMachine();
 
         rpm = rb_vehicle.velocity.x;
-        GetComponent<StudioEventEmitter>().SetParameter("RPM", rpm);
+        //GetComponent<StudioEventEmitter>().SetParameter("RPM", rpm);
         //Debug.Log(emitter.Params[0].Value);
     }
 
@@ -186,7 +186,7 @@ public class Vehicle : MonoBehaviour
 
             try
             {
-                audioManager.Play(audioManager.nitroBoostSFX); //NITRO BOOST SOUND EFFECT
+                //audioManager.Play(audioManager.nitroBoostSFX); //NITRO BOOST SOUND EFFECT
             }
             catch { Debug.LogWarning("nitroBoostSFX :: Could not find AudioManager", this.gameObject); }
 

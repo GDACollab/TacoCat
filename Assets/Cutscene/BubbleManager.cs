@@ -97,7 +97,7 @@ public class BubbleManager : MonoBehaviour
                     UpdateBubbleHeight();
                     yield return new WaitForSeconds(cutsceneManager.textSpeedAlex);
 
-                    cutsceneManager.audioManager.Play(cutsceneManager.audioManager.typingSFX);
+                    //cutsceneManager.audioManager.Play(cutsceneManager.audioManager.typingSFX);
                 }
                 messageText.text += " ";
             }

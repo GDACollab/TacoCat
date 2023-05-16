@@ -110,7 +110,7 @@ public class PlayerHand : MonoBehaviour
                 currHeldIngredient = new ingredientType();
                 state = handState.HOME;
                 //pop sound when placed
-                audioManager.Play(audioManager.ingriPlaceSFX);
+                //audioManager.Play(audioManager.ingriPlaceSFX);
             }
         }
 
@@ -152,7 +152,7 @@ public class PlayerHand : MonoBehaviour
 
             pickBin = bin;
             //woosh sound when starting to pick up ingredient
-            audioManager.Play(audioManager.pawSwipeSFX);
+            //audioManager.Play(audioManager.pawSwipeSFX);
         }
     }
 
