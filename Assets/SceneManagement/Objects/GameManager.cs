@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance = null;
     public static EventSystem eventSystemInstance = null;
 
-    // no need to edit countdownTimer or timeRemaining it will configure itselves
+    [Range(0.0f, 500.0f)]
     public float timeRemaining;
     public float totalTime;
     [Range(0.0f,1.0f)]
