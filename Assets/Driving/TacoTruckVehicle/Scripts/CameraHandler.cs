@@ -212,12 +212,24 @@ public class CameraHandler : MonoBehaviour
             float velocityPercent = Mathf.InverseLerp(velocityRange.x, velocityRange.y, vehicleRb.velocity.magnitude);
 
             //Set zPos based on car's Y position from the zero, and the camera's FOV (60 in this case) divided by 2 (so, 30)
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+            float zPos = Mathf.Min(zPosRange.x, -((vehicle.transform.position.y-GetCurrentZero()) / Mathf.Tan(30*Mathf.Deg2Rad)));
+            Debug.Log(GetCurrentZero());
+            
+=======
+>>>>>>> Stashed changes
             float testa = GetCurrentZero();
             float test = -((vehicle.transform.position.y - testa) / Mathf.Tan(30 * Mathf.Deg2Rad));
             Debug.Log("Actual Math: " + test);
             Debug.Log("Get Current Zero: " + testa);
             Debug.Log("Points! " + bezierPointsListTracker);
             float zPos = Mathf.Min(zPosRange.x, test);
+<<<<<<< Updated upstream
+=======
+>>>>>>> 43eb9800b1e7e071b0b8993609ee3d11e55c6dc8
+>>>>>>> Stashed changes
 
             // Set camera x to car x
             float xPos = vehicle.transform.position.x;
