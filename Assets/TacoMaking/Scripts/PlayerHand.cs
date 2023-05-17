@@ -92,7 +92,6 @@ public class PlayerHand : MonoBehaviour
             {
                 GameObject ingr = Instantiate(tacoGameManager.GetIngredientObject(currHeldIngredient), transform);
                 ingr.transform.parent = transform;
-                ingr.GetComponent<SpriteRenderer>().sortingOrder = transform.childCount + transform.GetComponentInChildren<SpriteRenderer>(false).sortingOrder;
                 state = handState.PLACE_INGR;
             }
 
