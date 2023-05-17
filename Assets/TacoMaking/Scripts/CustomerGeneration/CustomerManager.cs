@@ -57,14 +57,15 @@ public class CustomerManager : MonoBehaviour
         //If there is a current customer, then starts its transition out of frame
         if (currCustomer != null)
         {
-            //Delays the destruction of the customer so that they have time to move offscreen
-            currCustomer.MoveCustomer(positionList[0].position);
+            //Delays the destruction of the customer so that they have time to move offscreen      
             currCustomer.transitionOffset = 0;
             if (customerList[0].hasEndingDialogue)
             {
+                currCustomer.dialoguePause = dialogueDelay;
                 dialogueDelayTime = dialogueDelay;
             }
-            Destroy(currCustomer.gameObject, transitionTime);
+            currCustomer.MoveCustomer(positionList[0].position);
+            Destroy(currCustomer.gameObject, transitionTime + currCustomer.dialoguePause);
             customerList.RemoveAt(0);
             currCustomer = null;
         }
@@ -89,7 +90,6 @@ public class CustomerManager : MonoBehaviour
             {
                 //Adds a delay to subsequent customers being moved so that they don't all move at the same exact time              
                 customerList[i].transitionOffset = (i + 1) * transitionDelay;
-                Debug.Log((i + 1) * transitionDelay);
                 customerList[i].dialoguePause = dialogueDelayTime;
                 customerList[i].currPosition = i;
                 customerList[i].MoveCustomer(positionList[i + 1].position);
