@@ -62,14 +62,23 @@ public class BubbleManager : MonoBehaviour
     {
         //Debug.Log("update Bubble Height");
         int lineCount = messageText.textInfo.lineCount;
-        backgroundImage.transform.localScale = new Vector3(1, lineCount * 0.25f, 1);
+
         float oldBubbleHeight = bubbleVerticalSize;
         bubbleVerticalSize = lineCount * 0.25f * 4;
+        bubbleVerticalSize = Mathf.Clamp(bubbleVerticalSize, 0.25f, 1000);
+        backgroundImage.transform.localScale = new Vector3(1, Mathf.Max(0.25f, (bubbleVerticalSize/4) + 0.05f), 1);
+        bubbleVerticalSize += 0.05f;
 
-        if (bubbleVerticalSize != oldBubbleHeight)
+        if (bubbleVerticalSize != oldBubbleHeight && characterType == CutsceneManager.character.ALEX)
         {
             cutsceneManager.MoveBubblesUp(bubbleVerticalSize - oldBubbleHeight);
         }
+
+        if (characterType == CutsceneManager.character.JAMIE)
+        {
+            cutsceneManager.MoveBubblesUp(bubbleVerticalSize/2);
+        }
+
     }
 
     
@@ -100,6 +109,7 @@ public class BubbleManager : MonoBehaviour
                     //cutsceneManager.audioManager.Play(cutsceneManager.audioManager.typingSFX);
                 }
                 messageText.text += " ";
+                UpdateBubbleHeight();
             }
 
     }

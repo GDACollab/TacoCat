@@ -16,7 +16,10 @@ public class CutsceneManager : MonoBehaviour
     //public float positionX = 1.0f;
     //public float positionY = 1.0f;
 
-    
+    //2 QOL
+
+    // text too close to edges
+    // bubble size updating late
 
     //[Range(0.0f, 10.0f)]
     //public float scroll;
@@ -153,7 +156,7 @@ public class CutsceneManager : MonoBehaviour
 
     public void MoveBubblesUp(float amount)
     {
-        Debug.Log("moved bubbles up");
+        Debug.Log("moved bubbles up by: " + amount);
         foreach (GameObject existingBubble in currentBubbles)
         {
             existingBubble.transform.position += new Vector3(0, amount, 0);
@@ -199,13 +202,10 @@ public class CutsceneManager : MonoBehaviour
 
             //insert instance of jamiebubble text += l + "\n"
             GameObject bubble = Instantiate(bubblePrefab, jamieMessageParent);
-            //bubble.GetComponent<RectTransform>().pivot = new Vector2(0, 0);
             bubble.transform.position = jamieMessageParent.position;
             bubble.GetComponent<BubbleManager>().Init(character.JAMIE, l, this);
 
             yield return StartCoroutine(bubble.GetComponent<BubbleManager>().InstantTextFill(l));
-
-            yield return new WaitForSeconds(0.1f);
 
             currentBubbles.Add(bubble);
 
