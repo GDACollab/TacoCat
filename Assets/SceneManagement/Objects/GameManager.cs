@@ -109,14 +109,8 @@ public class GameManager : MonoBehaviour {
                 Debug.Log("GameManager: Setup Taco Making");
                 determinedSceneType = true;
                 tacoGameManager = GameObject.FindGameObjectWithTag("TacoGameManager").GetComponent<TacoMakingGameManager>();
+                tacoGameManager.difficulty = currLevel;
                 currGame = currGame.TACO_MAKING;
-            }
-            else if (GameObject.FindGameObjectWithTag("DrivingGameManager"))
-            {
-                Debug.Log("GameManager: Setup Driving");
-                determinedSceneType = true;
-                drivingGameManager = GameObject.FindGameObjectWithTag("DrivingGameManager").GetComponent<DrivingGameManager>();
-                currGame = currGame.DRIVING;
             }
             else if (GameObject.FindGameObjectWithTag("CutsceneManager"))
             {
@@ -124,6 +118,13 @@ public class GameManager : MonoBehaviour {
                 determinedSceneType = true;
                 cutsceneManager = GameObject.FindGameObjectWithTag("CutsceneManager").GetComponent<CutsceneManager>();
                 currGame = currGame.CUTSCENE;
+            }
+            else if (GameObject.FindGameObjectWithTag("DrivingGameManager"))
+            {
+                Debug.Log("GameManager: Setup Driving");
+                determinedSceneType = true;
+                drivingGameManager = GameObject.FindGameObjectWithTag("DrivingGameManager").GetComponent<DrivingGameManager>();
+                currGame = currGame.DRIVING;
             }
             else
             {
