@@ -3748,7 +3748,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attenuationObject: {fileID: 0}
 --- !u!222 &43533921327101662
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6149,11 +6148,13 @@ MonoBehaviour:
   comboCounter: 0
   totalCustomers: 10
   customersLeftToGenerate: 0
+  difficulty: 1
   submittedCustomers: 0
   lineSize: 3
   gameScore: 0
   maxGameScore: 0
   gasAmount: 0
+  minimumGasThreshold: 0.5
   nitroCharges: 0
   tacoPrefab: {fileID: 7059686471766786423, guid: 863fba71dcdc2fd4c9dbafcb4a47ce2a, type: 3}
   allIngredientPrefabs:
@@ -6228,7 +6229,7 @@ MonoBehaviour:
   customerPrefab: {fileID: 4784761311512434799, guid: 0944c8b0746db6448b0eeae4e32351bf, type: 3}
   currCustomer: {fileID: 0}
   transitionTime: 1.5
-  dialogueDelay: 3
+  dialogueDelay: 1.5
   transitionDelay: 0.25
   positionList:
   - {fileID: 7397252489446104402}
@@ -6238,6 +6239,7 @@ MonoBehaviour:
   - {fileID: 7397252489917132085}
   - {fileID: 7397252488249209637}
   customerList: []
+  difficulty: 1
 --- !u!114 &6885326606904917008
 MonoBehaviour:
   m_ObjectHideFlags: 0

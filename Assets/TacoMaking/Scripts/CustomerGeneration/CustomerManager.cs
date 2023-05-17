@@ -44,7 +44,7 @@ public class CustomerManager : MonoBehaviour
         customerScript.currPosition = -1;
         customerScript.difficulty = difficulty;
         //Temp for testing
-        customerScript.hasEndingDialogue = false;
+        customerScript.hasEndingDialogue = true;
         customerScript.hasIntroDialgue = false;
 
         customerList.Add(customerScript);
@@ -54,7 +54,7 @@ public class CustomerManager : MonoBehaviour
     }
 
     //Member used to remove the current customer
-    public void RemoveCurrentCustomer()
+    public void RemoveCurrentCustomer(scoreType tacoScore)
     {
         //If there is a current customer, then starts its transition out of frame
         if (currCustomer != null)
@@ -62,13 +62,16 @@ public class CustomerManager : MonoBehaviour
             //Delays the destruction of the customer so that they have time to move offscreen
             Vector3 endPosition = positionList[0].position;
             endPosition.y = Random.Range(-5.0f, 2.8f);
-            currCustomer.MoveCustomer(endPosition);
-            currCustomer.transitionOffset = 0;
+            
+            currCustomer.transitionOffset = 0;   
             if (customerList[0].hasEndingDialogue)
             {
+                currCustomer.dialoguePause = dialogueDelay;
                 dialogueDelayTime = dialogueDelay;
+                currCustomer.GetComponent<CustomerDialogue>().CreateDialogue(currCustomer, tacoScore);            
             }
-            Destroy(currCustomer.gameObject, transitionTime);
+            currCustomer.MoveCustomer(endPosition);
+            Destroy(currCustomer.gameObject, transitionTime + currCustomer.dialoguePause);
             customerList.RemoveAt(0);
             currCustomer = null;
         }
@@ -93,7 +96,6 @@ public class CustomerManager : MonoBehaviour
             {
                 //Adds a delay to subsequent customers being moved so that they don't all move at the same exact time              
                 customerList[i].transitionOffset = (i + 1) * transitionDelay;
-                Debug.Log((i + 1) * transitionDelay);
                 customerList[i].dialoguePause = dialogueDelayTime;
                 customerList[i].currPosition = i;
                 customerList[i].MoveCustomer(positionList[i + 1].position);

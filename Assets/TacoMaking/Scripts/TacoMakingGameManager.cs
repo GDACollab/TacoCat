@@ -124,7 +124,7 @@ public class TacoMakingGameManager : MonoBehaviour
 
         CreateNewSubmissionTaco();
 
-        customerManager.RemoveCurrentCustomer();
+        customerManager.RemoveCurrentCustomer(score);
 
         submittedCustomers++;
     }

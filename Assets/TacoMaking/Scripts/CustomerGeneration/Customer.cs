@@ -29,7 +29,8 @@ public class Customer: MonoBehaviour
     private Coroutine lastRoutine = null;
     [HideInInspector] public bool hasEndingDialogue;
     [HideInInspector] public bool hasIntroDialgue;
-    [HideInInspector] public float dialoguePause;
+    [HideInInspector] public float dialoguePause = 0;
+    public species customerSpecies;
 
     // List of possible colors to tint this customer's sprite once their taco is finished.
     // Elements correspond to the values in the scoreType enum in TacoMakingGameManager.cs .
@@ -66,8 +67,7 @@ public class Customer: MonoBehaviour
         Debug.Log("Created Customer Order");
 
         // Decide on customer species
-        species custSpecies;
-        custSpecies = (species)Random.Range(0,4); //Selects random species from the range of possible options
+        customerSpecies = (species)Random.Range(0,4); //Selects random species from the range of possible options
 
         // get menu from bench manager
         List<ingredientType> menu = tacoGameManager.benchManager.menu;
@@ -98,7 +98,7 @@ public class Customer: MonoBehaviour
         List<int> custPreference = new List<int> { 0, 1, 2, 3, 4 };
         // I would like to switch this with calling for the required value (ie getting fish.value)
         // but afaik we don't have that implemented, and I don't want to risk messing with it rn
-        switch (custSpecies)
+        switch (customerSpecies)
         {
             case species.Fish: //No fish, 2x sour cream
                 custPreference = new List<int> { 0, 1, 3, 4, 4 };
@@ -110,15 +110,15 @@ public class Customer: MonoBehaviour
                 break;
             case species.Sheep: //2x cabbage
                 custPreference = new List<int> { 0, 0, 1, 2, 3, 4 };
-                customerSpriteObject[3].SetActive(true);
+                customerSpriteObject[2].SetActive(true);
                 break;
             case species.Frog: // 1/2x fish, 2x jalapenos
                 custPreference = new List<int> { 0, 0, 1, 1, 2, 3, 3, 3, 3, 4, 4 };
-                customerSpriteObject[4].SetActive(true);
+                customerSpriteObject[3].SetActive(true);
                 break;
             case species.Capybara: // 1/2x Pico
                 custPreference = new List<int> { 0, 0, 1, 2, 2, 3, 3, 4, 4 };
-                customerSpriteObject[5].SetActive(true);
+                customerSpriteObject[4].SetActive(true);
                 break;
         }
         Debug.Log(custPreference);
