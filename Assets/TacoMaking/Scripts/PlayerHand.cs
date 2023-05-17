@@ -118,7 +118,9 @@ public class PlayerHand : MonoBehaviour
         {
             // target -> home
             // all other states are not true
-
+            if(transform.childCount>1){
+                Destroy(transform.GetChild(transform.childCount-1).gameObject);
+            }
             target = handHome.transform;
         }
     }

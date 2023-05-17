@@ -127,6 +127,7 @@ public class TacoMakingGameManager : MonoBehaviour
         customerManager.RemoveCurrentCustomer();
 
         submittedCustomers++;
+        uiManager.newOrderTaken = false;
     }
 
     // Parameter: score from completed Taco
