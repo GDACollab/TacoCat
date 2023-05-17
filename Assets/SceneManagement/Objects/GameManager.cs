@@ -110,6 +110,7 @@ public class GameManager : MonoBehaviour
         {
             if (GameObject.FindGameObjectWithTag("Main Menu"))
             {
+                timeRemaining = totalTime;
                 Debug.Log("GameManager: Setup Main Menu");
                 determinedSceneType = true;
                 currGame = currGame.MENU;
@@ -340,8 +341,7 @@ public class GameManager : MonoBehaviour
             clockHour = clockHour - 12;
         }
         int clockMin = (int)(totalClockTime) % 60;
-        Debug.Log("current hour is: "+ clockHour);
-        Debug.Log("current minute is: " + clockMin);
+        Debug.Log("current time is: " + clockHour + ":"+clockMin);
     }
 
 
