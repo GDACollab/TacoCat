@@ -60,7 +60,9 @@ public class CustomerManager : MonoBehaviour
         if (currCustomer != null)
         {
             //Delays the destruction of the customer so that they have time to move offscreen
-            currCustomer.MoveCustomer(positionList[0].position);
+            Vector3 endPosition = positionList[0].position;
+            endPosition.y = Random.Range(-5.0f, 2.8f);
+            currCustomer.MoveCustomer(endPosition);
             currCustomer.transitionOffset = 0;
             if (customerList[0].hasEndingDialogue)
             {
