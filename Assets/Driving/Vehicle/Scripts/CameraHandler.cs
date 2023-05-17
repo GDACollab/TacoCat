@@ -97,8 +97,8 @@ public class CameraHandler : MonoBehaviour
     // Used for determining if new bezier points should be added to the list
     Vector3 lastCurvePoint = new Vector3(-99999999, 99999999, 0); //Tracks lowest Point from the last curve to judge what points should get added
 
-    public List<Vector3> bezierPoints = new List<Vector3>(); //List of points used to determine where the 'zero' point should be
-    public int bezierPointsListTracker = 0; //Current positioning in the list of points
+    List<Vector3> bezierPoints = new List<Vector3>(); //List of points used to determine where the 'zero' point should be
+    int bezierPointsListTracker = 0; //Current positioning in the list of points
 
     //Called in the bezier generator, adds the P_1/P_2 point to the bezierPoints list
     //(To do so, whenever a P_1/2 point is made, run this function with that point before moving onto the next point)
@@ -215,7 +215,7 @@ public class CameraHandler : MonoBehaviour
             float velocityPercent = Mathf.InverseLerp(velocityRange.x, velocityRange.y, vehicleRb.velocity.magnitude);
 
             //Set zPos based on car's Y position from the zero, and the camera's FOV (60 in this case) divided by 2 (so, 30)
-            float testa = GetCurrentZero();
+            float testa = (GetCurrentZero() - cameraForgiveness);
             float test = -((vehicle.transform.position.y - testa) / Mathf.Tan(30 * Mathf.Deg2Rad));
             Debug.Log("Actual Math: " + test);
             Debug.Log("Get Current Zero: " + testa);
