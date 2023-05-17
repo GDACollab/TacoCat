@@ -19,11 +19,12 @@ public class GameManager : MonoBehaviour
     public static GameManager instance = null;
     public static EventSystem eventSystemInstance = null;
 
-    [Range(0.0f, 500.0f)]
+    // slider for remaining time and timer from 0 to 1
+    [Range(0.0f, 1000.0f)]
     public float timeRemaining;
     public float totalTime;
     [Range(0.0f,1.0f)]
-    public float countdownTimer;
+    public float countdownTimer = 0;
 
 
     [HideInInspector]
@@ -197,8 +198,10 @@ public class GameManager : MonoBehaviour
                 timeRemaining = 0;
             }
             countdownTimer = (1 - (timeRemaining / totalTime));
-            Debug.Log("countdown timer is:" + countdownTimer);
+            //Debug.Log("countdown timer is:" + countdownTimer);
         }
+        calculateTime();
+        
     }
 
     public void LoadMenu()
@@ -325,6 +328,20 @@ public class GameManager : MonoBehaviour
 
         SceneManager.UnloadSceneAsync(thisScene);
         isLoadingScene = false;
+    }
+
+    public void calculateTime()
+    {
+        // in total minutes
+        float totalClockTime = (totalTime-timeRemaining+(totalTime*2/3))*(720/totalTime);
+        int clockHour = (int)(totalClockTime)/60;
+        if (clockHour > 12)
+        {
+            clockHour = clockHour - 12;
+        }
+        int clockMin = (int)(totalClockTime) % 60;
+        Debug.Log("current hour is: "+ clockHour);
+        Debug.Log("current minute is: " + clockMin);
     }
 
 
