@@ -87,15 +87,15 @@ public class CameraHandler : MonoBehaviour
 
     //List of variables used to determine points
     // x/y values of current points
-    public float a_x_pos;
-    public float a_y_pos;
-    public float b_x_pos;
-    public float b_y_pos;
+    float a_x_pos;
+    float a_y_pos;
+    float b_x_pos;
+    float b_y_pos;
     // slope/constant values used in equation
-    public float slope;
-    public float constant;
+    float slope;
+    float constant;
     // Used for determining if new bezier points should be added to the list
-    float lastCurvePointY = 99999999; //Y of lowest Point from the last curve
+    Vector3 lastCurvePoint = new Vector3(-99999999, 99999999, 0); //Tracks lowest Point from the last curve to judge what points should get added
 
     public List<Vector3> bezierPoints = new List<Vector3>(); //List of points used to determine where the 'zero' point should be
     public int bezierPointsListTracker = 0; //Current positioning in the list of points
@@ -104,11 +104,11 @@ public class CameraHandler : MonoBehaviour
     //(To do so, whenever a P_1/2 point is made, run this function with that point before moving onto the next point)
     public void addToBezierPoints(Vector3 point)
     {
-        if (lastCurvePointY > point.y)
+        if (lastCurvePoint.y > point.y && lastCurvePoint.x != point.x) //y check to prevent unwanted height increases, x to prevent duplicates
         {
             bezierPoints.Add(point);
         }
-        lastCurvePointY = point.y;
+        lastCurvePoint = point;
     }
 
     //Determines the numbers used for making the equation
@@ -201,6 +201,9 @@ public class CameraHandler : MonoBehaviour
     // Additional value added (technically subtracted) to the zero point
     public float cameraForgiveness = 1.0f;
 
+    // Each value = 1/6 of the distance from the ceenter to the screen edge, + is to the left and - is to the right
+    public float cameraSixthOffset = 2;
+
     // Modified fixedUpdate() to work with the Zero point code
     void FixedUpdate()
     {
@@ -217,16 +220,20 @@ public class CameraHandler : MonoBehaviour
             Debug.Log("Actual Math: " + test);
             Debug.Log("Get Current Zero: " + testa);
             Debug.Log("Points! " + bezierPointsListTracker);
-            float zPos = Mathf.Min(zPosRange.x, test);
+            float zPos = Mathf.Max(zPosRange.y,Mathf.Min(zPosRange.x, test));
 
-            // Set camera x to car x
-            float xPos = vehicle.transform.position.x;
+            // Set camera x to car x, offset by cameraSixthOffset
+            float cameraShift = vehicle.transform.position.y - testa;
+            //camerashift gets divided by 4.5 and multiplied by 8 to match x:y ratio, then multiplied by cameraSixthOffset/6. below is that, but simplified
+            cameraShift = cameraShift * cameraSixthOffset * 8 / 27;
+            float xPos = Mathf.Min(xPosRange.y, Mathf.Max(xPosRange.x, (vehicle.transform.position.x + cameraShift)));
 
             // Set camera y to car y
-            float yPos = vehicle.transform.position.y;
+            float yPos = Mathf.Min(yPosRange.y, Mathf.Max(yPosRange.x, vehicle.transform.position.y));
 
             // Update the camera's position with the new x/y/z-position
-            transform.position = new Vector3(xPos, yPos, zPos);
+            currOffset = new Vector3(xPos, yPos, zPos); //currOffset stores the goal position (at least, here it does...)
+            transform.position = Vector3.Lerp(transform.position, currOffset, camSpeed * Time.deltaTime);
 
         }
     }
