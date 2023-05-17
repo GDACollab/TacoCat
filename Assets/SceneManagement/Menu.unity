@@ -245,7 +245,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attenuationObject: {fileID: 0}
 --- !u!1 &610623316
 GameObject:
   m_ObjectHideFlags: 0
@@ -890,6 +889,14 @@ PrefabInstance:
     - target: {fileID: 7004250954060202129, guid: b98e17472161422409ce954e519a82b5, type: 3}
       propertyPath: m_Name
       value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: totalTime
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: countdownTimer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
       propertyPath: driving1.m_SceneName
