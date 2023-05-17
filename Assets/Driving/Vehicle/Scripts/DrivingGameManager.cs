@@ -13,6 +13,8 @@ public class DrivingGameManager : MonoBehaviour
     public LightingManager lightingManager;
     public DrivingUIManager uiManager;
     public Vehicle vehicle;
+    public CameraHandler camHandler;
+
 
     [Space(10)]
     public bool endOfGame;
