@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 public enum ingredientType { NONE, FISH, SOUR_CREAM, PICO_DE_GALLO, CABBAGE, SLICED_JALAPENOS }
 public enum scoreType { NONE, PERFECT, GOOD, OKAY, FAILED } // possible scores a taco can get.
 
@@ -44,6 +45,8 @@ public class TacoMakingGameManager : MonoBehaviour
     public GameObject tacoPrefab;
     public List<GameObject> allIngredientPrefabs;
     public List<GameObject> allIngredientBinPrefabs;
+
+    public TMP_Text clockTime;
 
     public void Start()
     {

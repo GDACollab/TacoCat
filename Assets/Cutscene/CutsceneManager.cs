@@ -16,7 +16,7 @@ public class CutsceneManager : MonoBehaviour
     //public float positionX = 1.0f;
     //public float positionY = 1.0f;
 
-    
+
 
     //[Range(0.0f, 10.0f)]
     //public float scroll;
@@ -40,7 +40,7 @@ public class CutsceneManager : MonoBehaviour
 
     private TextList list;
 
-    
+
 
     [Range(0.0f, 0.5f)]
     public float messageDelayAlex;
@@ -53,8 +53,8 @@ public class CutsceneManager : MonoBehaviour
     [Range(0.0f, 0.5f)]
     public float textSpeedAlex;
 
-    
-    
+
+
 
     [Space]
 
@@ -83,7 +83,7 @@ public class CutsceneManager : MonoBehaviour
         audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
         // clear text in phoneText.text
         //phoneText.text = string.Empty;
-        
+
         startingPosition = 0;
 
         //testing
@@ -91,9 +91,8 @@ public class CutsceneManager : MonoBehaviour
         //Instantiate(jamieBubble, jamieBubble.transform.position, transform.rotation);
 
         StartCoroutine(begin());
-
     }
-    
+
     public IEnumerator begin()
     {
         switch (GameManager.instance.cutsceneIndex)
@@ -122,11 +121,11 @@ public class CutsceneManager : MonoBehaviour
 
 
                 //phoneText.text += "<align=right><b><color=#0000ffff>Alex</b></color> \n";
-                
+
 
 
                 yield return StartCoroutine(Typeline(a.texts));
-                
+
 
             }
             else
@@ -141,7 +140,7 @@ public class CutsceneManager : MonoBehaviour
 
                 //phoneText.text += "<align=left><b><color=#ff00ffff>Jamie</b></color> \n";
                 yield return StartCoroutine(PrintText(a.texts));
-               // phoneText.text = "";
+                // phoneText.text = "";
             }
 
         }
@@ -187,8 +186,8 @@ public class CutsceneManager : MonoBehaviour
         }
     }
 
-        //for printing the entire message at once
-        IEnumerator PrintText(List<string> characterText)
+    //for printing the entire message at once
+    IEnumerator PrintText(List<string> characterText)
     {
 
         //Add each element from phone_texts to phoneText
@@ -222,6 +221,6 @@ public class CutsceneManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

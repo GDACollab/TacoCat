@@ -20,11 +20,21 @@ public class GameManager : MonoBehaviour
     public static EventSystem eventSystemInstance = null;
 
     // slider for remaining time and timer from 0 to 1
-    [Range(0.0f, 1000.0f)]
+    [Range(-1000.0f, 1000.0f)]
     public float timeRemaining;
     public float totalTime;
     [Range(0.0f,1.0f)]
     public float countdownTimer = 0;
+    public int clockHour;
+    public int clockMinute;
+    public int updateClockEveryMinute;
+    public int startTimeIn24Hours;
+    public int endTimeIn24Hours;
+    public int hardCapHourIn24Hours;
+    public int hardCapMinute;
+    private bool hardCapAM;
+    public bool isAM = true;
+    public bool happyEnd = true;
 
 
     [HideInInspector]
@@ -83,6 +93,23 @@ public class GameManager : MonoBehaviour
 
         // set remaining time to total time initially
         timeRemaining = totalTime;
+        if (startTimeIn24Hours < 12)
+        {
+            isAM=true;
+        }
+        else
+        {
+            isAM=false;
+        }
+        if (hardCapHourIn24Hours > 12)
+        {
+            hardCapHourIn24Hours -= 12;
+            hardCapAM = false;
+        }
+        else
+        {
+            hardCapAM = true;
+        }
     }
 
     private void OnEnable()
@@ -190,19 +217,39 @@ public class GameManager : MonoBehaviour
         // is not cutscene or menu, countdown time
         if (currGame != currGame.CUTSCENE && currGame != currGame.MENU)
         {
-            if ((timeRemaining - Time.deltaTime) >= 0)
+            if ((timeRemaining - Time.deltaTime) < 0)
+            {
+                happyEnd = false;
+            }
+            /*
+            timeRemaining -= Time.deltaTime;
+            if((1 - (timeRemaining / totalTime)) <= 1 && (1 - (timeRemaining / totalTime)) >= 0)
+            {
+                countdownTimer = (1 - (timeRemaining / totalTime));
+            }*/
+            if (clockHour != hardCapHourIn24Hours || clockMinute != hardCapMinute || isAM != hardCapAM)
             {
                 timeRemaining -= Time.deltaTime;
+                if ((1 - (timeRemaining / totalTime)) <= 1 && (1 - (timeRemaining / totalTime)) >= 0)
+                {
+                    countdownTimer = (1 - (timeRemaining / totalTime));
+                }
+                else if ((1 - (timeRemaining / totalTime)) > 1)
+                {
+                    countdownTimer = 1;
+                }
+                else if ((1 - (timeRemaining / totalTime)) < 0)
+                {
+                    countdownTimer = 0;
+                }
+                calculateTime();
             }
-            else
-            {
-                timeRemaining = 0;
-            }
-            countdownTimer = (1 - (timeRemaining / totalTime));
-            //Debug.Log("countdown timer is at:" + countdownTimer);
         }
-        calculateTime();
-        
+
+
+        //clockHour == hardCapHour && clockMinute == hardCapMinute && isAM == hardCapAM
+
+
     }
 
     public void LoadMenu()
@@ -334,14 +381,17 @@ public class GameManager : MonoBehaviour
     public void calculateTime()
     {
         // in total minutes
-        float totalClockTime = (totalTime - timeRemaining + (totalTime * 2 / 3)) * (720 / totalTime);
-        int clockHour = (int)(totalClockTime) / 60;
-        if (clockHour > 12)
+        float totalClockTime = (totalTime - timeRemaining + (totalTime * 60 * startTimeIn24Hours / 60 / (endTimeIn24Hours - startTimeIn24Hours))) * (60 * (endTimeIn24Hours - startTimeIn24Hours) / totalTime);
+        clockHour = (int)(totalClockTime) / 60;
+        if (clockHour > 11)
+        {
+            isAM = false;
+        }
+        while (clockHour > 12)
         {
             clockHour = clockHour - 12;
         }
-        int clockMin = (int)(totalClockTime) % 60;
-        Debug.Log("current time is: " + clockHour + ":" + clockMin);
+        clockMinute = (int)(totalClockTime) % 60;
     }
 
 
