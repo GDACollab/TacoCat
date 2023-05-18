@@ -18,6 +18,8 @@ public class BubbleManager : MonoBehaviour
     public List<Sprite> backgroundOptions;
     public List<Sprite> tickOptions;
 
+    public float lineHeight;
+
     public string fontAssetName = "TacocatMorganFont-Regular_1 SDF";
 
     public float bubbleVerticalSize;
@@ -92,9 +94,9 @@ public class BubbleManager : MonoBehaviour
         int lineCount = messageText.textInfo.lineCount;
 
         float oldBubbleHeight = bubbleVerticalSize;
-        bubbleVerticalSize = lineCount * 0.25f * 4;
-        bubbleVerticalSize = Mathf.Clamp(bubbleVerticalSize, 0.25f, 1000);
-        backgroundImage.transform.localScale = new Vector3(1, Mathf.Max(0.25f, (bubbleVerticalSize/4) + 0.05f), 1);
+        bubbleVerticalSize = lineCount * lineHeight;
+        bubbleVerticalSize = Mathf.Clamp(bubbleVerticalSize, 0.38f, 1000);
+        backgroundImage.transform.localScale = new Vector3(1, Mathf.Max(0.38f, (bubbleVerticalSize/4) + 0.05f), 1);
         bubbleVerticalSize += 0.05f;
 
         if (bubbleVerticalSize != oldBubbleHeight && characterType == CutsceneManager.character.ALEX)
@@ -104,7 +106,7 @@ public class BubbleManager : MonoBehaviour
 
         if (characterType == CutsceneManager.character.JAMIE)
         {
-            cutsceneManager.MoveBubblesUp(bubbleVerticalSize/2);
+            cutsceneManager.MoveBubblesUp(bubbleVerticalSize/2.35f);
         }
 
     }
