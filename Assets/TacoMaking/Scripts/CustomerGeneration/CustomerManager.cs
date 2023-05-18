@@ -4,18 +4,26 @@ using UnityEngine;
 [System.Serializable]
 public class CustomerManager : MonoBehaviour
 {
+    
     [HideInInspector]
     public TacoMakingGameManager tacoGameManager;
+
+    [Header("Customer Vars")]
     public GameObject customerPrefab;
     public Customer currCustomer;
-
     public float transitionTime;       //How long it takes in seconds for the customer to transition between positions
-    [SerializeField] private float dialogueDelay;
     [SerializeField] private float transitionDelay; //The most that a customers transition time can be randomly offset (used to make customers move at diff speeds)
     public List<Transform> positionList = new List<Transform>(); //Used as the points the customer transitions to/from 
     public List<Customer> customerList = new List<Customer>();
-    [HideInInspector] public int difficulty = 1;
+
+    [Header("Dialogue Vars")]
+    [SerializeField] private float dialogueDelay;
     private float dialogueDelayTime = 0;
+    [SerializeField] private float dialogueChance;
+
+    [Header("Misc")]
+    [HideInInspector] public int difficulty = 1;
+    
 
 
     //before calling check if customers left to generate == 0
@@ -44,7 +52,11 @@ public class CustomerManager : MonoBehaviour
         customerScript.currPosition = -1;
         customerScript.difficulty = difficulty;
         //Temp for testing
-        customerScript.hasEndingDialogue = true;
+        if (Random.Range(0f, 1f) < dialogueChance)
+        { 
+            customerScript.hasEndingDialogue = true;
+        }
+        
         customerScript.hasIntroDialgue = false;
 
         customerList.Add(customerScript);

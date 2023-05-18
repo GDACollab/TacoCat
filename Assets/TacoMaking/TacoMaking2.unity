@@ -2990,6 +2990,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: driving1.m_SceneName
+      value: Farm_Level1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: driving2.m_SceneName
+      value: Water_Level2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: driving3.m_SceneName
+      value: City_Level3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: tacoMakingScene.m_SceneName
+      value: TacoMaking1
+      objectReference: {fileID: 0}
     - target: {fileID: 7004250954060202135, guid: b98e17472161422409ce954e519a82b5, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -6230,7 +6246,6 @@ MonoBehaviour:
   customerPrefab: {fileID: 4784761311512434799, guid: 0944c8b0746db6448b0eeae4e32351bf, type: 3}
   currCustomer: {fileID: 0}
   transitionTime: 1.5
-  dialogueDelay: 1
   transitionDelay: 0.25
   positionList:
   - {fileID: 7397252489446104402}
@@ -6240,6 +6255,8 @@ MonoBehaviour:
   - {fileID: 7397252489917132085}
   - {fileID: 7397252488249209637}
   customerList: []
+  dialogueDelay: 1
+  dialogueChance: 0.5
   difficulty: 1
 --- !u!114 &6885326606904917008
 MonoBehaviour:
