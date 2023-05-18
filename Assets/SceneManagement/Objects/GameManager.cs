@@ -110,10 +110,10 @@ public class GameManager : MonoBehaviour
         {
             if (GameObject.FindGameObjectWithTag("Main Menu"))
             {
-                timeRemaining = totalTime;
                 Debug.Log("GameManager: Setup Main Menu");
                 determinedSceneType = true;
                 currGame = currGame.MENU;
+                timeRemaining = totalTime;
             }
             else if (GameObject.FindGameObjectWithTag("TacoGameManager"))
             {
@@ -199,7 +199,7 @@ public class GameManager : MonoBehaviour
                 timeRemaining = 0;
             }
             countdownTimer = (1 - (timeRemaining / totalTime));
-            //Debug.Log("countdown timer is:" + countdownTimer);
+            //Debug.Log("countdown timer is at:" + countdownTimer);
         }
         calculateTime();
         
@@ -334,14 +334,14 @@ public class GameManager : MonoBehaviour
     public void calculateTime()
     {
         // in total minutes
-        float totalClockTime = (totalTime-timeRemaining+(totalTime*2/3))*(720/totalTime);
-        int clockHour = (int)(totalClockTime)/60;
+        float totalClockTime = (totalTime - timeRemaining + (totalTime * 2 / 3)) * (720 / totalTime);
+        int clockHour = (int)(totalClockTime) / 60;
         if (clockHour > 12)
         {
             clockHour = clockHour - 12;
         }
         int clockMin = (int)(totalClockTime) % 60;
-        Debug.Log("current time is: " + clockHour + ":"+clockMin);
+        Debug.Log("current time is: " + clockHour + ":" + clockMin);
     }
 
 
