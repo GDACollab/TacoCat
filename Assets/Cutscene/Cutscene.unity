@@ -394,7 +394,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attenuationObject: {fileID: 0}
 --- !u!1 &616322081
 GameObject:
   m_ObjectHideFlags: 0
@@ -587,7 +586,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 14.25, y: -67.85}
+  m_AnchoredPosition: {x: 14.25, y: -67.850006}
   m_SizeDelta: {x: -321.64, y: -173.72}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1058757335
@@ -660,10 +659,6 @@ MonoBehaviour:
   endOfCutscene: 0
   audioManager: {fileID: 0}
   startingPosition: 0
-  positionX: 1
-  positionY: 1
-  scroll: 1.1
-  characterLimit: 25
   CutsceneOneDialogue:
   - person: 0
     texts:
@@ -721,7 +716,7 @@ MonoBehaviour:
     - Since when do you have a car???
   - person: 0
     texts:
-    - "well, it\u2019s not rlly a car\u2026"
+    - "well, it\u2019s not rlly a car..."
   - person: 1
     texts:
     - "My flight leaves tonight. I can\u2019t miss it. If you get to CATsisco before
@@ -928,7 +923,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -7.5}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1403703411
@@ -953,8 +948,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: SKIP!!!!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: ee6c058c3bb67cb49ba76ec0e81f1c92, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: ee6c058c3bb67cb49ba76ec0e81f1c92, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 46789a13ee7ee654dbe0d71b5c0e6d27, type: 2}
+  m_sharedMaterial: {fileID: 5649813136417982491, guid: 46789a13ee7ee654dbe0d71b5c0e6d27, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -978,8 +973,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 48
-  m_fontSizeBase: 48
+  m_fontSize: 72
+  m_fontSizeBase: 72
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1183,7 +1178,7 @@ PrefabInstance:
     - target: {fileID: 4909303822951794284, guid: be635faacab3f7744b13c97549120a30, type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: ee6c058c3bb67cb49ba76ec0e81f1c92, type: 2}
+      objectReference: {fileID: 11400000, guid: 46789a13ee7ee654dbe0d71b5c0e6d27, type: 2}
     - target: {fileID: 4909303822951794284, guid: be635faacab3f7744b13c97549120a30, type: 3}
       propertyPath: m_fontColor.b
       value: 0
@@ -1226,6 +1221,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4909303822951794284, guid: be635faacab3f7744b13c97549120a30, type: 3}
       propertyPath: m_HorizontalAlignment
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4909303822951794284, guid: be635faacab3f7744b13c97549120a30, type: 3}
+      propertyPath: m_hasFontAssetChanged
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4909303822951794285, guid: be635faacab3f7744b13c97549120a30, type: 3}
