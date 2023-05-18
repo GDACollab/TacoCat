@@ -891,8 +891,20 @@ PrefabInstance:
       value: GameManager
       objectReference: {fileID: 0}
     - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: isAM
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
       propertyPath: totalTime
-      value: 600
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: hardCapHour
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: hardCapMinute
+      value: 37
       objectReference: {fileID: 0}
     - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
       propertyPath: timeRemaining
@@ -903,8 +915,28 @@ PrefabInstance:
       value: 0.455
       objectReference: {fileID: 0}
     - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: endTimeIn24Hours
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: endTimeIn24hours
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
       propertyPath: endTimein24hours
       value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: updateEveryMinute
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: startTimeIn24Hours
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: startTimeIn24hours
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
       propertyPath: startTimein24hours
@@ -921,6 +953,14 @@ PrefabInstance:
     - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
       propertyPath: driving3.m_SceneName
       value: City_Level3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: hardCapHourIn24Hours
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: updateClockEveryMinute
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
       propertyPath: tacoMakingScene.m_SceneName
