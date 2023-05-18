@@ -143,16 +143,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7395e70d68010048b638753c6702709, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  capybaraBarks:
+  capybaraBarksNeutral:
   - Nice, sunny day, glad I came out
-  frogBarks:
-  - Could use some flies, ribbit
-  ravenBarks:
+  frogBarksNeutral:
+  - Could use some flies
+  ravenBarksNeutral:
   - Been following your truck for a bit, Caw!
-  sheepBarks:
+  sheepBarksNeutral:
   - "My soul\u2019s been craving this"
-  fishBarks:
+  fishBarksNeutral:
   - "There isn\u2019t fish in this, right?"
+  capybaraBarksGood:
+  - The taco is respectable
+  frogBarksGood:
+  - So Yummy, almost as good as flies
+  ravenBarksGood:
+  - Mmmm tasty thanks
+  sheepBarksGood:
+  - My soul is satisfied
+  fishBarksGood:
+  - Thanks for listening and for the taco
+  capybaraBarksBad:
+  - This taco is not Capyproved
+  frogBarksBad:
+  - Yuck! Should have got flies
+  ravenBarksBad:
+  - Caw Ewww Caw
+  sheepBarksBad:
+  - This taco has ruined me
+  fishBarksBad:
+  - I said NO FISH!!!
   dialogueBox: {fileID: 1076088723787729604}
   textMesh: {fileID: 940399836938378637}
 --- !u!1 &5897813708622392495
