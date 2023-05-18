@@ -66,12 +66,14 @@ public class CustomerManager : MonoBehaviour
             currCustomer.transitionOffset = 0;   
             if (customerList[0].hasEndingDialogue)
             {
-                currCustomer.dialoguePause = dialogueDelay;
-                dialogueDelayTime = dialogueDelay;
-                currCustomer.GetComponent<CustomerDialogue>().CreateDialogue(currCustomer, tacoScore);            
+                //currCustomer.dialoguePause = dialogueDelay;
+                //dialogueDelayTime = dialogueDelay;
+                currCustomer.GetComponent<CustomerDialogue>().CreateDialogue(currCustomer, tacoScore);
+                currCustomer.transitionTime = currCustomer.transitionTime * 2;
             }
             currCustomer.MoveCustomer(endPosition);
-            Destroy(currCustomer.gameObject, transitionTime + currCustomer.dialoguePause);
+            //Destroy(currCustomer.gameObject, transitionTime + currCustomer.dialoguePause);
+            Destroy(currCustomer.gameObject, currCustomer.transitionTime);
             customerList.RemoveAt(0);
             currCustomer = null;
         }
