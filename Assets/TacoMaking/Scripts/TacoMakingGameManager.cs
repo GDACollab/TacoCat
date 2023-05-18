@@ -73,7 +73,7 @@ public class TacoMakingGameManager : MonoBehaviour
 
         // check for end
         // if (submittedCustomers == totalCustomers)
-        if (customersLeftToGenerate <= 0)
+        if (gasAmount >= minimumGasThreshold)
         {
             uiManager.endText.SetActive(true);
             endOfGame = true;
