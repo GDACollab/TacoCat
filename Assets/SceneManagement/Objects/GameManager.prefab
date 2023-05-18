@@ -54,21 +54,22 @@ MonoBehaviour:
     m_SceneName: 
   cutsceneIndex: 0
   isLoadingScene: 0
+  activateScene: 1
   menuScene:
     m_SceneName: Menu
   loadingScene:
     m_SceneName: LoadingScreen
   driving1:
-    m_SceneName: Level1
+    m_SceneName: Farm_Level1
   driving2:
-    m_SceneName: Level2
+    m_SceneName: Water_Level2
   driving3:
-    m_SceneName: Level3
+    m_SceneName: City_Level3
   tacoMakingScene:
-    m_SceneName: TacoMaking
+    m_SceneName: TacoMaking1
   cutscene:
     m_SceneName: Cutscene
-  nitroCharges: 0
+  nitroCharges: 3
   gasAmount: 0
   loadProgress: 0
 --- !u!1001 &389845888435534682
@@ -153,7 +154,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3004636162711251326, guid: e1b009394b5c2f24bb844b6948eaabb8, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 1
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3004636162711251326, guid: e1b009394b5c2f24bb844b6948eaabb8, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target

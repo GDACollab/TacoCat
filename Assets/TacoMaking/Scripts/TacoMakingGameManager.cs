@@ -12,6 +12,7 @@ public class TacoMakingGameManager : MonoBehaviour
     public AudioManager audioManager;
     public TacoUIManager uiManager;
     public IngredientBenchManager benchManager;
+    public GameObject background;
 
     public bool endOfGame;
 
@@ -47,6 +48,7 @@ public class TacoMakingGameManager : MonoBehaviour
 
     public void Start()
     {
+        difficulty = Mathf.Min(difficulty, 3);
         customerCreationTimer = customerManager.transitionTime;
         customerManager.difficulty = difficulty;
 
@@ -54,6 +56,11 @@ public class TacoMakingGameManager : MonoBehaviour
         audioManager = gameManager.audioManager;
         benchManager = GetComponentInChildren<IngredientBenchManager>();
         uiManager = GetComponentInChildren<TacoUIManager>();
+        
+        for(int i = 0; i < background.transform.childCount; i++){
+            background.transform.GetChild(i).gameObject.SetActive(false);
+        }
+        background.transform.GetChild(difficulty-1).gameObject.SetActive(true);
         
         CreateNewSubmissionTaco();
 
@@ -66,7 +73,7 @@ public class TacoMakingGameManager : MonoBehaviour
 
         // check for end
         // if (submittedCustomers == totalCustomers)
-        if (customersLeftToGenerate <= 0)
+        if (gasAmount >= minimumGasThreshold)
         {
             uiManager.endText.SetActive(true);
             endOfGame = true;
@@ -127,6 +134,7 @@ public class TacoMakingGameManager : MonoBehaviour
         customerManager.RemoveCurrentCustomer();
 
         submittedCustomers++;
+        uiManager.newOrderTaken = false;
     }
 
     // Parameter: score from completed Taco

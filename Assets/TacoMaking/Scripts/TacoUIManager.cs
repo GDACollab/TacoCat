@@ -154,7 +154,7 @@ public class TacoUIManager : MonoBehaviour
         ClearDisplayOrder();
 
         // Calculate the starting y position
-        float startY = ingredientPointParent.position.y - ((order.Count - 1) * ingredientSpacing) / 2;
+        float startY = ingredientPointParent.position.y; // - ((order.Count - 1) * ingredientSpacing) / 2;
 
         // Spawn each object at the appropriate position
         for (int i = 0; i < order.Count; i++)

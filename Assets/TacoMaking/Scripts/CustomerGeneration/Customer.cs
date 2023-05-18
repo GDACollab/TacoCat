@@ -67,7 +67,7 @@ public class Customer: MonoBehaviour
 
         // Decide on customer species
         species custSpecies;
-        custSpecies = (species)Random.Range(0,4); //Selects random species from the range of possible options
+        custSpecies = (species)Random.Range(0,5); //Selects random species from the range of possible options
 
         // get menu from bench manager
         List<ingredientType> menu = tacoGameManager.benchManager.menu;
@@ -110,15 +110,15 @@ public class Customer: MonoBehaviour
                 break;
             case species.Sheep: //2x cabbage
                 custPreference = new List<int> { 0, 0, 1, 2, 3, 4 };
-                customerSpriteObject[3].SetActive(true);
+                customerSpriteObject[2].SetActive(true);
                 break;
             case species.Frog: // 1/2x fish, 2x jalapenos
                 custPreference = new List<int> { 0, 0, 1, 1, 2, 3, 3, 3, 3, 4, 4 };
-                customerSpriteObject[4].SetActive(true);
+                customerSpriteObject[3].SetActive(true);
                 break;
             case species.Capybara: // 1/2x Pico
                 custPreference = new List<int> { 0, 0, 1, 2, 2, 3, 3, 4, 4 };
-                customerSpriteObject[5].SetActive(true);
+                customerSpriteObject[4].SetActive(true);
                 break;
         }
         Debug.Log(custPreference);
@@ -142,7 +142,7 @@ public class Customer: MonoBehaviour
 
     public SpeciesType RandomizeSpecies()    //Generates a Random Species
     {
-        return (SpeciesType)Random.Range(0,4);
+        return (SpeciesType)Random.Range(0,5);
     }
 
     // << SPAWN ORDER UI BOX >>
