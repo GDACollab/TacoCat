@@ -96,8 +96,8 @@ public class BubbleManager : MonoBehaviour
         float oldBubbleHeight = bubbleVerticalSize;
         bubbleVerticalSize = lineCount * lineHeight;
         bubbleVerticalSize = Mathf.Clamp(bubbleVerticalSize, 0.38f, 1000);
-        backgroundImage.transform.localScale = new Vector3(1, Mathf.Max(0.38f, (bubbleVerticalSize/4) + 0.05f), 1);
-        bubbleVerticalSize += 0.05f;
+        backgroundImage.transform.localScale = new Vector3(1, Mathf.Max(0.38f, (bubbleVerticalSize) + 0.05f), 1);
+        bubbleVerticalSize += lineHeight;
 
         if (bubbleVerticalSize != oldBubbleHeight && characterType == CutsceneManager.character.ALEX)
         {
