@@ -21,6 +21,7 @@ public class DrivingGameManager : MonoBehaviour
     public float totalDistance;
     public float vehicleDistance;
     public float percentageTraveled;
+    Vector2 newVehicleStartPosition;
 
     [Header("Stuck")]
     public int stuckMaxVelocity;
@@ -38,6 +39,7 @@ public class DrivingGameManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        newVehicleStartPosition = vehicle.transform.position;
 
         stageManager = GetComponent<StageManager>();
         vehicle.rb_vehicle.constraints = RigidbodyConstraints2D.FreezeAll;
@@ -93,7 +95,8 @@ public class DrivingGameManager : MonoBehaviour
         }
 
         // << UPDATE DISTANCE TRACKER >>
-        vehicleDistance = Vector2.Distance(stageManager.main_begPos, vehicle.transform.position);
+        
+        vehicleDistance = Vector2.Distance(newVehicleStartPosition, vehicle.transform.position);              //(stageManager.main_begPos, vehicle.transform.position);
         totalDistance = stageManager.mainGenerationLength;
         percentageTraveled = vehicleDistance / totalDistance;
         if (percentageTraveled <= 0) { percentageTraveled = 0; }
