@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using TMPro;
 
 [RequireComponent(typeof(LineRenderer))]
 [RequireComponent(typeof(StageManager))]
@@ -81,6 +82,8 @@ public class EnvironmentGenerator : MonoBehaviour
     public float signScale = 40;
     [Tooltip("Number of signs to spawn")]
     public int numSigns = 4;
+
+    public string fontAssetName = "TacocatMorganFont-Regular_1 SDF";
 
     private void Awake()
     {
@@ -223,7 +226,21 @@ public class EnvironmentGenerator : MonoBehaviour
         newSignObject.transform.localScale = newSignObject.transform.localScale * signScale;
 
         TMPro.TextMeshProUGUI textBox = newSignObject.GetComponentInChildren<TMPro.TextMeshProUGUI>();
+
+        TMP_FontAsset fontAsset = FindFontAsset(fontAssetName);
+
+        if (fontAsset != null)
+        {
+            textBox.font = fontAsset;
+        }
+        else
+        {
+            Debug.LogError("Font asset not found: " + fontAssetName);
+        }
+
         textBox.text = System.Math.Floor((100.0f / numSigns) * signNum) + "%";
+
+        // textBox.text.fontSize = 15;
 
         allSpawnedObjects.Add(newSignObject);
         return newSignObject;
@@ -268,6 +285,21 @@ public class EnvironmentGenerator : MonoBehaviour
         }
 
         return newTreeObject;
+    }
+
+    private TMP_FontAsset FindFontAsset(string fontName)
+    {
+        TMP_FontAsset[] fonts = Resources.FindObjectsOfTypeAll<TMP_FontAsset>();
+
+        foreach (TMP_FontAsset font in fonts)
+        {
+            if (font.name == fontName)
+            {
+                return font;
+            }
+        }
+
+        return null;
     }
 
     #region HELPER FUNCTIONS =================================================================
