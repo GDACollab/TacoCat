@@ -33,7 +33,6 @@ public class TacoMakingGameManager : MonoBehaviour
     [HideInInspector]
     public int submittedCustomers;
     public int lineSize;
-    private float customerCreationTimer; //Used to space out the creation of customers
 
     [Header("Score")]
     public float gameScore = 0; // max score is 3 * numOfCustomers served
@@ -52,7 +51,6 @@ public class TacoMakingGameManager : MonoBehaviour
     public void Start()
     {
         difficulty = Mathf.Min(difficulty, 3);
-        customerCreationTimer = customerManager.transitionTime;
         customerManager.difficulty = difficulty;
 
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
@@ -96,48 +94,47 @@ public class TacoMakingGameManager : MonoBehaviour
 
     // continue through remaining customers
     public void CustomerRotation()
-    {
-        if (customerCreationTimer > customerManager.transitionTime / 3)
+    {   
+        //Calls to create a new customer as long as there are more customers to generate up to max number of customers in line at once
+        if (customersLeftToGenerate > 0 && customerManager.customerList.Count < lineSize + 1)
         {
-            //Calls to create a new customer as long as there are more customers to generate up to max number of customers in line at once
-            if (customersLeftToGenerate > 0 && customerManager.customerList.Count < lineSize + 1)
-            {
-                customerCreationTimer = 0;
-                customersLeftToGenerate--;
-                //The ID passed in for each customer starts at 1 and counts up to totalCustomers
-                Customer customer = customerManager.CreateNewCustomer(totalCustomers - customersLeftToGenerate).GetComponent<Customer>();
+            customersLeftToGenerate--;
+            //The ID passed in for each customer starts at 1 and counts up to totalCustomers
+            Customer customer = customerManager.CreateNewCustomer(totalCustomers - customersLeftToGenerate).GetComponent<Customer>();
 
-            }
-
-            if (customersLeftToGenerate < 3 && gasAmount < minimumGasThreshold) 
-            {
-                customersLeftToGenerate += 3;
-            }
-
-            if (customersLeftToGenerate < 3 && gasAmount < minimumGasThreshold) 
-            {
-                customersLeftToGenerate += 3;
-            }
         }
-        customerCreationTimer += Time.deltaTime;
+
+        if (customersLeftToGenerate < 3 && gasAmount < minimumGasThreshold) 
+        {
+            customersLeftToGenerate += 3;
+        }
+
+        if (customersLeftToGenerate < 3 && gasAmount < minimumGasThreshold) 
+        {
+            customersLeftToGenerate += 3;
+        }
     }
 
     // submit taco to customer to be graded
     public void SubmitTaco()
     {
-        scoreType score = customerManager.currCustomer.ScoreTaco(submissionTaco);
-        NewTacoScore(score);
+        //Can't submit taco until customer is finished moving
+        if (customerManager.currCustomer.moveRoutine == null)
+        {
+            scoreType score = customerManager.currCustomer.ScoreTaco(submissionTaco);
+            NewTacoScore(score);
         
-        Debug.Log("Submitted Taco! Customer Score " + score);
+            Debug.Log("Submitted Taco! Customer Score " + score);
 
-        //audioManager.Play("event:/SFX/Taco Making/Bell Ding");
+            //audioManager.Play("event:/SFX/Taco Making/Bell Ding");
 
-        CreateNewSubmissionTaco();
+            CreateNewSubmissionTaco();
 
-        customerManager.RemoveCurrentCustomer();
+            customerManager.RemoveCurrentCustomer(score);
 
-        submittedCustomers++;
-        uiManager.newOrderTaken = false;
+            submittedCustomers++;
+            uiManager.newOrderTaken = false;
+        }
     }
 
     // Parameter: score from completed Taco
