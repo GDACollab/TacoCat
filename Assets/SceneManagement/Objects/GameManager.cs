@@ -6,18 +6,16 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 //using FMODUnity;
 
-
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
 public enum currGame { NONE, MENU, CUTSCENE, TACO_MAKING, DRIVING }
 
-public class GameManager : MonoBehaviour {
-
+public class GameManager : MonoBehaviour
+{
     public static GameManager instance = null;
     public static EventSystem eventSystemInstance = null;
-
 
     [HideInInspector]
     public AudioManager audioManager;
@@ -29,7 +27,41 @@ public class GameManager : MonoBehaviour {
     DrivingGameManager drivingGameManager;
     CutsceneManager cutsceneManager;
 
-    // track game state
+
+    [Header(" === INIT GAME TIMER === ")]
+    [Tooltip("Total duration of game in seconds")]
+    public float totalGameTime_seconds = 300;
+    [Tooltip("when should the clock start in 24 hours")]
+    public int startTime_24hr = 8;
+    [Tooltip("when should the day end in 24 hours")]
+    public int endTime_24hr = 20;
+    [Tooltip("updates the visible clock every X in-game minutes")]
+    public int updateClockEvery_Minutes = 30;
+
+    [Space(10), Tooltip("what hour should the clock stop updating in 24 hours")]
+    public int hardCapHour = 23;
+    [Tooltip("around what minute should the clock updating")]
+    public int hardCapMinute = 59;
+
+    [Header(" === ACTIVE GAME TIMER === ")]
+    [Range(0.0f, 1000.0f), Tooltip("Time remaining in seconds")]
+    public float timeRemaining;
+    [Range(0.0f,1.0f), Tooltip("Internal timer that goes from 0 to 1")]
+    public float countdownTimer = 0;
+    [Tooltip("current hour")]
+    public int curClockHour;
+    [Tooltip("current minute")]
+    public int curClockMinute;
+
+    private bool hardCapAM;
+    [HideInInspector]
+    public bool isAM = true;
+    [HideInInspector]
+    public bool happyEnd = true;
+
+
+
+    [Header(" === SCENE MANAGEMENT === ")]
     public currGame currGame = currGame.NONE;
     public int currLevel = 1;
     public SceneObject currScene;
@@ -46,7 +78,6 @@ public class GameManager : MonoBehaviour {
     public SceneObject driving1;
     public SceneObject driving2;
     public SceneObject driving3;
-
 
     [Space(10)]
     public SceneObject tacoMakingScene;
@@ -73,6 +104,8 @@ public class GameManager : MonoBehaviour {
         audioManager = GetComponentInChildren<AudioManager>();
         pauseManager = GetComponentInChildren<PauseManager>();
 
+        // << START GAME TIMER >>
+        GameTimerStart();
     }
 
     private void OnEnable()
@@ -103,6 +136,7 @@ public class GameManager : MonoBehaviour {
                 Debug.Log("GameManager: Setup Main Menu");
                 determinedSceneType = true;
                 currGame = currGame.MENU;
+                timeRemaining = totalGameTime_seconds;
             }
             else if (GameObject.FindGameObjectWithTag("TacoGameManager"))
             {
@@ -144,7 +178,8 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public void Update() {
+    public void Update()
+    {
 
         // << TACO GAME MANAGER >>
         if (currGame == currGame.TACO_MAKING && tacoGameManager != null)
@@ -177,9 +212,14 @@ public class GameManager : MonoBehaviour {
                 LoadTacoMakingScene();
             }
         }
+
+
+        // << UPDATE GAME TIMER >>
+        GameTimerUpdate();
     }
 
-    public void LoadMenu() {
+    public void LoadMenu()
+    {
         currGame = currGame.MENU;
         currLevel = 1;
         cutsceneIndex = 0;
@@ -188,20 +228,24 @@ public class GameManager : MonoBehaviour {
     }
 
     // **** LOAD TACO MAKING SCENE ****
-    public void LoadTacoMakingScene(bool async = false) {
+    public void LoadTacoMakingScene(bool async = false)
+    {
 
         currGame = currGame.TACO_MAKING;
-        if(async){
+        if (async)
+        {
             StartCoroutine(ConcurrentLoadingCoroutine(tacoMakingScene));
         }
-        else{
+        else
+        {
             StartCoroutine(LoadingCoroutine(tacoMakingScene));
         }
         //audioManager.PlaySong(audioManager.tacoMusicPath);
     }
 
     // **** LOAD DRIVING SCENES ****
-    public void LoadDrivingScene(int levelNum) {
+    public void LoadDrivingScene(int levelNum)
+    {
         currGame = currGame.DRIVING;
 
         if (levelNum == 1)
@@ -219,6 +263,7 @@ public class GameManager : MonoBehaviour {
             currLevel = 3;
             StartCoroutine(LoadingCoroutine(driving3));
         }
+
         //audioManager.PlaySong(audioManager.drivingMusicPath);
     }
 
@@ -239,7 +284,8 @@ public class GameManager : MonoBehaviour {
     [HideInInspector]
     public float loadProgress;
 
-    IEnumerator LoadingCoroutine(SceneObject scene) {
+    IEnumerator LoadingCoroutine(SceneObject scene)
+    {
         isLoadingScene = true;
         yield return null;
 
@@ -254,10 +300,12 @@ public class GameManager : MonoBehaviour {
         Debug.Log("Loading " + currScene + ":" + newScene.progress);
 
         //When the load is still in progress, output the Text and progress bar
-        while (!newScene.isDone) {
+        while (!newScene.isDone)
+        {
             loadProgress = newScene.progress;
 
-            if (newScene.progress >= 0.9f) {
+            if (newScene.progress >= 0.9f)
+            {
                 newScene.allowSceneActivation = true;
             }
             yield return new WaitForEndOfFrame();
@@ -266,8 +314,9 @@ public class GameManager : MonoBehaviour {
         SceneManager.UnloadSceneAsync(loadingScene);
         isLoadingScene = false;
     }
-    
-    IEnumerator ConcurrentLoadingCoroutine(SceneObject scene) {
+
+    IEnumerator ConcurrentLoadingCoroutine(SceneObject scene)
+    {
         isLoadingScene = true;
         yield return null;
 
@@ -281,10 +330,12 @@ public class GameManager : MonoBehaviour {
         Debug.Log("Loading " + currScene + ":" + newScene.progress);
 
         //When the load is still in progress, output the Text and progress bar
-        while (!newScene.isDone) {
+        while (!newScene.isDone)
+        {
             loadProgress = newScene.progress;
 
-            if (newScene.progress >= 0.9f) {
+            if (newScene.progress >= 0.9f)
+            {
                 newScene.allowSceneActivation = activateScene;
             }
             yield return new WaitForEndOfFrame();
@@ -294,9 +345,75 @@ public class GameManager : MonoBehaviour {
         isLoadingScene = false;
     }
 
+    public void CalculateTime()
+    {
+        // in total minutes
+        float totalClockTime = (totalGameTime_seconds - timeRemaining + (totalGameTime_seconds * 60 * startTime_24hr / 60 / (endTime_24hr - startTime_24hr))) * (60 * (endTime_24hr - startTime_24hr) / totalGameTime_seconds);
+        curClockHour = (int)(totalClockTime) / 60;
+        if (curClockHour > 11)
+        {
+            isAM = false;
+        }
+        while (curClockHour > 12)
+        {
+            curClockHour = curClockHour - 12;
+        }
+        curClockMinute = (int)(totalClockTime) % 60;
+    }
 
+    public void GameTimerStart()
+    {
+        timeRemaining = totalGameTime_seconds;
+        if (startTime_24hr < 12)
+        {
+            isAM = true;
+        }
+        else
+        {
+            isAM = false;
+        }
+        if (hardCapHour > 12)
+        {
+            hardCapHour -= 12;
+            hardCapAM = false;
+        }
+        else
+        {
+            hardCapAM = true;
+        }
+        CalculateTime();
+    }
 
-#region >> SCENE OBJECT (( allows for drag / dropping scenes into inspector ))
+    public void GameTimerUpdate()
+    {
+        // is not cutscene or menu, countdown time
+        if (currGame != currGame.CUTSCENE && currGame != currGame.MENU)
+        {
+            if ((timeRemaining - Time.deltaTime) < 0)
+            {
+                happyEnd = false;
+            }
+            if (curClockHour != hardCapHour || curClockMinute != hardCapMinute || isAM != hardCapAM)
+            {
+                timeRemaining -= Time.deltaTime;
+                if ((1 - (timeRemaining / totalGameTime_seconds)) <= 1 && (1 - (timeRemaining / totalGameTime_seconds)) >= 0)
+                {
+                    countdownTimer = (1 - (timeRemaining / totalGameTime_seconds));
+                }
+                else if ((1 - (timeRemaining / totalGameTime_seconds)) > 1)
+                {
+                    countdownTimer = 1;
+                }
+                else if ((1 - (timeRemaining / totalGameTime_seconds)) < 0)
+                {
+                    countdownTimer = 0;
+                }
+                CalculateTime();
+            }
+        }
+    }
+
+    #region >> SCENE OBJECT (( allows for drag / dropping scenes into inspector ))
     [System.Serializable]
     public class SceneObject
     {
@@ -314,7 +431,7 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-#region SceneObjects
+    #region SceneObjects
 #if UNITY_EDITOR
             [CustomPropertyDrawer(typeof(SceneObject))]
             public class SceneObjectEditor : PropertyDrawer
@@ -365,8 +482,8 @@ public class GameManager : MonoBehaviour {
                 }
             }
 #endif
-#endregion
+    #endregion
 
 
-#endregion
+    #endregion
 }

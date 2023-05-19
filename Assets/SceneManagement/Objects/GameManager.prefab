@@ -46,6 +46,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7846e2187297056448d1c65d3f432aeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  totalGameTime_seconds: 300
+  startTime_24hr: 8
+  endTime_24hr: 20
+  updateClockEvery_Minutes: 30
+  hardCapHour: 23
+  hardCapMinute: 59
+  timeRemaining: 0
+  countdownTimer: 0
+  curClockHour: 0
+  curClockMinute: 0
+  isAM: 1
+  happyEnd: 1
   audioManager: {fileID: 10505627301420208}
   pauseManager: {fileID: 0}
   currGame: 0
@@ -60,16 +72,16 @@ MonoBehaviour:
   loadingScene:
     m_SceneName: LoadingScreen
   driving1:
-    m_SceneName: Farm_Level1
+    m_SceneName: Level1
   driving2:
-    m_SceneName: Water_Level2
+    m_SceneName: Level2
   driving3:
-    m_SceneName: City_Level3
+    m_SceneName: Level3
   tacoMakingScene:
-    m_SceneName: TacoMaking1
+    m_SceneName: TacoMaking
   cutscene:
     m_SceneName: Cutscene
-  nitroCharges: 3
+  nitroCharges: 0
   gasAmount: 0
   loadProgress: 0
 --- !u!1001 &389845888435534682
@@ -154,7 +166,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3004636162711251326, guid: e1b009394b5c2f24bb844b6948eaabb8, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3004636162711251326, guid: e1b009394b5c2f24bb844b6948eaabb8, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
