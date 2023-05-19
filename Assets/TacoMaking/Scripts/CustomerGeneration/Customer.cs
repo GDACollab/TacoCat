@@ -17,6 +17,7 @@ public class Customer: MonoBehaviour
     public enum species {Fish,Raven,Sheep,Frog,Capybara}; //species selectable by CreateCustomerOrder
     public List<ingredientType> order; //ingredients in the order
     public int difficulty = 1;
+    public species custSpecies;
 
     [HideInInspector] public Vector3 prevPos;
     [HideInInspector] public Vector3 targetPos;
@@ -66,7 +67,6 @@ public class Customer: MonoBehaviour
         Debug.Log("Created Customer Order");
 
         // Decide on customer species
-        species custSpecies;
         custSpecies = (species)Random.Range(0,5); //Selects random species from the range of possible options
 
         // get menu from bench manager

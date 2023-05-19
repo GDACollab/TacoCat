@@ -31,8 +31,8 @@ public class CustomerDialogue : MonoBehaviour
     public void CreateDialogue(Customer customer, scoreType score)
     {
         //textMesh = dialogueBox.GetComponentInChildren<TextMeshProUGUI>();
-        textMesh.text = PickDialogue(customer.customerSpecies, score);
-        Debug.Log(customer.customerSpecies);
+        textMesh.text = PickDialogue(customer.custSpecies, score);
+        Debug.Log(customer.custSpecies);
         dialogueBox.SetActive(true);
     }
 
