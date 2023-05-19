@@ -29,8 +29,7 @@ public class Customer: MonoBehaviour
     private Coroutine lastRoutine = null;
     [HideInInspector] public bool hasEndingDialogue;
     [HideInInspector] public bool hasIntroDialgue;
-    [HideInInspector] public float dialoguePause = 0;
-    public species customerSpecies;
+    [HideInInspector] public float dialoguePause;
 
     // List of possible colors to tint this customer's sprite once their taco is finished.
     // Elements correspond to the values in the scoreType enum in TacoMakingGameManager.cs .
@@ -67,7 +66,8 @@ public class Customer: MonoBehaviour
         Debug.Log("Created Customer Order");
 
         // Decide on customer species
-        customerSpecies = (species)Random.Range(0,4); //Selects random species from the range of possible options
+        species custSpecies;
+        custSpecies = (species)Random.Range(0,5); //Selects random species from the range of possible options
 
         // get menu from bench manager
         List<ingredientType> menu = tacoGameManager.benchManager.menu;
@@ -98,7 +98,7 @@ public class Customer: MonoBehaviour
         List<int> custPreference = new List<int> { 0, 1, 2, 3, 4 };
         // I would like to switch this with calling for the required value (ie getting fish.value)
         // but afaik we don't have that implemented, and I don't want to risk messing with it rn
-        switch (customerSpecies)
+        switch (custSpecies)
         {
             case species.Fish: //No fish, 2x sour cream
                 custPreference = new List<int> { 0, 1, 3, 4, 4 };
@@ -142,7 +142,7 @@ public class Customer: MonoBehaviour
 
     public SpeciesType RandomizeSpecies()    //Generates a Random Species
     {
-        return (SpeciesType)Random.Range(0,4);
+        return (SpeciesType)Random.Range(0,5);
     }
 
     // << SPAWN ORDER UI BOX >>

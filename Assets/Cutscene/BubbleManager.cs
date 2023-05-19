@@ -18,6 +18,8 @@ public class BubbleManager : MonoBehaviour
     public List<Sprite> backgroundOptions;
     public List<Sprite> tickOptions;
 
+    public string fontAssetName = "TacocatMorganFont-Regular_1 SDF";
+
     public float bubbleVerticalSize;
 
     // Start is called before the first frame update
@@ -42,6 +44,20 @@ public class BubbleManager : MonoBehaviour
 
     public void UpdateVisuals() 
     {
+        // Set the font!
+        TMP_FontAsset fontAsset = FindFontAsset(fontAssetName);
+
+        if (fontAsset != null)
+        {
+            messageText.font = fontAsset;
+        }
+        else
+        {
+            Debug.LogError("Font asset not found: " + fontAssetName);
+        }
+
+        messageText.fontSize = 15;
+
         //messageText.text = textContents;
         if (characterType == CutsceneManager.character.ALEX)
         {
@@ -53,9 +69,21 @@ public class BubbleManager : MonoBehaviour
             backgroundImage.sprite = backgroundOptions[1];
             tickImage.sprite = tickOptions[1];
         }
+    }
 
-        
+    private TMP_FontAsset FindFontAsset(string fontName)
+    {
+        TMP_FontAsset[] fonts = Resources.FindObjectsOfTypeAll<TMP_FontAsset>();
 
+        foreach (TMP_FontAsset font in fonts)
+        {
+            if (font.name == fontName)
+            {
+                return font;
+            }
+        }
+
+        return null;
     }
 
     public void UpdateBubbleHeight()
