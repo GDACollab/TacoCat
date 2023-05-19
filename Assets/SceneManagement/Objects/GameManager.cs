@@ -13,10 +13,28 @@ using UnityEditor;
 
 public enum currGame { NONE, MENU, CUTSCENE, TACO_MAKING, DRIVING }
 
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
 
     public static GameManager instance = null;
     public static EventSystem eventSystemInstance = null;
+
+    // slider for remaining time and timer from 0 to 1
+    [Range(-1000.0f, 1000.0f)]
+    public float timeRemaining;
+    public float totalTime;
+    [Range(0.0f,1.0f)]
+    public float countdownTimer = 0;
+    public int clockHour;
+    public int clockMinute;
+    public int updateClockEveryMinute;
+    public int startTimeIn24Hours;
+    public int endTimeIn24Hours;
+    public int hardCapHourIn24Hours;
+    public int hardCapMinute;
+    private bool hardCapAM;
+    public bool isAM = true;
+    public bool happyEnd = true;
 
 
     [HideInInspector]
@@ -73,6 +91,25 @@ public class GameManager : MonoBehaviour {
         audioManager = GetComponentInChildren<AudioManager>();
         pauseManager = GetComponentInChildren<PauseManager>();
 
+        // set remaining time to total time initially
+        timeRemaining = totalTime;
+        if (startTimeIn24Hours < 12)
+        {
+            isAM=true;
+        }
+        else
+        {
+            isAM=false;
+        }
+        if (hardCapHourIn24Hours > 12)
+        {
+            hardCapHourIn24Hours -= 12;
+            hardCapAM = false;
+        }
+        else
+        {
+            hardCapAM = true;
+        }
     }
 
     private void OnEnable()
@@ -103,6 +140,7 @@ public class GameManager : MonoBehaviour {
                 Debug.Log("GameManager: Setup Main Menu");
                 determinedSceneType = true;
                 currGame = currGame.MENU;
+                timeRemaining = totalTime;
             }
             else if (GameObject.FindGameObjectWithTag("TacoGameManager"))
             {
@@ -144,7 +182,8 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public void Update() {
+    public void Update()
+    {
 
         // << TACO GAME MANAGER >>
         if (currGame == currGame.TACO_MAKING && tacoGameManager != null)
@@ -177,9 +216,47 @@ public class GameManager : MonoBehaviour {
                 LoadTacoMakingScene();
             }
         }
+
+        // is not cutscene or menu, countdown time
+        if (currGame != currGame.CUTSCENE && currGame != currGame.MENU)
+        {
+            if ((timeRemaining - Time.deltaTime) < 0)
+            {
+                happyEnd = false;
+            }
+            /*
+            timeRemaining -= Time.deltaTime;
+            if((1 - (timeRemaining / totalTime)) <= 1 && (1 - (timeRemaining / totalTime)) >= 0)
+            {
+                countdownTimer = (1 - (timeRemaining / totalTime));
+            }*/
+            if (clockHour != hardCapHourIn24Hours || clockMinute != hardCapMinute || isAM != hardCapAM)
+            {
+                timeRemaining -= Time.deltaTime;
+                if ((1 - (timeRemaining / totalTime)) <= 1 && (1 - (timeRemaining / totalTime)) >= 0)
+                {
+                    countdownTimer = (1 - (timeRemaining / totalTime));
+                }
+                else if ((1 - (timeRemaining / totalTime)) > 1)
+                {
+                    countdownTimer = 1;
+                }
+                else if ((1 - (timeRemaining / totalTime)) < 0)
+                {
+                    countdownTimer = 0;
+                }
+                calculateTime();
+            }
+        }
+
+
+        //clockHour == hardCapHour && clockMinute == hardCapMinute && isAM == hardCapAM
+
+
     }
 
-    public void LoadMenu() {
+    public void LoadMenu()
+    {
         currGame = currGame.MENU;
         currLevel = 1;
         cutsceneIndex = 0;
@@ -188,20 +265,24 @@ public class GameManager : MonoBehaviour {
     }
 
     // **** LOAD TACO MAKING SCENE ****
-    public void LoadTacoMakingScene(bool async = false) {
+    public void LoadTacoMakingScene(bool async = false)
+    {
 
         currGame = currGame.TACO_MAKING;
-        if(async){
+        if (async)
+        {
             StartCoroutine(ConcurrentLoadingCoroutine(tacoMakingScene));
         }
-        else{
+        else
+        {
             StartCoroutine(LoadingCoroutine(tacoMakingScene));
         }
         //audioManager.PlaySong(audioManager.tacoMusicPath);
     }
 
     // **** LOAD DRIVING SCENES ****
-    public void LoadDrivingScene(int levelNum) {
+    public void LoadDrivingScene(int levelNum)
+    {
         currGame = currGame.DRIVING;
 
         if (levelNum == 1)
@@ -239,7 +320,8 @@ public class GameManager : MonoBehaviour {
     [HideInInspector]
     public float loadProgress;
 
-    IEnumerator LoadingCoroutine(SceneObject scene) {
+    IEnumerator LoadingCoroutine(SceneObject scene)
+    {
         isLoadingScene = true;
         yield return null;
 
@@ -254,10 +336,12 @@ public class GameManager : MonoBehaviour {
         Debug.Log("Loading " + currScene + ":" + newScene.progress);
 
         //When the load is still in progress, output the Text and progress bar
-        while (!newScene.isDone) {
+        while (!newScene.isDone)
+        {
             loadProgress = newScene.progress;
 
-            if (newScene.progress >= 0.9f) {
+            if (newScene.progress >= 0.9f)
+            {
                 newScene.allowSceneActivation = true;
             }
             yield return new WaitForEndOfFrame();
@@ -266,8 +350,9 @@ public class GameManager : MonoBehaviour {
         SceneManager.UnloadSceneAsync(loadingScene);
         isLoadingScene = false;
     }
-    
-    IEnumerator ConcurrentLoadingCoroutine(SceneObject scene) {
+
+    IEnumerator ConcurrentLoadingCoroutine(SceneObject scene)
+    {
         isLoadingScene = true;
         yield return null;
 
@@ -281,10 +366,12 @@ public class GameManager : MonoBehaviour {
         Debug.Log("Loading " + currScene + ":" + newScene.progress);
 
         //When the load is still in progress, output the Text and progress bar
-        while (!newScene.isDone) {
+        while (!newScene.isDone)
+        {
             loadProgress = newScene.progress;
 
-            if (newScene.progress >= 0.9f) {
+            if (newScene.progress >= 0.9f)
+            {
                 newScene.allowSceneActivation = activateScene;
             }
             yield return new WaitForEndOfFrame();
@@ -294,9 +381,25 @@ public class GameManager : MonoBehaviour {
         isLoadingScene = false;
     }
 
+    public void calculateTime()
+    {
+        // in total minutes
+        float totalClockTime = (totalTime - timeRemaining + (totalTime * 60 * startTimeIn24Hours / 60 / (endTimeIn24Hours - startTimeIn24Hours))) * (60 * (endTimeIn24Hours - startTimeIn24Hours) / totalTime);
+        clockHour = (int)(totalClockTime) / 60;
+        if (clockHour > 11)
+        {
+            isAM = false;
+        }
+        while (clockHour > 12)
+        {
+            clockHour = clockHour - 12;
+        }
+        clockMinute = (int)(totalClockTime) % 60;
+    }
 
 
-#region >> SCENE OBJECT (( allows for drag / dropping scenes into inspector ))
+
+    #region >> SCENE OBJECT (( allows for drag / dropping scenes into inspector ))
     [System.Serializable]
     public class SceneObject
     {
@@ -314,7 +417,7 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-#region SceneObjects
+    #region SceneObjects
 #if UNITY_EDITOR
             [CustomPropertyDrawer(typeof(SceneObject))]
             public class SceneObjectEditor : PropertyDrawer
@@ -365,8 +468,8 @@ public class GameManager : MonoBehaviour {
                 }
             }
 #endif
-#endregion
+    #endregion
 
 
-#endregion
+    #endregion
 }
