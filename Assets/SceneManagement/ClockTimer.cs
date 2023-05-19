@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class clockTimer : MonoBehaviour
+public class ClockTimer : MonoBehaviour
 {
     public TMP_Text clockTime;
     void Update()
