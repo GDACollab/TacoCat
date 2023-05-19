@@ -183,8 +183,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: NEW GAME
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 9b1e3ffa022e319458338cf85034c4e5, type: 2}
-  m_sharedMaterial: {fileID: -5191623549394683550, guid: 9b1e3ffa022e319458338cf85034c4e5, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 682d717893b39b54f8ce7623092ddcdc, type: 2}
+  m_sharedMaterial: {fileID: 4659687799435944628, guid: 682d717893b39b54f8ce7623092ddcdc, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -318,8 +318,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: QUIT
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 9b1e3ffa022e319458338cf85034c4e5, type: 2}
-  m_sharedMaterial: {fileID: -5191623549394683550, guid: 9b1e3ffa022e319458338cf85034c4e5, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 682d717893b39b54f8ce7623092ddcdc, type: 2}
+  m_sharedMaterial: {fileID: 4659687799435944628, guid: 682d717893b39b54f8ce7623092ddcdc, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1141,8 +1141,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: CONTINUE
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 9b1e3ffa022e319458338cf85034c4e5, type: 2}
-  m_sharedMaterial: {fileID: -5191623549394683550, guid: 9b1e3ffa022e319458338cf85034c4e5, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 682d717893b39b54f8ce7623092ddcdc, type: 2}
+  m_sharedMaterial: {fileID: 4659687799435944628, guid: 682d717893b39b54f8ce7623092ddcdc, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2132,8 +2132,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 9b1e3ffa022e319458338cf85034c4e5, type: 2}
-  m_sharedMaterial: {fileID: -5191623549394683550, guid: 9b1e3ffa022e319458338cf85034c4e5, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 682d717893b39b54f8ce7623092ddcdc, type: 2}
+  m_sharedMaterial: {fileID: 4659687799435944628, guid: 682d717893b39b54f8ce7623092ddcdc, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2490,8 +2490,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: SETTINGS
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 9b1e3ffa022e319458338cf85034c4e5, type: 2}
-  m_sharedMaterial: {fileID: -5191623549394683550, guid: 9b1e3ffa022e319458338cf85034c4e5, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 682d717893b39b54f8ce7623092ddcdc, type: 2}
+  m_sharedMaterial: {fileID: 4659687799435944628, guid: 682d717893b39b54f8ce7623092ddcdc, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2686,6 +2686,18 @@ PrefabInstance:
     - target: {fileID: 7004250954060202129, guid: b98e17472161422409ce954e519a82b5, type: 3}
       propertyPath: m_Name
       value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: driving1.m_SceneName
+      value: Farm_Level1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: driving2.m_SceneName
+      value: Water_Level2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: driving3.m_SceneName
+      value: City_Level3
       objectReference: {fileID: 0}
     - target: {fileID: 7004250954060202135, guid: b98e17472161422409ce954e519a82b5, type: 3}
       propertyPath: m_RootOrder
