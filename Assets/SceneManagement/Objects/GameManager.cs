@@ -6,7 +6,6 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 //using FMODUnity;
 
-
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -15,37 +14,8 @@ public enum currGame { NONE, MENU, CUTSCENE, TACO_MAKING, DRIVING }
 
 public class GameManager : MonoBehaviour
 {
-
     public static GameManager instance = null;
     public static EventSystem eventSystemInstance = null;
-
-    // slider for remaining time and timer from 0 to 1
-    
-    [Range(0.0f, 1000.0f), Tooltip("Time remaining in seconds")]
-    public float timeRemaining;
-    [Tooltip("Total duration of game in seconds")]
-    public float totalTime;
-    [Range(0.0f,1.0f), Tooltip("Internal timer that goes from 0 to 1")]
-    public float countdownTimer = 0;
-    [Tooltip("current hour")]
-    public int clockHour;
-    [Tooltip("current minute")]
-    public int clockMinute;
-    [Tooltip("updates the visible clock every X in-game minutes")]
-    public int updateClock;
-    [Tooltip("when should the clock start in 24 hours")]
-    public int startTime;
-    [Tooltip("when should the day end in 24 hours")]
-    public int endTime;
-    [Tooltip("what hour should the clock stop updating in 24 hours")]
-    public int hardCapHour;
-    [Tooltip("around what minute should the clock updating")]
-    public int hardCapMinute;
-    private bool hardCapAM;
-    [Tooltip("no need to touch this")]
-    public bool isAM = true;
-    public bool happyEnd = true;
-
 
     [HideInInspector]
     public AudioManager audioManager;
@@ -57,7 +27,41 @@ public class GameManager : MonoBehaviour
     DrivingGameManager drivingGameManager;
     CutsceneManager cutsceneManager;
 
-    // track game state
+
+    [Header(" === INIT GAME TIMER === ")]
+    [Tooltip("Total duration of game in seconds")]
+    public float totalGameTime_seconds = 300;
+    [Tooltip("when should the clock start in 24 hours")]
+    public int startTime_24hr = 8;
+    [Tooltip("when should the day end in 24 hours")]
+    public int endTime_24hr = 20;
+    [Tooltip("updates the visible clock every X in-game minutes")]
+    public int updateClockEvery_Minutes = 30;
+
+    [Space(10), Tooltip("what hour should the clock stop updating in 24 hours")]
+    public int hardCapHour = 23;
+    [Tooltip("around what minute should the clock updating")]
+    public int hardCapMinute = 59;
+
+    [Header(" === ACTIVE GAME TIMER === ")]
+    [Range(0.0f, 1000.0f), Tooltip("Time remaining in seconds")]
+    public float timeRemaining;
+    [Range(0.0f,1.0f), Tooltip("Internal timer that goes from 0 to 1")]
+    public float countdownTimer = 0;
+    [Tooltip("current hour")]
+    public int curClockHour;
+    [Tooltip("current minute")]
+    public int curClockMinute;
+
+    private bool hardCapAM;
+    [HideInInspector]
+    public bool isAM = true;
+    [HideInInspector]
+    public bool happyEnd = true;
+
+
+
+    [Header(" === SCENE MANAGEMENT === ")]
     public currGame currGame = currGame.NONE;
     public int currLevel = 1;
     public SceneObject currScene;
@@ -74,7 +78,6 @@ public class GameManager : MonoBehaviour
     public SceneObject driving1;
     public SceneObject driving2;
     public SceneObject driving3;
-
 
     [Space(10)]
     public SceneObject tacoMakingScene;
@@ -101,8 +104,8 @@ public class GameManager : MonoBehaviour
         audioManager = GetComponentInChildren<AudioManager>();
         pauseManager = GetComponentInChildren<PauseManager>();
 
-        // initializes the time
-        gameTimerStart();
+        // << START GAME TIMER >>
+        GameTimerStart();
     }
 
     private void OnEnable()
@@ -133,7 +136,7 @@ public class GameManager : MonoBehaviour
                 Debug.Log("GameManager: Setup Main Menu");
                 determinedSceneType = true;
                 currGame = currGame.MENU;
-                timeRemaining = totalTime;
+                timeRemaining = totalGameTime_seconds;
             }
             else if (GameObject.FindGameObjectWithTag("TacoGameManager"))
             {
@@ -209,7 +212,10 @@ public class GameManager : MonoBehaviour
                 LoadTacoMakingScene();
             }
         }
-        gameTimerUpdate();
+
+
+        // << UPDATE GAME TIMER >>
+        GameTimerUpdate();
     }
 
     public void LoadMenu()
@@ -257,6 +263,7 @@ public class GameManager : MonoBehaviour
             currLevel = 3;
             StartCoroutine(LoadingCoroutine(driving3));
         }
+
         //audioManager.PlaySong(audioManager.drivingMusicPath);
     }
 
@@ -338,26 +345,26 @@ public class GameManager : MonoBehaviour
         isLoadingScene = false;
     }
 
-    public void calculateTime()
+    public void CalculateTime()
     {
         // in total minutes
-        float totalClockTime = (totalTime - timeRemaining + (totalTime * 60 * startTime / 60 / (endTime - startTime))) * (60 * (endTime - startTime) / totalTime);
-        clockHour = (int)(totalClockTime) / 60;
-        if (clockHour > 11)
+        float totalClockTime = (totalGameTime_seconds - timeRemaining + (totalGameTime_seconds * 60 * startTime_24hr / 60 / (endTime_24hr - startTime_24hr))) * (60 * (endTime_24hr - startTime_24hr) / totalGameTime_seconds);
+        curClockHour = (int)(totalClockTime) / 60;
+        if (curClockHour > 11)
         {
             isAM = false;
         }
-        while (clockHour > 12)
+        while (curClockHour > 12)
         {
-            clockHour = clockHour - 12;
+            curClockHour = curClockHour - 12;
         }
-        clockMinute = (int)(totalClockTime) % 60;
+        curClockMinute = (int)(totalClockTime) % 60;
     }
 
-    public void gameTimerStart()
+    public void GameTimerStart()
     {
-        timeRemaining = totalTime;
-        if (startTime < 12)
+        timeRemaining = totalGameTime_seconds;
+        if (startTime_24hr < 12)
         {
             isAM = true;
         }
@@ -374,10 +381,10 @@ public class GameManager : MonoBehaviour
         {
             hardCapAM = true;
         }
-        calculateTime();
+        CalculateTime();
     }
 
-    public void gameTimerUpdate()
+    public void GameTimerUpdate()
     {
         // is not cutscene or menu, countdown time
         if (currGame != currGame.CUTSCENE && currGame != currGame.MENU)
@@ -386,22 +393,22 @@ public class GameManager : MonoBehaviour
             {
                 happyEnd = false;
             }
-            if (clockHour != hardCapHour || clockMinute != hardCapMinute || isAM != hardCapAM)
+            if (curClockHour != hardCapHour || curClockMinute != hardCapMinute || isAM != hardCapAM)
             {
                 timeRemaining -= Time.deltaTime;
-                if ((1 - (timeRemaining / totalTime)) <= 1 && (1 - (timeRemaining / totalTime)) >= 0)
+                if ((1 - (timeRemaining / totalGameTime_seconds)) <= 1 && (1 - (timeRemaining / totalGameTime_seconds)) >= 0)
                 {
-                    countdownTimer = (1 - (timeRemaining / totalTime));
+                    countdownTimer = (1 - (timeRemaining / totalGameTime_seconds));
                 }
-                else if ((1 - (timeRemaining / totalTime)) > 1)
+                else if ((1 - (timeRemaining / totalGameTime_seconds)) > 1)
                 {
                     countdownTimer = 1;
                 }
-                else if ((1 - (timeRemaining / totalTime)) < 0)
+                else if ((1 - (timeRemaining / totalGameTime_seconds)) < 0)
                 {
                     countdownTimer = 0;
                 }
-                calculateTime();
+                CalculateTime();
             }
         }
     }
