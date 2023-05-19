@@ -190,8 +190,8 @@ public class CutsceneManager : MonoBehaviour
         }
     }
 
-        //for printing the entire message at once
-        IEnumerator PrintText(List<string> characterText)
+    //for printing the entire message at once
+    IEnumerator PrintText(List<string> characterText)
     {
 
         //Add each element from phone_texts to phoneText

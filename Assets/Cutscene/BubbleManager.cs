@@ -58,7 +58,9 @@ public class BubbleManager : MonoBehaviour
             Debug.LogError("Font asset not found: " + fontAssetName);
         }
 
-        messageText.fontSize = 15;
+
+        // damn it was getting tense right here , just you and the bubbles - mortal enemies
+        //messageText.fontSize = 15;
 
         //messageText.text = textContents;
         if (characterType == CutsceneManager.character.ALEX)
@@ -84,33 +86,23 @@ public class BubbleManager : MonoBehaviour
                 return font;
             }
         }
-
         return null;
     }
 
     public void UpdateBubbleHeight()
     {
-        //Debug.Log("update Bubble Height");
-        int lineCount = messageText.textInfo.lineCount;
-
-        float oldBubbleHeight = bubbleVerticalSize;
-        bubbleVerticalSize = lineCount * lineHeight;
-        bubbleVerticalSize = Mathf.Clamp(bubbleVerticalSize, 0.38f, 1000);
-        backgroundImage.transform.localScale = new Vector3(1, Mathf.Max(0.38f, (bubbleVerticalSize) + 0.05f), 1);
+        //backgroundImage.transform.localScale = new Vector3(1, Mathf.Max(0.38f, (bubbleVerticalSize) + 0.05f), 1);
         bubbleVerticalSize += lineHeight;
 
-        if (bubbleVerticalSize != oldBubbleHeight && characterType == CutsceneManager.character.ALEX)
+        if (characterType == CutsceneManager.character.ALEX)
         {
-            cutsceneManager.MoveBubblesUp(bubbleVerticalSize - oldBubbleHeight);
+            cutsceneManager.MoveBubblesUp(bubbleVerticalSize);
         }
-
-        if (characterType == CutsceneManager.character.JAMIE)
+        else if (characterType == CutsceneManager.character.JAMIE)
         {
-            cutsceneManager.MoveBubblesUp(bubbleVerticalSize/2.35f);
+            cutsceneManager.MoveBubblesUp(bubbleVerticalSize);
         }
-
     }
-
     
     public IEnumerator InstantTextFill(string s)
     {
@@ -120,28 +112,25 @@ public class BubbleManager : MonoBehaviour
     }
 
     //For typing out the message
-
     public IEnumerator TextCrawl(string s)
     {
         string[] words = s.Split(" ");
 
-            foreach (string word in words)
+        foreach (string word in words)
+        {
+            //Add each element from phone_texts to phoneText
+            foreach (char c in word)
             {
+                //insert instance of alexbubble text += c
+                messageText.text += c;
+                yield return new WaitForSeconds(cutsceneManager.textSpeedAlex);
 
-                //Add each element from phone_texts to phoneText
-                foreach (char c in word)
-                {
-                    //insert instance of alexbubble text += c
-                    messageText.text += c;
-                    UpdateBubbleHeight();
-                    yield return new WaitForSeconds(cutsceneManager.textSpeedAlex);
-
-                    //cutsceneManager.audioManager.Play(cutsceneManager.audioManager.typingSFX);
-                }
-                messageText.text += " ";
-                UpdateBubbleHeight();
+                //cutsceneManager.audioManager.Play(cutsceneManager.audioManager.typingSFX);
             }
+            messageText.text += " ";
+        }
 
+        UpdateBubbleHeight();
     }
-    
+
 }
