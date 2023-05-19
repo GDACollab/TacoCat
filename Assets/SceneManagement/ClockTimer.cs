@@ -14,7 +14,7 @@ public class ClockTimer : MonoBehaviour
         {
             clockMinute = "0" + clockMinute;
         }
-        if (GameManager.instance.clockMinute % GameManager.instance.updateClockEveryMinute == 0)
+        if (GameManager.instance.clockMinute % GameManager.instance.updateClock == 0)
         {
             if (GameManager.instance.isAM == true)
             {
