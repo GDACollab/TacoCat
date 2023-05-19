@@ -20,19 +20,29 @@ public class GameManager : MonoBehaviour
     public static EventSystem eventSystemInstance = null;
 
     // slider for remaining time and timer from 0 to 1
-    [Range(-1000.0f, 1000.0f)]
+    
+    [Range(0.0f, 1000.0f), Tooltip("Time remaining in seconds")]
     public float timeRemaining;
+    [Tooltip("Total duration of game in seconds")]
     public float totalTime;
-    [Range(0.0f,1.0f)]
+    [Range(0.0f,1.0f), Tooltip("Internal timer that goes from 0 to 1")]
     public float countdownTimer = 0;
+    [Tooltip("current hour")]
     public int clockHour;
+    [Tooltip("current minute")]
     public int clockMinute;
-    public int updateClockEveryMinute;
-    public int startTimeIn24Hours;
-    public int endTimeIn24Hours;
-    public int hardCapHourIn24Hours;
+    [Tooltip("updates the visible clock every X in-game minutes")]
+    public int updateClock;
+    [Tooltip("when should the clock start in 24 hours")]
+    public int startTime;
+    [Tooltip("when should the day end in 24 hours")]
+    public int endTime;
+    [Tooltip("what hour should the clock stop updating in 24 hours")]
+    public int hardCapHour;
+    [Tooltip("around what minute should the clock updating")]
     public int hardCapMinute;
     private bool hardCapAM;
+    [Tooltip("no need to touch this")]
     public bool isAM = true;
     public bool happyEnd = true;
 
@@ -91,25 +101,8 @@ public class GameManager : MonoBehaviour
         audioManager = GetComponentInChildren<AudioManager>();
         pauseManager = GetComponentInChildren<PauseManager>();
 
-        // set remaining time to total time initially
-        timeRemaining = totalTime;
-        if (startTimeIn24Hours < 12)
-        {
-            isAM=true;
-        }
-        else
-        {
-            isAM=false;
-        }
-        if (hardCapHourIn24Hours > 12)
-        {
-            hardCapHourIn24Hours -= 12;
-            hardCapAM = false;
-        }
-        else
-        {
-            hardCapAM = true;
-        }
+        // initializes the time
+        gameTimerStart();
     }
 
     private void OnEnable()
@@ -213,43 +206,7 @@ public class GameManager : MonoBehaviour
                 LoadTacoMakingScene();
             }
         }
-
-        // is not cutscene or menu, countdown time
-        if (currGame != currGame.CUTSCENE && currGame != currGame.MENU)
-        {
-            if ((timeRemaining - Time.deltaTime) < 0)
-            {
-                happyEnd = false;
-            }
-            /*
-            timeRemaining -= Time.deltaTime;
-            if((1 - (timeRemaining / totalTime)) <= 1 && (1 - (timeRemaining / totalTime)) >= 0)
-            {
-                countdownTimer = (1 - (timeRemaining / totalTime));
-            }*/
-            if (clockHour != hardCapHourIn24Hours || clockMinute != hardCapMinute || isAM != hardCapAM)
-            {
-                timeRemaining -= Time.deltaTime;
-                if ((1 - (timeRemaining / totalTime)) <= 1 && (1 - (timeRemaining / totalTime)) >= 0)
-                {
-                    countdownTimer = (1 - (timeRemaining / totalTime));
-                }
-                else if ((1 - (timeRemaining / totalTime)) > 1)
-                {
-                    countdownTimer = 1;
-                }
-                else if ((1 - (timeRemaining / totalTime)) < 0)
-                {
-                    countdownTimer = 0;
-                }
-                calculateTime();
-            }
-        }
-
-
-        //clockHour == hardCapHour && clockMinute == hardCapMinute && isAM == hardCapAM
-
-
+        gameTimerUpdate();
     }
 
     public void LoadMenu()
@@ -381,7 +338,7 @@ public class GameManager : MonoBehaviour
     public void calculateTime()
     {
         // in total minutes
-        float totalClockTime = (totalTime - timeRemaining + (totalTime * 60 * startTimeIn24Hours / 60 / (endTimeIn24Hours - startTimeIn24Hours))) * (60 * (endTimeIn24Hours - startTimeIn24Hours) / totalTime);
+        float totalClockTime = (totalTime - timeRemaining + (totalTime * 60 * startTime / 60 / (endTime - startTime))) * (60 * (endTime - startTime) / totalTime);
         clockHour = (int)(totalClockTime) / 60;
         if (clockHour > 11)
         {
@@ -394,7 +351,57 @@ public class GameManager : MonoBehaviour
         clockMinute = (int)(totalClockTime) % 60;
     }
 
+    public void gameTimerStart()
+    {
+        timeRemaining = totalTime;
+        if (startTime < 12)
+        {
+            isAM = true;
+        }
+        else
+        {
+            isAM = false;
+        }
+        if (hardCapHour > 12)
+        {
+            hardCapHour -= 12;
+            hardCapAM = false;
+        }
+        else
+        {
+            hardCapAM = true;
+        }
+        calculateTime();
+    }
 
+    public void gameTimerUpdate()
+    {
+        // is not cutscene or menu, countdown time
+        if (currGame != currGame.CUTSCENE && currGame != currGame.MENU)
+        {
+            if ((timeRemaining - Time.deltaTime) < 0)
+            {
+                happyEnd = false;
+            }
+            if (clockHour != hardCapHour || clockMinute != hardCapMinute || isAM != hardCapAM)
+            {
+                timeRemaining -= Time.deltaTime;
+                if ((1 - (timeRemaining / totalTime)) <= 1 && (1 - (timeRemaining / totalTime)) >= 0)
+                {
+                    countdownTimer = (1 - (timeRemaining / totalTime));
+                }
+                else if ((1 - (timeRemaining / totalTime)) > 1)
+                {
+                    countdownTimer = 1;
+                }
+                else if ((1 - (timeRemaining / totalTime)) < 0)
+                {
+                    countdownTimer = 0;
+                }
+                calculateTime();
+            }
+        }
+    }
 
     #region >> SCENE OBJECT (( allows for drag / dropping scenes into inspector ))
     [System.Serializable]
