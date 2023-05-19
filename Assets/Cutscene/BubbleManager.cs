@@ -15,9 +15,6 @@ public class BubbleManager : MonoBehaviour
 
     public CutsceneManager.character characterType;
 
-    public List<Sprite> backgroundOptions;
-    public List<Sprite> tickOptions;
-
     public float lineHeight;
 
     public string fontAssetName = "TacocatMorganFont-Regular_1 SDF";
@@ -46,33 +43,7 @@ public class BubbleManager : MonoBehaviour
 
     public void UpdateVisuals() 
     {
-        // Set the font!
-        TMP_FontAsset fontAsset = FindFontAsset(fontAssetName);
 
-        if (fontAsset != null)
-        {
-            messageText.font = fontAsset;
-        }
-        else
-        {
-            Debug.LogError("Font asset not found: " + fontAssetName);
-        }
-
-
-        // damn it was getting tense right here , just you and the bubbles - mortal enemies
-        //messageText.fontSize = 15;
-
-        //messageText.text = textContents;
-        if (characterType == CutsceneManager.character.ALEX)
-        {
-            backgroundImage.sprite = backgroundOptions[0];
-            tickImage.sprite = tickOptions[0];
-        }
-        else
-        {
-            backgroundImage.sprite = backgroundOptions[1];
-            tickImage.sprite = tickOptions[1];
-        }
     }
 
     private TMP_FontAsset FindFontAsset(string fontName)

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3772167065949580086}
   - component: {fileID: 3084877378707828946}
   m_Layer: 5
-  m_Name: TextBubble
+  m_Name: AlexTextBubble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41,7 +41,7 @@ RectTransform:
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0.5}
+  m_Pivot: {x: 0.75, y: 0.5}
 --- !u!222 &828280797624487390
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -68,13 +68,7 @@ MonoBehaviour:
   tickImage: {fileID: 1564180912570553495}
   textContents: 
   characterType: 0
-  backgroundOptions:
-  - {fileID: -2045117334, guid: 0c36b2836db1e6744b03670d94c0b6b3, type: 3}
-  - {fileID: -463546390, guid: 60cc24bf2f88b1049bf99f35d8663133, type: 3}
-  tickOptions:
-  - {fileID: 2043214460, guid: ce361ccc0820bf441aaa7fc575297f42, type: 3}
-  - {fileID: 376568095, guid: 05d00549b3a7cc54d9c1bb49f0acf63e, type: 3}
-  lineHeight: 1
+  lineHeight: 0
   fontAssetName: TacocatMorganFont-Regular_1 SDF
   bubbleVerticalSize: 0
 --- !u!114 &3772167065949580086
