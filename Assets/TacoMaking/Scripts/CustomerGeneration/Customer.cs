@@ -17,6 +17,7 @@ public class Customer: MonoBehaviour
     public enum species {Fish,Raven,Sheep,Frog,Capybara}; //species selectable by CreateCustomerOrder
     public List<ingredientType> order; //ingredients in the order
     public int difficulty = 1;
+    public species custSpecies;
 
     [HideInInspector] public Vector3 prevPos;
     [HideInInspector] public Vector3 targetPos;
@@ -26,7 +27,7 @@ public class Customer: MonoBehaviour
     [HideInInspector] public float transitionOffset; //The most that a customers transition time can be randomly offset (used to make customers move at diff speeds)
     [HideInInspector] private float transitionOffsetTimer;
     [HideInInspector] public int currPosition;
-    private Coroutine lastRoutine = null;
+    [HideInInspector] public Coroutine moveRoutine = null;
     [HideInInspector] public bool hasEndingDialogue;
     [HideInInspector] public bool hasIntroDialgue;
     [HideInInspector] public float dialoguePause;
@@ -66,7 +67,6 @@ public class Customer: MonoBehaviour
         Debug.Log("Created Customer Order");
 
         // Decide on customer species
-        species custSpecies;
         custSpecies = (species)Random.Range(0,5); //Selects random species from the range of possible options
 
         // get menu from bench manager
@@ -249,11 +249,11 @@ public class Customer: MonoBehaviour
         transitionOffsetTimer = 0;
         prevPos = transform.position;
         targetPos = newPosition;
-        if (lastRoutine != null)
+        if (moveRoutine != null)
         {
-            StopCoroutine(lastRoutine);
+            StopCoroutine(moveRoutine);
         }
-        lastRoutine = StartCoroutine(MovePosition());
+        moveRoutine = StartCoroutine(MovePosition());
     }
 
     private IEnumerator MovePosition()
@@ -282,7 +282,7 @@ public class Customer: MonoBehaviour
             currTransitionTime += Time.deltaTime;
             yield return null;
         }
-        lastRoutine = null;
+        moveRoutine = null;
     }
 
     // Changes this customer's sprite appearance based on the score of their taco
