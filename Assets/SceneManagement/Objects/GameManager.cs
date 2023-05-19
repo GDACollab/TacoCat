@@ -15,7 +15,7 @@ public enum currGame { NONE, MENU, CUTSCENE, TACO_MAKING, DRIVING }
 
 public class GameManager : MonoBehaviour {
 
-    public static GameManager instance = null;
+    public static GameManager instance { get; private set; }
     public static EventSystem eventSystemInstance = null;
 
 
@@ -178,7 +178,7 @@ public class GameManager : MonoBehaviour {
 
     public void LoadMenu() {
         currGame = currGame.MENU;
-        currLevel = 1;
+        //currLevel = 1;
         cutsceneIndex = 0;
         SceneManager.LoadScene(menuScene);
         //audioManager.PlaySong(audioManager.menuMusicPath);
