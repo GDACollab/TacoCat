@@ -5,25 +5,27 @@ using UnityEngine;
 public class MenuManager : MonoBehaviour
 {
     // UI Elements
-    [Header("Game")]
-    //public GameObject gameManager;
     [Header("Signs")]
     public GameObject continueSign;
-    public GameObject endlessSign;
+    public GameObject hangingSign;
     public GameObject pole;
 
-    void Awake()
+    void Start()
     {
         // Check level progression
         int level = GameManager.instance.currLevel;
-        if (level > 1)
+        bool win = GameManager.instance.trueEnding;
+
+        if (level > 1 && level < 4)
         {
             continueSign.SetActive(true); // Enable continue sign
             // Adjust pole to fit continue sign
+            RectTransform poleBox = pole.GetComponent<RectTransform>();
+            poleBox.sizeDelta = new Vector2(100, 1500);
         }
-        if (level > 3)
+        if (win)
         {
-            endlessSign.SetActive(true); // Enable endless sign
+            hangingSign.SetActive(true); // Enable hanging sign
         }
     }
 }
