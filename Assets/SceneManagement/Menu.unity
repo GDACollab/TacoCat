@@ -478,9 +478,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1354788260}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: LoadCutscene
+      - m_Target: {fileID: 877234841}
+        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+        m_MethodName: Continue
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -488,18 +488,6 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 6994455183296229762}
-        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
-        m_MethodName: Play
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: event:/SFX/Cutscene/Texting Clicks
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &289858099
@@ -902,9 +890,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1354788260}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: LoadCutscene
+      - m_Target: {fileID: 877234841}
+        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+        m_MethodName: NewGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -912,18 +900,6 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 6994455183296229762}
-        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
-        m_MethodName: Play
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: event:/SFX/Cutscene/Texting Clicks
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &577821383
@@ -995,6 +971,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e4455fc6dccfd64bbe5752267ca957b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &614497527 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5120949042771533292, guid: b98e17472161422409ce954e519a82b5, type: 3}
+  m_PrefabInstance: {fileID: 7004250952722246962}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &678822414 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5120949041857759932, guid: b98e17472161422409ce954e519a82b5, type: 3}
@@ -1347,6 +1328,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1043005193 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5120949042173079231, guid: b98e17472161422409ce954e519a82b5, type: 3}
+  m_PrefabInstance: {fileID: 7004250952722246962}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1222945119
 GameObject:
   m_ObjectHideFlags: 0
@@ -1432,9 +1418,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1354788260}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: Quit
+      - m_Target: {fileID: 877234841}
+        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+        m_MethodName: Exit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1586,17 +1572,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1354788260 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
-  m_PrefabInstance: {fileID: 7004250952722246962}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7004250952722246963}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7846e2187297056448d1c65d3f432aeb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1373418701
 GameObject:
   m_ObjectHideFlags: 0
@@ -1682,33 +1657,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1391964861}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 678822414}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 606339857}
         m_TargetAssemblyTypeName: PauseManager, Assembly-CSharp
-        m_MethodName: Pause
+        m_MethodName: Settings
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2407,13 +2358,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 877234841}
+        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+        m_MethodName: Credits
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2477,6 +2428,16 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+--- !u!1 &1997978781 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5120949042332313455, guid: b98e17472161422409ce954e519a82b5, type: 3}
+  m_PrefabInstance: {fileID: 7004250952722246962}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2074197090 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5120949041775977145, guid: b98e17472161422409ce954e519a82b5, type: 3}
+  m_PrefabInstance: {fileID: 7004250952722246962}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2117552208
 GameObject:
   m_ObjectHideFlags: 0
@@ -2612,17 +2573,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2117552208}
   m_CullTransparentMesh: 1
---- !u!114 &6994455183296229762 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 10505627301420208, guid: b98e17472161422409ce954e519a82b5, type: 3}
-  m_PrefabInstance: {fileID: 7004250952722246962}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 399d30af4f863cf488de9a77942e1814, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &7004250952722246962
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2630,6 +2580,70 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5120949041775977145, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5120949042038436144, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: m_TagString
+      value: PauseManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 5120949042038436146, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: baseMenu
+      value: 
+      objectReference: {fileID: 678822414}
+    - target: {fileID: 5120949042038436146, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: backButton
+      value: 
+      objectReference: {fileID: 614497527}
+    - target: {fileID: 5120949042038436146, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: switchMenu
+      value: 
+      objectReference: {fileID: 1043005193}
+    - target: {fileID: 5120949042038436146, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: settingsMenu
+      value: 
+      objectReference: {fileID: 1391964861}
+    - target: {fileID: 5120949042038436146, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: settingsBackButton
+      value: 
+      objectReference: {fileID: 614497527}
+    - target: {fileID: 5120949042078783389, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5120949042633850286, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: ee6c058c3bb67cb49ba76ec0e81f1c92, type: 2}
+    - target: {fileID: 5120949042633850286, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: ee6c058c3bb67cb49ba76ec0e81f1c92, type: 2}
+    - target: {fileID: 5120949043016745464, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: ee6c058c3bb67cb49ba76ec0e81f1c92, type: 2}
+    - target: {fileID: 5120949043016745464, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: ee6c058c3bb67cb49ba76ec0e81f1c92, type: 2}
+    - target: {fileID: 5120949043325284238, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: ee6c058c3bb67cb49ba76ec0e81f1c92, type: 2}
+    - target: {fileID: 5120949043325284238, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: ee6c058c3bb67cb49ba76ec0e81f1c92, type: 2}
+    - target: {fileID: 5120949043687173721, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: ee6c058c3bb67cb49ba76ec0e81f1c92, type: 2}
+    - target: {fileID: 5120949043687173721, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: ee6c058c3bb67cb49ba76ec0e81f1c92, type: 2}
     - target: {fileID: 7004250952158807698, guid: b98e17472161422409ce954e519a82b5, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -2735,6 +2749,10 @@ PrefabInstance:
       value: GameManager
       objectReference: {fileID: 0}
     - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: currLevel
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
       propertyPath: driving1.m_SceneName
       value: Farm_Level1
       objectReference: {fileID: 0}
@@ -2748,7 +2766,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
       propertyPath: tacoMakingScene.m_SceneName
-      value: TacoMaking1
+      value: TacoMaking
       objectReference: {fileID: 0}
     - target: {fileID: 7004250954060202135, guid: b98e17472161422409ce954e519a82b5, type: 3}
       propertyPath: m_RootOrder
@@ -2824,11 +2842,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7004250952722246963}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7e4455fc6dccfd64bbe5752267ca957b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pauseKey: 27
-  pauseCanvas: {fileID: 0}
-  volumeSliderParent: {fileID: 0}
+  pauseCanvas: {fileID: 2074197090}
+  volumeSliderParent: {fileID: 1997978781}
+  baseMenu: {fileID: 678822414}
+  settingsMenu: {fileID: 1391964861}
+  settingsBackButton: {fileID: 0}
+  switchMenu: {fileID: 0}
