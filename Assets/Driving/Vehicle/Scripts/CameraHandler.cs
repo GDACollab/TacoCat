@@ -199,7 +199,7 @@ public class CameraHandler : MonoBehaviour
     }
 
     // Additional value added (technically subtracted) to the zero point
-    public float cameraForgiveness = 1.0f;
+    public float cameraForgiveness;
 
     // Each value = 1/6 of the distance from the ceenter to the screen edge, + is to the left and - is to the right
     public float cameraSixthOffset = 2;
@@ -216,16 +216,17 @@ public class CameraHandler : MonoBehaviour
 
             //Set zPos based on car's Y position from the zero, and the camera's FOV (60 in this case) divided by 2 (so, 30)
             float testa = (GetCurrentZero() - cameraForgiveness);
-            float test = -((vehicle.transform.position.y - testa) / Mathf.Tan(30 * Mathf.Deg2Rad));
-            Debug.Log("Actual Math: " + test);
-            Debug.Log("Get Current Zero: " + testa);
-            Debug.Log("Points! " + bezierPointsListTracker);
+            float test = -(Mathf.Abs((vehicle.transform.position.y - testa)) / Mathf.Tan(30 * Mathf.Deg2Rad));
+            //Debug.Log("Actual Math: " + test);
+            //Debug.Log("Get Current Zero: " + testa);
+            //Debug.Log("Points! " + bezierPointsListTracker);
             float zPos = Mathf.Max(zPosRange.y,Mathf.Min(zPosRange.x, test));
 
             // Set camera x to car x, offset by cameraSixthOffset
-            float cameraShift = vehicle.transform.position.y - testa;
+            float cameraShift = Mathf.Abs(vehicle.transform.position.y - testa);
             //camerashift gets divided by 4.5 and multiplied by 8 to match x:y ratio, then multiplied by cameraSixthOffset/6. below is that, but simplified
             cameraShift = cameraShift * cameraSixthOffset * 8 / 27;
+            Debug.Log("camShift: " + cameraShift);
             float xPos = Mathf.Min(xPosRange.y, Mathf.Max(xPosRange.x, (vehicle.transform.position.x + cameraShift)));
 
             // Set camera y to car y
