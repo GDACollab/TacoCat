@@ -15,7 +15,7 @@ public enum currGame { NONE, MENU, CUTSCENE, TACO_MAKING, DRIVING }
 
 public class GameManager : MonoBehaviour {
 
-    public static GameManager instance { get; private set; }
+    public static GameManager instance = null;
     public static EventSystem eventSystemInstance = null;
 
 
@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour {
     // track game state
     public currGame currGame = currGame.NONE;
     public int currLevel = 1;
+    public bool trueEnding = false; // Whether the true ending has been achived
     public SceneObject currScene;
     public int cutsceneIndex = 0;
     [Space(5)]
@@ -72,7 +73,6 @@ public class GameManager : MonoBehaviour {
 
         audioManager = GetComponentInChildren<AudioManager>();
         pauseManager = GetComponentInChildren<PauseManager>();
-
     }
 
     private void OnEnable()
