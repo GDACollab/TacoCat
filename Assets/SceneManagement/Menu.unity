@@ -258,6 +258,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 215152004}
   m_CullTransparentMesh: 1
+--- !u!1 &245253203 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1460864642856209576, guid: b98e17472161422409ce954e519a82b5, type: 3}
+  m_PrefabInstance: {fileID: 7004250952722246962}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &265857351
 GameObject:
   m_ObjectHideFlags: 0
@@ -2580,6 +2585,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3957118948243743841, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: m_text
+      value: Return To Menu
+      objectReference: {fileID: 0}
     - target: {fileID: 5120949041775977145, guid: b98e17472161422409ce954e519a82b5, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -2608,6 +2617,10 @@ PrefabInstance:
       propertyPath: settingsBackButton
       value: 
       objectReference: {fileID: 614497527}
+    - target: {fileID: 5120949042038436146, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: settingsBackToMenu
+      value: 
+      objectReference: {fileID: 245253203}
     - target: {fileID: 5120949042078783389, guid: b98e17472161422409ce954e519a82b5, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0
@@ -2828,6 +2841,26 @@ PrefabInstance:
       propertyPath: continueSign
       value: 
       objectReference: {fileID: 289858096}
+    - target: {fileID: 9002437797038961700, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9002437797038961700, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9002437797038961700, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 606339857}
+    - target: {fileID: 9002437797038961700, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Pause
+      objectReference: {fileID: 0}
+    - target: {fileID: 9002437797038961700, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PauseManager, Assembly-CSharp
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b98e17472161422409ce954e519a82b5, type: 3}
 --- !u!1 &7004250952722246963 stripped
@@ -2853,4 +2886,5 @@ MonoBehaviour:
   baseMenu: {fileID: 678822414}
   settingsMenu: {fileID: 1391964861}
   settingsBackButton: {fileID: 0}
+  settingsBackToMenu: {fileID: 0}
   switchMenu: {fileID: 0}
