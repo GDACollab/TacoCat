@@ -63,7 +63,9 @@ public class GameManager : MonoBehaviour
 
     [Header(" === SCENE MANAGEMENT === ")]
     public currGame currGame = currGame.NONE;
+    public currGame lastGame;
     public int currLevel = 1;
+    public bool trueEnding = false;
     public SceneObject currScene;
     public int cutsceneIndex = 0;
     [Space(5)]
@@ -220,8 +222,9 @@ public class GameManager : MonoBehaviour
 
     public void LoadMenu()
     {
+        lastGame = currGame;
         currGame = currGame.MENU;
-        currLevel = 1;
+        //currLevel = 1;    // Deletes progress
         cutsceneIndex = 0;
         SceneManager.LoadScene(menuScene);
         //audioManager.PlaySong(audioManager.menuMusicPath);
