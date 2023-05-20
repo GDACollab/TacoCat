@@ -35,8 +35,9 @@ public class CutsceneManager : MonoBehaviour
     public List<TextList> CutsceneOneDialogue;
     public List<TextList> CutsceneTwoDialogue;
     public List<TextList> CutsceneThreeDialogue;
+    public List<TextList> GoodEndingDialogue;
 
-    private List<TextList> chosenDialogue;
+    public List<TextList> chosenDialogue;
 
     private TextList list;
 
@@ -108,6 +109,10 @@ public class CutsceneManager : MonoBehaviour
                 break;
             case 2:
                 chosenDialogue = CutsceneThreeDialogue;
+                GameManager.instance.cutsceneIndex++;
+                break;
+            case 3:
+                chosenDialogue = GoodEndingDialogue;
                 break;
             default:
                 chosenDialogue = CutsceneOneDialogue;
@@ -148,7 +153,10 @@ public class CutsceneManager : MonoBehaviour
 
         yield return new WaitForSeconds(4);
 
-        endOfCutscene = true;
+        if (chosenDialogue != GoodEndingDialogue)
+        {
+            endOfCutscene = true;
+        }
     }
 
     public void MoveBubblesUp(float amount)

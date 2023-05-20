@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour {
     [Space(10)]
     public SceneObject tacoMakingScene;
     public SceneObject cutscene;
+    public SceneObject creditscene;
 
     [Header("--SCENE VARIABLE TRANSFER--")]
     public int nitroCharges = 3;
@@ -161,9 +162,14 @@ public class GameManager : MonoBehaviour {
         if (currGame == currGame.DRIVING && drivingGameManager != null)
         {
             if (drivingGameManager.endOfGame && !isLoadingScene)
-            {
-                if (currLevel == 3) { LoadMenu(); }  // end of game
+            {   
+                /*
+                if (currLevel == 3) {
+                    LoadMenu(); 
+                }
+                */
                 currLevel++;
+                Debug.Log("Current Level: " + currLevel);
                 StartCoroutine(ConcurrentLoadingCoroutine(cutscene));
                 // LoadCutscene();
             }

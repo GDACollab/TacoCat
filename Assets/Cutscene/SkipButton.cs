@@ -10,7 +10,10 @@ public class SkipButton : MonoBehaviour, IPointerClickHandler
     void Start()
     {
         gameObject.SetActive(false);
-        Invoke("ShowAsset", 3f);
+        if (CutsceneAsset.chosenDialogue != CutsceneAsset.GoodEndingDialogue)
+        {
+            Invoke("ShowAsset", 3f);
+        }
     }
 
     void ShowAsset()
