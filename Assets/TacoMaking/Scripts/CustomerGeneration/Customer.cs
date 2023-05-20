@@ -17,6 +17,7 @@ public class Customer: MonoBehaviour
     public enum species {Fish,Raven,Sheep,Frog,Capybara}; //species selectable by CreateCustomerOrder
     public List<ingredientType> order; //ingredients in the order
     public int difficulty = 1;
+    public species custSpecies;
 
     [HideInInspector] public Vector3 prevPos;
     [HideInInspector] public Vector3 targetPos;
@@ -26,7 +27,7 @@ public class Customer: MonoBehaviour
     [HideInInspector] public float transitionOffset; //The most that a customers transition time can be randomly offset (used to make customers move at diff speeds)
     [HideInInspector] private float transitionOffsetTimer;
     [HideInInspector] public int currPosition;
-    private Coroutine lastRoutine = null;
+    [HideInInspector] public Coroutine moveRoutine = null;
     [HideInInspector] public bool hasEndingDialogue;
     [HideInInspector] public bool hasIntroDialgue;
     [HideInInspector] public float dialoguePause;
@@ -66,8 +67,7 @@ public class Customer: MonoBehaviour
         Debug.Log("Created Customer Order");
 
         // Decide on customer species
-        species custSpecies;
-        custSpecies = (species)Random.Range(0,4); //Selects random species from the range of possible options
+        custSpecies = (species)Random.Range(0,5); //Selects random species from the range of possible options
 
         // get menu from bench manager
         List<ingredientType> menu = tacoGameManager.benchManager.menu;
@@ -110,15 +110,15 @@ public class Customer: MonoBehaviour
                 break;
             case species.Sheep: //2x cabbage
                 custPreference = new List<int> { 0, 0, 1, 2, 3, 4 };
-                customerSpriteObject[3].SetActive(true);
+                customerSpriteObject[2].SetActive(true);
                 break;
             case species.Frog: // 1/2x fish, 2x jalapenos
                 custPreference = new List<int> { 0, 0, 1, 1, 2, 3, 3, 3, 3, 4, 4 };
-                customerSpriteObject[4].SetActive(true);
+                customerSpriteObject[3].SetActive(true);
                 break;
             case species.Capybara: // 1/2x Pico
                 custPreference = new List<int> { 0, 0, 1, 2, 2, 3, 3, 4, 4 };
-                customerSpriteObject[5].SetActive(true);
+                customerSpriteObject[4].SetActive(true);
                 break;
         }
         Debug.Log(custPreference);
@@ -142,7 +142,7 @@ public class Customer: MonoBehaviour
 
     public SpeciesType RandomizeSpecies()    //Generates a Random Species
     {
-        return (SpeciesType)Random.Range(0,4);
+        return (SpeciesType)Random.Range(0,5);
     }
 
     // << SPAWN ORDER UI BOX >>
@@ -249,11 +249,11 @@ public class Customer: MonoBehaviour
         transitionOffsetTimer = 0;
         prevPos = transform.position;
         targetPos = newPosition;
-        if (lastRoutine != null)
+        if (moveRoutine != null)
         {
-            StopCoroutine(lastRoutine);
+            StopCoroutine(moveRoutine);
         }
-        lastRoutine = StartCoroutine(MovePosition());
+        moveRoutine = StartCoroutine(MovePosition());
     }
 
     private IEnumerator MovePosition()
@@ -282,7 +282,7 @@ public class Customer: MonoBehaviour
             currTransitionTime += Time.deltaTime;
             yield return null;
         }
-        lastRoutine = null;
+        moveRoutine = null;
     }
 
     // Changes this customer's sprite appearance based on the score of their taco
