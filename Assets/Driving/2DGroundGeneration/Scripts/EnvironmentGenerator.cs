@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 [RequireComponent(typeof(LineRenderer))]
 [RequireComponent(typeof(StageManager))]
@@ -56,11 +55,12 @@ public class EnvironmentGenerator : MonoBehaviour
     public int maxSpaceBetweenObjects = 40;
 
     [Space(10)]
+    public Transform envGenParent;
+    public Transform treeGenParent;
     public string environmentSortingGroupName;
 
     [Header("<< Trees >>")]
     public GameObject treePrefab;
-    public Transform treeGenParent;
     [Tooltip("Amount of variance in the scales of individual tree objects")]
     public float treeScaleVariance = 10;
     [Tooltip("Whether or not the trees rotate with the ground at all")]
@@ -180,9 +180,6 @@ public class EnvironmentGenerator : MonoBehaviour
             float thisScale = 1 + (Random.Range(-treeScaleVariance, treeScaleVariance)); 
             GameObject newTree = SpawnTree(pointIndex, thisScale, facing, sortingOrder, zposition);
 
-            newTree.GetComponentInChildren<SpriteRenderer>().sortingLayerName = environmentSortingGroupName;
-            treeGenParent.transform.position = stageManager.generationOffset;
-
             /* ===============================
              *  << SET UP FOR NEXT ENVIRONMENT OBJECT >>
              * ============================== */
@@ -218,6 +215,10 @@ public class EnvironmentGenerator : MonoBehaviour
             GameObject sign = SpawnSign( (i * distanceIndex) + mainGenStartIndex , i + 1);
             sign.name = "LandmarkSign " + i + " " + percentage;
         }
+
+
+        // set offset
+        envGenParent.transform.localPosition = stageManager.generationOffset;
 
     }
 
@@ -271,6 +272,7 @@ public class EnvironmentGenerator : MonoBehaviour
         {
             // set sorting order of sprite renderer
             SpriteRenderer treeSpriteRend = newTreeObject.GetComponentInChildren<SpriteRenderer>();
+            treeSpriteRend.sortingLayerName = environmentSortingGroupName;
             treeSpriteRend.sortingOrder = sortingOrder;
         }
 

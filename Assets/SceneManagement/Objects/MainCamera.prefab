@@ -50,13 +50,14 @@ MonoBehaviour:
   vehicle: {fileID: 0}
   ground: {fileID: 0}
   camSpeed: 5
-  offsetAdjustSpeed: {x: 3, y: 3, z: 3}
+  offsetAdjustSpeed: {x: 3, y: 7, z: 3}
   perfect_camShakeMagnitude: 0.5
   nitro_camShakeMagnitude: 1
   xPosRange: {x: 500, y: 1500}
   yPosRange: {x: -500, y: 500}
+  heightOffsetPercentage: -0.25
   zPosRange: {x: -1200, y: -2000}
-  truckHeightZoomRange: {x: 100, y: 1000}
+  truckHeightValueRange: {x: 300, y: 500}
   currCamOffset: {x: 0, y: 0, z: 0}
   cameraSixthOffset: 10
   bezierPointsListTracker: 0
@@ -207,7 +208,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1971999595
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

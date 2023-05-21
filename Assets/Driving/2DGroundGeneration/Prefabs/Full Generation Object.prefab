@@ -33,7 +33,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7247553292708645435}
-  - {fileID: 2191229852954528193}
   - {fileID: 2272469841242197367}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -53,6 +52,7 @@ MonoBehaviour:
   allStagesGenerated: 0
   meshCreator: {fileID: 3070127029581114840}
   mainGenerationLength: 30000
+  generationOffset: {x: 0, y: 0, z: 0}
   main_begPos: {x: 0, y: 0, z: 0}
   main_endPos: {x: 30000, y: 0, z: 0}
   startIslandXOffset: -1000
@@ -98,9 +98,10 @@ MonoBehaviour:
   gasStationGroundPointIndex: 23
   minSpaceBetweenObjects: 3
   maxSpaceBetweenObjects: 14
+  envGenParent: {fileID: 2272469841242197367}
+  treeGenParent: {fileID: 5571463960001830364}
   environmentSortingGroupName: EnvBackground
   treePrefab: {fileID: 3801461193250748064, guid: 98f3305ed9766834c91d1bed13271dad, type: 3}
-  treeGenParent: {fileID: 5571463960001830364}
   treeScaleVariance: 0.25
   treeRotationEnabled: 1
   treeRotScalar: 30
@@ -318,8 +319,8 @@ Transform:
   m_LocalScale: {x: 4000, y: 1, z: 1000}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2742292303635479994}
-  m_RootOrder: 1
+  m_Father: {fileID: 2272469841242197367}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!33 &2286458887881574021
 MeshFilter:
@@ -412,8 +413,9 @@ Transform:
   m_Children:
   - {fileID: 5571463960001830364}
   - {fileID: 2742292303754920709}
+  - {fileID: 2191229852954528193}
   m_Father: {fileID: 2742292303635479994}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8744683770413148027
 GameObject:

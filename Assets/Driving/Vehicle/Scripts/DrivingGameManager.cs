@@ -102,10 +102,6 @@ public class DrivingGameManager : MonoBehaviour
         percentageTraveled = vehicleDistance / totalDistance;
         if (percentageTraveled <= 0) { percentageTraveled = 0; }
 
-        if (lightingManager != null)
-        {
-            lightingManager.timeOfDay = percentageTraveled;
-        }
 
     }
     
