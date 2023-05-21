@@ -227,7 +227,7 @@ public class CameraHandler : MonoBehaviour
 
 
             truckHeight = Mathf.Abs((vehiclePos.y - currZeroPos));
-            Debug.Log("Truck height from currZero: " + truckHeight);
+            //Debug.Log("Truck height from currZero: " + truckHeight);
 
             // << VERT CAMERA SHIFT >>
             // Calculate the camera shift based on the difference between car's y position and zero position
