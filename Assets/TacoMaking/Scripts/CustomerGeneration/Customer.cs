@@ -44,12 +44,13 @@ public class Customer: MonoBehaviour
     };
 
     // HARDCODED -> 1: FISH . 2: RAVEN . 3: SHEEP . 4: FROG . 5: CAPYBARA
-    public List<GameObject> customerSpriteObject = new List<GameObject>();
+    public List<GameObject> customerSpriteObjects = new List<GameObject>();
 
     private void Awake()
     {
         tacoGameManager = GetComponentInParent<TacoMakingGameManager>();
         customerManager = GetComponentInParent<CustomerManager>();
+
     }
 
     void Start()
@@ -59,6 +60,13 @@ public class Customer: MonoBehaviour
         order = CreateCustomerOrder(Mathf.Min(3, difficulty));
 
         // ShowBubbleOrder(order);
+
+
+        // turn off all gameobject before choosing species
+        foreach (GameObject customer in customerSpriteObjects)
+        {
+            customer.SetActive(false);
+        }
     }
 
     public List<ingredientType> CreateCustomerOrder(int difficulty) 
@@ -102,23 +110,23 @@ public class Customer: MonoBehaviour
         {
             case species.Fish: //No fish, 2x sour cream
                 custPreference = new List<int> { 0, 1, 3, 4, 4 };
-                customerSpriteObject[0].SetActive(true);
+                customerSpriteObjects[0].SetActive(true);
                 break;
             case species.Raven: //2x fish
                 custPreference = new List<int> { 0, 1, 2, 2, 3, 4 };
-                customerSpriteObject[1].SetActive(true);
+                customerSpriteObjects[1].SetActive(true);
                 break;
             case species.Sheep: //2x cabbage
                 custPreference = new List<int> { 0, 0, 1, 2, 3, 4 };
-                customerSpriteObject[2].SetActive(true);
+                customerSpriteObjects[2].SetActive(true);
                 break;
             case species.Frog: // 1/2x fish, 2x jalapenos
                 custPreference = new List<int> { 0, 0, 1, 1, 2, 3, 3, 3, 3, 4, 4 };
-                customerSpriteObject[3].SetActive(true);
+                customerSpriteObjects[3].SetActive(true);
                 break;
             case species.Capybara: // 1/2x Pico
                 custPreference = new List<int> { 0, 0, 1, 2, 2, 3, 3, 4, 4 };
-                customerSpriteObject[4].SetActive(true);
+                customerSpriteObjects[4].SetActive(true);
                 break;
         }
         Debug.Log(custPreference);

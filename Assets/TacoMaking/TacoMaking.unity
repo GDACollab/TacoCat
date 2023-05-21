@@ -346,7 +346,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &287920533
 Transform:
   m_ObjectHideFlags: 0
@@ -2785,7 +2785,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2009644835
 Transform:
   m_ObjectHideFlags: 0
@@ -3100,8 +3100,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 00:00 AM
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: db471acfc49e6364da43d3325036e4ae, type: 2}
-  m_sharedMaterial: {fileID: 6027583252247185833, guid: db471acfc49e6364da43d3325036e4ae, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ee6c058c3bb67cb49ba76ec0e81f1c92, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: ee6c058c3bb67cb49ba76ec0e81f1c92, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3360,6 +3360,14 @@ PrefabInstance:
     - target: {fileID: 2766567070304902, guid: fbbd17400b2f2ff479970d15e2dee6cb, type: 3}
       propertyPath: m_Name
       value: InsideTruckSprites
+      objectReference: {fileID: 0}
+    - target: {fileID: 2766567070304902, guid: fbbd17400b2f2ff479970d15e2dee6cb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2766567944523153, guid: fbbd17400b2f2ff479970d15e2dee6cb, type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fbbd17400b2f2ff479970d15e2dee6cb, type: 3}
