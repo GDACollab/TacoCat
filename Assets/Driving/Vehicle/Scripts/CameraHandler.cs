@@ -21,17 +21,15 @@ public class CameraHandler : MonoBehaviour
     public float nitro_camShakeMagnitude = 0.5f;
 
 
-    [Header("Parameters")]
-    public Vector2 velocityRange = new Vector2(300, 1000); //the range of velocity the camera should adjust for
-    public Vector2 heightRange = new Vector2(300, 1000);
+
     
-    [Space(30)]
     [Header("Adjustment Ranges")]
     public Vector2 xPosRange = new Vector2(0, -100); // the range of z positions the camera should adjust between
     public Vector2 yPosRange = new Vector2(0, -200);
-    public Vector2 zPosRange = new Vector2(-200, -500); // the range of z positions the camera should adjust between
+    public Vector2 zPosRange = new Vector2(-800, -2000); // the range of z positions the camera should adjust between
 
-
+    [Tooltip("Adjust the zoom of the camera based on the truck height values in this range")]
+    public Vector2 truckHeightZoomRange = new Vector2(300, 500);
 
     [Header("Camera Generation-Based Offset")]
     public Vector3 currCamOffset;
@@ -42,6 +40,7 @@ public class CameraHandler : MonoBehaviour
     // Modified fixedUpdate() to work with the Zero point code
 
     float currZeroPos;
+    float truckHeight;
 
 
     Vector3 currApoint;
@@ -226,26 +225,35 @@ public class CameraHandler : MonoBehaviour
             currZeroPos = GetCurrentZero();
             //Debug.Log("currZeroPos " + currZeroPos);
 
+
+            truckHeight = Mathf.Abs((vehiclePos.y - currZeroPos));
+            Debug.Log("Truck height from currZero: " + truckHeight);
+
             // << VERT CAMERA SHIFT >>
             // Calculate the camera shift based on the difference between car's y position and zero position
-            float newYOffset = -(MathF.Abs(vehiclePos.y - currZeroPos) * 0.25f); // get the midpoint between the two
+            float newYOffset = - (truckHeight * 0.1f);
             newYOffset = Mathf.Clamp(newYOffset, yPosRange.x, yPosRange.y);
 
             // << HORZ CAMERA SHIFT >>
             // Calculate the x position of the camera based on the car's x position and camera shift
-            float newXOffset = newYOffset * cameraSixthOffset * (8 / 27);
+            float newXOffset = truckHeight * cameraSixthOffset * (8 / 27);
             newXOffset = Mathf.Clamp(newXOffset, xPosRange.x, xPosRange.y);
 
             // << CAMERA ZOOM >>
             // Calculate the z position of the camera based on the car's y position and camera's FOV
-            float newZOffset = -(Mathf.Abs((vehiclePos.y - currZeroPos)) / Mathf.Tan(30 * Mathf.Deg2Rad));
-            newZOffset = Mathf.Clamp(newZOffset, zPosRange.x, zPosRange.y);
+            //float newZOffset = -(Mathf.Abs((vehiclePos.y - currZeroPos)) / Mathf.Tan(30 * Mathf.Deg2Rad));
+
+            // get percentage of height out of max height range
+            float zoomPercentage = (float)(truckHeight / truckHeightZoomRange.y);
+            float newZOffset = zPosRange.y * zoomPercentage; // get zoom percentage from z pos range
+            newZOffset = Mathf.Clamp(newZOffset, zPosRange.y, zPosRange.x); // clamp offset
+            Debug.Log("newZOffset: " + newZOffset);
 
             // [[ LERP CAMERA ]]
             // Lerp the offset / zoom individually
             currCamOffset.x = Mathf.Lerp(currCamOffset.x, vehiclePos.x + newXOffset, offsetAdjustSpeed.x * Time.fixedDeltaTime);
             currCamOffset.y = Mathf.Lerp(currCamOffset.y, vehiclePos.y + newYOffset, offsetAdjustSpeed.y * Time.fixedDeltaTime);
-            currCamOffset.z = Mathf.Lerp(currCamOffset.z, newZOffset, offsetAdjustSpeed.z * Time.deltaTime);
+            currCamOffset.z = Mathf.Lerp(currCamOffset.z, newZOffset, offsetAdjustSpeed.z * Time.fixedDeltaTime);
             
             // Lerp the camera position to the specific offset ^^
             transform.position = Vector3.Lerp(transform.position, currCamOffset, camSpeed * Time.fixedDeltaTime);
