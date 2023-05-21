@@ -50,16 +50,17 @@ MonoBehaviour:
   vehicle: {fileID: 0}
   ground: {fileID: 0}
   camSpeed: 5
+  offsetAdjustSpeed: {x: 3, y: 3, z: 3}
   perfect_camShakeMagnitude: 0.5
   nitro_camShakeMagnitude: 1
   velocityRange: {x: 100, y: 1000}
   heightRange: {x: 300, y: 1000}
-  xPosRange: {x: -999999, y: 999999}
-  yPosRange: {x: -200, y: 600}
-  zPosRange: {x: -400, y: -999999}
-  currOffset: {x: 20, y: 51.560783, z: -200}
-  cameraForgiveness: 1
-  cameraSixthOffset: 4
+  xPosRange: {x: 500, y: 1200}
+  yPosRange: {x: -500, y: 500}
+  zPosRange: {x: -800, y: -1500}
+  currCamOffset: {x: 0, y: 0, z: 0}
+  cameraSixthOffset: 10
+  bezierPointsListTracker: 0
 --- !u!20 &1801153804266685742
 Camera:
   m_ObjectHideFlags: 0
