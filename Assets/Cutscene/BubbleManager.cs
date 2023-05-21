@@ -15,8 +15,8 @@ public class BubbleManager : MonoBehaviour
 
     public CutsceneManager.character characterType;
 
-    public List<Sprite> backgroundOptions;
-    public List<Sprite> tickOptions;
+
+    public float lineHeight;
 
     public string fontAssetName = "TacocatMorganFont-Regular_1 SDF";
 
@@ -30,7 +30,7 @@ public class BubbleManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     public void Init(CutsceneManager.character type, string text, CutsceneManager manager)
@@ -44,31 +44,7 @@ public class BubbleManager : MonoBehaviour
 
     public void UpdateVisuals() 
     {
-        // Set the font!
-        TMP_FontAsset fontAsset = FindFontAsset(fontAssetName);
 
-        if (fontAsset != null)
-        {
-            messageText.font = fontAsset;
-        }
-        else
-        {
-            Debug.LogError("Font asset not found: " + fontAssetName);
-        }
-
-        messageText.fontSize = 15;
-
-        //messageText.text = textContents;
-        if (characterType == CutsceneManager.character.ALEX)
-        {
-            backgroundImage.sprite = backgroundOptions[0];
-            tickImage.sprite = tickOptions[0];
-        }
-        else
-        {
-            backgroundImage.sprite = backgroundOptions[1];
-            tickImage.sprite = tickOptions[1];
-        }
     }
 
     private TMP_FontAsset FindFontAsset(string fontName)
@@ -82,24 +58,23 @@ public class BubbleManager : MonoBehaviour
                 return font;
             }
         }
-
         return null;
     }
 
     public void UpdateBubbleHeight()
     {
-        //Debug.Log("update Bubble Height");
-        int lineCount = messageText.textInfo.lineCount;
-        backgroundImage.transform.localScale = new Vector3(1, lineCount * 0.25f, 1);
-        float oldBubbleHeight = bubbleVerticalSize;
-        bubbleVerticalSize = lineCount * 0.25f * 4;
+        //backgroundImage.transform.localScale = new Vector3(1, Mathf.Max(0.38f, (bubbleVerticalSize) + 0.05f), 1);
+        //bubbleVerticalSize += lineHeight;
 
-        if (bubbleVerticalSize != oldBubbleHeight)
+        if (characterType == CutsceneManager.character.ALEX)
         {
-            cutsceneManager.MoveBubblesUp(bubbleVerticalSize - oldBubbleHeight);
+            cutsceneManager.MoveBubblesUp(bubbleVerticalSize);
+        }
+        else if (characterType == CutsceneManager.character.JAMIE)
+        {
+            cutsceneManager.MoveBubblesUp(bubbleVerticalSize);
         }
     }
-
     
     public IEnumerator InstantTextFill(string s)
     {
@@ -109,27 +84,25 @@ public class BubbleManager : MonoBehaviour
     }
 
     //For typing out the message
-
     public IEnumerator TextCrawl(string s)
     {
         string[] words = s.Split(" ");
 
-            foreach (string word in words)
+        foreach (string word in words)
+        {
+            //Add each element from phone_texts to phoneText
+            foreach (char c in word)
             {
+                //insert instance of alexbubble text += c
+                messageText.text += c;
+                yield return new WaitForSeconds(cutsceneManager.textSpeedAlex);
 
-                //Add each element from phone_texts to phoneText
-                foreach (char c in word)
-                {
-                    //insert instance of alexbubble text += c
-                    messageText.text += c;
-                    UpdateBubbleHeight();
-                    yield return new WaitForSeconds(cutsceneManager.textSpeedAlex);
-
-                    //cutsceneManager.audioManager.Play(cutsceneManager.audioManager.typingSFX);
-                }
-                messageText.text += " ";
+                //cutsceneManager.audioManager.Play(cutsceneManager.audioManager.typingSFX);
             }
+            messageText.text += " ";
+        }
 
+        UpdateBubbleHeight();
     }
-    
+
 }
