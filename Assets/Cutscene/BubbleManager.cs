@@ -15,6 +15,7 @@ public class BubbleManager : MonoBehaviour
 
     public CutsceneManager.character characterType;
 
+
     public float lineHeight;
 
     public string fontAssetName = "TacocatMorganFont-Regular_1 SDF";
@@ -29,7 +30,7 @@ public class BubbleManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     public void Init(CutsceneManager.character type, string text, CutsceneManager manager)
@@ -63,7 +64,7 @@ public class BubbleManager : MonoBehaviour
     public void UpdateBubbleHeight()
     {
         //backgroundImage.transform.localScale = new Vector3(1, Mathf.Max(0.38f, (bubbleVerticalSize) + 0.05f), 1);
-        bubbleVerticalSize += lineHeight;
+        //bubbleVerticalSize += lineHeight;
 
         if (characterType == CutsceneManager.character.ALEX)
         {

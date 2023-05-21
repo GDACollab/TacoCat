@@ -13,6 +13,8 @@ public class CutsceneManager : MonoBehaviour
 
     public float startingPosition;
 
+    public float scrollFactor;
+
     //public float positionX = 1.0f;
     //public float positionY = 1.0f;
 
@@ -122,6 +124,7 @@ public class CutsceneManager : MonoBehaviour
 
     public void MoveBubblesUp(float amount)
     {
+        amount *= scrollFactor;
         Debug.Log("moved bubbles up by: " + amount);
         foreach (GameObject existingBubble in currentBubbles)
         {
