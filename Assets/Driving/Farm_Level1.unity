@@ -422,7 +422,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 342044049}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!43 &426110297
+--- !u!43 &394818252
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -17505,15 +17505,15 @@ MonoBehaviour:
   - {fileID: 21300000, guid: bfff473ad307e4253beeddf15a1c20c8, type: 3}
   - {fileID: 21300000, guid: 10b7dc315088241d4becce87210c0c43, type: 3}
   gasStationScale: 4
-  gasStationYOffset: 44
+  gasStationYOffset: 0
   gasStationGroundPointIndex: 23
   treeGenParent: {fileID: 7736978145719334173}
-  treeScaleVariance: 0.1
+  treeScaleVariance: 1
   treeRotationEnabled: 1
   treeRotScalar: 30
-  treeYOffset: 97
+  treeYOffset: 0
   treeZPosition: 10
-  treePrefab: {fileID: 8034499220166526309, guid: c5b6d62b71b76ec418efdd3bb04bde85, type: 3}
+  treePrefab: {fileID: 3801461193250748064, guid: 98f3305ed9766834c91d1bed13271dad, type: 3}
   signPrefab: {fileID: 7292054314515768603, guid: 9473524ecdb6d4fd5ab1dbc038ec454b, type: 3}
   signGenParent: {fileID: 1473964996}
   signScale: 40
@@ -17698,6 +17698,10 @@ PrefabInstance:
       propertyPath: vehicle
       value: 
       objectReference: {fileID: 2139287183}
+    - target: {fileID: 1801153804266685736, guid: 9c8f1c7b8e721411ca3c911ffb4570b3, type: 3}
+      propertyPath: truckHeightZoomRange.x
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 1801153804266685739, guid: 9c8f1c7b8e721411ca3c911ffb4570b3, type: 3}
       propertyPath: m_Name
       value: MainCamera
