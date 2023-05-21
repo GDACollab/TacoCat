@@ -26,16 +26,9 @@ public class EnvironmentGenerator : MonoBehaviour
     [HideInInspector]
     public List<GameObject> allSpawnedObjects = new List<GameObject>(); // stores all spawned env objects
 
-    [Header("Environment Generation Values ===========================")]
-    [Tooltip("Minimum space between environment objects")]
-    [Range(1, 100)]
-    public int minSpaceBetweenObjects = 10;
-    [Tooltip("Maximum space between environment objects")]
-    [Range(1, 100)]
-    public int maxSpaceBetweenObjects = 40;
-
     [Header("Line")]
     public bool drawLine;
+    public bool enableCollision;
     LineRenderer lineRenderer;
     [Range(1, 100)]
     public float lineWidth = 20;
@@ -54,11 +47,20 @@ public class EnvironmentGenerator : MonoBehaviour
     [Tooltip("Distance in ground points that the gas stations will spawn from each end")]
     public int gasStationGroundPointIndex = 1;
 
+    [Header("Environment Generation Values ===========================")]
+    [Tooltip("Minimum space between environment objects")]
+    [Range(1, 100)]
+    public int minSpaceBetweenObjects = 10;
+    [Tooltip("Maximum space between environment objects")]
+    [Range(1, 100)]
+    public int maxSpaceBetweenObjects = 40;
+
+    [Space(10)]
+    public string environmentSortingGroupName;
+
     [Header("<< Trees >>")]
-    [Tooltip("Parent for the spawned trees")]
+    public GameObject treePrefab;
     public Transform treeGenParent;
-    // [Tooltip("Base scale of the Tree Objects")]
-    // public float treeScale = 50;
     [Tooltip("Amount of variance in the scales of individual tree objects")]
     public float treeScaleVariance = 10;
     [Tooltip("Whether or not the trees rotate with the ground at all")]
@@ -69,9 +71,6 @@ public class EnvironmentGenerator : MonoBehaviour
     public float treeYOffset = 0;
     public int treeZPosition = -1;
     
-    [Tooltip("Tree prefab")]
-    public GameObject treePrefab;
-
     [Header("<< Signs >>")]
     [Tooltip("Base sign prefab")]
     public GameObject signPrefab;
@@ -115,6 +114,9 @@ public class EnvironmentGenerator : MonoBehaviour
             SpawnAllEnvironmentObjects();
 
             if (drawLine) { DrawCurveLine(groundPoints, lineWidth, lineMaterial); }
+            else { lineRenderer.enabled = false; }
+
+            GetComponentInChildren<EdgeCollider2D>().enabled = enableCollision;
         }
 
     }
@@ -152,6 +154,7 @@ public class EnvironmentGenerator : MonoBehaviour
         if (groundRotations.Count < 1) { Debug.LogWarning("No rotation points."); return; }
 
         int sortingOrder = 0; // sorting order of the object to be spawned
+        int maxSortingOrder = 4; // max sorting order
         int spacing = minSpaceBetweenObjects; // minimum spacing between objects
         int levelNum = GameObject.Find("GameManager").GetComponent<GameManager>().currLevel - 1;
 
@@ -170,12 +173,15 @@ public class EnvironmentGenerator : MonoBehaviour
         */
 
         // << SPAWN TREES >>
-        for (int currPointIndex = 10; currPointIndex < groundPoints.Count - 1; currPointIndex += spacing)
+        for (int pointIndex = 10; pointIndex < groundPoints.Count - 1; pointIndex += spacing)
         {
             // spawn new environment object
             int facing = Random.Range(0, 2)*2 - 1; 
             float thisScale = 1 + (Random.Range(-treeScaleVariance, treeScaleVariance)); 
-            SpawnTree(currPointIndex, thisScale, facing, sortingOrder, zposition);
+            GameObject newTree = SpawnTree(pointIndex, thisScale, facing, sortingOrder, zposition);
+
+            newTree.GetComponentInChildren<SpriteRenderer>().sortingLayerName = environmentSortingGroupName;
+            treeGenParent.transform.position = stageManager.generationOffset;
 
             /* ===============================
              *  << SET UP FOR NEXT ENVIRONMENT OBJECT >>
@@ -183,21 +189,18 @@ public class EnvironmentGenerator : MonoBehaviour
 
             // << SORTING ORDER >>
             // toggle sorting order so that objects on this layer dont overlap
-            if (sortingOrder == 0) 
-            { 
-                sortingOrder = 1; 
-            } 
-            else if (sortingOrder == 1) 
-            { 
-                sortingOrder = 0; 
+            if (sortingOrder < maxSortingOrder)
+            {
+                sortingOrder++;
             }
+            else { sortingOrder = 0; }
 
             // << OBJECT SPACING >>
             // Determine the number of points to skip before instantiating the next prefab
             spacing = Random.Range(minSpaceBetweenObjects, maxSpaceBetweenObjects + 1);
 
             // Make sure we don't go past the end of the line
-            if (currPointIndex + spacing >= groundPoints.Count - 1)
+            if (pointIndex + spacing >= groundPoints.Count - 1)
             {
                 break;
             }

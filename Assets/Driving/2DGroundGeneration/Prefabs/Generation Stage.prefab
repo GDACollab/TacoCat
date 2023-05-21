@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 8771345538298886060}
   - component: {fileID: 8771345538298886059}
   m_Layer: 8
-  m_Name: GroundGenerator
+  m_Name: Generation Stage
   m_TagString: EnvironmentGenerator
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -88,7 +88,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8771345538298886058}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.017897, y: 0.21662416, z: -31.857944}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -124,6 +124,9 @@ MonoBehaviour:
   chunkStyles: 0100000003000000
   chunkLengthRange: {x: 700, y: 1000}
   chunkHeightRange: {x: 100, y: 400}
+  chunkBucketLengths: 
+  chunkBucketHeights: 
+  chunkPattern: []
   startIslandXOffset: -700
   startIslandYOffset: -700
   endIslandXOffset: 700

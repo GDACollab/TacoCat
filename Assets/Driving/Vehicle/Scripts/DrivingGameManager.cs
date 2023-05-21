@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-[RequireComponent(typeof(StageManager))]
-[RequireComponent(typeof(EnvironmentGenerator))]
-[RequireComponent(typeof(EnvironmentOcclusion))]
+
 public class DrivingGameManager : MonoBehaviour
 {
-    GameManager gameManager;
-    StageManager stageManager; // manages the generation stages
+    public StageManager playAreaStageManager; // manages the generation stages
+    public StageManager backgroundStageManager; // manages the generation stages
+
+
     public LightingManager lightingManager;
     public DrivingUIManager uiManager;
     public Vehicle vehicle;
@@ -41,9 +41,7 @@ public class DrivingGameManager : MonoBehaviour
     void Awake()
     {
 
-        stageManager = GetComponent<StageManager>();
         vehicle.rb_vehicle.constraints = RigidbodyConstraints2D.FreezeAll;
-
 
         endOfGame = false;
         stuckTime = 0;
@@ -54,7 +52,11 @@ public class DrivingGameManager : MonoBehaviour
 
     public IEnumerator Initialize()
     {
-        yield return new WaitUntil(() => stageManager.allStagesGenerated);
+        playAreaStageManager.BeginStageGeneration();
+        yield return new WaitUntil(() => playAreaStageManager.allStagesGenerated);
+
+        backgroundStageManager.BeginStageGeneration();
+        yield return new WaitUntil(() => backgroundStageManager.allStagesGenerated);
 
         vehicle.rb_vehicle.constraints = RigidbodyConstraints2D.None;
         vehicle.nitroCharges = nitroCharges;
@@ -95,8 +97,8 @@ public class DrivingGameManager : MonoBehaviour
         }
 
         // << UPDATE DISTANCE TRACKER >>
-        vehicleDistance = Vector2.Distance(stageManager.main_begPos, vehicle.transform.position);
-        totalDistance = stageManager.mainGenerationLength;
+        vehicleDistance = Vector2.Distance(playAreaStageManager.main_begPos, vehicle.transform.position);
+        totalDistance = playAreaStageManager.mainGenerationLength;
         percentageTraveled = vehicleDistance / totalDistance;
         if (percentageTraveled <= 0) { percentageTraveled = 0; }
 

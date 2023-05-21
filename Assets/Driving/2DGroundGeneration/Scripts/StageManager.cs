@@ -9,6 +9,8 @@ public class StageManager : MonoBehaviour
 
     [Header("[[ GENERATION LENGTHS ]]")]
     public int mainGenerationLength = 30000;
+    public Vector3 generationOffset;
+
     [HideInInspector]
     public Vector3 main_begPos, main_endPos;
 
@@ -29,7 +31,7 @@ public class StageManager : MonoBehaviour
     [HideInInspector]
     public List<float> allLevelGroundRotations = new List<float>(); // all ground rotations of the chunks
 
-    void Awake()
+    public void BeginStageGeneration()
     {
         StartCoroutine(StageGeneration());
     }
