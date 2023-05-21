@@ -20,16 +20,17 @@ public class CameraHandler : MonoBehaviour
     [Range(0, 1)]
     public float nitro_camShakeMagnitude = 0.5f;
 
+    [Header("Cam Horz Adjustment")]
+    public Vector2 xPosRange = new Vector2(0, -100); // the range of x positions the camera should adjust between
 
+    [Header("Cam Height Adjustment")]
+    public Vector2 yPosRange = new Vector2(0, -200); // the range of y positions the camera should adjust between
+    public float heightOffsetPercentage = -0.25f;
 
-    
-    [Header("Adjustment Ranges")]
-    public Vector2 xPosRange = new Vector2(0, -100); // the range of z positions the camera should adjust between
-    public Vector2 yPosRange = new Vector2(0, -200);
+    [Header("Cam Zoom Adjustment")]
     public Vector2 zPosRange = new Vector2(-800, -2000); // the range of z positions the camera should adjust between
-
     [Tooltip("Adjust the zoom of the camera based on the truck height values in this range")]
-    public Vector2 truckHeightZoomRange = new Vector2(300, 500);
+    public Vector2 truckHeightValueRange = new Vector2(300, 500);
 
     [Header("Camera Generation-Based Offset")]
     public Vector3 currCamOffset;
@@ -231,7 +232,7 @@ public class CameraHandler : MonoBehaviour
 
             // << VERT CAMERA SHIFT >>
             // Calculate the camera shift based on the difference between car's y position and zero position
-            float newYOffset = - (truckHeight * 0.1f);
+            float newYOffset = -(truckHeight) * heightOffsetPercentage;
             newYOffset = Mathf.Clamp(newYOffset, yPosRange.x, yPosRange.y);
 
             // << HORZ CAMERA SHIFT >>
@@ -244,10 +245,10 @@ public class CameraHandler : MonoBehaviour
             //float newZOffset = -(Mathf.Abs((vehiclePos.y - currZeroPos)) / Mathf.Tan(30 * Mathf.Deg2Rad));
 
             // get percentage of height out of max height range
-            float zoomPercentage = (float)(truckHeight / truckHeightZoomRange.y);
+            float zoomPercentage = (float)(truckHeight / truckHeightValueRange.y);
             float newZOffset = zPosRange.y * zoomPercentage; // get zoom percentage from z pos range
             newZOffset = Mathf.Clamp(newZOffset, zPosRange.y, zPosRange.x); // clamp offset
-            Debug.Log("newZOffset: " + newZOffset);
+            //Debug.Log("newZOffset: " + newZOffset);
 
             // [[ LERP CAMERA ]]
             // Lerp the offset / zoom individually

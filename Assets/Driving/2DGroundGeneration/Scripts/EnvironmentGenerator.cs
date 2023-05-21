@@ -158,12 +158,16 @@ public class EnvironmentGenerator : MonoBehaviour
         // << SPAWN GAS STATIONS >>
         GameObject startStation   = Instantiate(gasStationPrefab, groundPoints[gasStationGroundPointIndex] + new Vector3(0, gasStationYOffset, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
         startStation.transform.localScale = startStation.transform.localScale * gasStationScale;
+        
+        /*
         startStation.GetComponent<SpriteRenderer>().sprite = gasStationSprites[levelNum];
+
         if(levelNum != 2){
             GameObject endStation = Instantiate(gasStationPrefab, groundPoints[groundPoints.Count - gasStationGroundPointIndex] + new Vector3(0, gasStationYOffset, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
             endStation.GetComponent<SpriteRenderer>().sprite = gasStationSprites[levelNum+1];
             endStation.transform.localScale = endStation.transform.localScale * gasStationScale;
         }
+        */
 
         // << SPAWN TREES >>
         for (int currPointIndex = 10; currPointIndex < groundPoints.Count - 1; currPointIndex += spacing)
