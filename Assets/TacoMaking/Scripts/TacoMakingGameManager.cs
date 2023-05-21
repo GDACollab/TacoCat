@@ -77,7 +77,9 @@ public class TacoMakingGameManager : MonoBehaviour
             if(Input.GetKeyDown(KeyCode.Space)){
                 activateTutorial = false;
             }
-            setTutorial(activateTutorial);
+            if(gameManager.currGame==currGame.TACO_MAKING){
+                setTutorial(activateTutorial);
+            }
         }
         else{
             CustomerRotation();
