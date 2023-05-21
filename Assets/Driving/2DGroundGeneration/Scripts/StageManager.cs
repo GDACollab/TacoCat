@@ -27,9 +27,11 @@ public class StageManager : MonoBehaviour
     // ground generation values
     public List<GroundGeneration> stages;
     [HideInInspector]
-    public List<Vector3> allLevelGroundPoints = new List<Vector3>(); // all ground points of the chunks
+    public List<BezierCurveGeneration> allStageChunks = new List<BezierCurveGeneration>();
     [HideInInspector]
-    public List<float> allLevelGroundRotations = new List<float>(); // all ground rotations of the chunks
+    public List<Vector3> allStageGroundPoints = new List<Vector3>(); // all ground points of the chunks
+    [HideInInspector]
+    public List<float> allStageGroundRotations = new List<float>(); // all ground rotations of the chunks
 
     public void BeginStageGeneration()
     {
@@ -76,8 +78,9 @@ public class StageManager : MonoBehaviour
                 yield return new WaitUntil(() => groundGen.generationFinished);
 
                 // add all generation points
-                allLevelGroundPoints.AddRange(groundGen.allGroundPoints);
-                allLevelGroundRotations.AddRange(groundGen.allGroundRotations);
+                allStageChunks.AddRange(groundGen.chunks);
+                allStageGroundPoints.AddRange(groundGen.allGroundPoints);
+                allStageGroundRotations.AddRange(groundGen.allGroundRotations);
 
                 // update new stage beginning
                 newStageBeginningPos = groundGen.endGenPos;
@@ -86,7 +89,7 @@ public class StageManager : MonoBehaviour
             // [[ CREATE MESH ]]
             if (meshCreator != null)
             {
-                meshCreator.GenerateUndergroundMesh(allLevelGroundPoints);
+                meshCreator.GenerateUndergroundMesh(allStageGroundPoints);
             }
             else { Debug.LogError("ERROR:: Mesh Creator is null", this.gameObject); }
 
@@ -101,9 +104,9 @@ public class StageManager : MonoBehaviour
         int closestIndex = -1;
         float closestDistance = float.MaxValue;
 
-        for (int i = 0; i < allLevelGroundPoints.Count; i++)
+        for (int i = 0; i < allStageGroundPoints.Count; i++)
         {
-            float distance = Vector3.Distance(pos, allLevelGroundPoints[i]);
+            float distance = Vector3.Distance(pos, allStageGroundPoints[i]);
 
             if (distance < closestDistance)
             {
@@ -113,6 +116,15 @@ public class StageManager : MonoBehaviour
         }
 
         return closestIndex;
+    }
+
+    public void DestroyAllChunks()
+    {
+        foreach (BezierCurveGeneration curve in allStageChunks)
+        {
+            Destroy(curve);
+        }
+        allStageChunks.Clear();
     }
 
     private void OnDrawGizmos()
@@ -150,6 +162,11 @@ public class StageManager : MonoBehaviour
         // << UPHILL TO LAUNCH >>
         Gizmos.DrawLine(begGenPos + xOffset + yOffset, begGenPos);
 
+
+
+        // << END ISLAND >>
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(stages[stages.Count - 1].endGenPos, begGenPos);
     }
 
 #if UNITY_EDITOR

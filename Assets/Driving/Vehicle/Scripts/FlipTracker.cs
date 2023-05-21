@@ -84,7 +84,7 @@ public class FlipTracker : MonoBehaviour
             jumpStarted = false;
             endJumpRot = currRot;
 
-            groundPointRotation = stageManager.allLevelGroundRotations[hitPointIndex];
+            groundPointRotation = stageManager.allStageGroundRotations[hitPointIndex];
 
             if (IsPerfectLanding(endJumpRot, groundPointRotation) && flipCount > 0) 
             {
@@ -143,10 +143,10 @@ public class FlipTracker : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (stageManager != null && stageManager.allLevelGroundPoints.Count > 1)
+        if (stageManager != null && stageManager.allStageGroundPoints.Count > 1)
         {
             Gizmos.color = Color.green;
-            Gizmos.DrawSphere(stageManager.allLevelGroundPoints[hitPointIndex], 4);
+            Gizmos.DrawSphere(stageManager.allStageGroundPoints[hitPointIndex], 4);
         }
     }
 }

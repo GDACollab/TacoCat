@@ -8,7 +8,10 @@ public class CameraHandler : MonoBehaviour
     private Rigidbody2D vehicleRb;
 
     public GameObject vehicle;
-    public GameObject ground;
+    public StageManager playAreaGroundGeneration;
+
+    [Space(10)]
+    public bool foundGenerationPoints;
 
     [Space(10)]
     public float camSpeed = 5f;
@@ -61,34 +64,47 @@ public class CameraHandler : MonoBehaviour
     private void Start()
     {
         vehicleRb = vehicle.GetComponent<Rigidbody2D>();
+
+        StartCoroutine(Initialize());
     }
 
-    /*
-    // Update is called once per frame
-    void OldUpdate()
+
+    public IEnumerator Initialize()
     {
-        // if vehicle  is found
-        if(vehicle) {
+        // << GET ALL GENERATION POINTS >>
+        foundGenerationPoints = false;
+        while (!foundGenerationPoints)
+        {
+            foreach (BezierCurveGeneration chunk in playAreaGroundGeneration.allStageChunks)
+            {
+                // Send info to camera
+                if (chunk.p1_pos.y < chunk.p2_pos.y)
+                {
+                    AddToCamGenPoints(chunk.p1_pos);
+                }
+                else
+                {
+                    AddToCamGenPoints(chunk.p2_pos);
+                }
+            }
 
-            // Calculate the current velocity as a percentage of the velocityRange
-            float velocityPercent = Mathf.InverseLerp(velocityRange.x, velocityRange.y, vehicleRb.velocity.magnitude);
+            if (camBezierPoints.Count > 2)
+            {
+                foundGenerationPoints = true;
+            }
+            else
+            {
+                Debug.LogWarning("Cannot Find Cam Bezier Points", this.gameObject);
+                camBezierPoints.Clear();
+            }
 
-            // Linearly interpolate the camera's z-position based on the velocityPercent
-            float zPos = Mathf.Lerp(zPosRange.x, zPosRange.y, velocityPercent);
-            float xPos = Mathf.Lerp(xPosRange.x, xPosRange.y, velocityPercent);
-
-            // Linearly interpolate the camera's y-position based on the height
-            float heightPercent = Mathf.InverseLerp(heightRange.x, heightRange.y, vehicle.transform.position.y - ground.transform.position.y);
-
-            float yPos = Mathf.Lerp(yPosRange.x, yPosRange.y, heightPercent);
-
-            // Update the camera's position with the new z-position
-            currOffset = new Vector3(xPos, yPos, zPos);
-            transform.position = Vector3.Lerp(transform.position, vehicle.transform.position + currOffset, camSpeed * Time.deltaTime);
-            
+            yield return null; // Wait for the next frame
         }
+
+        // Rest of your code here
+
+        yield return null; // Optional: Wait for the next frame
     }
-    */
 
 
     public IEnumerator Shake(float duration, float magnitude)
@@ -106,11 +122,9 @@ public class CameraHandler : MonoBehaviour
         }
     }
 
-
-
     //Called in the bezier generator, adds the P_1/P_2 point to the bezierPoints list
     //(To do so, whenever a P_1/2 point is made, run this function with that point before moving onto the next point)
-    public void addToBezierPoints(Vector3 point)
+    public void AddToCamGenPoints(Vector3 point)
     {
         /*
         if (lastCurvePoint.y > point.y && lastCurvePoint.x != point.x) //y check to prevent unwanted height increases, x to prevent duplicates
@@ -218,7 +232,7 @@ public class CameraHandler : MonoBehaviour
     void FixedUpdate()
     {
         // Check if vehicle is found
-        if (vehicle)
+        if (vehicle && foundGenerationPoints)
         {
             Vector3 vehiclePos = vehicle.transform.position;
 

@@ -205,9 +205,9 @@ public class Vehicle : MonoBehaviour
 
                 // get current point under truck
                 int curGroundPointIndex = stageManager.PosToGroundPointIndex(rb_vehicle.position);
-                if (stageManager.allLevelGroundPoints.Count > curGroundPointIndex && curGroundPointIndex != -1)
+                if (stageManager.allStageGroundPoints.Count > curGroundPointIndex && curGroundPointIndex != -1)
                 {
-                    currGroundSlopeAngle = stageManager.allLevelGroundRotations[curGroundPointIndex]; // get angle of that point
+                    currGroundSlopeAngle = stageManager.allStageGroundRotations[curGroundPointIndex]; // get angle of that point
                 }
 
                 // update in air / ground drive

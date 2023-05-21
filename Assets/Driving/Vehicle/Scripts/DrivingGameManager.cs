@@ -6,6 +6,7 @@ using UnityEngine.Rendering.Universal;
 
 public class DrivingGameManager : MonoBehaviour
 {
+    public StageManager foregroundStageManager;
     public StageManager playAreaStageManager; // manages the generation stages
     public StageManager backgroundStageManager; // manages the generation stages
 
@@ -52,6 +53,10 @@ public class DrivingGameManager : MonoBehaviour
 
     public IEnumerator Initialize()
     {
+
+        foregroundStageManager.BeginStageGeneration();
+        yield return new WaitUntil(() => foregroundStageManager.allStagesGenerated);
+
         playAreaStageManager.BeginStageGeneration();
         yield return new WaitUntil(() => playAreaStageManager.allStagesGenerated);
 

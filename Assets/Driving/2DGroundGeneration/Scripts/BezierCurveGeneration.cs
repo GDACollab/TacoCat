@@ -64,17 +64,7 @@ public class BezierCurveGeneration : MonoBehaviour
 
     private void Start()
     {
-        cameraHandler = GameObject.FindGameObjectWithTag("DrivingGameManager").GetComponent<DrivingGameManager>().camHandler;
 
-        //Send info to camera
-        if (p1_pos.y < p2_pos.y)
-        {
-            cameraHandler.GetComponent<CameraHandler>().addToBezierPoints(p1_pos);
-        }
-        else
-        {
-            cameraHandler.GetComponent<CameraHandler>().addToBezierPoints(p2_pos);
-        }
     }
 
     public void Update()

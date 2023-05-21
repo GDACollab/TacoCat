@@ -57,19 +57,18 @@ public class EnvironmentGenerator : MonoBehaviour
     [Space(10)]
     public Transform envGenParent;
     public Transform treeGenParent;
-    public string environmentSortingGroupName;
 
-    [Header("<< Trees >>")]
-    public GameObject treePrefab;
+    [Header("<< Environment Objects >>")]
+    public List<GameObject> envPrefabs = new List<GameObject>();
     [Tooltip("Amount of variance in the scales of individual tree objects")]
-    public float treeScaleVariance = 10;
+    public Vector2 envScaleRange = new Vector2(1, 100);
     [Tooltip("Whether or not the trees rotate with the ground at all")]
-    public bool treeRotationEnabled = true;
+    public bool rotationEnabled = true;
     [Range(0, 100), Tooltip("From 0-100%, how closely will the trees align with the rotation of the ground")]
-    public float treeRotScalar = 70;
+    public float rotationScalar = 70;
     [Range(0, 200), Tooltip("Vertical offset for the trees")]
-    public float treeYOffset = 0;
-    public int treeZPosition = -1;
+    public float envObjYOffset = 0;
+    public int envObjectZPos = -1;
     
     [Header("<< Signs >>")]
     [Tooltip("Base sign prefab")]
@@ -100,14 +99,14 @@ public class EnvironmentGenerator : MonoBehaviour
         mainGenerationPoints.Clear();
 
         // get ground points
-        groundPoints = stageManager.allLevelGroundPoints;
-        groundRotations = stageManager.allLevelGroundRotations;
+        groundPoints = stageManager.allStageGroundPoints;
+        groundRotations = stageManager.allStageGroundRotations;
 
         foreach (GroundGeneration stage in stageManager.stages)
         {
             mainGenerationPoints.AddRange(stage.allGroundPoints); // add stage points
         }
-
+        
         // if generation finished and environment not spawned
         if (!environmentSpawned)
         {
@@ -118,7 +117,6 @@ public class EnvironmentGenerator : MonoBehaviour
 
             GetComponentInChildren<EdgeCollider2D>().enabled = enableCollision;
         }
-
     }
 
     public void SpawnAllEnvironmentObjects()
@@ -127,7 +125,18 @@ public class EnvironmentGenerator : MonoBehaviour
         DeleteAllEnvironmentObjects();
 
         // spawn tree objects
-        SpawnEnvironmentObjects(treeZPosition);
+        SpawnEnvironmentObjects(envObjectZPos);
+
+
+        /*
+        startStation.GetComponent<SpriteRenderer>().sprite = gasStationSprites[levelNum];
+
+        if(levelNum != 2){
+            GameObject endStation = Instantiate(gasStationPrefab, groundPoints[groundPoints.Count - gasStationGroundPointIndex] + new Vector3(0, gasStationYOffset, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
+            endStation.GetComponent<SpriteRenderer>().sprite = gasStationSprites[levelNum+1];
+            endStation.transform.localScale = endStation.transform.localScale * gasStationScale;
+        }
+        */
 
         environmentSpawned = true;
     }
@@ -162,22 +171,12 @@ public class EnvironmentGenerator : MonoBehaviour
         GameObject startStation   = Instantiate(gasStationPrefab, groundPoints[gasStationGroundPointIndex] + new Vector3(0, gasStationYOffset, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
         startStation.transform.localScale = startStation.transform.localScale * gasStationScale;
         
-        /*
-        startStation.GetComponent<SpriteRenderer>().sprite = gasStationSprites[levelNum];
-
-        if(levelNum != 2){
-            GameObject endStation = Instantiate(gasStationPrefab, groundPoints[groundPoints.Count - gasStationGroundPointIndex] + new Vector3(0, gasStationYOffset, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
-            endStation.GetComponent<SpriteRenderer>().sprite = gasStationSprites[levelNum+1];
-            endStation.transform.localScale = endStation.transform.localScale * gasStationScale;
-        }
-        */
-
         // << SPAWN TREES >>
         for (int pointIndex = 10; pointIndex < groundPoints.Count - 1; pointIndex += spacing)
         {
             // spawn new environment object
-            int facing = Random.Range(0, 2)*2 - 1; 
-            float thisScale = 1 + (Random.Range(-treeScaleVariance, treeScaleVariance)); 
+            int facing = Random.Range(0, 2)*2 - 1;
+            float thisScale = Random.Range(envScaleRange.x, envScaleRange.y);
             GameObject newTree = SpawnTree(pointIndex, thisScale, facing, sortingOrder, zposition);
 
             /* ===============================
@@ -224,7 +223,7 @@ public class EnvironmentGenerator : MonoBehaviour
 
     public GameObject SpawnSign(int pointIndex, int signNum)
     {
-        Vector3 signLoc = findNearestPeak(pointIndex);
+        Vector3 signLoc = FindNearestPath(pointIndex);
         GameObject newSignObject = Instantiate(signPrefab, signLoc, Quaternion.Euler(new Vector3(0, 0, 0)));
         newSignObject.transform.parent = signGenParent;
 
@@ -240,7 +239,7 @@ public class EnvironmentGenerator : MonoBehaviour
     public GameObject SpawnTree(int pointIndex, float scale, int facing, int sortingOrder, int zposition = 0)
     {
         // create a random environment object at indexed groundPoint and with rotation
-        GameObject newTreeObject = Instantiate(treePrefab, groundPoints[pointIndex], Quaternion.Euler(new Vector3(0, 0, 0)));
+        GameObject newTreeObject = Instantiate(GetRandomObjectFromList(envPrefabs), groundPoints[pointIndex], Quaternion.Euler(new Vector3(0, 0, 0))); ;
     
         //set parent
         newTreeObject.transform.parent = treeGenParent;
@@ -256,11 +255,11 @@ public class EnvironmentGenerator : MonoBehaviour
         newTreeObject.transform.position = SetZ(newTreeObject.transform.position, zposition + Random.Range(-0.01f, 0.01f));
 
         // Move down slightly 
-        newTreeObject.transform.position = new Vector3(newTreeObject.transform.position.x, newTreeObject.transform.position.y + treeYOffset, newTreeObject.transform.position.z);
+        newTreeObject.transform.position = new Vector3(newTreeObject.transform.position.x, newTreeObject.transform.position.y + envObjYOffset, newTreeObject.transform.position.z);
 
         //Apply rotation 
-        if(treeRotationEnabled){
-            newTreeObject.transform.Rotate(new Vector3(0, 0, groundRotations[pointIndex] * (treeRotScalar / 100)));
+        if(rotationEnabled){
+            newTreeObject.transform.Rotate(new Vector3(0, 0, groundRotations[pointIndex] * (rotationScalar / 100)));
         }
 
         // << SET SORTING ORDER >>
@@ -272,7 +271,6 @@ public class EnvironmentGenerator : MonoBehaviour
         {
             // set sorting order of sprite renderer
             SpriteRenderer treeSpriteRend = newTreeObject.GetComponentInChildren<SpriteRenderer>();
-            treeSpriteRend.sortingLayerName = environmentSortingGroupName;
             treeSpriteRend.sortingOrder = sortingOrder;
         }
 
@@ -282,7 +280,7 @@ public class EnvironmentGenerator : MonoBehaviour
     #region HELPER FUNCTIONS =================================================================
 
     //Given a groundPoint, find the nearest peak
-    public Vector3 findNearestPeak(int pointIndex){
+    public Vector3 FindNearestPath(int pointIndex){
         Vector3 workingPoint = groundPoints[pointIndex];
         float curY = workingPoint.y;
 
@@ -333,6 +331,12 @@ public class EnvironmentGenerator : MonoBehaviour
         return workingPoint;
     }
 
+    public GameObject GetRandomObjectFromList(List<GameObject> objects)
+    {
+        if (objects.Count == 0) { Debug.LogError("Object List is NULL"); return null; }
+
+        return objects[Random.Range(0, objects.Count - 1)];
+    }
 
     public void DestroyListObjects(List<GameObject> list)
     {
