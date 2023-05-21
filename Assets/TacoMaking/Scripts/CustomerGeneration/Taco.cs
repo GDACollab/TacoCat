@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Taco : MonoBehaviour
 {
-    public List<ingredientType> ingredients; //ingredients currently on the taco
-    public void addIngredient(ingredientType newIngredient){ 
+    public List<INGREDIENT_TYPE> ingredients; //ingredients currently on the taco
+    public void addIngredient(INGREDIENT_TYPE newIngredient){ 
         //called when key has been inputed for ingredient in taco making
         ingredients.Add(newIngredient);
     }
@@ -27,7 +27,7 @@ public class Taco : MonoBehaviour
 
     }
 
-    public static int ingredientCompare(List<ingredientType> a, List<ingredientType> b){ //returns the number of matching ingredients in a row from the [0]th element
+    public static int ingredientCompare(List<INGREDIENT_TYPE> a, List<INGREDIENT_TYPE> b){ //returns the number of matching ingredients in a row from the [0]th element
         
         int ingredientMatch=0;
         int smallerLength=0;

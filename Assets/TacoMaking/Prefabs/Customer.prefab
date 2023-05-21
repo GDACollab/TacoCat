@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2354081417323375753}
   - component: {fileID: 4876190386815158619}
   - component: {fileID: 8378119572907938319}
+  - component: {fileID: 3708534868892578025}
   m_Layer: 0
   m_Name: Customer
   m_TagString: Untagged
@@ -109,7 +110,7 @@ MonoBehaviour:
   orderUI: {fileID: 7669438798918109656}
   order: 
   difficulty: 1
-  custSpecies: 0
+  species: 0
   prevPos: {x: 0, y: 0, z: 0}
   targetPos: {x: 0, y: 0, z: 0}
   interpolater: 0
@@ -125,12 +126,6 @@ MonoBehaviour:
   - {r: 0.7529412, g: 255, b: 0.39607844, a: 1}
   - {r: 0.9764706, g: 0.5529412, b: 0, a: 1}
   - {r: 1, g: 0, b: 0, a: 1}
-  customerSpriteObject:
-  - {fileID: 5897813708622392495}
-  - {fileID: 9189886895019749270}
-  - {fileID: 8077811605330598555}
-  - {fileID: 8003808394434728124}
-  - {fileID: 7982269305798104938}
 --- !u!114 &8378119572907938319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,6 +170,25 @@ MonoBehaviour:
   - I said NO FISH!!!
   dialogueBox: {fileID: 4824244886885778605}
   textMesh: {fileID: 4688486352851145700}
+--- !u!114 &3708534868892578025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4784761311512434799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 143b4da299c835b48aea42c3f95383f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customerRigs:
+  - {fileID: 7982269305798104938}
+  currAnimator: {fileID: 0}
+  hasOrdered: 0
+  hasWaved: 0
+  idleAnim: 
+  waveAnim: 
 --- !u!1 &5897813708622392495
 GameObject:
   m_ObjectHideFlags: 0
@@ -524,7 +538,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7968677617854687632, guid: a867809628887624b9c943e999e2cb17, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7968677617854687635, guid: a867809628887624b9c943e999e2cb17, type: 3}
       propertyPath: m_RootOrder

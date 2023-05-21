@@ -99,6 +99,8 @@ public class CustomerManager : MonoBehaviour
         {
             currCustomer = customerList[0];
 
+            currCustomer.anim.hasOrdered = true;
+
             //tacoAudioManager.OrderAudio(); //needs to be edited later
         }
 

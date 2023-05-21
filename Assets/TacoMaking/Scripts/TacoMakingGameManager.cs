@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-public enum ingredientType { NONE, FISH, SOUR_CREAM, PICO_DE_GALLO, CABBAGE, SLICED_JALAPENOS }
+public enum INGREDIENT_TYPE { NONE, FISH, SOUR_CREAM, PICO_DE_GALLO, CABBAGE, SLICED_JALAPENOS }
 public enum scoreType { NONE, PERFECT, GOOD, OKAY, FAILED } // possible scores a taco can get.
 
 public class TacoMakingGameManager : MonoBehaviour
@@ -202,7 +202,7 @@ public class TacoMakingGameManager : MonoBehaviour
     }
 
     // << ADD INGREDIENT TO SUBMISSION TACO >>
-    public void AddIngredientToTaco(ingredientType type)
+    public void AddIngredientToTaco(INGREDIENT_TYPE type)
     {
         submissionTaco.addIngredient(type); 
         submissionTaco.addingredientObject(GetIngredientObject(type));
@@ -210,7 +210,7 @@ public class TacoMakingGameManager : MonoBehaviour
 
 
     // return prefab that is related to the input enum type
-    public GameObject GetIngredientObject(ingredientType ingrType)
+    public GameObject GetIngredientObject(INGREDIENT_TYPE ingrType)
     {
         // for each object in prefab list
         foreach(GameObject obj in allIngredientPrefabs)
@@ -229,7 +229,7 @@ public class TacoMakingGameManager : MonoBehaviour
 
 
     // return prefab that is related to the input enum type
-    public GameObject GetIngredientBinSprite(ingredientType ingrType)
+    public GameObject GetIngredientBinSprite(INGREDIENT_TYPE ingrType)
     {
         // for each object in prefab list
         foreach (GameObject obj in allIngredientBinPrefabs)
