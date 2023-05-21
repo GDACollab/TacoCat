@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5190235138532786957}
   m_LocalRotation: {x: 0, y: 0, z: 0.7034337, w: 0.7107609}
-  m_LocalPosition: {x: 0.019099731, y: -5.5565467, z: 0}
+  m_LocalPosition: {x: 8.890286, y: -3.2626462, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -169,7 +169,7 @@ MonoBehaviour:
   m_BoneTransforms:
   - {fileID: 5190235140499731677}
   m_Bounds:
-    m_Center: {x: 0.13888526, y: -0.023424149, z: 0.00000047683716}
+    m_Center: {x: 0.13888907, y: -0.023423433, z: 0.00000047683716}
     m_Extent: {x: 3.8496065, y: 3.4636307, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
@@ -310,8 +310,8 @@ MonoBehaviour:
   - {fileID: 5190235138894974949}
   - {fileID: 5190235138551346714}
   m_Bounds:
-    m_Center: {x: 0.0019066334, y: -0.19813752, z: 0.00000047683716}
-    m_Extent: {x: 1.9666824, y: 3.7103019, z: 2.842171e-14}
+    m_Center: {x: 0.001904726, y: -0.19813752, z: 0.00000047683716}
+    m_Extent: {x: 1.9666827, y: 3.7103024, z: 2.842171e-14}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
   m_AutoRebind: 0
@@ -417,8 +417,8 @@ MonoBehaviour:
   m_BoneTransforms:
   - {fileID: 5190235138532786962}
   m_Bounds:
-    m_Center: {x: -0.12717772, y: -0.17387104, z: 0}
-    m_Extent: {x: 4.49287, y: 5.5030365, z: 0}
+    m_Center: {x: 8.744009, y: 2.1200294, z: 0}
+    m_Extent: {x: 4.4928703, y: 5.5030365, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
   m_AutoRebind: 0
@@ -526,7 +526,7 @@ MonoBehaviour:
   - {fileID: 5190235139546906441}
   - {fileID: 5190235139382778189}
   m_Bounds:
-    m_Center: {x: 0.07995808, y: -0.25637007, z: 0}
+    m_Center: {x: 0.079957366, y: -0.25637007, z: 0}
     m_Extent: {x: 1.7402463, y: 3.6880927, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
@@ -571,6 +571,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5190235139447393476}
+  - component: {fileID: 3328057338119611486}
   m_Layer: 0
   m_Name: KingCapybara
   m_TagString: Untagged
@@ -594,6 +595,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &3328057338119611486
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5190235139447393479}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1d3af491a74fbbd4a92609cd7a5ed341, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &5190235139546906440
 GameObject:
   m_ObjectHideFlags: 0
