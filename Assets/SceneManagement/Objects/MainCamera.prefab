@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 1801153804266685736}
   - component: {fileID: 1801153804266685742}
   - component: {fileID: 1801153804266685740}
-  - component: {fileID: 1801153804266685741}
   m_Layer: 0
   m_Name: MainCamera
   m_TagString: MainCamera
@@ -50,16 +49,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vehicle: {fileID: 0}
   ground: {fileID: 0}
-  vehicleHeight: 0
-  groundLineY: 750
-  smoothTime: 10
   camSpeed: 5
+  offsetAdjustSpeed: {x: 3, y: 3, z: 3}
   perfect_camShakeMagnitude: 0.5
   nitro_camShakeMagnitude: 1
-  velocityRange: {x: 100, y: 1000}
-  xPosRange: {x: 20, y: 500}
-  zPosRange: {x: -600, y: -1500}
-  currOffset: {x: 20, y: 51.560783, z: -200}
+  truckHeightZoomRange: {x: 300, y: 1000}
+  xPosRange: {x: 500, y: 1200}
+  yPosRange: {x: -500, y: 500}
+  zPosRange: {x: -1000, y: -2000}
+  currCamOffset: {x: 0, y: 0, z: 0}
+  cameraSixthOffset: 10
+  bezierPointsListTracker: 0
 --- !u!20 &1801153804266685742
 Camera:
   m_ObjectHideFlags: 0
@@ -85,7 +85,7 @@ Camera:
     height: 1
   near clip plane: 0.01
   far clip plane: 10000
-  field of view: 58.722183
+  field of view: 36.003254
   orthographic: 0
   orthographic size: 700
   m_Depth: -100
@@ -136,19 +136,6 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!114 &1801153804266685741
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1801153804266685739}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attenuationObject: {fileID: 0}
 --- !u!1 &1801153805254675668
 GameObject:
   m_ObjectHideFlags: 0
