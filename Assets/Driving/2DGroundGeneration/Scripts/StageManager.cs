@@ -9,8 +9,6 @@ public class StageManager : MonoBehaviour
 
     [Header("[[ GENERATION LENGTHS ]]")]
     public int mainGenerationLength = 30000;
-    public Vector3 generationOffset;
-
     [HideInInspector]
     public Vector3 main_begPos, main_endPos;
 
@@ -21,18 +19,17 @@ public class StageManager : MonoBehaviour
     public int endIslandXOffset = 1000;
 
     [Header("[[ GROUND GENERATION ]]")]
-    int numStages;
+    public int numStages = 3;
     int stageLength; // set based on mainGenerationLength / stages
 
     // ground generation values
     public List<GroundGeneration> stages;
-    public List<BezierCurveGeneration> allStageChunks = new List<BezierCurveGeneration>();
     [HideInInspector]
-    public List<Vector3> allStageGroundPoints = new List<Vector3>(); // all ground points of the chunks
+    public List<Vector3> allLevelGroundPoints = new List<Vector3>(); // all ground points of the chunks
     [HideInInspector]
-    public List<float> allStageGroundRotations = new List<float>(); // all ground rotations of the chunks
+    public List<float> allLevelGroundRotations = new List<float>(); // all ground rotations of the chunks
 
-    public void BeginStageGeneration()
+    void Awake()
     {
         StartCoroutine(StageGeneration());
     }
@@ -44,7 +41,6 @@ public class StageManager : MonoBehaviour
         main_endPos = main_begPos + new Vector3(mainGenerationLength, 0);
 
         // get stage length
-        numStages = stages.Count;
         stageLength = mainGenerationLength / numStages;
 
         // [[ GENERATE EACH STAGE ]]
@@ -78,9 +74,8 @@ public class StageManager : MonoBehaviour
                 yield return new WaitUntil(() => groundGen.generationFinished);
 
                 // add all generation points
-                allStageChunks.AddRange(groundGen.chunks);
-                allStageGroundPoints.AddRange(groundGen.allGroundPoints);
-                allStageGroundRotations.AddRange(groundGen.allGroundRotations);
+                allLevelGroundPoints.AddRange(groundGen.allGroundPoints);
+                allLevelGroundRotations.AddRange(groundGen.allGroundRotations);
 
                 // update new stage beginning
                 newStageBeginningPos = groundGen.endGenPos;
@@ -89,22 +84,13 @@ public class StageManager : MonoBehaviour
             // [[ CREATE MESH ]]
             if (meshCreator != null)
             {
-                meshCreator.GenerateUndergroundMesh(allStageGroundPoints);
+                meshCreator.GenerateUndergroundMesh(allLevelGroundPoints);
             }
             else { Debug.LogError("ERROR:: Mesh Creator is null", this.gameObject); }
 
             allStagesGenerated = true;
         }
 
-        // Get Cam Bezier Points
-        CameraHandler cam = Camera.main.GetComponent<CameraHandler>();
-        cam.Init();
-
-        yield return new WaitUntil(() => cam.foundGenerationPoints);
-
-
-        // Destroy Chunks
-        DestroyAllChunks();
 
     }
 
@@ -113,9 +99,9 @@ public class StageManager : MonoBehaviour
         int closestIndex = -1;
         float closestDistance = float.MaxValue;
 
-        for (int i = 0; i < allStageGroundPoints.Count; i++)
+        for (int i = 0; i < allLevelGroundPoints.Count; i++)
         {
-            float distance = Vector3.Distance(pos, allStageGroundPoints[i]);
+            float distance = Vector3.Distance(pos, allLevelGroundPoints[i]);
 
             if (distance < closestDistance)
             {
@@ -125,20 +111,6 @@ public class StageManager : MonoBehaviour
         }
 
         return closestIndex;
-    }
-
-    public void DestroyAllChunks()
-    {
-        Debug.Log("Stage Destroy Chunks");
-        foreach (BezierCurveGeneration curve in allStageChunks)
-        {
-            if (curve != null)
-            {
-                Destroy(curve.gameObject);
-            }
-        }
-
-        allStageChunks.Clear();
     }
 
     private void OnDrawGizmos()
@@ -176,11 +148,6 @@ public class StageManager : MonoBehaviour
         // << UPHILL TO LAUNCH >>
         Gizmos.DrawLine(begGenPos + xOffset + yOffset, begGenPos);
 
-
-
-        // << END ISLAND >>
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(stages[stages.Count - 1].endGenPos, begGenPos);
     }
 
 #if UNITY_EDITOR
@@ -188,7 +155,7 @@ public class StageManager : MonoBehaviour
     {
         main_begPos = this.transform.position;
         main_endPos = main_begPos + new Vector3(mainGenerationLength, 0);
-        stageLength = mainGenerationLength / stages.Count;
+        stageLength = mainGenerationLength / numStages;
     }
 #endif
 

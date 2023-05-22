@@ -42,7 +42,7 @@ public class PlayerHand : MonoBehaviour
     // You can change the target object during runtime and watch the hand move back and forth
 
 
-    public INGREDIENT_TYPE currHeldIngredient; // this holds the current ingredient in player hand
+    public ingredientType currHeldIngredient; // this holds the current ingredient in player hand
 
     // << STATE MACHINE >>
     // because this hand is going to need to do specific things once it reaches its target,
@@ -106,7 +106,7 @@ public class PlayerHand : MonoBehaviour
                 // taco.AddIngredient(/*ingredient*/);
                 Destroy(transform.GetChild(transform.childCount-1).gameObject);
                 tacoGameManager.AddIngredientToTaco(currHeldIngredient);
-                currHeldIngredient = new INGREDIENT_TYPE();
+                currHeldIngredient = new ingredientType();
                 state = handState.HOME;
                 //pop sound when placed
                 //audioManager.Play(audioManager.ingriPlaceSFX);

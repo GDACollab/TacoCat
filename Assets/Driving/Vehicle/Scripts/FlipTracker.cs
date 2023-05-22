@@ -10,7 +10,7 @@ public class FlipTracker : MonoBehaviour
     RaycastHit2D hit;
     public AudioManager audioManager;
     StageManager stageManager;
-    public int hitPointIndex;
+    int hitPointIndex;
     float initTruckRotation;
 
     public bool jumpStarted = false;
@@ -46,7 +46,7 @@ public class FlipTracker : MonoBehaviour
     {
         vehicle = GetComponent<Vehicle>();
         animHandler = GetComponent<TruckAnimationHandler>();
-        stageManager = GameObject.FindGameObjectWithTag("DrivingGameManager").GetComponent<DrivingGameManager>().playAreaStageManager;
+        stageManager = GetComponentInParent<StageManager>();
         initTruckRotation = transform.rotation.eulerAngles.z;
         audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
         boostSpriteY = boostSprite.transform.localScale.y;
@@ -84,7 +84,7 @@ public class FlipTracker : MonoBehaviour
             jumpStarted = false;
             endJumpRot = currRot;
 
-            groundPointRotation = stageManager.allStageGroundRotations[hitPointIndex];
+            groundPointRotation = stageManager.allLevelGroundRotations[hitPointIndex];
 
             if (IsPerfectLanding(endJumpRot, groundPointRotation) && flipCount > 0) 
             {
@@ -143,10 +143,10 @@ public class FlipTracker : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (stageManager != null && stageManager.allStageGroundPoints.Count > 1)
+        if (stageManager != null && stageManager.allLevelGroundPoints.Count > 1)
         {
             Gizmos.color = Color.green;
-            Gizmos.DrawSphere(stageManager.allStageGroundPoints[hitPointIndex], 4);
+            Gizmos.DrawSphere(stageManager.allLevelGroundPoints[hitPointIndex], 4);
         }
     }
 }
