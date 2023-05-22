@@ -10,7 +10,7 @@ public class FlipTracker : MonoBehaviour
     RaycastHit2D hit;
     public AudioManager audioManager;
     StageManager stageManager;
-    int hitPointIndex;
+    public int hitPointIndex;
     float initTruckRotation;
 
     public bool jumpStarted = false;

@@ -33,20 +33,18 @@ public class EnvironmentGenerator : MonoBehaviour
     [Space(10)]
     public Transform envGenParent;
 
-    [Space(10)]
     [Header("<< Environment Objects 1 >>>>>>>>>>>>>>>>>>>")]
-    [Space(10), Tooltip("Minimum space between environment objects")]
+    [Tooltip("Minimum space between environment objects")]
     [Range(1, 100)]
     public int env1_minSpacing = 10;
     [Tooltip("Maximum space between environment objects")]
     [Range(1, 100)]
     public int env1_maxSpacing = 40;
-
     [Tooltip("Amount of variance in the scales of individual tree objects")]
     public Vector2 env1ScaleRange = new Vector2(1, 10);
-
     [Space(10), Tooltip("Whether or not the trees rotate with the ground at all")]
     public bool env1_rotationEnabled = true;
+
     [Range(0, 100), Tooltip("From 0-100%, how closely will the trees align with the rotation of the ground")]
     public float env1_rotScalar = 30;
     
@@ -60,18 +58,24 @@ public class EnvironmentGenerator : MonoBehaviour
 
 
     [Header("<< Environment Objects 2 >>>>>>>>>>>>>>>>>>>")]
-    public Transform envGen2Parent;
-    public List<GameObject> envPrefabs_2 = new List<GameObject>();
-    [Tooltip("Amount of variance in the scales of individual tree objects")]
-    public Vector2 env2ScaleRange = new Vector2(1, 10);
-    [Tooltip("Whether or not the trees rotate with the ground at all")]
-    public bool env2_rotationEnabled = true;
     [Tooltip("Minimum space between environment objects")]
     [Range(1, 100)]
     public int env2_minSpacing = 10;
     [Tooltip("Maximum space between environment objects")]
     [Range(1, 100)]
     public int env2_maxSpacing = 40;
+    [Tooltip("Amount of variance in the scales of individual tree objects")]
+    public Vector2 env2ScaleRange = new Vector2(1, 10);
+    [Tooltip("Whether or not the trees rotate with the ground at all")]
+    public bool env2_rotationEnabled = true;
+    [Range(0, 100), Tooltip("From 0-100%, how closely will the trees align with the rotation of the ground")]
+    public float env2_rotScalar = 30;
+
+    [Space(10), Range(0, 200), Tooltip("Vertical offset for the trees")]
+    public float env2ObjYOffset = 0;
+    public Transform envGen2Parent;
+    public List<GameObject> envPrefabs_2 = new List<GameObject>();
+
 
 
 
@@ -151,8 +155,11 @@ public class EnvironmentGenerator : MonoBehaviour
         DeleteAllEnvironmentObjects();
 
         // << SPAWN ENV OBJECTS >>
-        SpawnEnvObjs(envPrefabs_1, envGen1Parent, env1ScaleRange, env1_minSpacing, env1_maxSpacing);
-        SpawnEnvObjs(envPrefabs_2, envGen2Parent, env1ScaleRange, env2_minSpacing, env2_maxSpacing);
+        SpawnEnvObjs(envPrefabs_1, envGen1Parent, env1_rotationEnabled,env1_rotScalar, env1ScaleRange, env1_minSpacing, env1_maxSpacing);
+        envGen1Parent.transform.position += new Vector3(0, env1ObjYOffset, 0);
+
+        SpawnEnvObjs(envPrefabs_2, envGen2Parent, env2_rotationEnabled, env2_rotScalar, env2ScaleRange, env2_minSpacing, env2_maxSpacing);
+        envGen2Parent.transform.position += new Vector3(0, env2ObjYOffset, 0);
 
         // << SPAWN SIGNS >>
         if (spawnLandmarkSigns)
@@ -198,7 +205,7 @@ public class EnvironmentGenerator : MonoBehaviour
     }
 
 
-    public void SpawnEnvObjs(List<GameObject> envObjs, Transform parent, Vector2 scaleRange, int minSpacing = 10, int maxSpacing = 40)
+    public void SpawnEnvObjs(List<GameObject> envObjs, Transform parent, bool rotationEnabled, float rotScalar, Vector2 scaleRange, int minSpacing = 10, int maxSpacing = 40)
     {
         if (envObjs.Count < 1) { Debug.Log("No ground points."); return; }
         // check ground points
@@ -220,6 +227,12 @@ public class EnvironmentGenerator : MonoBehaviour
 
             // set parent
             newObj.transform.parent = parent;
+
+            //Apply rotation 
+            if (rotationEnabled)
+            {
+                newObj.transform.Rotate(new Vector3(0, 0, groundRotations[pointIndex] * (env1_rotScalar / 100)));
+            }
 
             /* =========================================== ////
              *  << SET UP FOR NEXT ENVIRONMENT OBJECT >>
@@ -266,11 +279,6 @@ public class EnvironmentGenerator : MonoBehaviour
         // Move down slightly 
         newEnvObject.transform.position = new Vector3(newEnvObject.transform.position.x, newEnvObject.transform.position.y + env1ObjYOffset, newEnvObject.transform.position.z);
 
-        //Apply rotation 
-        if (env1_rotationEnabled)
-        {
-            newEnvObject.transform.Rotate(new Vector3(0, 0, groundRotations[pointIndex] * (env1_rotScalar / 100)));
-        }
 
         // << SET SORTING ORDER >>
         if (!newEnvObject.GetComponentInChildren<SpriteRenderer>())
