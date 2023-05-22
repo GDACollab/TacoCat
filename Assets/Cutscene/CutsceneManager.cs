@@ -70,6 +70,8 @@ public class CutsceneManager : MonoBehaviour
     public Transform alexMessageParent;
     public Transform jamieMessageParent;
 
+    public RectTransform jamieCallsAlexObject;
+
     /*[Header("Typing out the message")]
     public bool typeOutJamie;
 
@@ -156,6 +158,23 @@ public class CutsceneManager : MonoBehaviour
         if (chosenDialogue != GoodEndingDialogue)
         {
             endOfCutscene = true;
+        }
+        else
+        {
+            RectTransform rectTransform = jamieCallsAlexObject.GetComponent<RectTransform>();
+            Vector3 startPosition = rectTransform.anchoredPosition3D;
+            Vector3 targetPosition = new Vector3(-360, 0, 0);
+            float duration = 0.1f;
+            float elapsedTime = 0f;
+
+            while (elapsedTime < duration)
+            {
+                rectTransform.anchoredPosition3D = Vector3.Lerp(startPosition, targetPosition, elapsedTime / duration);
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            rectTransform.anchoredPosition3D = targetPosition;
         }
     }
 
