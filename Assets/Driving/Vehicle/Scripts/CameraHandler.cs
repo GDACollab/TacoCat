@@ -65,9 +65,12 @@ public class CameraHandler : MonoBehaviour
     {
         vehicleRb = vehicle.GetComponent<Rigidbody2D>();
 
-        StartCoroutine(Initialize());
     }
 
+    public void Init()
+    {
+        StartCoroutine(Initialize());
+    }
 
     public IEnumerator Initialize()
     {

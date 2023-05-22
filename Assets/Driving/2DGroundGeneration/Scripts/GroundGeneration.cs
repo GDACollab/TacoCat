@@ -67,6 +67,8 @@ public class GroundGeneration : MonoBehaviour
 
     public void CreateGeneration()
     {
+        Debug.Log("[[ CREATE NEW GENERATION ]]");
+
         // create chunk parent
         chunkGenParent = new GameObject("Chunk Parent").transform;
         chunkGenParent.parent = this.transform;
@@ -92,7 +94,11 @@ public class GroundGeneration : MonoBehaviour
         fullGenerationHeight = endGenPos.y - begGenPos.y;
 
         // destroy all current chunks, if any
-        if (chunks.Count > 0) { DestroyAllChunks(); }
+        if (chunks.Count > 0) {
+
+            Debug.LogWarning("GroundGen Destroy Chunks");    
+            DestroyAllChunks(); 
+        }
 
         // [[ GENERATION ]]
         Debug.Log(">> NEW GENERATION ( " + this.gameObject.name + " )", this.gameObject);
@@ -144,11 +150,6 @@ public class GroundGeneration : MonoBehaviour
         yield return new WaitUntil(() => generationFinished);
 
         Debug.Log(">> " + this.gameObject.name + " Generation Finished [ " + chunks.Count + " chunks ]", this.gameObject);
-    }
-
-    public void DestroyGenerationObjects()
-    {
-        DestroyAllChunks();
     }
 
     #region GENERATION ====================================================
@@ -578,8 +579,12 @@ public class GroundGeneration : MonoBehaviour
     {
         foreach (BezierCurveGeneration curve in chunks)
         {
-            Destroy(curve);
+            if (curve != null)
+            {
+                Destroy(curve.gameObject);
+            }
         }
+
         chunks.Clear();
     }
 

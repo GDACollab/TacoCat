@@ -21,12 +21,11 @@ public class StageManager : MonoBehaviour
     public int endIslandXOffset = 1000;
 
     [Header("[[ GROUND GENERATION ]]")]
-    public int numStages = 3;
+    int numStages;
     int stageLength; // set based on mainGenerationLength / stages
 
     // ground generation values
     public List<GroundGeneration> stages;
-    [HideInInspector]
     public List<BezierCurveGeneration> allStageChunks = new List<BezierCurveGeneration>();
     [HideInInspector]
     public List<Vector3> allStageGroundPoints = new List<Vector3>(); // all ground points of the chunks
@@ -45,6 +44,7 @@ public class StageManager : MonoBehaviour
         main_endPos = main_begPos + new Vector3(mainGenerationLength, 0);
 
         // get stage length
+        numStages = stages.Count;
         stageLength = mainGenerationLength / numStages;
 
         // [[ GENERATE EACH STAGE ]]
@@ -96,6 +96,15 @@ public class StageManager : MonoBehaviour
             allStagesGenerated = true;
         }
 
+        // Get Cam Bezier Points
+        CameraHandler cam = Camera.main.GetComponent<CameraHandler>();
+        cam.Init();
+
+        yield return new WaitUntil(() => cam.foundGenerationPoints);
+
+
+        // Destroy Chunks
+        DestroyAllChunks();
 
     }
 
@@ -120,10 +129,15 @@ public class StageManager : MonoBehaviour
 
     public void DestroyAllChunks()
     {
+        Debug.Log("Stage Destroy Chunks");
         foreach (BezierCurveGeneration curve in allStageChunks)
         {
-            Destroy(curve);
+            if (curve != null)
+            {
+                Destroy(curve.gameObject);
+            }
         }
+
         allStageChunks.Clear();
     }
 
@@ -174,7 +188,7 @@ public class StageManager : MonoBehaviour
     {
         main_begPos = this.transform.position;
         main_endPos = main_begPos + new Vector3(mainGenerationLength, 0);
-        stageLength = mainGenerationLength / numStages;
+        stageLength = mainGenerationLength / stages.Count;
     }
 #endif
 

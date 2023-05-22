@@ -53,7 +53,6 @@ public class DrivingGameManager : MonoBehaviour
 
     public IEnumerator Initialize()
     {
-
         foregroundStageManager.BeginStageGeneration();
         yield return new WaitUntil(() => foregroundStageManager.allStagesGenerated);
 
