@@ -47,6 +47,8 @@ public class BezierCurveGeneration : MonoBehaviour
     [HideInInspector]
     public Vector3 p0_pos, p1_pos, p2_pos, p3_pos;
 
+    public CameraHandler cameraHandler;
+
     [Header("Generation Editing ===========================================")]
     [Range(0.01f, 0.1f), Tooltip("Distance between points in bezier curve")]
     public float spaceBetweenPoints = 0.1f;
@@ -62,6 +64,7 @@ public class BezierCurveGeneration : MonoBehaviour
 
     private void Start()
     {
+
     }
 
     public void Update()

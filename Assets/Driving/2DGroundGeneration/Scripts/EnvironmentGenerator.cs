@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 [RequireComponent(typeof(LineRenderer))]
 [RequireComponent(typeof(StageManager))]
@@ -14,7 +13,8 @@ public class EnvironmentGenerator : MonoBehaviour
      * at a random interval, that is determined by minSpace and maxSpace
      * 
      */
-    
+
+    LineRenderer lineRenderer;
     public StageManager stageManager;
     public bool environmentSpawned;
     [HideInInspector]
@@ -26,23 +26,80 @@ public class EnvironmentGenerator : MonoBehaviour
     [HideInInspector]
     public List<GameObject> allSpawnedObjects = new List<GameObject>(); // stores all spawned env objects
 
-    [Header("Environment Generation Values ===========================")]
+    [Header("======== Environment Generation Values ========")]
+    [Space(10)]
+
+
+    [Space(10)]
+    public Transform envGenParent;
+
+    [Header("<< Environment Objects 1 >>>>>>>>>>>>>>>>>>>")]
     [Tooltip("Minimum space between environment objects")]
     [Range(1, 100)]
-    public int minSpaceBetweenObjects = 10;
+    public int env1_minSpacing = 10;
     [Tooltip("Maximum space between environment objects")]
     [Range(1, 100)]
-    public int maxSpaceBetweenObjects = 40;
+    public int env1_maxSpacing = 40;
+    [Tooltip("Amount of variance in the scales of individual tree objects")]
+    public Vector2 env1ScaleRange = new Vector2(1, 10);
+    [Space(10), Tooltip("Whether or not the trees rotate with the ground at all")]
+    public bool env1_rotationEnabled = true;
+
+    [Range(0, 100), Tooltip("From 0-100%, how closely will the trees align with the rotation of the ground")]
+    public float env1_rotScalar = 30;
+    
+    [Space(10), Range(0, 200), Tooltip("Vertical offset for the trees")]
+    public float env1ObjYOffset = 0;
+
+    [Space(10)]
+    public Transform envGen1Parent;
+    public List<GameObject> envPrefabs_1 = new List<GameObject>();
+
+
+
+    [Header("<< Environment Objects 2 >>>>>>>>>>>>>>>>>>>")]
+    [Tooltip("Minimum space between environment objects")]
+    [Range(1, 100)]
+    public int env2_minSpacing = 10;
+    [Tooltip("Maximum space between environment objects")]
+    [Range(1, 100)]
+    public int env2_maxSpacing = 40;
+    [Tooltip("Amount of variance in the scales of individual tree objects")]
+    public Vector2 env2ScaleRange = new Vector2(1, 10);
+    [Tooltip("Whether or not the trees rotate with the ground at all")]
+    public bool env2_rotationEnabled = true;
+    [Range(0, 100), Tooltip("From 0-100%, how closely will the trees align with the rotation of the ground")]
+    public float env2_rotScalar = 30;
+
+    [Space(10), Range(0, 200), Tooltip("Vertical offset for the trees")]
+    public float env2ObjYOffset = 0;
+    public Transform envGen2Parent;
+    public List<GameObject> envPrefabs_2 = new List<GameObject>();
+
+
+
 
     [Header("Line")]
     public bool drawLine;
-    LineRenderer lineRenderer;
+    public bool enableCollision;
     [Range(1, 100)]
     public float lineWidth = 20;
     public Vector3 lineOffset;
     public Material lineMaterial;
 
+    [Header("<< Landmark Signs >>")]
+    public bool spawnLandmarkSigns;
+    [Tooltip("Base sign prefab")]
+    public GameObject signPrefab;
+    [Tooltip("Parent for the spawned signs")]
+    public Transform signGenParent;
+    [Tooltip("Base scale of the Sign Objects")]
+    public float signScale = 40;
+    [Tooltip("Number of signs to spawn")]
+    public int numSigns = 4;
+
     [Header("<< Gas Stations >>")]
+    public bool spawnGasStationEnds;
     [Tooltip("Gas station prefab")]
     public GameObject gasStationPrefab;
     [Tooltip("List of gas station sprites")]
@@ -53,34 +110,6 @@ public class EnvironmentGenerator : MonoBehaviour
     public float gasStationYOffset;
     [Tooltip("Distance in ground points that the gas stations will spawn from each end")]
     public int gasStationGroundPointIndex = 1;
-
-    [Header("<< Trees >>")]
-    [Tooltip("Parent for the spawned trees")]
-    public Transform treeGenParent;
-    // [Tooltip("Base scale of the Tree Objects")]
-    // public float treeScale = 50;
-    [Tooltip("Amount of variance in the scales of individual tree objects")]
-    public float treeScaleVariance = 10;
-    [Tooltip("Whether or not the trees rotate with the ground at all")]
-    public bool treeRotationEnabled = true;
-    [Range(0, 100), Tooltip("From 0-100%, how closely will the trees align with the rotation of the ground")]
-    public float treeRotScalar = 70;
-    [Range(0, 200), Tooltip("Vertical offset for the trees")]
-    public float treeYOffset = 0;
-    public int treeZPosition = -1;
-    
-    [Tooltip("Tree prefab")]
-    public GameObject treePrefab;
-
-    [Header("<< Signs >>")]
-    [Tooltip("Base sign prefab")]
-    public GameObject signPrefab;
-    [Tooltip("Parent for the spawned signs")]
-    public Transform signGenParent;
-    [Tooltip("Base scale of the Sign Objects")]
-    public float signScale = 40;
-    [Tooltip("Number of signs to spawn")]
-    public int numSigns = 4;
 
     private void Awake()
     {
@@ -101,122 +130,174 @@ public class EnvironmentGenerator : MonoBehaviour
         mainGenerationPoints.Clear();
 
         // get ground points
-        groundPoints = stageManager.allLevelGroundPoints;
-        groundRotations = stageManager.allLevelGroundRotations;
+        groundPoints = stageManager.allStageGroundPoints;
+        groundRotations = stageManager.allStageGroundRotations;
 
         foreach (GroundGeneration stage in stageManager.stages)
         {
             mainGenerationPoints.AddRange(stage.allGroundPoints); // add stage points
         }
-
+        
         // if generation finished and environment not spawned
         if (!environmentSpawned)
         {
             SpawnAllEnvironmentObjects();
 
             if (drawLine) { DrawCurveLine(groundPoints, lineWidth, lineMaterial); }
-        }
+            else { lineRenderer.enabled = false; }
 
+            GetComponentInChildren<EdgeCollider2D>().enabled = enableCollision;
+        }
     }
 
     public void SpawnAllEnvironmentObjects()
     {
-
         DeleteAllEnvironmentObjects();
 
-        // spawn tree objects
-        SpawnEnvironmentObjects(treeZPosition);
+        // << SPAWN ENV OBJECTS >>
+        SpawnEnvObjs(envPrefabs_1, envGen1Parent, env1_rotationEnabled,env1_rotScalar, env1ScaleRange, env1_minSpacing, env1_maxSpacing);
+        envGen1Parent.transform.position += new Vector3(0, env1ObjYOffset, 0);
+
+        SpawnEnvObjs(envPrefabs_2, envGen2Parent, env2_rotationEnabled, env2_rotScalar, env2ScaleRange, env2_minSpacing, env2_maxSpacing);
+        envGen2Parent.transform.position += new Vector3(0, env2ObjYOffset, 0);
+
+        // << SPAWN SIGNS >>
+        if (spawnLandmarkSigns)
+        {
+            float percentage = (float)1 / (float)numSigns; // get the distance percentage
+            for (int i = 0; i < numSigns; i++)
+            {
+                // get ground point at percentage
+                int mainGenStartIndex = stageManager.PosToGroundPointIndex(stageManager.stages[0].begGenPos);
+                int distanceIndex = Mathf.FloorToInt(mainGenerationPoints.Count * percentage);
+
+                // spawn sign
+                GameObject sign = SpawnSign((i * distanceIndex) + mainGenStartIndex, i + 1);
+                sign.name = "LandmarkSign " + i + " " + percentage;
+            }
+        }
+
+        // << SPAWN GAS STATIONS >>
+        if (spawnGasStationEnds)
+        {
+            // << SPAWN GAS STATIONS >>
+            int levelNum = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().currLevel;
+
+            // START STATION
+            GameObject startStation = Instantiate(gasStationPrefab, groundPoints[gasStationGroundPointIndex] + new Vector3(0, gasStationYOffset, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
+            startStation.transform.localScale = startStation.transform.localScale * gasStationScale;
+            startStation.GetComponentInChildren<SpriteRenderer>().sprite = gasStationSprites[levelNum];
+
+            // END STATION
+            if (levelNum != 2)
+            {
+                GameObject endStation = Instantiate(gasStationPrefab, groundPoints[groundPoints.Count - gasStationGroundPointIndex] + new Vector3(0, gasStationYOffset, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
+                endStation.GetComponentInChildren<SpriteRenderer>().sprite = gasStationSprites[levelNum + 1];
+                endStation.transform.localScale = endStation.transform.localScale * gasStationScale;
+            }
+
+        }
+
+        // set offset
+        envGenParent.transform.localPosition = stageManager.generationOffset;
 
         environmentSpawned = true;
     }
 
-    public void DeleteAllEnvironmentObjects()
+
+    public void SpawnEnvObjs(List<GameObject> envObjs, Transform parent, bool rotationEnabled, float rotScalar, Vector2 scaleRange, int minSpacing = 10, int maxSpacing = 40)
     {
-        // destroy
-        foreach (GameObject obj in allSpawnedObjects)
-        {
-            Destroy(obj);
-        }
-
-        // clear parent list
-        allSpawnedObjects.Clear();
-
-        environmentSpawned = false;
-    }
-
-    public void SpawnEnvironmentObjects(int zposition)
-    {
+        if (envObjs.Count < 1) { Debug.Log("No ground points."); return; }
         // check ground points
         if (groundPoints.Count < 1) { Debug.LogWarning("No ground points."); return; }
         // check ground rotations
         if (groundRotations.Count < 1) { Debug.LogWarning("No rotation points."); return; }
 
+        // << SPAWN ENV OBJECTS >>
         int sortingOrder = 0; // sorting order of the object to be spawned
-        int spacing = minSpaceBetweenObjects; // minimum spacing between objects
-        int levelNum = GameObject.Find("GameManager").GetComponent<GameManager>().currLevel - 1;
+        int maxSortingOrder = 4; // max sorting order
+        int curSpacing = minSpacing; // minimum spacing between objects
 
-        // << SPAWN GAS STATIONS >>
-        GameObject startStation   = Instantiate(gasStationPrefab, groundPoints[gasStationGroundPointIndex] + new Vector3(0, gasStationYOffset, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
-        startStation.transform.localScale = startStation.transform.localScale * gasStationScale;
-        startStation.GetComponent<SpriteRenderer>().sprite = gasStationSprites[levelNum];
-        if(levelNum != 2){
-            GameObject endStation = Instantiate(gasStationPrefab, groundPoints[groundPoints.Count - gasStationGroundPointIndex] + new Vector3(0, gasStationYOffset, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
-            endStation.GetComponent<SpriteRenderer>().sprite = gasStationSprites[levelNum+1];
-            endStation.transform.localScale = endStation.transform.localScale * gasStationScale;
-        }
-
-        // << SPAWN TREES >>
-        for (int currPointIndex = 10; currPointIndex < groundPoints.Count - 1; currPointIndex += spacing)
+        for (int pointIndex = 10; pointIndex < groundPoints.Count - 1; pointIndex += curSpacing)
         {
             // spawn new environment object
-            int facing = Random.Range(0, 2)*2 - 1; 
-            float thisScale = 1 + (Random.Range(-treeScaleVariance, treeScaleVariance)); 
-            SpawnTree(currPointIndex, thisScale, facing, sortingOrder, zposition);
+            int facing = Random.Range(0, 2)*2 - 1;
+            float thisScale = Random.Range(scaleRange.x, scaleRange.y);
+            GameObject newObj = SpawnEnvObject(GetRandomObject(envObjs), pointIndex, thisScale, facing, sortingOrder, 0);
 
-            /* ===============================
+            // set parent
+            newObj.transform.parent = parent;
+
+            //Apply rotation 
+            if (rotationEnabled)
+            {
+                newObj.transform.Rotate(new Vector3(0, 0, groundRotations[pointIndex] * (env1_rotScalar / 100)));
+            }
+
+            /* =========================================== ////
              *  << SET UP FOR NEXT ENVIRONMENT OBJECT >>
              * ============================== */
 
             // << SORTING ORDER >>
             // toggle sorting order so that objects on this layer dont overlap
-            if (sortingOrder == 0) 
-            { 
-                sortingOrder = 1; 
-            } 
-            else if (sortingOrder == 1) 
-            { 
-                sortingOrder = 0; 
+            if (sortingOrder < maxSortingOrder)
+            {
+                sortingOrder++;
             }
+            else { sortingOrder = 0; }
 
             // << OBJECT SPACING >>
             // Determine the number of points to skip before instantiating the next prefab
-            spacing = Random.Range(minSpaceBetweenObjects, maxSpaceBetweenObjects + 1);
+            curSpacing = Random.Range(minSpacing, maxSpacing + 1);
 
             // Make sure we don't go past the end of the line
-            if (currPointIndex + spacing >= groundPoints.Count - 1)
+            if (pointIndex + curSpacing >= groundPoints.Count - 1)
             {
                 break;
             }
         }
+    }
 
-        // << SPAWN SIGNS >>
-        float percentage = (float)1 / (float)numSigns; // get the distance percentage
-        for (int i = 0; i < numSigns; i++)
+    #region SPAWN ENV OBJECTS ===============================================================
+    public GameObject SpawnEnvObject(GameObject prefab, int pointIndex, float scale, int facing, int sortingOrder, int zposition = 0)
+    {
+        // create a random environment object at indexed groundPoint and with rotation
+        GameObject newEnvObject = Instantiate(prefab, groundPoints[pointIndex], Quaternion.Euler(new Vector3(0, 0, 0))); ;
+
+        //set parent
+        allSpawnedObjects.Add(newEnvObject);
+
+        // randomly face left or right, then scale
+        Vector3 flipScaleVector = newEnvObject.transform.localScale;
+        flipScaleVector.x *= facing;
+        flipScaleVector *= scale;
+        newEnvObject.transform.localScale = flipScaleVector;
+
+        // set z position
+        newEnvObject.transform.position = SetZ(newEnvObject.transform.position, zposition + Random.Range(-0.01f, 0.01f));
+
+        // Move down slightly 
+        newEnvObject.transform.position = new Vector3(newEnvObject.transform.position.x, newEnvObject.transform.position.y + env1ObjYOffset, newEnvObject.transform.position.z);
+
+
+        // << SET SORTING ORDER >>
+        if (!newEnvObject.GetComponentInChildren<SpriteRenderer>())
         {
-            // get ground point at percentage
-            int mainGenStartIndex = stageManager.PosToGroundPointIndex(stageManager.stages[0].begGenPos);
-            int distanceIndex = Mathf.FloorToInt(mainGenerationPoints.Count * percentage);
-
-            // spawn sign
-            GameObject sign = SpawnSign( (i * distanceIndex) + mainGenStartIndex , i + 1);
-            sign.name = "LandmarkSign " + i + " " + percentage;
+            Debug.LogError("Env Object doesn't have SpriteRenderer component", newEnvObject);
+        }
+        else
+        {
+            // set sorting order of sprite renderer
+            SpriteRenderer sr = newEnvObject.GetComponentInChildren<SpriteRenderer>();
+            sr.sortingOrder = sortingOrder;
         }
 
+        return newEnvObject;
     }
 
     public GameObject SpawnSign(int pointIndex, int signNum)
     {
-        Vector3 signLoc = findNearestPeak(pointIndex);
+        Vector3 signLoc = FindNearestPath(pointIndex);
         GameObject newSignObject = Instantiate(signPrefab, signLoc, Quaternion.Euler(new Vector3(0, 0, 0)));
         newSignObject.transform.parent = signGenParent;
 
@@ -228,52 +309,12 @@ public class EnvironmentGenerator : MonoBehaviour
         allSpawnedObjects.Add(newSignObject);
         return newSignObject;
     }
-
-    public GameObject SpawnTree(int pointIndex, float scale, int facing, int sortingOrder, int zposition = 0)
-    {
-        // create a random environment object at indexed groundPoint and with rotation
-        GameObject newTreeObject = Instantiate(treePrefab, groundPoints[pointIndex], Quaternion.Euler(new Vector3(0, 0, 0)));
-    
-        //set parent
-        newTreeObject.transform.parent = treeGenParent;
-        allSpawnedObjects.Add(newTreeObject);
-
-        // randomly face left or right, then scale
-        Vector3 scaleVec = newTreeObject.transform.localScale;
-        scaleVec.x *= facing;
-        scaleVec *= scale;
-        newTreeObject.transform.localScale = scaleVec;
-
-        // set z position
-        newTreeObject.transform.position = SetZ(newTreeObject.transform.position, zposition + Random.Range(-0.01f, 0.01f));
-
-        // Move down slightly 
-        newTreeObject.transform.position = new Vector3(newTreeObject.transform.position.x, newTreeObject.transform.position.y + treeYOffset, newTreeObject.transform.position.z);
-
-        //Apply rotation 
-        if(treeRotationEnabled){
-            newTreeObject.transform.Rotate(new Vector3(0, 0, groundRotations[pointIndex] * (treeRotScalar / 100)));
-        }
-
-        // << SET SORTING ORDER >>
-        if (!newTreeObject.GetComponentInChildren<SpriteRenderer>())
-        {
-            Debug.LogError("Env Object doesn't have SpriteRenderer component", newTreeObject);
-        }
-        else
-        {
-            // set sorting order of sprite renderer
-            SpriteRenderer treeSpriteRend = newTreeObject.GetComponentInChildren<SpriteRenderer>();
-            treeSpriteRend.sortingOrder = sortingOrder;
-        }
-
-        return newTreeObject;
-    }
+    #endregion
 
     #region HELPER FUNCTIONS =================================================================
 
     //Given a groundPoint, find the nearest peak
-    public Vector3 findNearestPeak(int pointIndex){
+    public Vector3 FindNearestPath(int pointIndex){
         Vector3 workingPoint = groundPoints[pointIndex];
         float curY = workingPoint.y;
 
@@ -324,6 +365,12 @@ public class EnvironmentGenerator : MonoBehaviour
         return workingPoint;
     }
 
+    public GameObject GetRandomObject(List<GameObject> objects)
+    {
+        if (objects.Count == 0) { Debug.LogError("Object List is NULL"); return null; }
+
+        return objects[Random.Range(0, objects.Count)];
+    }
 
     public void DestroyListObjects(List<GameObject> list)
     {
@@ -333,6 +380,20 @@ public class EnvironmentGenerator : MonoBehaviour
         }
 
         list.Clear();
+    }
+
+    public void DeleteAllEnvironmentObjects()
+    {
+        // destroy
+        foreach (GameObject obj in allSpawnedObjects)
+        {
+            Destroy(obj);
+        }
+
+        // clear parent list
+        allSpawnedObjects.Clear();
+
+        environmentSpawned = false;
     }
 
     Vector3 SetZ(Vector3 vector, float z)
