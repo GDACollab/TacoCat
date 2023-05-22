@@ -27,7 +27,7 @@ public class TacoUIManager : MonoBehaviour
     public Transform ingredientPointParent;
     public bool newOrderTaken;
     [Header("Test Order Window UI")]
-    public List<ingredientType> testIngredients = new List<ingredientType>(4);
+    public List<INGREDIENT_TYPE> testIngredients = new List<INGREDIENT_TYPE>(4);
     
     [Header("Gas/Nitro UI")]
     public Image fuelBar;
@@ -149,7 +149,7 @@ public class TacoUIManager : MonoBehaviour
     }
     
     // Call this to display the order. Takes in the order as a list of ingredients. 
-    public void DisplayOrder(List<ingredientType> order)
+    public void DisplayOrder(List<INGREDIENT_TYPE> order)
     {
         ClearDisplayOrder();
 

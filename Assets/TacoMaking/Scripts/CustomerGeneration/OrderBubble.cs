@@ -9,7 +9,7 @@ public class OrderBubble : MonoBehaviour
 
     public Transform ingredientPointParent;
 
-    public List<ingredientType> order;
+    public List<INGREDIENT_TYPE> order;
 
     List<GameObject> orderIngredientObjects = new List<GameObject>();
 

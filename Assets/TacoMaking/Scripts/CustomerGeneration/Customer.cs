@@ -2,22 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum SpeciesType {Fish, Ravens, Sheep, Frogs, Capybaras};
-
+public enum CUST_SPECIES { None, Fish, Raven, Sheep, Frog, Capybara }; //species selectable by CreateCustomerOrder
 public class Customer: MonoBehaviour
 {
     CustomerManager customerManager;
     TacoMakingGameManager tacoGameManager;
+    [HideInInspector]
+    public CustomerAnimator anim;
 
     public Taco submittedTaco;
 
     [Header("Order UI")]
     public OrderBubble orderUI;
 
-    public enum species {Fish,Raven,Sheep,Frog,Capybara}; //species selectable by CreateCustomerOrder
-    public List<ingredientType> order; //ingredients in the order
+    public List<INGREDIENT_TYPE> order; //ingredients in the order
     public int difficulty = 1;
-    public species custSpecies;
+    public CUST_SPECIES species;
 
     [HideInInspector] public Vector3 prevPos;
     [HideInInspector] public Vector3 targetPos;
@@ -43,34 +43,32 @@ public class Customer: MonoBehaviour
         Color.red
     };
 
-    // HARDCODED -> 1: FISH . 2: RAVEN . 3: SHEEP . 4: FROG . 5: CAPYBARA
-    public List<GameObject> customerSpriteObject = new List<GameObject>();
-
     private void Awake()
     {
         tacoGameManager = GetComponentInParent<TacoMakingGameManager>();
         customerManager = GetComponentInParent<CustomerManager>();
+        anim = GetComponent<CustomerAnimator>();
+
+        species = ChooseRandomSpecies();
+
     }
 
     void Start()
     {
         orderUI.gameObject.SetActive(false);
 
-        order = CreateCustomerOrder(Mathf.Min(3, difficulty));
+        Debug.Log("Species init: " + species);
 
-        // ShowBubbleOrder(order);
+        anim.ChooseSpeciesRig(species);
+        order = CreateCustomerOrder(Mathf.Min(3, difficulty));
     }
 
-    public List<ingredientType> CreateCustomerOrder(int difficulty) 
+    public List<INGREDIENT_TYPE> CreateCustomerOrder(int difficulty) 
     {
-
         Debug.Log("Created Customer Order");
 
-        // Decide on customer species
-        custSpecies = (species)Random.Range(0,5); //Selects random species from the range of possible options
-
         // get menu from bench manager
-        List<ingredientType> menu = tacoGameManager.benchManager.menu;
+        List<INGREDIENT_TYPE> menu = tacoGameManager.benchManager.menu;
         
         List<int> orderLengths = new List<int>();
         switch (difficulty)
@@ -92,33 +90,28 @@ public class Customer: MonoBehaviour
         int orderLength = orderLengths[Random.Range(0, orderLengths.Count)]; // randomize order length
 
         // To be returned
-        List<ingredientType> s_order = new List<ingredientType>(orderLength);
+        List<INGREDIENT_TYPE> s_order = new List<INGREDIENT_TYPE>(orderLength);
 
         // Decides on possible ingredients + said element's weight
         List<int> custPreference = new List<int> { 0, 1, 2, 3, 4 };
         // I would like to switch this with calling for the required value (ie getting fish.value)
         // but afaik we don't have that implemented, and I don't want to risk messing with it rn
-        switch (custSpecies)
+        switch (species)
         {
-            case species.Fish: //No fish, 2x sour cream
+            case CUST_SPECIES.Fish: //No fish, 2x sour cream
                 custPreference = new List<int> { 0, 1, 3, 4, 4 };
-                customerSpriteObject[0].SetActive(true);
                 break;
-            case species.Raven: //2x fish
+            case CUST_SPECIES.Raven: //2x fish
                 custPreference = new List<int> { 0, 1, 2, 2, 3, 4 };
-                customerSpriteObject[1].SetActive(true);
                 break;
-            case species.Sheep: //2x cabbage
+            case CUST_SPECIES.Sheep: //2x cabbage
                 custPreference = new List<int> { 0, 0, 1, 2, 3, 4 };
-                customerSpriteObject[2].SetActive(true);
                 break;
-            case species.Frog: // 1/2x fish, 2x jalapenos
+            case CUST_SPECIES.Frog: // 1/2x fish, 2x jalapenos
                 custPreference = new List<int> { 0, 0, 1, 1, 2, 3, 3, 3, 3, 4, 4 };
-                customerSpriteObject[3].SetActive(true);
                 break;
-            case species.Capybara: // 1/2x Pico
+            case CUST_SPECIES.Capybara: // 1/2x Pico
                 custPreference = new List<int> { 0, 0, 1, 2, 2, 3, 3, 4, 4 };
-                customerSpriteObject[4].SetActive(true);
                 break;
         }
         Debug.Log(custPreference);
@@ -140,13 +133,13 @@ public class Customer: MonoBehaviour
         return s_order;
     }
 
-    public SpeciesType RandomizeSpecies()    //Generates a Random Species
+    public CUST_SPECIES ChooseRandomSpecies()    //Generates a Random Species
     {
-        return (SpeciesType)Random.Range(0,5);
+        return (CUST_SPECIES)Random.Range(1,6);
     }
 
     // << SPAWN ORDER UI BOX >>
-    public GameObject ShowBubbleOrder(List<ingredientType> order)
+    public GameObject ShowBubbleOrder(List<INGREDIENT_TYPE> order)
     {
         orderUI.gameObject.SetActive(true);
 
@@ -181,7 +174,6 @@ public class Customer: MonoBehaviour
         // << PERFECT >> ingredients are the same and order is perfect
         if (numSameIngredients == order.Count && correctPlacementCount == order.Count)
         {
-            
             return scoreType.PERFECT;
         }
         // << GOOD >> ingredients are the same, but order is wrong
@@ -201,12 +193,11 @@ public class Customer: MonoBehaviour
         }
     }
 
-
     public int compareIngredients(Taco taco)
     {
         int sameIngredientCount = 0;
 
-        foreach(ingredientType ingr in taco.ingredients)
+        foreach(INGREDIENT_TYPE ingr in taco.ingredients)
         {
             if (order.Contains(ingr))
             {

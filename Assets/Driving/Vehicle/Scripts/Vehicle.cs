@@ -80,10 +80,11 @@ public class Vehicle : MonoBehaviour
     {
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         audioManager = gameManager.audioManager;
-        stageManager = GetComponentInParent<StageManager>();
         cameraHandler = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraHandler>();
         drivingGameManager = GameObject.FindGameObjectWithTag("DrivingGameManager").GetComponent<DrivingGameManager>();
         drivingUIManager = drivingGameManager.uiManager;
+        stageManager = drivingGameManager.playAreaStageManager;
+
 
         rb_vehicle.velocity = startingVelocity;
         state = DRIVE_STATE.NONE;
@@ -204,9 +205,9 @@ public class Vehicle : MonoBehaviour
 
                 // get current point under truck
                 int curGroundPointIndex = stageManager.PosToGroundPointIndex(rb_vehicle.position);
-                if (stageManager.allLevelGroundPoints.Count > curGroundPointIndex && curGroundPointIndex != -1)
+                if (stageManager.allStageGroundPoints.Count > curGroundPointIndex && curGroundPointIndex != -1)
                 {
-                    currGroundSlopeAngle = stageManager.allLevelGroundRotations[curGroundPointIndex]; // get angle of that point
+                    currGroundSlopeAngle = stageManager.allStageGroundRotations[curGroundPointIndex]; // get angle of that point
                 }
 
                 // update in air / ground drive
