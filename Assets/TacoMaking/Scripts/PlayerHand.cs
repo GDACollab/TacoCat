@@ -90,6 +90,8 @@ public class PlayerHand : MonoBehaviour
         {
             if (TransformProximity())
             {
+                GameObject ingr = Instantiate(tacoGameManager.GetIngredientObject(currHeldIngredient), transform);
+                ingr.transform.parent = transform;
                 state = handState.PLACE_INGR;
             }
 
@@ -102,11 +104,12 @@ public class PlayerHand : MonoBehaviour
             if (TransformProximity())
             {
                 // taco.AddIngredient(/*ingredient*/);
+                Destroy(transform.GetChild(transform.childCount-1).gameObject);
                 tacoGameManager.AddIngredientToTaco(currHeldIngredient);
                 currHeldIngredient = new ingredientType();
                 state = handState.HOME;
                 //pop sound when placed
-                audioManager.Play(audioManager.ingriPlaceSFX);
+                //audioManager.Play(audioManager.ingriPlaceSFX);
             }
         }
 
@@ -114,7 +117,9 @@ public class PlayerHand : MonoBehaviour
         {
             // target -> home
             // all other states are not true
-
+            if(transform.childCount>1){
+                Destroy(transform.GetChild(transform.childCount-1).gameObject);
+            }
             target = handHome.transform;
         }
     }
@@ -143,12 +148,12 @@ public class PlayerHand : MonoBehaviour
             target = bin.transform;
             tacoTarget = submissionTaco.transform;
             currHeldIngredient = bin.ingredientType;
-
+            
             state = handState.PICK_FROM_BIN;
 
             pickBin = bin;
             //woosh sound when starting to pick up ingredient
-            audioManager.Play(audioManager.pawSwipeSFX);
+            //audioManager.Play(audioManager.pawSwipeSFX);
         }
     }
 

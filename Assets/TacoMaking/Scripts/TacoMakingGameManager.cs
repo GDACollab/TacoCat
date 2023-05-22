@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 public enum ingredientType { NONE, FISH, SOUR_CREAM, PICO_DE_GALLO, CABBAGE, SLICED_JALAPENOS }
 public enum scoreType { NONE, PERFECT, GOOD, OKAY, FAILED } // possible scores a taco can get.
 
@@ -12,6 +13,7 @@ public class TacoMakingGameManager : MonoBehaviour
     public AudioManager audioManager;
     public TacoUIManager uiManager;
     public IngredientBenchManager benchManager;
+    public GameObject background;
 
     public bool endOfGame;
 
@@ -27,36 +29,40 @@ public class TacoMakingGameManager : MonoBehaviour
     public int comboCounter;   //counts the number for 3 combos in total throughout the whole minigame
     public int totalCustomers; //Total number of customers that will appear
     public int customersLeftToGenerate; //the number of customers left to generate in the scene
+    public int difficulty = 1;
     [HideInInspector]
     public int submittedCustomers;
     public int lineSize;
-    private float customerCreationTimer; //Used to space out the creation of customers
 
     [Header("Score")]
     public float gameScore = 0; // max score is 3 * numOfCustomers served
     public float maxGameScore;
     public float gasAmount = 0;
-    public int nitroCharges;
+    public float minimumGasThreshold = .5f; // 0 is none, 1 is full
+    public int nitroCharges = 0;
 
     [Header("Prefabs")]
     public GameObject tacoPrefab;
     public List<GameObject> allIngredientPrefabs;
     public List<GameObject> allIngredientBinPrefabs;
 
+    public TMP_Text clockTime;
+
     public void Start()
     {
-
-
-
-        customerCreationTimer = customerManager.transitionTime;
+        difficulty = Mathf.Min(difficulty, 3);
+        customerManager.difficulty = difficulty;
 
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         audioManager = gameManager.audioManager;
         benchManager = GetComponentInChildren<IngredientBenchManager>();
         uiManager = GetComponentInChildren<TacoUIManager>();
         
-
-
+        for(int i = 0; i < background.transform.childCount; i++){
+            background.transform.GetChild(i).gameObject.SetActive(false);
+        }
+        background.transform.GetChild(difficulty-1).gameObject.SetActive(true);
+        
         CreateNewSubmissionTaco();
 
         customersLeftToGenerate = totalCustomers;
@@ -67,7 +73,8 @@ public class TacoMakingGameManager : MonoBehaviour
         CustomerRotation();
 
         // check for end
-        if (submittedCustomers == totalCustomers)
+        // if (submittedCustomers == totalCustomers)
+        if (gasAmount >= minimumGasThreshold)
         {
             uiManager.endText.SetActive(true);
             endOfGame = true;
@@ -87,37 +94,47 @@ public class TacoMakingGameManager : MonoBehaviour
 
     // continue through remaining customers
     public void CustomerRotation()
-    {
-        if (customerCreationTimer > customerManager.transitionTime / 3)
+    {   
+        //Calls to create a new customer as long as there are more customers to generate up to max number of customers in line at once
+        if (customersLeftToGenerate > 0 && customerManager.customerList.Count < lineSize + 1)
         {
-            //Calls to create a new customer as long as there are more customers to generate up to max number of customers in line at once
-            if (customersLeftToGenerate > 0 && customerManager.customerList.Count < lineSize + 1)
-            {
-                customerCreationTimer = 0;
-                customersLeftToGenerate--;
-                //The ID passed in for each customer starts at 1 and counts up to totalCustomers
-                Customer customer = customerManager.CreateNewCustomer(totalCustomers - customersLeftToGenerate).GetComponent<Customer>();
+            customersLeftToGenerate--;
+            //The ID passed in for each customer starts at 1 and counts up to totalCustomers
+            Customer customer = customerManager.CreateNewCustomer(totalCustomers - customersLeftToGenerate).GetComponent<Customer>();
 
-            }
         }
-        customerCreationTimer += Time.deltaTime;
+
+        if (customersLeftToGenerate < 3 && gasAmount < minimumGasThreshold) 
+        {
+            customersLeftToGenerate += 3;
+        }
+
+        if (customersLeftToGenerate < 3 && gasAmount < minimumGasThreshold) 
+        {
+            customersLeftToGenerate += 3;
+        }
     }
 
     // submit taco to customer to be graded
     public void SubmitTaco()
     {
-        scoreType score = customerManager.currCustomer.ScoreTaco(submissionTaco);
-        NewTacoScore(score);
+        //Can't submit taco until customer is finished moving
+        if (customerManager.currCustomer.moveRoutine == null)
+        {
+            scoreType score = customerManager.currCustomer.ScoreTaco(submissionTaco);
+            NewTacoScore(score);
         
-        Debug.Log("Submitted Taco! Customer Score " + score);
+            Debug.Log("Submitted Taco! Customer Score " + score);
 
-        audioManager.Play("event:/SFX/Taco Making/Bell Ding");
+            //audioManager.Play("event:/SFX/Taco Making/Bell Ding");
 
-        CreateNewSubmissionTaco();
+            CreateNewSubmissionTaco();
 
-        customerManager.RemoveCurrentCustomer();
+            customerManager.RemoveCurrentCustomer(score);
 
-        submittedCustomers++;
+            submittedCustomers++;
+            uiManager.newOrderTaken = false;
+        }
     }
 
     // Parameter: score from completed Taco
@@ -131,7 +148,7 @@ public class TacoMakingGameManager : MonoBehaviour
             
             perfectCounter++;
    
-            if (perfectCounter % 3 == 0 && perfectCounter != 0)
+            if (perfectCounter % 3 == 0 && perfectCounter != 0 && submittedCustomers <= totalCustomers)
             {
                 comboCounter++;
                 if (nitroCharges < 3)
