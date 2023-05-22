@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2405655447570477439
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 373459222918562849}
+  m_Layer: 0
+  m_Name: Env2Parent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &373459222918562849
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2405655447570477439}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2272469841242197367}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2742292303635479995
 GameObject:
   m_ObjectHideFlags: 0
@@ -58,13 +89,13 @@ MonoBehaviour:
   startIslandXOffset: -1000
   startIslandYOffset: -500
   endIslandXOffset: 3000
-  numStages: 3
   stages:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  allLevelGroundPoints: []
-  allLevelGroundRotations: []
+  allStageChunks: []
+  allStageGroundPoints: []
+  allStageGroundRotations: []
 --- !u!114 &2742292303635479999
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83,11 +114,34 @@ MonoBehaviour:
   groundRotations: []
   mainGenerationPoints: []
   allSpawnedObjects: []
+  rotationScalar: 70
+  envObjYOffset: 0
+  envGenParent: {fileID: 2272469841242197367}
+  envGen1Parent: {fileID: 5571463960001830364}
+  envPrefabs_1:
+  - {fileID: 669959166561596448, guid: 3ab7d6fb51559d049b2aa1753aabbb35, type: 3}
+  - {fileID: 3801461193250748064, guid: 7acda67bc39cd2c42b20d1157a164f68, type: 3}
+  env1ScaleRange: {x: 1, y: 10}
+  env1_rotationEnabled: 1
+  env1_minSpacing: 10
+  env1_maxSpacing: 40
+  envGen2Parent: {fileID: 373459222918562849}
+  envPrefabs_2: []
+  env2ScaleRange: {x: 1, y: 2}
+  env2_rotationEnabled: 1
+  env2_minSpacing: 10
+  env2_maxSpacing: 40
   drawLine: 1
   enableCollision: 1
   lineWidth: 100
   lineOffset: {x: 5, y: -50, z: 0}
   lineMaterial: {fileID: 2100000, guid: 95b160534129f2647b82dc53f6777085, type: 2}
+  spawnLandmarkSigns: 0
+  signPrefab: {fileID: 7292054314515768603, guid: 9473524ecdb6d4fd5ab1dbc038ec454b, type: 3}
+  signGenParent: {fileID: 2742292303754920709}
+  signScale: 40
+  numSigns: 4
+  spawnGasStationEnds: 0
   gasStationPrefab: {fileID: 4066191289592924326, guid: 0d92edf9460a9ba45b08ca291da21df3, type: 3}
   gasStationSprites:
   - {fileID: 21300000, guid: bd284b101b58d4dcab5ad1dc83a47447, type: 3}
@@ -96,21 +150,6 @@ MonoBehaviour:
   gasStationScale: 4
   gasStationYOffset: 10
   gasStationGroundPointIndex: 23
-  minSpaceBetweenObjects: 3
-  maxSpaceBetweenObjects: 14
-  envGenParent: {fileID: 2272469841242197367}
-  treeGenParent: {fileID: 5571463960001830364}
-  environmentSortingGroupName: EnvBackground
-  treePrefab: {fileID: 3801461193250748064, guid: 98f3305ed9766834c91d1bed13271dad, type: 3}
-  treeScaleVariance: 0.25
-  treeRotationEnabled: 1
-  treeRotScalar: 30
-  treeYOffset: 0
-  treeZPosition: 10
-  signPrefab: {fileID: 7292054314515768603, guid: 9473524ecdb6d4fd5ab1dbc038ec454b, type: 3}
-  signGenParent: {fileID: 2742292303754920709}
-  signScale: 40
-  numSigns: 4
 --- !u!114 &2742292303635479996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,7 +205,7 @@ LineRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2132478623
-  m_SortingLayer: 5
+  m_SortingLayer: 7
   m_SortingOrder: 1
   m_Positions:
   - {x: 0, y: 0, z: 0}
@@ -255,7 +294,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2272469841242197367}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4214453594778084804
 GameObject:
@@ -267,7 +306,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5571463960001830364}
   m_Layer: 0
-  m_Name: TreeParent
+  m_Name: Env1Parent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -320,7 +359,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2272469841242197367}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!33 &2286458887881574021
 MeshFilter:
@@ -381,7 +420,7 @@ SortingGroup:
   m_GameObject: {fileID: 6329002046810275152}
   m_Enabled: 1
   m_SortingLayerID: 2132478623
-  m_SortingLayer: 5
+  m_SortingLayer: 7
   m_SortingOrder: 0
 --- !u!1 &7153004905748324074
 GameObject:
@@ -393,7 +432,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2272469841242197367}
   m_Layer: 0
-  m_Name: EnvironmentParent
+  m_Name: FullEnvParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -412,6 +451,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5571463960001830364}
+  - {fileID: 373459222918562849}
   - {fileID: 2742292303754920709}
   - {fileID: 2191229852954528193}
   m_Father: {fileID: 2742292303635479994}
@@ -552,5 +592,5 @@ SortingGroup:
   m_GameObject: {fileID: 8744683770413148027}
   m_Enabled: 1
   m_SortingLayerID: 2132478623
-  m_SortingLayer: 5
+  m_SortingLayer: 7
   m_SortingOrder: -1

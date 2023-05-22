@@ -27,28 +27,53 @@ public class EnvironmentGenerator : MonoBehaviour
     public List<GameObject> allSpawnedObjects = new List<GameObject>(); // stores all spawned env objects
 
     [Header("======== Environment Generation Values ========")]
-    [Tooltip("Minimum space between environment objects")]
-    [Range(1, 100)]
-    public int minSpaceBetweenObjects = 10;
-    [Tooltip("Maximum space between environment objects")]
-    [Range(1, 100)]
-    public int maxSpaceBetweenObjects = 40;
+    [Space(10)]
+
 
     [Space(10)]
     public Transform envGenParent;
-    public Transform treeGenParent;
 
-    [Header("<< Environment Objects >>")]
-    public List<GameObject> envPrefabs = new List<GameObject>();
+    [Space(10)]
+    [Header("<< Environment Objects 1 >>>>>>>>>>>>>>>>>>>")]
+    [Space(10), Tooltip("Minimum space between environment objects")]
+    [Range(1, 100)]
+    public int env1_minSpacing = 10;
+    [Tooltip("Maximum space between environment objects")]
+    [Range(1, 100)]
+    public int env1_maxSpacing = 40;
+
     [Tooltip("Amount of variance in the scales of individual tree objects")]
-    public Vector2 envScaleRange = new Vector2(1, 10);
-    [Tooltip("Whether or not the trees rotate with the ground at all")]
-    public bool rotationEnabled = true;
+    public Vector2 env1ScaleRange = new Vector2(1, 10);
+
+    [Space(10), Tooltip("Whether or not the trees rotate with the ground at all")]
+    public bool env1_rotationEnabled = true;
     [Range(0, 100), Tooltip("From 0-100%, how closely will the trees align with the rotation of the ground")]
-    public float rotationScalar = 70;
-    [Range(0, 200), Tooltip("Vertical offset for the trees")]
-    public float envObjYOffset = 0;
-    public int envObjectZPos = -1;
+    public float env1_rotScalar = 30;
+    
+    [Space(10), Range(0, 200), Tooltip("Vertical offset for the trees")]
+    public float env1ObjYOffset = 0;
+
+    [Space(10)]
+    public Transform envGen1Parent;
+    public List<GameObject> envPrefabs_1 = new List<GameObject>();
+
+
+
+    [Header("<< Environment Objects 2 >>>>>>>>>>>>>>>>>>>")]
+    public Transform envGen2Parent;
+    public List<GameObject> envPrefabs_2 = new List<GameObject>();
+    [Tooltip("Amount of variance in the scales of individual tree objects")]
+    public Vector2 env2ScaleRange = new Vector2(1, 10);
+    [Tooltip("Whether or not the trees rotate with the ground at all")]
+    public bool env2_rotationEnabled = true;
+    [Tooltip("Minimum space between environment objects")]
+    [Range(1, 100)]
+    public int env2_minSpacing = 10;
+    [Tooltip("Maximum space between environment objects")]
+    [Range(1, 100)]
+    public int env2_maxSpacing = 40;
+
+
 
     [Header("Line")]
     public bool drawLine;
@@ -70,6 +95,7 @@ public class EnvironmentGenerator : MonoBehaviour
     public int numSigns = 4;
 
     [Header("<< Gas Stations >>")]
+    public bool spawnGasStationEnds;
     [Tooltip("Gas station prefab")]
     public GameObject gasStationPrefab;
     [Tooltip("List of gas station sprites")]
@@ -125,7 +151,8 @@ public class EnvironmentGenerator : MonoBehaviour
         DeleteAllEnvironmentObjects();
 
         // << SPAWN ENV OBJECTS >>
-        SpawnAllEnvObjects(envObjectZPos);
+        SpawnEnvObjs(envPrefabs_1, envGen1Parent, env1ScaleRange, env1_minSpacing, env1_maxSpacing);
+        SpawnEnvObjs(envPrefabs_2, envGen2Parent, env1ScaleRange, env2_minSpacing, env2_maxSpacing);
 
         // << SPAWN SIGNS >>
         if (spawnLandmarkSigns)
@@ -143,20 +170,25 @@ public class EnvironmentGenerator : MonoBehaviour
             }
         }
 
-
         // << SPAWN GAS STATIONS >>
-        int levelNum = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().currLevel;
+        if (spawnGasStationEnds)
+        {
+            // << SPAWN GAS STATIONS >>
+            int levelNum = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().currLevel;
 
-        // START STATION
-        GameObject startStation = Instantiate(gasStationPrefab, groundPoints[gasStationGroundPointIndex] + new Vector3(0, gasStationYOffset, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
-        startStation.transform.localScale = startStation.transform.localScale * gasStationScale;
-        startStation.GetComponentInChildren<SpriteRenderer>().sprite = gasStationSprites[levelNum];
+            // START STATION
+            GameObject startStation = Instantiate(gasStationPrefab, groundPoints[gasStationGroundPointIndex] + new Vector3(0, gasStationYOffset, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
+            startStation.transform.localScale = startStation.transform.localScale * gasStationScale;
+            startStation.GetComponentInChildren<SpriteRenderer>().sprite = gasStationSprites[levelNum];
 
-        // END STATION
-        if(levelNum != 2){
-            GameObject endStation = Instantiate(gasStationPrefab, groundPoints[groundPoints.Count - gasStationGroundPointIndex] + new Vector3(0, gasStationYOffset, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
-            endStation.GetComponentInChildren<SpriteRenderer>().sprite = gasStationSprites[levelNum+1];
-            endStation.transform.localScale = endStation.transform.localScale * gasStationScale;
+            // END STATION
+            if (levelNum != 2)
+            {
+                GameObject endStation = Instantiate(gasStationPrefab, groundPoints[groundPoints.Count - gasStationGroundPointIndex] + new Vector3(0, gasStationYOffset, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
+                endStation.GetComponentInChildren<SpriteRenderer>().sprite = gasStationSprites[levelNum + 1];
+                endStation.transform.localScale = endStation.transform.localScale * gasStationScale;
+            }
+
         }
 
         // set offset
@@ -166,27 +198,30 @@ public class EnvironmentGenerator : MonoBehaviour
     }
 
 
-    public void SpawnAllEnvObjects(int zposition)
+    public void SpawnEnvObjs(List<GameObject> envObjs, Transform parent, Vector2 scaleRange, int minSpacing = 10, int maxSpacing = 40)
     {
+        if (envObjs.Count < 1) { Debug.Log("No ground points."); return; }
         // check ground points
         if (groundPoints.Count < 1) { Debug.LogWarning("No ground points."); return; }
         // check ground rotations
         if (groundRotations.Count < 1) { Debug.LogWarning("No rotation points."); return; }
 
-
         // << SPAWN ENV OBJECTS >>
         int sortingOrder = 0; // sorting order of the object to be spawned
         int maxSortingOrder = 4; // max sorting order
-        int spacing = minSpaceBetweenObjects; // minimum spacing between objects
+        int curSpacing = minSpacing; // minimum spacing between objects
 
-        for (int pointIndex = 10; pointIndex < groundPoints.Count - 1; pointIndex += spacing)
+        for (int pointIndex = 10; pointIndex < groundPoints.Count - 1; pointIndex += curSpacing)
         {
             // spawn new environment object
             int facing = Random.Range(0, 2)*2 - 1;
-            float thisScale = Random.Range(envScaleRange.x, envScaleRange.y);
-            GameObject newObj = SpawnEnvObject( GetRandomObject(envPrefabs), pointIndex, thisScale, facing, sortingOrder, zposition);
+            float thisScale = Random.Range(scaleRange.x, scaleRange.y);
+            GameObject newObj = SpawnEnvObject(GetRandomObject(envObjs), pointIndex, thisScale, facing, sortingOrder, 0);
 
-            /* ===============================
+            // set parent
+            newObj.transform.parent = parent;
+
+            /* =========================================== ////
              *  << SET UP FOR NEXT ENVIRONMENT OBJECT >>
              * ============================== */
 
@@ -200,10 +235,10 @@ public class EnvironmentGenerator : MonoBehaviour
 
             // << OBJECT SPACING >>
             // Determine the number of points to skip before instantiating the next prefab
-            spacing = Random.Range(minSpaceBetweenObjects, maxSpaceBetweenObjects + 1);
+            curSpacing = Random.Range(minSpacing, maxSpacing + 1);
 
             // Make sure we don't go past the end of the line
-            if (pointIndex + spacing >= groundPoints.Count - 1)
+            if (pointIndex + curSpacing >= groundPoints.Count - 1)
             {
                 break;
             }
@@ -217,25 +252,24 @@ public class EnvironmentGenerator : MonoBehaviour
         GameObject newEnvObject = Instantiate(prefab, groundPoints[pointIndex], Quaternion.Euler(new Vector3(0, 0, 0))); ;
 
         //set parent
-        newEnvObject.transform.parent = treeGenParent;
         allSpawnedObjects.Add(newEnvObject);
 
         // randomly face left or right, then scale
-        Vector3 scaleVec = newEnvObject.transform.localScale;
-        scaleVec.x *= facing;
-        scaleVec *= scale;
-        newEnvObject.transform.localScale = scaleVec;
+        Vector3 flipScaleVector = newEnvObject.transform.localScale;
+        flipScaleVector.x *= facing;
+        flipScaleVector *= scale;
+        newEnvObject.transform.localScale = flipScaleVector;
 
         // set z position
         newEnvObject.transform.position = SetZ(newEnvObject.transform.position, zposition + Random.Range(-0.01f, 0.01f));
 
         // Move down slightly 
-        newEnvObject.transform.position = new Vector3(newEnvObject.transform.position.x, newEnvObject.transform.position.y + envObjYOffset, newEnvObject.transform.position.z);
+        newEnvObject.transform.position = new Vector3(newEnvObject.transform.position.x, newEnvObject.transform.position.y + env1ObjYOffset, newEnvObject.transform.position.z);
 
         //Apply rotation 
-        if (rotationEnabled)
+        if (env1_rotationEnabled)
         {
-            newEnvObject.transform.Rotate(new Vector3(0, 0, groundRotations[pointIndex] * (rotationScalar / 100)));
+            newEnvObject.transform.Rotate(new Vector3(0, 0, groundRotations[pointIndex] * (env1_rotScalar / 100)));
         }
 
         // << SET SORTING ORDER >>
