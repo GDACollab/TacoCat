@@ -5,8 +5,9 @@ using UnityEngine;
 [ExecuteAlways]
 public class SunCycle : MonoBehaviour
 {
-    [Tooltip("The sun GameObject to move.")]
+    [Tooltip("The sun or moon GameObject to move.")]
     public GameObject sunObj;
+    public GameObject moonObj;
     [Tooltip("The starting position of the sun object. The z coordinate is taken into account.")]
     public Vector3 startPos;
     [Tooltip("The x coordinate of the end position of the sun object's path. The end position will have the same y coordinate as the starting position.")]
@@ -20,6 +21,10 @@ public class SunCycle : MonoBehaviour
     [Range(0.0f, 1.0f)]
     public float pathProgress;
 
+    [Header("Refrences needed")]
+    public LightingManager lightManager;
+    public TIME_OF_DAY currentDayCycle;
+
     private Vector3 s_circleCenter;
     private Vector3 s_vecToStartPos;
     private float s_angleFromStartToEnd;
@@ -32,7 +37,18 @@ public class SunCycle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        currentDayCycle = lightManager.dayCycleState;
         UpdateSunPos();
+        if (currentDayCycle == TIME_OF_DAY.NIGHT)
+        {
+            sunObj.SetActive(false);
+            moonObj.SetActive(true);
+        }
+        else
+        {
+            moonObj.SetActive(false);
+            sunObj.SetActive(true);
+        }
     }
 
     public void SetUpSunPath()
@@ -60,7 +76,9 @@ public class SunCycle : MonoBehaviour
         Quaternion rotationQuat = Quaternion.AngleAxis(angleOffsetFromStart, Vector3.back);
 
         sunObj.transform.position = rotationQuat * s_vecToStartPos + s_circleCenter;
+        moonObj.transform.position = rotationQuat * s_vecToStartPos + s_circleCenter;
         sunObj.transform.position = new Vector3(sunObj.transform.position.x, sunObj.transform.position.y * heightPercentage, sunObj.transform.position.z);
+        moonObj.transform.position = new Vector3(moonObj.transform.position.x, moonObj.transform.position.y * heightPercentage, moonObj.transform.position.z);
     }
 
     public void OnDrawGizmos()
