@@ -46,11 +46,7 @@ public class TacoMakingGameManager : MonoBehaviour
     public List<GameObject> allIngredientPrefabs;
     public List<GameObject> allIngredientBinPrefabs;
 
-    [Header("Truck")]
-    public GameObject window;
     public TMP_Text clockTime;
-    public float windowOpenDelay = 2f;
-    public float windowOpenTime = 1f;
 
     public void Start()
     {
@@ -70,8 +66,6 @@ public class TacoMakingGameManager : MonoBehaviour
         CreateNewSubmissionTaco();
 
         customersLeftToGenerate = totalCustomers;
-        // Invoke("OpenWindow", windowOpenDelay);
-        StartCoroutine("OpenWindow");
     }
 
     public void Update()
@@ -196,24 +190,6 @@ public class TacoMakingGameManager : MonoBehaviour
         maxGameScore = totalCustomers * 3;
         gasAmount = gameScore/maxGameScore;
         Debug.Log("gasAmout: "+gasAmount+" gameScore: "+ gameScore+" maxGameScore: "+ maxGameScore+" totalCustomers: "+ totalCustomers);
-    }
-    
-    public IEnumerator OpenWindow(){
-        yield return new WaitForSeconds(windowOpenDelay);
-        float windowTime = 0;
-        Vector3 startPos = window.transform.localPosition;
-        Vector3 endPos = startPos;
-        endPos.y = 8.54f;
-        float interpolater = 0;
-        
-        while(windowTime<windowOpenTime){
-            interpolater = windowTime / windowOpenTime;
-            interpolater = interpolater * interpolater * (3f - 2f * interpolater);
-            window.transform.position = Vector3.Lerp(startPos, endPos, interpolater);
-            windowTime += Time.deltaTime;
-            yield return null;
-        }
-        // window.SetActive(false);
     }
 
 
