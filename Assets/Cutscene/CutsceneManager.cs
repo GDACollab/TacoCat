@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 
 public class CutsceneManager : MonoBehaviour
 {
@@ -72,12 +74,15 @@ public class CutsceneManager : MonoBehaviour
 
     public RectTransform jamieCallsAlexObject;
 
+    public Image image;
+    public float fadeTime = 1f;
+    private float currentAlpha = 0f;
+
     /*[Header("Typing out the message")]
     public bool typeOutJamie;
 
     [Range(0.0f, 0.5f)]
     public float textSpeedJamie;*/
-
 
 
     // Start is called before the first frame update
@@ -92,6 +97,8 @@ public class CutsceneManager : MonoBehaviour
         //testing
         //Instantiate(alexBubble, alexBubble.transform.position, transform.rotation);
         //Instantiate(jamieBubble, jamieBubble.transform.position, transform.rotation);
+
+        image.color = new Color(image.color.r, image.color.g, image.color.b, currentAlpha);
 
         StartCoroutine(begin());
 
@@ -153,7 +160,7 @@ public class CutsceneManager : MonoBehaviour
 
         }
 
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(3);
 
         if (chosenDialogue != GoodEndingDialogue)
         {
@@ -175,7 +182,29 @@ public class CutsceneManager : MonoBehaviour
             }
 
             rectTransform.anchoredPosition3D = targetPosition;
+
+            yield return new WaitForSeconds(1f);
+            StartCoroutine(FadeOut());
+            yield return new WaitForSeconds(fadeTime);
+            SceneManager.LoadScene("GoodEnding");
         }
+    }
+
+    private System.Collections.IEnumerator FadeOut()
+    {
+        float timer = 0f;
+
+        while (timer < fadeTime)
+        {
+            timer += Time.deltaTime;
+            currentAlpha = Mathf.Lerp(0f, 1f, timer / fadeTime);
+
+            image.color = new Color(image.color.r, image.color.g, image.color.b, currentAlpha);
+
+            yield return null;
+        }
+
+        image.color = new Color(image.color.r, image.color.g, image.color.b, 1f);
     }
 
     public void MoveBubblesUp(float amount)
