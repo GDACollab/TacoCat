@@ -30,9 +30,12 @@ public class MenuManager : MonoBehaviour
             RectTransform poleBox = pole.GetComponent<RectTransform>();
             poleBox.sizeDelta = new Vector2(100, 1500);
         }
-        if (win)
+        if (win && level > 3)
         {
             hangingSign.SetActive(true); // Enable hanging sign
+            Animator signDrop = hangingSign.GetComponent<Animator>();
+            Debug.Log("MenuManager: Deloying Hanging Sign");
+            signDrop.Play("Deploy");
         }
     }
 
@@ -67,7 +70,7 @@ public class MenuManager : MonoBehaviour
 
     public void Credits()
     {
-
+        
     }
 
     public void Exit()

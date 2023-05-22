@@ -1832,7 +1832,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1484127114
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1895,7 +1895,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 3
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.6037736, g: 0.6037736, b: 0.6037736, a: 1}
@@ -1946,7 +1946,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2763,6 +2763,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
       propertyPath: currLevel
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: trueEnding
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}

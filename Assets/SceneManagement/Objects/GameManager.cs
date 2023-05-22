@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
     public currGame currGame = currGame.NONE;
     public currGame lastGame;
     public int currLevel = 1;
-    public bool trueEnding = false;
+    public bool trueEnding = true;
     public SceneObject currScene;
     public int cutsceneIndex = 0;
     [Space(5)]
