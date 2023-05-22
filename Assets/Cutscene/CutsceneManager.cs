@@ -43,6 +43,8 @@ public class CutsceneManager : MonoBehaviour
 
     private List<TextList> chosenDialogue;
 
+    public float unskipableDelay;
+
     [Range(0.0f, 0.5f)]
     public float messageDelayAlex;
 
@@ -107,7 +109,7 @@ public class CutsceneManager : MonoBehaviour
             if (textLine.person == 0)
             {
                 // ALEX
-                yield return new WaitForSeconds(0.11f);
+                //yield return new WaitForSeconds(unskipableDelay);
                 yield return StartCoroutine(AlexText_TypeLine(textLine.texts));
             }
             else
@@ -115,8 +117,9 @@ public class CutsceneManager : MonoBehaviour
                 //Jamie
                 //slight pause so Jamie doesn't respond instantly
 
-                //yield return new WaitForSeconds(messageDelayJamie/4);
-                yield return jamieCountdown();
+                
+                //yield return jamieCountdown();
+                //yield return new WaitForSeconds(unskipableDelay);
                 yield return StartCoroutine(JamieText_InstantPrint(textLine.texts));
             }
         }
@@ -168,7 +171,7 @@ public class CutsceneManager : MonoBehaviour
     {
         foreach (string s in l)
         {
-
+            
             GameObject bubble = Instantiate(alexMessagePrefab, alexMessageParent);
             bubble.transform.position = alexMessageParent.position;
             bubble.GetComponent<BubbleManager>().Init(character.ALEX, s, this);
@@ -177,7 +180,9 @@ public class CutsceneManager : MonoBehaviour
             currentBubbles.Add(bubble);
 
             //audioManager.Play(audioManager.sendTextSFX);
+            
             yield return alexCountdown();
+            yield return new WaitForSeconds(unskipableDelay);
 
         }
     }
@@ -188,6 +193,7 @@ public class CutsceneManager : MonoBehaviour
         //Add each element from phone_texts to phoneText
         foreach (string l in characterText)
         {
+            
             //phoneText.text += l + "\n";
 
             //insert instance of jamiebubble text += l + "\n"
@@ -200,7 +206,9 @@ public class CutsceneManager : MonoBehaviour
 
             //audioManager.Play(audioManager.recieveTextSFX);
             Debug.Log("ReceiveTextSFX");
+            
             yield return jamieCountdown();
+            yield return new WaitForSeconds(unskipableDelay);
         }
     }
 
