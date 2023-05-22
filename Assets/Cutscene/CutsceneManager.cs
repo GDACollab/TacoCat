@@ -107,13 +107,16 @@ public class CutsceneManager : MonoBehaviour
             if (textLine.person == 0)
             {
                 // ALEX
+                yield return new WaitForSeconds(0.11f);
                 yield return StartCoroutine(AlexText_TypeLine(textLine.texts));
             }
             else
             {
                 //Jamie
                 //slight pause so Jamie doesn't respond instantly
-                yield return new WaitForSeconds(messageDelayJamie);
+
+                //yield return new WaitForSeconds(messageDelayJamie/4);
+                yield return jamieCountdown();
                 yield return StartCoroutine(JamieText_InstantPrint(textLine.texts));
             }
         }
@@ -121,6 +124,35 @@ public class CutsceneManager : MonoBehaviour
         yield return new WaitForSeconds(4);
         endOfCutscene = true;
     }
+
+
+    IEnumerator jamieCountdown()
+    {
+        for (float timer = messageDelayJamie; timer >= 0; timer -= Time.deltaTime)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                yield break;
+            }
+            yield return null;
+        }
+
+    }
+
+    IEnumerator alexCountdown()
+    {
+        for (float timer = messageDelayAlex; timer >= 0; timer -= Time.deltaTime)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                yield break;
+            }
+            yield return null;
+        }
+
+    }
+
+
 
     public void MoveBubblesUp(float amount)
     {
@@ -145,7 +177,7 @@ public class CutsceneManager : MonoBehaviour
             currentBubbles.Add(bubble);
 
             //audioManager.Play(audioManager.sendTextSFX);
-            yield return new WaitForSeconds(messageDelayAlex);
+            yield return alexCountdown();
 
         }
     }
@@ -168,7 +200,7 @@ public class CutsceneManager : MonoBehaviour
 
             //audioManager.Play(audioManager.recieveTextSFX);
             Debug.Log("ReceiveTextSFX");
-            yield return new WaitForSeconds(messageDelayJamie);
+            yield return jamieCountdown();
         }
     }
 
