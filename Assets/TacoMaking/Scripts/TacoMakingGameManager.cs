@@ -78,7 +78,7 @@ public class TacoMakingGameManager : MonoBehaviour
                 activateTutorial = false;
             }
             if(gameManager.currGame==currGame.TACO_MAKING){
-                setTutorial(activateTutorial);
+                ShowTutorial(activateTutorial);
             }
         }
         else{
@@ -205,10 +205,10 @@ public class TacoMakingGameManager : MonoBehaviour
         Debug.Log("gasAmout: "+gasAmount+" gameScore: "+ gameScore+" maxGameScore: "+ maxGameScore+" totalCustomers: "+ totalCustomers);
     }
     
-    private void setTutorial(bool set){
-        transform.Find("Tutorial Canvas").gameObject.SetActive(set);
-        GetComponent<InputManager>().enabled = !set;
-        Time.timeScale = (set) ? 0 : 1;
+    private void ShowTutorial(bool enable){
+        transform.Find("Tutorial Canvas").gameObject.SetActive(enable);
+        GetComponent<InputManager>().enabled = !enable;
+        Time.timeScale = (enable) ? 0 : 1;
     }
 
 
