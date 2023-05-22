@@ -47,6 +47,7 @@ public class TacoMakingGameManager : MonoBehaviour
     public List<GameObject> allIngredientBinPrefabs;
 
     public TMP_Text clockTime;
+    public bool activateTutorial = true;
 
     public void Start()
     {
@@ -63,6 +64,8 @@ public class TacoMakingGameManager : MonoBehaviour
         }
         background.transform.GetChild(difficulty-1).gameObject.SetActive(true);
         
+        activateTutorial = (difficulty!=1) ? false : activateTutorial;
+
         CreateNewSubmissionTaco();
 
         customersLeftToGenerate = totalCustomers;
@@ -70,14 +73,24 @@ public class TacoMakingGameManager : MonoBehaviour
 
     public void Update()
     {
-        CustomerRotation();
+        if(activateTutorial){
+            if(Input.GetKeyDown(KeyCode.Space)){
+                activateTutorial = false;
+            }
+            if(gameManager.currGame==currGame.TACO_MAKING){
+                setTutorial(activateTutorial);
+            }
+        }
+        else{
+            CustomerRotation();
 
-        // check for end
-        // if (submittedCustomers == totalCustomers)
-        if (gasAmount >= minimumGasThreshold)
-        {
-            uiManager.endText.SetActive(true);
-            endOfGame = true;
+            // check for end
+            // if (submittedCustomers == totalCustomers)
+            if (gasAmount >= minimumGasThreshold)
+            {
+                uiManager.endText.SetActive(true);
+                endOfGame = true;
+            }
         }
     }
 
@@ -190,6 +203,12 @@ public class TacoMakingGameManager : MonoBehaviour
         maxGameScore = totalCustomers * 3;
         gasAmount = gameScore/maxGameScore;
         Debug.Log("gasAmout: "+gasAmount+" gameScore: "+ gameScore+" maxGameScore: "+ maxGameScore+" totalCustomers: "+ totalCustomers);
+    }
+    
+    private void setTutorial(bool set){
+        transform.Find("Tutorial Canvas").gameObject.SetActive(set);
+        GetComponent<InputManager>().enabled = !set;
+        Time.timeScale = (set) ? 0 : 1;
     }
 
 
