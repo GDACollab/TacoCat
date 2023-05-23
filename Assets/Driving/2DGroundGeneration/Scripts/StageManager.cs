@@ -186,9 +186,13 @@ public class StageManager : MonoBehaviour
 #if UNITY_EDITOR
     private void OnValidate()
     {
-        main_begPos = this.transform.position;
-        main_endPos = main_begPos + new Vector3(mainGenerationLength, 0);
-        stageLength = mainGenerationLength / stages.Count;
+        if (stages.Count > 0)
+        {
+            main_begPos = this.transform.position;
+            main_endPos = main_begPos + new Vector3(mainGenerationLength, 0);
+            stageLength = mainGenerationLength / stages.Count;
+        }
+
     }
 #endif
 

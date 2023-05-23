@@ -88,7 +88,7 @@ public class TacoMakingGameManager : MonoBehaviour
             // if (submittedCustomers == totalCustomers)
             if (gasAmount >= minimumGasThreshold)
             {
-                uiManager.endText.SetActive(true);
+                //uiManager.endText.SetActive(true);
                 endOfGame = true;
             }
         }
