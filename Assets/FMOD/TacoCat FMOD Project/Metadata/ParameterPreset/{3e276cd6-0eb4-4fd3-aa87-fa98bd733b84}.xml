@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{3e276cd6-0eb4-4fd3-aa87-fa98bd733b84}">
+		<property name="name">
+			<value>happyEnding</value>
+		</property>
+		<relationship name="folder">
+			<destination>{537295e0-55ed-4581-88d4-761b4c281eb5}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{1d2f64dd-e877-4b19-8f0a-3ea50f6ff749}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{1d2f64dd-e877-4b19-8f0a-3ea50f6ff749}">
+		<property name="parameterType">
+			<value>1</value>
+		</property>
+		<property name="maximum">
+			<value>2</value>
+		</property>
+		<property name="isGlobal">
+			<value>true</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+		<property name="isExposedRecursively">
+			<value>false</value>
+		</property>
+		<relationship name="automators">
+			<destination>{81994077-0051-4c4b-8ad1-ca02b20412c6}</destination>
+		</relationship>
+	</object>
+	<object class="Automator" id="{81994077-0051-4c4b-8ad1-ca02b20412c6}">
+		<property name="nameOfPropertyBeingAutomated">
+			<value>cursorPosition</value>
+		</property>
+	</object>
+</objects>
