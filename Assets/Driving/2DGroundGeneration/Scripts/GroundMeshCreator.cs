@@ -6,7 +6,6 @@ using UnityEngine;
 [RequireComponent(typeof(EdgeCollider2D))]
 public class GroundMeshCreator : MonoBehaviour
 {
-    private StageManager stageManager;
     private MeshFilter meshFilter;
     private MeshRenderer meshRenderer;
     private Mesh generatedMesh;
@@ -17,8 +16,6 @@ public class GroundMeshCreator : MonoBehaviour
     public Material groundMaterial;
     Vector3 begPos, endPos, middleOfMesh, scaleOfGeneration, safeGenTextureScale;
 
-
-    [Space(20)]
     public int underground_height = -500;
 
     [Header("Debug")]
@@ -28,7 +25,6 @@ public class GroundMeshCreator : MonoBehaviour
     private void Awake()
     {
         // setup mesh components
-        stageManager = GetComponentInParent<StageManager>();
         meshFilter = GetComponent<MeshFilter>();
         meshFilter.mesh = new Mesh();
         meshRenderer = GetComponent<MeshRenderer>();
@@ -78,7 +74,7 @@ public class GroundMeshCreator : MonoBehaviour
 
         //DONT TOUCH THIS OR I WILL CASTRATE YOU
         //For some reason this fixes positioning problems
-        transform.position = Vector3.zero + stageManager.generationOffset;
+        transform.position = Vector3.zero;
         //undergroundMeshObj.transform.position = new Vector3(undergroundMeshObj.transform.localPosition.x, undergroundMeshObj.transform.localPosition.y);
 
 
