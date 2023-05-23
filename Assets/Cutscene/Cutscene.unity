@@ -974,6 +974,71 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1334271520
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7004250954060202129, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: m_Name
+      value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: creditscene.m_SceneName
+      value: Credits
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: tacoMakingScene.m_SceneName
+      value: TacoMaking
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202135, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202135, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202135, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202135, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202135, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202135, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202135, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202135, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202135, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202135, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202135, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b98e17472161422409ce954e519a82b5, type: 3}
 --- !u!1 &1357507493
 GameObject:
   m_ObjectHideFlags: 0
@@ -1125,8 +1190,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: SKIP!!!!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 954c5573a9a1bb74495865797560d49a, type: 2}
-  m_sharedMaterial: {fileID: -6051360038554888114, guid: 954c5573a9a1bb74495865797560d49a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ee6c058c3bb67cb49ba76ec0e81f1c92, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: ee6c058c3bb67cb49ba76ec0e81f1c92, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1450,8 +1515,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: ALEEEEEEEEX!!!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 954c5573a9a1bb74495865797560d49a, type: 2}
-  m_sharedMaterial: {fileID: -6051360038554888114, guid: 954c5573a9a1bb74495865797560d49a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ee6c058c3bb67cb49ba76ec0e81f1c92, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: ee6c058c3bb67cb49ba76ec0e81f1c92, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
