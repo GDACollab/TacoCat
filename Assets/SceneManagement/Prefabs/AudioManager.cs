@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
-//using FMOD.Studio;
-//using FMODUnity;
+using FMOD.Studio;
+using FMODUnity;
 
 //EVENTS W/ PARAMETERS
 //music events, isPaused
@@ -34,13 +34,12 @@ public class AudioManager : MonoBehaviour {
     public string ambiVolBusPath = "bus:/Ambience";
 
     //BUSES
-    /*
+
     public FMOD.Studio.Bus masBus;
     public FMOD.Studio.Bus musBus;
     public FMOD.Studio.Bus sfxBus;
     public FMOD.Studio.Bus diaBus;
     public FMOD.Studio.Bus ambiBus;
-    */
 
     /////////////////////////MUSIC//////////////////////////////
     [Header("FMOD Music")]
@@ -89,16 +88,16 @@ public class AudioManager : MonoBehaviour {
     [Tooltip("Name of the paw swiping event")]
     public string pawSwipeSFX; //IMPLEMENTED
     public bool isPaused;
-
-    //FMODUnity.RuntimeManager.StudioSystem.setParameterByName("isPaused", isPaused);
+    
+    
 
     //need to have name of parameter and variable
-    // FOR GLOBAL PARAMETERS FMOD Parameter name, variable name
+    //FOR GLOBAL PARAMETERS FMOD Parameter name, variable name
     //FMODUnity.RuntimeManager.StudioSystem.setParameterByName("", x);
 
     void Awake()
     {
-        /*
+        
         // Load the FMOD banks
         RuntimeManager.LoadBank("Master");
         RuntimeManager.LoadBank("SFX");
@@ -111,17 +110,17 @@ public class AudioManager : MonoBehaviour {
         sfxBus = FMODUnity.RuntimeManager.GetBus(sfxVolBusPath);
         diaBus = FMODUnity.RuntimeManager.GetBus(diaVolBusPath);
         ambiBus = FMODUnity.RuntimeManager.GetBus(ambiVolBusPath);
-        */
+        
 
-        /*menuMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + menuMusic);
+        //menuMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + menuMusic);
 
-        cutsceneMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + cutsceneMusic);
-        tacoMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + tacoMusic);
-        drivingMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + drivingMusic);*/
+        //cutsceneMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + cutsceneMusic);
+        //tacoMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + tacoMusic);
+        //drivingMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + drivingMusic);*/
 
     }
 
-    /*
+  
     protected EventInstance currentPlaying;
 
 
@@ -190,5 +189,4 @@ public class AudioManager : MonoBehaviour {
         diaBus.setVolume(dialogueVolume);
         ambiBus.setVolume(ambianceVolume);
     }
-    */
 }
