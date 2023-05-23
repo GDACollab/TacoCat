@@ -11,8 +11,7 @@ public class Taco : MonoBehaviour
     }
     public void addingredientObject(GameObject obj)
     {
-        GameObject ingr = Instantiate(obj, transform.position + new Vector3(0, 0.2f * ingredients.Count + 0.1f, 0), Quaternion.identity, transform);
-        // Revise
+        GameObject ingr = Instantiate(obj, transform);
 
         // ingredient sorting order =  count + taco current sorting order
         ingr.GetComponent<SpriteRenderer>().sortingOrder = ingredients.Count + GetComponent<SpriteRenderer>().sortingOrder;

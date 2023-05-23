@@ -6,23 +6,27 @@ using Unity.VisualScripting;
 
 public class CutsceneManager : MonoBehaviour
 {
-    //public TextMeshProUGUI phoneText;
+    public TextMeshProUGUI phoneText;
     public bool endOfCutscene;
 
-    public AudioManager audioManager;
+    //testbubble text variables
+    public GameObject alexBubble;
+    public GameObject jamieBubble;
 
-    public float startingPosition;
+    AudioManager audioManager;
 
-    //public float positionX = 1.0f;
-    //public float positionY = 1.0f;
+    private float startingPosition;
 
+    public float positionX = 1.0f;
+    public float positionY = 1.0f;
 
+    
 
-    //[Range(0.0f, 10.0f)]
-    //public float scroll;
+    [Range(0.0f, 10.0f)]
+    public float scroll;
 
-    //[Tooltip("[WIP] Max charcters per line.\nWon't move the whole word to the next line currently")]
-    //public int characterLimit;
+    [Tooltip("[WIP] Max charcters per line.\nWon't move the whole word to the next line currently")]
+    public int characterLimit;
 
     public enum character { ALEX, JAMIE };
     [System.Serializable]
@@ -40,7 +44,7 @@ public class CutsceneManager : MonoBehaviour
 
     private TextList list;
 
-
+    
 
     [Range(0.0f, 0.5f)]
     public float messageDelayAlex;
@@ -53,8 +57,8 @@ public class CutsceneManager : MonoBehaviour
     [Range(0.0f, 0.5f)]
     public float textSpeedAlex;
 
-
-
+    
+    private int counter;
 
     [Space]
 
@@ -63,11 +67,7 @@ public class CutsceneManager : MonoBehaviour
     [Range(0.0f, 5.0f)]
     public float messageDelayJamie;
 
-    public GameObject bubblePrefab;
-    public List<GameObject> currentBubbles = new List<GameObject>();
 
-    public Transform alexMessageParent;
-    public Transform jamieMessageParent;
 
     /*[Header("Typing out the message")]
     public bool typeOutJamie;
@@ -82,8 +82,9 @@ public class CutsceneManager : MonoBehaviour
     {
         audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
         // clear text in phoneText.text
-        //phoneText.text = string.Empty;
-
+        phoneText.text = string.Empty;
+        
+        counter = 0;
         startingPosition = 0;
 
         //testing
@@ -91,8 +92,9 @@ public class CutsceneManager : MonoBehaviour
         //Instantiate(jamieBubble, jamieBubble.transform.position, transform.rotation);
 
         StartCoroutine(begin());
-    }
 
+    }
+    
     public IEnumerator begin()
     {
         switch (GameManager.instance.cutsceneIndex)
@@ -120,12 +122,9 @@ public class CutsceneManager : MonoBehaviour
                 //Alex
 
 
-                //phoneText.text += "<align=right><b><color=#0000ffff>Alex</b></color> \n";
-
-
-
+                phoneText.text += "<align=right><b><color=#0000ffff>Alex</b></color> \n";
                 yield return StartCoroutine(Typeline(a.texts));
-
+                
 
             }
             else
@@ -138,9 +137,9 @@ public class CutsceneManager : MonoBehaviour
                 //scroll all texts
                 //increase all y values of instances by scroll
 
-                //phoneText.text += "<align=left><b><color=#ff00ffff>Jamie</b></color> \n";
+                phoneText.text += "<align=left><b><color=#ff00ffff>Jamie</b></color> \n";
                 yield return StartCoroutine(PrintText(a.texts));
-                // phoneText.text = "";
+               // phoneText.text = "";
             }
 
         }
@@ -149,28 +148,64 @@ public class CutsceneManager : MonoBehaviour
 
         endOfCutscene = true;
     }
+    
 
-    public void MoveBubblesUp(float amount)
-    {
-        Debug.Log("moved bubbles up");
-        foreach (GameObject existingBubble in currentBubbles)
+    //for printing the entire message at once
+    IEnumerator PrintText(List<string> characterText) {
+
+        //Add each element from phone_texts to phoneText
+
+        foreach (string l in characterText)
         {
-            existingBubble.transform.position += new Vector3(0, amount, 0);
+            phoneText.text += l + "\n";
+
+            //insert instance of jamiebubble text += l + "\n"
+            //GameObject JBubble = Instantiate(jamieBubble, new Vector3(-5,startingPosition,0), Quaternion.identity);
+            startingPosition += scroll;
+            audioManager.Play(audioManager.recieveTextSFX);
+            Debug.Log("ReceiveTextSFX");
+            yield return new WaitForSeconds(messageDelayJamie);
         }
+            
+
     }
 
-    public IEnumerator Typeline(List<string> l)
+    //For typing out the message
+    
+    IEnumerator Typeline(List<string> l)
     {
         foreach (string s in l)
         {
 
-            GameObject bubble = Instantiate(bubblePrefab, alexMessageParent);
-            bubble.GetComponent<RectTransform>().pivot = new Vector2(1, 0);
-            bubble.transform.position = alexMessageParent.position;
-            bubble.GetComponent<BubbleManager>().Init(character.ALEX, s, this);
+            string[] words = s.Split(" ");
 
-            yield return StartCoroutine(bubble.GetComponent<BubbleManager>().TextCrawl(s));
-            currentBubbles.Add(bubble);
+            foreach(string word in words)
+            {
+                if (counter >= characterLimit)
+                {
+                    //insert instance of alexbubble text += "\n"
+                    phoneText.text += "\n";
+                    counter = 0;
+                }
+
+                //Add each element from phone_texts to phoneText
+                foreach (char c in word)
+                {
+                    //insert instance of alexbubble text += c
+                    phoneText.text += c;
+
+                    counter++;
+                    yield return new WaitForSeconds(textSpeedAlex);
+
+                    audioManager.Play(audioManager.typingSFX);
+                }
+                phoneText.text += " ";
+            }
+
+            phoneText.text += "\n";
+            counter = 0;
+
+
 
             //insert instance of alexbubble text += "\n"
 
@@ -180,47 +215,18 @@ public class CutsceneManager : MonoBehaviour
             //scroll all texts
             //increase all y values of instances by scroll
             //GameObject ABubble = Instantiate(alexBubble, new Vector3(5, startingPosition, 0), Quaternion.identity);
-            //audioManager.Play(audioManager.sendTextSFX);
+            startingPosition += scroll;
+            audioManager.Play(audioManager.sendTextSFX);
             yield return new WaitForSeconds(messageDelayAlex);
-
+            
         }
     }
 
-    //for printing the entire message at once
-    IEnumerator PrintText(List<string> characterText)
-    {
-
-        //Add each element from phone_texts to phoneText
-
-        foreach (string l in characterText)
-        {
-            //phoneText.text += l + "\n";
-
-            //insert instance of jamiebubble text += l + "\n"
-            GameObject bubble = Instantiate(bubblePrefab, jamieMessageParent);
-            //bubble.GetComponent<RectTransform>().pivot = new Vector2(0, 0);
-            bubble.transform.position = jamieMessageParent.position;
-            bubble.GetComponent<BubbleManager>().Init(character.JAMIE, l, this);
-
-            yield return StartCoroutine(bubble.GetComponent<BubbleManager>().InstantTextFill(l));
-
-            yield return new WaitForSeconds(0.1f);
-
-            currentBubbles.Add(bubble);
-
-            //audioManager.Play(audioManager.recieveTextSFX);
-            Debug.Log("ReceiveTextSFX");
-            yield return new WaitForSeconds(messageDelayJamie);
-        }
-
-
-    }
-
-
+   
 
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 }

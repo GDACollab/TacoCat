@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum SpeciesType {Fish, Ravens, Sheep, Frogs, Capybaras};
+public enum SpeciesType {Fish, Raven, Sheep, Frog, Capybara};
 
 public class Customer: MonoBehaviour
 {
@@ -14,23 +14,23 @@ public class Customer: MonoBehaviour
     [Header("Order UI")]
     public OrderBubble orderUI;
 
-    public enum species {Fish,Raven,Sheep,Frog,Capybara}; //species selectable by CreateCustomerOrder
+    public SpeciesType species; //species selectable by CreateCustomerOrder
     public List<ingredientType> order; //ingredients in the order
-    public int difficulty = 1;
-    public species custSpecies;
 
     [HideInInspector] public Vector3 prevPos;
     [HideInInspector] public Vector3 targetPos;
     [HideInInspector] public float interpolater;
-    [HideInInspector] public float transitionTime; //How long it takes in seconds for the customer to move between positions
-    private float currTransitionTime; //Used for keeping track of time during transitions
-    [HideInInspector] public float transitionOffset; //The most that a customers transition time can be randomly offset (used to make customers move at diff speeds)
-    [HideInInspector] private float transitionOffsetTimer;
+    [HideInInspector] public float transitionTime;     //How long it takes in seconds for the customer to move between positions
+    [HideInInspector] public float currTransitionTime; //Used for keeping track of time during transitions
     [HideInInspector] public int currPosition;
-    [HideInInspector] public Coroutine moveRoutine = null;
-    [HideInInspector] public bool hasEndingDialogue;
-    [HideInInspector] public bool hasIntroDialgue;
-    [HideInInspector] public float dialoguePause;
+
+    [Header("CustomerRigs")]
+    public GameObject fishRig;
+    public GameObject ravenRig;
+    public GameObject sheepRig;
+    public GameObject frogRig;
+    public GameObject capybaraRig;
+
 
     // List of possible colors to tint this customer's sprite once their taco is finished.
     // Elements correspond to the values in the scoreType enum in TacoMakingGameManager.cs .
@@ -43,9 +43,6 @@ public class Customer: MonoBehaviour
         Color.red
     };
 
-    // HARDCODED -> 1: FISH . 2: RAVEN . 3: SHEEP . 4: FROG . 5: CAPYBARA
-    public List<GameObject> customerSpriteObject = new List<GameObject>();
-
     private void Awake()
     {
         tacoGameManager = GetComponentInParent<TacoMakingGameManager>();
@@ -56,40 +53,30 @@ public class Customer: MonoBehaviour
     {
         orderUI.gameObject.SetActive(false);
 
-        order = CreateCustomerOrder(Mathf.Min(3, difficulty));
+        // Decide on customer species
+        species = RandomizeSpecies(); //Selects random species from the range of possible options
+        EnableSpeciesRig();
 
-        // ShowBubbleOrder(order);
+        order = CreateCustomerOrder(3, 4);
+
+        ShowBubbleOrder(order);
+
     }
 
-    public List<ingredientType> CreateCustomerOrder(int difficulty) 
+    private void LateUpdate()
+    {
+        //Update customers position every frame
+        MoveCustomer();
+    }
+
+    public List<ingredientType> CreateCustomerOrder(int minOrderLength, int maxOrderLength) 
     {
 
         Debug.Log("Created Customer Order");
 
-        // Decide on customer species
-        custSpecies = (species)Random.Range(0,5); //Selects random species from the range of possible options
-
         // get menu from bench manager
-        List<ingredientType> menu = tacoGameManager.benchManager.menu;
-        
-        List<int> orderLengths = new List<int>();
-        switch (difficulty)
-        {
-            case 1:
-                orderLengths = new List<int> {3, 4};
-                break;
-            case 2:
-                orderLengths = new List<int> {3, 4, 4, 4, 5, 5};
-                break;
-            case 3:
-                orderLengths = new List<int> {3, 4, 5, 5, 5, 6, 6};
-                break;
-            default:
-                orderLengths = new List<int> {3, 4};
-                break;
-        }
-        
-        int orderLength = orderLengths[Random.Range(0, orderLengths.Count)]; // randomize order length
+        List<ingredientType> menu = tacoGameManager.benchManager.menu;        
+        int orderLength = Random.Range(minOrderLength, maxOrderLength + 1); // randomize order length
 
         // To be returned
         List<ingredientType> s_order = new List<ingredientType>(orderLength);
@@ -98,27 +85,22 @@ public class Customer: MonoBehaviour
         List<int> custPreference = new List<int> { 0, 1, 2, 3, 4 };
         // I would like to switch this with calling for the required value (ie getting fish.value)
         // but afaik we don't have that implemented, and I don't want to risk messing with it rn
-        switch (custSpecies)
+        switch (species)
         {
-            case species.Fish: //No fish, 2x sour cream
+            case SpeciesType.Fish: //No fish, 2x sour cream
                 custPreference = new List<int> { 0, 1, 3, 4, 4 };
-                customerSpriteObject[0].SetActive(true);
                 break;
-            case species.Raven: //2x fish
+            case SpeciesType.Raven: //2x fish
                 custPreference = new List<int> { 0, 1, 2, 2, 3, 4 };
-                customerSpriteObject[1].SetActive(true);
                 break;
-            case species.Sheep: //2x cabbage
+            case SpeciesType.Sheep: //2x cabbage
                 custPreference = new List<int> { 0, 0, 1, 2, 3, 4 };
-                customerSpriteObject[2].SetActive(true);
                 break;
-            case species.Frog: // 1/2x fish, 2x jalapenos
+            case SpeciesType.Frog: // 1/2x fish, 2x jalapenos
                 custPreference = new List<int> { 0, 0, 1, 1, 2, 3, 3, 3, 3, 4, 4 };
-                customerSpriteObject[3].SetActive(true);
                 break;
-            case species.Capybara: // 1/2x Pico
+            case SpeciesType.Capybara: // 1/2x Pico
                 custPreference = new List<int> { 0, 0, 1, 2, 2, 3, 3, 4, 4 };
-                customerSpriteObject[4].SetActive(true);
                 break;
         }
         Debug.Log(custPreference);
@@ -242,47 +224,17 @@ public class Customer: MonoBehaviour
     }
 
     //Moves the customer from their previous position to their new position in line
-    public void MoveCustomer(Vector3 newPosition)
+    public void MoveCustomer()
     {
-        interpolater = 0;
-        currTransitionTime = 0;
-        transitionOffsetTimer = 0;
-        prevPos = transform.position;
-        targetPos = newPosition;
-        if (moveRoutine != null)
-        {
-            StopCoroutine(moveRoutine);
-        }
-        moveRoutine = StartCoroutine(MovePosition());
-    }
-
-    private IEnumerator MovePosition()
-    {
-        //Buffer for customers have dialogue
-        while (dialoguePause > 0)
-        {
-            dialoguePause -= Time.deltaTime;
-            yield return null;
-        }
-
-        //Buffer between different customers moving
-        while (transitionOffsetTimer < transitionOffset)
-        {
-            transitionOffsetTimer += Time.deltaTime;
-            yield return null;
-        }
-
         //Stops moving customer once they are at their new position
-        while (currTransitionTime < transitionTime)
+        if (currTransitionTime < transitionTime)
         {
             //Math to make the transition ease in and out
             interpolater = currTransitionTime / transitionTime;
             interpolater = interpolater * interpolater * (3f - 2f * interpolater);
             transform.position = Vector3.Lerp(prevPos, targetPos, interpolater);
             currTransitionTime += Time.deltaTime;
-            yield return null;
         }
-        moveRoutine = null;
     }
 
     // Changes this customer's sprite appearance based on the score of their taco
@@ -290,5 +242,37 @@ public class Customer: MonoBehaviour
     {
         SpriteRenderer mySpriteRenderer = GetComponent<SpriteRenderer>();
         mySpriteRenderer.color = colorAfterTacoFinished[(int)tacoScore];
+    }
+
+
+    public void EnableSpeciesRig()
+    {
+        fishRig.SetActive(false);
+        ravenRig.SetActive(false);
+        sheepRig.SetActive(false);
+        frogRig.SetActive(false);
+        capybaraRig.SetActive(false);
+
+        switch (species)
+        {
+            case SpeciesType.Fish:
+                fishRig.SetActive(true);
+                break;
+            case SpeciesType.Raven:
+                ravenRig.SetActive(true);
+                break;
+            case SpeciesType.Sheep:
+                sheepRig.SetActive(true);
+                break;
+            case SpeciesType.Frog:
+                frogRig.SetActive(true);
+                break;
+            case SpeciesType.Capybara:
+                capybaraRig.SetActive(true);
+                break;
+            default:
+                fishRig.SetActive(true);
+                break;
+        }
     }
 }
