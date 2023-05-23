@@ -62,7 +62,7 @@ public class PlayerHand : MonoBehaviour
 
     public void Start()
     {
-        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+        //audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
     }
 
     public void Update()
