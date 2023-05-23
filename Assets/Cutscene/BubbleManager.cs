@@ -15,12 +15,15 @@ public class BubbleManager : MonoBehaviour
 
     public CutsceneManager.character characterType;
 
+    public bool skip = false;
 
     public float lineHeight;
 
     public string fontAssetName = "TacocatMorganFont-Regular_1 SDF";
 
     public float bubbleVerticalSize;
+
+    //public float alexTextCrawlCountdown = CutsceneManager.textSpeedAlex;
 
     // Start is called before the first frame update
     void Start()
@@ -79,30 +82,53 @@ public class BubbleManager : MonoBehaviour
     public IEnumerator InstantTextFill(string s)
     {
         messageText.text = s;
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.01f);
         UpdateBubbleHeight();
     }
 
     //For typing out the message
     public IEnumerator TextCrawl(string s)
     {
+        skip = false;
         string[] words = s.Split(" ");
+        //float waitTime = 0.1f;
 
         foreach (string word in words)
         {
             //Add each element from phone_texts to phoneText
             foreach (char c in word)
             {
-                //insert instance of alexbubble text += c
-                messageText.text += c;
-                yield return new WaitForSeconds(cutsceneManager.textSpeedAlex);
 
-                //cutsceneManager.audioManager.Play(cutsceneManager.audioManager.typingSFX);
+                messageText.text += c;
+                yield return alexCrawlCountdown();
             }
             messageText.text += " ";
+            UpdateBubbleHeight();
+            
         }
-
-        UpdateBubbleHeight();
+        //waitTime = 0.1f;
+        skip = false;
     }
 
+   
+
+    IEnumerator alexCrawlCountdown()
+    {
+        float skipAmount = cutsceneManager.textSpeedAlex;
+        
+        if (skip == true)
+        {
+            skipAmount = 0f;
+        }
+        Debug.Log("new alexCrawlCountdown" + skip + skipAmount);
+        if (Input.GetKey(KeyCode.Space))
+        {
+                skip = true;
+                Debug.Log("hit space, skip value: " + skip + skipAmount);
+                yield break;
+        }
+        yield return new WaitForSeconds(skipAmount);
+
+        yield return null;
+    }
 }
