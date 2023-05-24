@@ -137,7 +137,7 @@ TextureImporter:
         width: 1672
         height: 712
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -158,7 +158,7 @@ TextureImporter:
         width: 900
         height: 523
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -174,12 +174,12 @@ TextureImporter:
       name: Dusk_Clouds_2
       rect:
         serializedVersion: 2
-        x: 1823
+        x: 3692
         y: 190
-        width: 3881
+        width: 2012
         height: 1331
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -187,6 +187,27 @@ TextureImporter:
       bones: []
       spriteID: 80627eaf933dadb40817a9fc0bb0a51d
       internalID: -1666926519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dusk_Clouds_3
+      rect:
+        serializedVersion: 2
+        x: 2061
+        y: 123
+        width: 1631
+        height: 1604
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a888abd7402ca441a81ce829cb19ecc
+      internalID: -499251968
       vertices: []
       indices: 
       edges: []
@@ -203,6 +224,7 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       Dusk_Clouds_0: -1696767297
+      Dusk_Clouds_3: -499251968
       Dusk_Clouds_2: -1666926519
       Dusk_Clouds_1: 2104257619
   spritePackingTag: 

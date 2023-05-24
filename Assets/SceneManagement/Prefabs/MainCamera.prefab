@@ -64,8 +64,8 @@ MonoBehaviour:
   truckHeightValueRange: {x: 500, y: 1000}
   truckHeight: 0
   zPosRange: {x: -1200, y: -3000}
-  overrideCam: 0
-  overrideCamOffset: {x: 0, y: 0, z: 0}
+  overrideCam: 1
+  overrideCamOffset: {x: 0, y: 0, z: -1500}
   currCamOffset: {x: 0, y: 0, z: 0}
   currCamPos: {x: 0, y: 0, z: 0}
   cameraSixthOffset: 10
@@ -246,7 +246,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &668913451832070829
 Transform:
   m_ObjectHideFlags: 0
@@ -255,8 +255,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2703298077026780103}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -900, z: 4000}
-  m_LocalScale: {x: 500, y: 500, z: 500}
+  m_LocalPosition: {x: -2200, y: 2200, z: 0}
+  m_LocalScale: {x: 200, y: 200, z: 200}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 8868223185110950193}
@@ -301,10 +301,10 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1742500597
-  m_SortingLayer: 3
+  m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 0.64639956, b: 0.11792451, a: 1}
+  m_Sprite: {fileID: 21300000, guid: bd19c3124c8d77f429c5165d06464543, type: 3}
+  m_Color: {r: 0.764151, g: 0.764151, b: 0.764151, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -385,7 +385,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1742500597
-  m_SortingLayer: 3
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 1, g: 0.64639956, b: 0.11792451, a: 1}
