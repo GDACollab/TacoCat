@@ -88,7 +88,7 @@ public class FlipTracker : MonoBehaviour
             //Reset truck's velocity to prevent extra-bouncy landings
             vehicle.GetComponent<Rigidbody2D>().angularVelocity = 0;
 
-            groundPointRotation = stageManager.allLevelGroundRotations[hitPointIndex];
+            groundPointRotation = stageManager.allStageGroundRotations[hitPointIndex];
 
             if (IsPerfectLanding(endJumpRot, groundPointRotation) && flipCount > 0) 
             {
@@ -99,10 +99,10 @@ public class FlipTracker : MonoBehaviour
                 float newTime = ((flips*timeBoost)+1)*vehicle.activePerfectBoostTime;
                 boostSprite.transform.localScale = new Vector3(boostSprite.transform.localScale.x, boostSpriteY*((flips*percentBoost)+1), boostSprite.transform.localScale.z);
                 StartCoroutine(vehicle.PerfectLandingBoost(newBoost, newTime));
-                audioManager.Play(audioManager.flipBoostSFX);
+                //audioManager.Play(audioManager.flipBoostSFX);
             }
             if(audioManager != null){
-                audioManager.Play(audioManager.truckLandingSFX);
+                //audioManager.Play(audioManager.truckLandingSFX);
             }
             //PLAY AUDIO MANAGER REG LANDING
         }
