@@ -10,7 +10,7 @@ public class IngredientBenchManager : MonoBehaviour
     public List<IngredientBin> ingredientBins;
 
     [Tooltip("Current menu of ingredients to choose from")]
-    public List<INGREDIENT_TYPE> menu;
+    public List<ingredientType> menu;
 
     [Header("Taco")]
     public Transform tacoSpawnPoint;
@@ -33,7 +33,7 @@ public class IngredientBenchManager : MonoBehaviour
         // << MATCH PREFABS AND ENUMS >>
         // first get all objects that == ingredientType in menu
         List<GameObject> ingrObjs = new List<GameObject>(); // store prefabs needed
-        foreach(INGREDIENT_TYPE ingr in menu)
+        foreach(ingredientType ingr in menu)
         {
             // get matching object in gamemanager
             GameObject ingr_obj = gameManager.GetIngredientBinSprite(ingr);

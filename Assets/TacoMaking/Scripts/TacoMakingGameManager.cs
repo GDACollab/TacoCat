@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-public enum INGREDIENT_TYPE { NONE, FISH, SOUR_CREAM, PICO_DE_GALLO, CABBAGE, SLICED_JALAPENOS }
+public enum ingredientType { NONE, FISH, SOUR_CREAM, PICO_DE_GALLO, CABBAGE, SLICED_JALAPENOS }
 public enum scoreType { NONE, PERFECT, GOOD, OKAY, FAILED } // possible scores a taco can get.
 
 public class TacoMakingGameManager : MonoBehaviour
@@ -47,7 +47,6 @@ public class TacoMakingGameManager : MonoBehaviour
     public List<GameObject> allIngredientBinPrefabs;
 
     public TMP_Text clockTime;
-    public bool activateTutorial = true;
 
     public void Start()
     {
@@ -64,8 +63,6 @@ public class TacoMakingGameManager : MonoBehaviour
         }
         background.transform.GetChild(difficulty-1).gameObject.SetActive(true);
         
-        activateTutorial = (difficulty!=1) ? false : activateTutorial;
-
         CreateNewSubmissionTaco();
 
         customersLeftToGenerate = totalCustomers;
@@ -73,24 +70,14 @@ public class TacoMakingGameManager : MonoBehaviour
 
     public void Update()
     {
-        if(activateTutorial){
-            if(Input.GetKeyDown(KeyCode.Space)){
-                activateTutorial = false;
-            }
-            if(gameManager.currGame==currGame.TACO_MAKING){
-                ShowTutorial(activateTutorial);
-            }
-        }
-        else{
-            CustomerRotation();
+        CustomerRotation();
 
-            // check for end
-            // if (submittedCustomers == totalCustomers)
-            if (gasAmount >= minimumGasThreshold)
-            {
-                uiManager.endText.SetActive(true);
-                endOfGame = true;
-            }
+        // check for end
+        // if (submittedCustomers == totalCustomers)
+        if (gasAmount >= minimumGasThreshold)
+        {
+            uiManager.endText.SetActive(true);
+            endOfGame = true;
         }
     }
 
@@ -204,12 +191,6 @@ public class TacoMakingGameManager : MonoBehaviour
         gasAmount = gameScore/maxGameScore;
         Debug.Log("gasAmout: "+gasAmount+" gameScore: "+ gameScore+" maxGameScore: "+ maxGameScore+" totalCustomers: "+ totalCustomers);
     }
-    
-    private void ShowTutorial(bool enable){
-        transform.Find("Tutorial Canvas").gameObject.SetActive(enable);
-        GetComponent<InputManager>().enabled = !enable;
-        Time.timeScale = (enable) ? 0 : 1;
-    }
 
 
     #region HELPER FUNCTIONS ==============================================================
@@ -221,7 +202,7 @@ public class TacoMakingGameManager : MonoBehaviour
     }
 
     // << ADD INGREDIENT TO SUBMISSION TACO >>
-    public void AddIngredientToTaco(INGREDIENT_TYPE type)
+    public void AddIngredientToTaco(ingredientType type)
     {
         submissionTaco.addIngredient(type); 
         submissionTaco.addingredientObject(GetIngredientObject(type));
@@ -229,7 +210,7 @@ public class TacoMakingGameManager : MonoBehaviour
 
 
     // return prefab that is related to the input enum type
-    public GameObject GetIngredientObject(INGREDIENT_TYPE ingrType)
+    public GameObject GetIngredientObject(ingredientType ingrType)
     {
         // for each object in prefab list
         foreach(GameObject obj in allIngredientPrefabs)
@@ -248,7 +229,7 @@ public class TacoMakingGameManager : MonoBehaviour
 
 
     // return prefab that is related to the input enum type
-    public GameObject GetIngredientBinSprite(INGREDIENT_TYPE ingrType)
+    public GameObject GetIngredientBinSprite(ingredientType ingrType)
     {
         // for each object in prefab list
         foreach (GameObject obj in allIngredientBinPrefabs)

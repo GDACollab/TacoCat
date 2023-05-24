@@ -19,7 +19,7 @@ public class GroundGeneration : MonoBehaviour
     [Header("Generation References")]
     public GameObject bezierCurvePrefab;
     Transform chunkGenParent;
-    public List<BezierCurveGeneration> chunks = new List<BezierCurveGeneration>();
+    List<GameObject> chunks = new List<GameObject>();
     public List<Vector3> allGroundPoints = new List<Vector3>(); // all ground points of the chunks
     public List<float> allGroundRotations = new List<float>(); // all ground rotations of the chunks
 
@@ -67,8 +67,6 @@ public class GroundGeneration : MonoBehaviour
 
     public void CreateGeneration()
     {
-        Debug.Log("[[ CREATE NEW GENERATION ]]");
-
         // create chunk parent
         chunkGenParent = new GameObject("Chunk Parent").transform;
         chunkGenParent.parent = this.transform;
@@ -94,11 +92,7 @@ public class GroundGeneration : MonoBehaviour
         fullGenerationHeight = endGenPos.y - begGenPos.y;
 
         // destroy all current chunks, if any
-        if (chunks.Count > 0) {
-
-            Debug.LogWarning("GroundGen Destroy Chunks");    
-            DestroyAllChunks(); 
-        }
+        if (chunks.Count > 0) { DestroyAllChunks(); }
 
         // [[ GENERATION ]]
         Debug.Log(">> NEW GENERATION ( " + this.gameObject.name + " )", this.gameObject);
@@ -150,6 +144,12 @@ public class GroundGeneration : MonoBehaviour
         yield return new WaitUntil(() => generationFinished);
 
         Debug.Log(">> " + this.gameObject.name + " Generation Finished [ " + chunks.Count + " chunks ]", this.gameObject);
+        DestroyGenerationObjects();
+    }
+
+    public void DestroyGenerationObjects()
+    {
+        DestroyAllChunks();
     }
 
     #region GENERATION ====================================================
@@ -494,10 +494,10 @@ public class GroundGeneration : MonoBehaviour
         GameObject newCurveObject = Instantiate(bezierCurvePrefab, newGenPosParentPos, Quaternion.identity);
         BezierCurveGeneration bezierGroundGen = newCurveObject.GetComponent<BezierCurveGeneration>();
         bezierGroundGen.debugMode = false;
-        chunks.Add(bezierGroundGen); // add to chunks list
 
         newCurveObject.SetActive(true); // set curve gen as active
         newCurveObject.transform.parent = chunkGenParent.transform; // set parent
+        chunks.Add(newCurveObject); // add to chunks list
 
         // set beginning and end points of the bezier curve
         bezierGroundGen.p0_pos = begPos;
@@ -566,10 +566,10 @@ public class GroundGeneration : MonoBehaviour
         allGroundRotations.Clear();
 
         //get positions from point lists in each chunk
-        foreach (BezierCurveGeneration chunk in chunks)
+        foreach (GameObject chunk in chunks)
         {
-            allGroundPoints.AddRange(chunk.generatedPoints);
-            allGroundRotations.AddRange(chunk.generatedRotations);
+            allGroundPoints.AddRange(chunk.GetComponent<BezierCurveGeneration>().generatedPoints);
+            allGroundRotations.AddRange(chunk.GetComponent<BezierCurveGeneration>().generatedRotations);
         }
 
         generationFinished = true;
@@ -577,14 +577,10 @@ public class GroundGeneration : MonoBehaviour
 
     public void DestroyAllChunks()
     {
-        foreach (BezierCurveGeneration curve in chunks)
+        foreach (GameObject obj in chunks)
         {
-            if (curve != null)
-            {
-                Destroy(curve.gameObject);
-            }
+            Destroy(obj);
         }
-
         chunks.Clear();
     }
 

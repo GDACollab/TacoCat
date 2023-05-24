@@ -6,7 +6,7 @@ public class IngredientBin : MonoBehaviour
 {
     // current ingredient object && type in bin
     public GameObject currIngredient;
-    public INGREDIENT_TYPE ingredientType;
+    public ingredientType ingredientType;
 
     // << SET INGREDIENT >>
     public void SetIngredientBin(GameObject ingr)
