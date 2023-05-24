@@ -82,10 +82,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allStagesGenerated: 0
   meshCreator: {fileID: 3070127029581114840}
-  mainGenerationLength: 30000
+  mainGenerationLength: 70000
   generationOffset: {x: 0, y: 0, z: 0}
   main_begPos: {x: 0, y: 0, z: 0}
-  main_endPos: {x: 30000, y: 0, z: 0}
+  main_endPos: {x: 70000, y: 0, z: 0}
   startIslandXOffset: -1000
   startIslandYOffset: -500
   endIslandXOffset: 3000
@@ -114,30 +114,41 @@ MonoBehaviour:
   groundRotations: []
   mainGenerationPoints: []
   allSpawnedObjects: []
-  rotationScalar: 70
-  envObjYOffset: 0
   envGenParent: {fileID: 2272469841242197367}
+  env1_minSpacing: 10
+  env1_maxSpacing: 40
+  env1ScaleRange: {x: 1, y: 10}
+  env1_rotationEnabled: 1
+  env1_rotScalar: 30
+  env1ObjYOffset: 0
   envGen1Parent: {fileID: 5571463960001830364}
   envPrefabs_1:
   - {fileID: 669959166561596448, guid: 3ab7d6fb51559d049b2aa1753aabbb35, type: 3}
-  - {fileID: 3801461193250748064, guid: 7acda67bc39cd2c42b20d1157a164f68, type: 3}
-  env1ScaleRange: {x: 1, y: 10}
-  env1_rotationEnabled: 1
-  env1_minSpacing: 10
-  env1_maxSpacing: 40
-  envGen2Parent: {fileID: 373459222918562849}
-  envPrefabs_2: []
-  env2ScaleRange: {x: 1, y: 2}
-  env2_rotationEnabled: 1
+  - {fileID: 3801461193250748064, guid: a2b964a40a271a841970492cef44c1a8, type: 3}
+  - {fileID: 3801461193250748064, guid: a2b964a40a271a841970492cef44c1a8, type: 3}
   env2_minSpacing: 10
   env2_maxSpacing: 40
+  env2ScaleRange: {x: 1, y: 2}
+  env2_rotationEnabled: 1
+  env2_rotScalar: 30
+  env2ObjYOffset: 0
+  envGen2Parent: {fileID: 373459222918562849}
+  envPrefabs_2:
+  - {fileID: 5599035235879907881, guid: d2fcdea8bbc302b44a0f8cba5c236fbf, type: 3}
+  - {fileID: 5599035235879907881, guid: 992c3eb89e9837a499e4b84e4e786171, type: 3}
+  - {fileID: 5599035235879907881, guid: 27cf7b9adb2540a42b757a85a7348440, type: 3}
+  - {fileID: 5599035235879907881, guid: e79e57ab85392fc478a0c5f5cae459a7, type: 3}
+  - {fileID: 5599035235879907881, guid: c5a66fc5be6eaf94388a250df487cd61, type: 3}
+  - {fileID: 5599035235879907881, guid: 55982595c6a3c8745bcff64d3364dfb3, type: 3}
+  - {fileID: 5599035235879907881, guid: 9634ec2d6ab08e64dba927c31e28b673, type: 3}
+  - {fileID: 5599035235879907881, guid: 9f5d5e25191638e489fec2055ac13cb5, type: 3}
   drawLine: 1
   enableCollision: 1
   lineWidth: 100
   lineOffset: {x: 5, y: -50, z: 0}
   lineMaterial: {fileID: 2100000, guid: 95b160534129f2647b82dc53f6777085, type: 2}
   spawnLandmarkSigns: 0
-  signPrefab: {fileID: 7292054314515768603, guid: 9473524ecdb6d4fd5ab1dbc038ec454b, type: 3}
+  signPrefab: {fileID: 3545904076403872029, guid: e10d5e6464213cb4ab2804aadf9fd2f7, type: 3}
   signGenParent: {fileID: 2742292303754920709}
   signScale: 40
   numSigns: 4
@@ -354,8 +365,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6329002046810275152}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 15000, y: 0, z: -100}
-  m_LocalScale: {x: 4000, y: 1, z: 1000}
+  m_LocalPosition: {x: 36061, y: 0, z: -100}
+  m_LocalScale: {x: 25000, y: 1, z: 1957.9}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2272469841242197367}

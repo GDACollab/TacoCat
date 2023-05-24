@@ -101,8 +101,6 @@ public class LightingManager : MonoBehaviour
 
     public void UpdateLightColors(float curTime)
     {
-        sunCycle.pathProgress = curTime;
-
         List<Color> toPalette = GetPaletteAtTime(curTime);
 
         foregroundLight.color = Color.Lerp(foregroundLight.color, toPalette[0], lightColorAdjustSpeed * Time.deltaTime);

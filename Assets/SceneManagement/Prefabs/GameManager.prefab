@@ -55,7 +55,7 @@ MonoBehaviour:
   hardCapHour: 23
   hardCapMinute: 59
   timeRemaining: 0
-  countdownTimer: 0
+  main_gameTimer: 0
   curClockHour: 0
   curClockMinute: 0
   isAM: 1
@@ -80,9 +80,11 @@ MonoBehaviour:
   driving3:
     m_SceneName: City_Level3
   tacoMakingScene:
-    m_SceneName: 
+    m_SceneName: TacoMaking
   cutscene:
     m_SceneName: Cutscene
+  creditscene:
+    m_SceneName: Credits
   nitroCharges: 0
   gasAmount: 0
   loadProgress: 0

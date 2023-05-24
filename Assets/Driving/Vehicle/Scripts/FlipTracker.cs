@@ -24,8 +24,9 @@ public class FlipTracker : MonoBehaviour
     public GameObject boostSprite;
     float boostSpriteY;
 
-    
+
     [Space(10)]
+    public TutorialManager uiScript;
     public int flipCount;
     private bool flipCounted;
     public float currAirTime;
@@ -93,10 +94,14 @@ public class FlipTracker : MonoBehaviour
             if (IsPerfectLanding(endJumpRot, groundPointRotation) && flipCount > 0) 
             {
                 int flips = Mathf.Min(flipCount, flipCap);
+
+
                 flips = (firstFlipCounts) ? flips : flips-1;
                 float flipBoost = flips*percentBoost;
                 Vector2 newBoost = new Vector2(((flipBoost)+1)*vehicle.perfectLandingBoostForce.x, vehicle.perfectLandingBoostForce.y);
                 float newTime = ((flips*timeBoost)+1)*vehicle.activePerfectBoostTime;
+
+
                 boostSprite.transform.localScale = new Vector3(boostSprite.transform.localScale.x, boostSpriteY*((flips*percentBoost)+1), boostSprite.transform.localScale.z);
                 StartCoroutine(vehicle.PerfectLandingBoost(newBoost, newTime));
                 //audioManager.Play(audioManager.flipBoostSFX);
@@ -127,7 +132,8 @@ public class FlipTracker : MonoBehaviour
 
         // if rotation is within bound and enough time has passed and landing downhill
         if (Mathf.Abs(groundPointRot - landPointRot) < perfectLandingRotationBound && currAirTime > perfectLandingMinAirTime)
-        { 
+        {
+            uiScript.showFlipCountUI(flipCount);
             return true;
         }
         return false;

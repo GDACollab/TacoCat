@@ -15,7 +15,7 @@ public class DrivingUIManager : MonoBehaviour
     private float fuelAmount = 0; // Initial fuel
     private int numNitro = 0; // Initial nitro
     private int miles = 0;
-    private List<int> signs;
+    public List<int> signDistances;
     private int signNum = 0;
 
     
@@ -55,9 +55,8 @@ public class DrivingUIManager : MonoBehaviour
         flipTracker = vehicle.GetComponent<FlipTracker>();
         initFuelNitro(vehicle_script.GetFuel(),vehicle_script.GetNitro());
         miles = totalMiles;
-        signs = drivingGameManager.getSignDistances(numSigns, totalMiles);
-        signs.Add(0);
-        signText.text = miles + " Miles Till Cat Nyansisco";
+        signDistances = drivingGameManager.getSignDistances(numSigns, totalMiles);
+        signDistances.Add(0);
     }
 
     // Update is called once per frame
@@ -78,12 +77,7 @@ public class DrivingUIManager : MonoBehaviour
             pointer.position = Vector3.Lerp(pointerStart.position, pointerEnd.position, drivingGameManager.percentageTraveled);
         }
         
-        // Update "x Miles Till Cat Nyansisco" sign
-        miles = (int)(totalMiles - totalMiles*(drivingGameManager.percentageTraveled));
-        if(signNum <= numSigns && miles <= signs[signNum]){
-            signText.text = signs[signNum] + " Miles Till Cat Nyansisco";
-            signNum++;
-        }
+
     }
 
     // Function to initialize the fuel gauges

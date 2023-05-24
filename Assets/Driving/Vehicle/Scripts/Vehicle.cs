@@ -248,6 +248,7 @@ public class Vehicle : MonoBehaviour
         nitroCharges--;
         drivingUIManager.updateNitro();
 
+        StartCoroutine(cameraHandler.BoostShake(activeNitroTime, cameraHandler.nitro_camShakeMagnitude));
 
         yield return new WaitForSeconds(activeNitroTime);
 
@@ -264,8 +265,7 @@ public class Vehicle : MonoBehaviour
         
         state = DRIVE_STATE.PERFECT_LANDING;
 
-        //StartCoroutine(cameraHandler.Shake(activePerfectBoostTime, cameraHandler.perfect_camShakeMagnitude));
-
+        StartCoroutine(cameraHandler.BoostShake(activePerfectBoostTime, cameraHandler.perfect_camShakeMagnitude));
 
         yield return new WaitForSeconds(activePerfectBoostTime);
         

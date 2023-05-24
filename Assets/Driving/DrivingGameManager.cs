@@ -44,7 +44,7 @@ public class DrivingGameManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        gameManager = GameManager.instance;
+        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         vehicle.rb_vehicle.constraints = RigidbodyConstraints2D.FreezeAll;
 
         endOfGame = false;

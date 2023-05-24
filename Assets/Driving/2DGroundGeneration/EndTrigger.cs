@@ -9,11 +9,15 @@ public class EndTrigger : MonoBehaviour
 
     public void Start()
     {
-        drivingGameManager = GetComponentInParent<DrivingGameManager>();
+        drivingGameManager = GameObject.FindGameObjectWithTag("DrivingGameManager").GetComponent<DrivingGameManager>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        drivingGameManager.endOfGame = true;
+        if (collision.CompareTag("Player"))
+        {
+            Debug.Log("Player hit end driving trigger");
+            drivingGameManager.endOfGame = true;
+        }
     }
 }
