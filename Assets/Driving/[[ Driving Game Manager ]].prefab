@@ -94,7 +94,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1559f5ed7245b4e1cb2af07882c4cfb9, type: 2}
+  - {fileID: 2100000, guid: 947fb70d1e94efe489b098c9de7a35af, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -203,7 +203,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46a9765300acfe741a6ddca8da692c5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightingManager: {fileID: 0}
   uiManager: {fileID: 0}
   vehicle: {fileID: 4097053437802065193}
   endOfGame: 0
@@ -213,8 +212,6 @@ MonoBehaviour:
   stuckMaxVelocity: 0
   stuckTimeoutDuration: 0
   stuckTime: 0
-  successText: You made it to the next city. One step closer to Jamie!
-  failText: You ran out of gas. A tow truck took you back to the prevous city
 --- !u!114 &3462254338527503413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,7 +228,6 @@ MonoBehaviour:
   environmentSpawned: 0
   groundPoints: []
   groundRotations: []
-  mainGenerationPoints: []
   allSpawnedObjects: []
   minSpaceBetweenObjects: 4
   maxSpaceBetweenObjects: 20
@@ -239,22 +235,15 @@ MonoBehaviour:
   lineWidth: 40
   lineOffset: {x: 0, y: -21, z: 0}
   lineMaterial: {fileID: 2100000, guid: 95b160534129f2647b82dc53f6777085, type: 2}
-  gasStationPrefab: {fileID: 0}
-  gasStationSprites: []
-  gasStationScale: 0
-  gasStationYOffset: 0
-  gasStationGroundPointIndex: 0
   treeGenParent: {fileID: 6018195331317115387}
+  treeScale: 50
   treeScaleVariance: 10
   treeRotationEnabled: 1
   treeRotScalar: 30
   treeYOffset: -10
   treeZPosition: 10
-  treePrefab: {fileID: 0}
-  signPrefab: {fileID: 0}
-  signGenParent: {fileID: 0}
-  signScale: 40
-  numSigns: 4
+  treePrefabs:
+  - {fileID: 3369474761770153936, guid: 98f3305ed9766834c91d1bed13271dad, type: 3}
 --- !u!114 &1960718257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,8 +259,7 @@ MonoBehaviour:
   allStagesGenerated: 0
   meshCreator: {fileID: 3769077976019180031}
   mainGenerationLength: 30000
-  main_begPos: {x: 0, y: 500, z: 0}
-  main_endPos: {x: 30000, y: 500, z: 0}
+  undergroundHeight: -1000
   startIslandXOffset: -1000
   startIslandYOffset: 500
   endIslandXOffset: 1000
@@ -442,14 +430,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vehicle: {fileID: 4097053437802065197}
   ground: {fileID: 4097053438608915788}
-  vehicleHeight: 0
-  groundLineY: 0
-  smoothTime: 0.3
   camSpeed: 5
   perfect_camShakeMagnitude: 0.5
   nitro_camShakeMagnitude: 1
   velocityRange: {x: 100, y: 700}
+  heightRange: {x: 200, y: 1000}
   xPosRange: {x: 20, y: 500}
+  yPosRange: {x: 50, y: -100}
   zPosRange: {x: -200, y: -600}
   currOffset: {x: 20, y: 0, z: -100}
 --- !u!20 &4097053439635786578
@@ -723,7 +710,6 @@ MonoBehaviour:
   meshCreated: 0
   collisionMesh: 1
   groundMaterial: {fileID: 2100000, guid: 4df2c0c0a8b01c84e9e0c8f780f24e4e, type: 2}
-  underground_height: -500
   debugMarker: {fileID: 0}
   debugMarkerList: []
 --- !u!23 &2361884029682957226
@@ -33422,7 +33408,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1136266330, guid: aad9dd5e0dc8547b388ccec1d0309294, type: 3}
       propertyPath: m_InstanceId
-      value: -53760
+      value: -1561456
       objectReference: {fileID: 0}
     - target: {fileID: 5231190167668380747, guid: aad9dd5e0dc8547b388ccec1d0309294, type: 3}
       propertyPath: m_Name
@@ -33536,7 +33522,6 @@ MonoBehaviour:
   AllowFadeout: 1
   TriggerOnce: 0
   Preload: 0
-  AllowNonRigidbodyDoppler: 0
   Params:
   - Name: RPM
     Value: 0

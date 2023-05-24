@@ -42,37 +42,27 @@ public class EnvironmentGenerator : MonoBehaviour
     public Vector3 lineOffset;
     public Material lineMaterial;
 
-    [Header("<< Gas Stations >>")]
-    [Tooltip("Gas station prefab")]
-    public GameObject gasStationPrefab;
-    [Tooltip("List of gas station sprites")]
-    public List<Sprite> gasStationSprites = new List<Sprite>();
-    [Tooltip("Gas station object scale")]
-    public float gasStationScale;
-    [Tooltip("Y offset for the gas station objects")]
-    public float gasStationYOffset;
-    [Tooltip("Distance in ground points that the gas stations will spawn from each end")]
-    public int gasStationGroundPointIndex = 1;
 
     [Header("<< Trees >>")]
     [Tooltip("Parent for the spawned trees")]
     public Transform treeGenParent;
-    // [Tooltip("Base scale of the Tree Objects")]
-    // public float treeScale = 50;
+    [Tooltip("Base scale of the Tree Objects")]
+    public float treeScale = 50;
     [Tooltip("Amount of variance in the scales of individual tree objects")]
     public float treeScaleVariance = 10;
     [Tooltip("Whether or not the trees rotate with the ground at all")]
     public bool treeRotationEnabled = true;
     [Range(0, 100), Tooltip("From 0-100%, how closely will the trees align with the rotation of the ground")]
     public float treeRotScalar = 70;
-    [Range(0, 200), Tooltip("Vertical offset for the trees")]
+    [Range(-100, 100), Tooltip("Vertical offset for the trees")]
     public float treeYOffset = 0;
-    public int treeZPosition = -1;
-    
-    [Tooltip("Tree prefab")]
-    public GameObject treePrefab;
 
-    [Header("<< Signs >>")]
+    public int treeZPosition = -1;
+
+    [Tooltip("List of tree prefabs to spawn")]
+    public List<GameObject> treePrefabs = new List<GameObject>();
+
+    [Header("Signs")]
     [Tooltip("Base sign prefab")]
     public GameObject signPrefab;
     [Tooltip("Parent for the spawned signs")]
@@ -125,7 +115,7 @@ public class EnvironmentGenerator : MonoBehaviour
         DeleteAllEnvironmentObjects();
 
         // spawn tree objects
-        SpawnEnvironmentObjects(treeZPosition);
+        SpawnEnvironmentObjects(treePrefabs, treeScale, treeZPosition);
 
         environmentSpawned = true;
     }
@@ -144,34 +134,27 @@ public class EnvironmentGenerator : MonoBehaviour
         environmentSpawned = false;
     }
 
-    public void SpawnEnvironmentObjects(int zposition)
+    public void SpawnEnvironmentObjects(List<GameObject> prefabs, float scale, int zposition)
     {
+        // check prefabs
+        if (prefabs.Count < 1) { Debug.LogWarning("No environment prefabs."); return; }
+
         // check ground points
         if (groundPoints.Count < 1) { Debug.LogWarning("No ground points."); return; }
+
         // check ground rotations
         if (groundRotations.Count < 1) { Debug.LogWarning("No rotation points."); return; }
 
         int sortingOrder = 0; // sorting order of the object to be spawned
         int spacing = minSpaceBetweenObjects; // minimum spacing between objects
-        int levelNum = GameObject.Find("GameManager").GetComponent<GameManager>().currLevel - 1;
-
-        // << SPAWN GAS STATIONS >>
-        GameObject startStation   = Instantiate(gasStationPrefab, groundPoints[gasStationGroundPointIndex] + new Vector3(0, gasStationYOffset, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
-        startStation.transform.localScale = startStation.transform.localScale * gasStationScale;
-        startStation.GetComponent<SpriteRenderer>().sprite = gasStationSprites[levelNum];
-        if(levelNum != 2){
-            GameObject endStation = Instantiate(gasStationPrefab, groundPoints[groundPoints.Count - gasStationGroundPointIndex] + new Vector3(0, gasStationYOffset, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
-            endStation.GetComponent<SpriteRenderer>().sprite = gasStationSprites[levelNum+1];
-            endStation.transform.localScale = endStation.transform.localScale * gasStationScale;
-        }
 
         // << SPAWN TREES >>
         for (int currPointIndex = 10; currPointIndex < groundPoints.Count - 1; currPointIndex += spacing)
         {
             // spawn new environment object
             int facing = Random.Range(0, 2)*2 - 1; 
-            float thisScale = 1 + (Random.Range(-treeScaleVariance, treeScaleVariance)); 
-            SpawnTree(currPointIndex, thisScale, facing, sortingOrder, zposition);
+            float thisScale = scale + (Random.Range(0, treeScaleVariance * 2) - treeScaleVariance); //this will have to be changed once we are spawning objects besides trees
+            SpawnTree(prefabs[Random.Range(0, prefabs.Count)], currPointIndex, thisScale, facing, sortingOrder, zposition);
 
             /* ===============================
              *  << SET UP FOR NEXT ENVIRONMENT OBJECT >>
@@ -217,6 +200,7 @@ public class EnvironmentGenerator : MonoBehaviour
     public GameObject SpawnSign(int pointIndex, int signNum)
     {
         Vector3 signLoc = findNearestPeak(pointIndex);
+        //Debug.Log(groundPoints[pointIndex] + "       " + signLoc);
         GameObject newSignObject = Instantiate(signPrefab, signLoc, Quaternion.Euler(new Vector3(0, 0, 0)));
         newSignObject.transform.parent = signGenParent;
 
@@ -229,23 +213,21 @@ public class EnvironmentGenerator : MonoBehaviour
         return newSignObject;
     }
 
-    public GameObject SpawnTree(int pointIndex, float scale, int facing, int sortingOrder, int zposition = 0)
+    public GameObject SpawnTree(GameObject prefab, int pointIndex, float scale, int facing, int sortingOrder, int zposition = 0)
     {
         // create a random environment object at indexed groundPoint and with rotation
-        GameObject newTreeObject = Instantiate(treePrefab, groundPoints[pointIndex], Quaternion.Euler(new Vector3(0, 0, 0)));
-    
+        GameObject newTreeObject = Instantiate(prefab, groundPoints[pointIndex], Quaternion.Euler(new Vector3(0, 0, 0)));
+
         //set parent
         newTreeObject.transform.parent = treeGenParent;
         allSpawnedObjects.Add(newTreeObject);
 
-        // randomly face left or right, then scale
-        Vector3 scaleVec = newTreeObject.transform.localScale;
-        scaleVec.x *= facing;
-        scaleVec *= scale;
-        newTreeObject.transform.localScale = scaleVec;
+        // randomly face left or right
+        Vector3 facingVector = new Vector3( facing,  1 );
+        newTreeObject.transform.localScale = facingVector * scale;
 
         // set z position
-        newTreeObject.transform.position = SetZ(newTreeObject.transform.position, zposition + Random.Range(-0.01f, 0.01f));
+        newTreeObject.transform.position = SetZ(newTreeObject.transform.position, zposition);
 
         // Move down slightly 
         newTreeObject.transform.position = new Vector3(newTreeObject.transform.position.x, newTreeObject.transform.position.y + treeYOffset, newTreeObject.transform.position.z);

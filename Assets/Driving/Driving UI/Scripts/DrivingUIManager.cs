@@ -41,11 +41,8 @@ public class DrivingUIManager : MonoBehaviour
 
     [Header("Toggle Progress Bar")]
     private GameObject progressBarSlider;
-    
-    [Header("Transition UI")]
-    public GameObject transitionParent;
-    public TMP_Text transitionMessage;
-    private bool endOfGame = false;
+    public bool viewProgressBar;
+
     
     // Start is called before the first frame update
     void Start()
@@ -58,6 +55,14 @@ public class DrivingUIManager : MonoBehaviour
         signs = drivingGameManager.getSignDistances(numSigns, totalMiles);
         signs.Add(0);
         signText.text = miles + " Miles Till Cat Nyansisco";
+        if (viewProgressBar)
+        {
+            progressBarSlider.SetActive(true);
+        }
+        else
+        {
+            progressBarSlider.SetActive(false);
+        }
     }
 
     // Update is called once per frame
@@ -104,8 +109,8 @@ public class DrivingUIManager : MonoBehaviour
     // Function to update the fuel gauge
     void updateFuel(){
         //Vector3 nRotation = new Vector3(0f, 0f, 50f - 140 * Mathf.Clamp(vehicle_script.GetFuel(), 0, 1f));
-        //adjust first value's float multiplier to change end pos, second to change start pos. Unsure what the math is, guessing should work well enough hopefully
-        Vector3 nRotation = Vector3.Lerp(Vector3.forward * -175f, Vector3.forward * 50f, vehicle_script.GetFuel());
+
+        Vector3 nRotation = Vector3.Lerp(Vector3.forward * -90f, Vector3.forward * 50f, vehicle_script.GetFuel());
 
         fuelSlider.transform.eulerAngles = nRotation;
     }
@@ -142,25 +147,6 @@ public class DrivingUIManager : MonoBehaviour
                 break;
             }
         }
-    }
-    
-    public void transitionStop(string message, bool end = false){
-        transitionParent.SetActive(true);
-        transitionMessage.text = message;
-        endOfGame = end;
-        Time.timeScale = 0;
-        GameObject.Find("GameManager").GetComponent<GameManager>().activateScene = false;
-        if(end){
-            drivingGameManager.endOfGame = end;
-        }
-        else{
-            GameObject.Find("GameManager").GetComponent<GameManager>().LoadTacoMakingScene(true);
-        }
-    }
-    
-    public void transitionContinue(){
-        Time.timeScale = 1;
-        GameObject.Find("GameManager").GetComponent<GameManager>().activateScene = true;
     }
 }
  

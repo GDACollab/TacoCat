@@ -26,14 +26,7 @@ public class DrivingGameManager : MonoBehaviour
     public int stuckMaxVelocity;
     public int stuckTimeoutDuration;
     public float stuckTime;
-    private bool endRun = false;
-    
-    [Header("Transition")]
-    public string successText = "You made it to the next city. One step closer to Jamie!";
-    public string failText = "You ran out of gas. A tow truck took you back to the prevous city";
-    
-    [Header("Nitro Carry")]
-    public int nitroCharges = 3;
+
 
     // Start is called before the first frame update
     void Awake()
@@ -55,8 +48,7 @@ public class DrivingGameManager : MonoBehaviour
         yield return new WaitUntil(() => stageManager.allStagesGenerated);
 
         vehicle.rb_vehicle.constraints = RigidbodyConstraints2D.None;
-        vehicle.nitroCharges = nitroCharges;
-        uiManager.updateNitro();
+
     }
 
     // Update is called once per frame
@@ -68,11 +60,10 @@ public class DrivingGameManager : MonoBehaviour
 
             if (vehicle.GetVelocity().x < stuckMaxVelocity) // Truck is stuck
             {
-                if (stuckTime >= stuckTimeoutDuration && !endOfGame && !endRun) // Timer is up
+                if (stuckTime >= stuckTimeoutDuration && !endOfGame) // Timer is up
                 {
-                    Debug.Log(failText);
-                    uiManager.transitionStop(failText, false);
-                    endRun = true;
+                    Debug.Log("You ran out of gas. A tow truck took you back to the prevous city");
+                    GameObject.Find("GameManager").GetComponent<GameManager>().LoadTacoMakingScene();
                 }
                 else 
                 {
@@ -88,8 +79,9 @@ public class DrivingGameManager : MonoBehaviour
         // Check for end of level
         if (percentageTraveled >= 1 && !endOfGame)
         {
-            Debug.Log(successText);
-            uiManager.transitionStop(successText, true);
+            Debug.Log("You made it to the next city. One step closer to Jamie!");
+
+            endOfGame = true;
         }
 
         // << UPDATE DISTANCE TRACKER >>

@@ -300,6 +300,7 @@ MonoBehaviour:
   tacoGameManager: {fileID: 0}
   customerPrefab: {fileID: 4784761311512434799, guid: 0944c8b0746db6448b0eeae4e32351bf, type: 3}
   currCustomer: {fileID: 0}
+  tacoAudioManager: {fileID: 0}
   transitionTime: 1.5
   positionList:
   - {fileID: 7397252489227757978}
@@ -1003,7 +1004,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiManager: {fileID: 0}
   benchManager: {fileID: 0}
-  audioManager: {fileID: 0}
   endOfGame: 0
   submissionTaco: {fileID: 0}
   hand: {fileID: 0}
@@ -1017,7 +1017,6 @@ MonoBehaviour:
   gameScore: 0
   maxGameScore: 0
   gasAmount: 0
-  minimumGasThreshold: 0.5
   tacoPrefab: {fileID: 7059686471766786423, guid: a29f0c6dead9f744f90b23c8fd5fa56e, type: 3}
   allIngredientPrefabs:
   - {fileID: 5291081972430352552, guid: 1ff6300ecfb84e449a25526590fc0c09, type: 3}
