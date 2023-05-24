@@ -1395,7 +1395,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00d52fe647e9a4f478790e6c08e18ba2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!43 &1916322855
+--- !u!43 &1549396970
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2143,6 +2143,10 @@ PrefabInstance:
       propertyPath: vehicle
       value: 
       objectReference: {fileID: 2139287183}
+    - target: {fileID: 1801153804266685736, guid: 9c8f1c7b8e721411ca3c911ffb4570b3, type: 3}
+      propertyPath: zPosRange.y
+      value: -3200
+      objectReference: {fileID: 0}
     - target: {fileID: 1801153804266685736, guid: 9c8f1c7b8e721411ca3c911ffb4570b3, type: 3}
       propertyPath: playAreaGroundGeneration
       value: 
