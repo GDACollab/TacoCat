@@ -10,7 +10,7 @@ public class FlipTracker : MonoBehaviour
     RaycastHit2D hit;
     public AudioManager audioManager;
     StageManager stageManager;
-    int hitPointIndex;
+    public int hitPointIndex;
     float initTruckRotation;
 
     public bool jumpStarted = false;
@@ -120,7 +120,7 @@ public class FlipTracker : MonoBehaviour
             flipCount = 0;
         }
     }
-    
+
     public bool IsPerfectLanding(float landPointRot, float groundPointRot)
     {
         if (vehicle.state == DRIVE_STATE.CRASH) { return false; }
@@ -148,10 +148,10 @@ public class FlipTracker : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (stageManager != null && stageManager.allLevelGroundPoints.Count > 1)
+        if (stageManager != null && stageManager.allStageGroundPoints.Count > 1)
         {
             Gizmos.color = Color.green;
-            Gizmos.DrawSphere(stageManager.allLevelGroundPoints[hitPointIndex], 4);
+            Gizmos.DrawSphere(stageManager.allStageGroundPoints[hitPointIndex], 4);
         }
     }
 }
