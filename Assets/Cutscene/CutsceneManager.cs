@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CutsceneManager : MonoBehaviour
 {
@@ -40,6 +42,8 @@ public class CutsceneManager : MonoBehaviour
     public List<TextList> CutsceneOneDialogue;
     public List<TextList> CutsceneTwoDialogue;
     public List<TextList> CutsceneThreeDialogue;
+    public List<TextList> GoodEndingDialogue;
+    public List<TextList> BadEndingDialogue;
 
     private List<TextList> chosenDialogue;
 
@@ -65,6 +69,12 @@ public class CutsceneManager : MonoBehaviour
     public GameObject jamieMessagePrefab;
     public Transform jamieMessageParent;
 
+    public RectTransform jamieCallsAlexObject;
+
+    public Image image;
+    public float fadeTime = 1f;
+    private float currentAlpha = 0f;
+
     /*[Header("Typing out the message")]
     public bool typeOutJamie;
 
@@ -79,6 +89,8 @@ public class CutsceneManager : MonoBehaviour
         audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
         
         startingPosition = 0;
+
+        image.color = new Color(image.color.r, image.color.g, image.color.b, currentAlpha);
 
         StartCoroutine(begin());
 
@@ -98,6 +110,10 @@ public class CutsceneManager : MonoBehaviour
                 break;
             case 2:
                 chosenDialogue = CutsceneThreeDialogue;
+                GameManager.instance.cutsceneIndex++;
+                break;
+            case 3:
+                chosenDialogue = GoodEndingDialogue;
                 break;
             default:
                 chosenDialogue = CutsceneOneDialogue;
@@ -124,8 +140,51 @@ public class CutsceneManager : MonoBehaviour
             }
         }
 
-        yield return new WaitForSeconds(4);
-        endOfCutscene = true;
+        yield return new WaitForSeconds(3);
+
+        if (chosenDialogue != GoodEndingDialogue)
+        {
+            endOfCutscene = true;
+        }
+        else
+        {
+            RectTransform rectTransform = jamieCallsAlexObject.GetComponent<RectTransform>();
+            Vector3 startPosition = rectTransform.anchoredPosition3D;
+            Vector3 targetPosition = new Vector3(-360, 0, 0);
+            float duration = 0.1f;
+            float elapsedTime = 0f;
+
+            while (elapsedTime < duration)
+            {
+                rectTransform.anchoredPosition3D = Vector3.Lerp(startPosition, targetPosition, elapsedTime / duration);
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            rectTransform.anchoredPosition3D = targetPosition;
+
+            yield return new WaitForSeconds(1f);
+            StartCoroutine(FadeOut());
+            yield return new WaitForSeconds(fadeTime);
+            SceneManager.LoadScene("GoodEnding");
+        }
+    }
+
+    private System.Collections.IEnumerator FadeOut()
+    {
+        float timer = 0f;
+
+        while (timer < fadeTime)
+        {
+            timer += Time.deltaTime;
+            currentAlpha = Mathf.Lerp(0f, 1f, timer / fadeTime);
+
+            image.color = new Color(image.color.r, image.color.g, image.color.b, currentAlpha);
+
+            yield return null;
+        }
+
+        image.color = new Color(image.color.r, image.color.g, image.color.b, 1f);
     }
 
 
