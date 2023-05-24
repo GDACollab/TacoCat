@@ -8,6 +8,12 @@ public class PauseManager : MonoBehaviour
     public KeyCode pauseKey = KeyCode.Escape;
     public GameObject pauseCanvas;
     public GameObject volumeSliderParent;
+    [Header("Groups")]
+    public GameObject baseMenu;
+    public GameObject settingsMenu;
+    public GameObject settingsBackButton;
+    public GameObject settingsBackToMenu;
+    public GameObject switchMenu;
     AudioManager audioManager;
     protected bool isPaused = false;
 
@@ -31,8 +37,31 @@ public class PauseManager : MonoBehaviour
         isPaused = !isPaused;
         pauseCanvas.SetActive(isPaused);
         audioManager.isPaused = isPaused;
-
+        // Reset pause menu on close
+        if (!isPaused)
+        {
+            Debug.Log("PauseManager: Resetting Pause Menu");
+            baseMenu.SetActive(true);
+            settingsMenu.SetActive(false);
+            settingsBackButton.SetActive(true);
+            settingsBackToMenu.SetActive(false);
+            switchMenu.SetActive(false);
+        }
         Time.timeScale = isPaused ? 0 : 1;
+    }
+
+    // Quick access settings menu
+    public void Settings()
+    {
+        // Pause Game
+        Pause();
+        // Open settings menu
+        Debug.Log("PauseManager: Opening Settings Menu");
+        baseMenu.SetActive(false);      // Disable normal options
+        settingsMenu.SetActive(true);   // Enable Settings
+        settingsBackButton.SetActive(false);    // Disable access to normal options (main menu only)
+        settingsBackToMenu.SetActive(true);    // Close Settings (main menu only)
+        
     }
 
     private void Update() {
