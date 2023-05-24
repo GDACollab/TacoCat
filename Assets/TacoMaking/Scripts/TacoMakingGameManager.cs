@@ -12,6 +12,7 @@ public class TacoMakingGameManager : MonoBehaviour
     [HideInInspector]
     public AudioManager audioManager;
     public TacoUIManager uiManager;
+    public TacoMakingLighting lightingManager;
     public IngredientBenchManager benchManager;
     public GameObject background;
 
@@ -69,6 +70,9 @@ public class TacoMakingGameManager : MonoBehaviour
         CreateNewSubmissionTaco();
 
         customersLeftToGenerate = totalCustomers;
+
+        // set lighting manager start values
+        lightingManager.timeOfDay = gameManager.main_gameTimer;
     }
 
     public void Update()
@@ -81,7 +85,9 @@ public class TacoMakingGameManager : MonoBehaviour
                 setTutorial(activateTutorial);
             }
         }
-        else{
+        else
+        {
+            
             CustomerRotation();
 
             // check for end
@@ -91,6 +97,10 @@ public class TacoMakingGameManager : MonoBehaviour
                 //uiManager.endText.SetActive(true);
                 endOfGame = true;
             }
+
+            //update lightingManager
+            lightingManager.timeOfDay = gameManager.main_gameTimer;
+
         }
     }
 

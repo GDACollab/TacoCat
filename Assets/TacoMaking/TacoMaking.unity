@@ -311,7 +311,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &264766884
 Transform:
   m_ObjectHideFlags: 0
@@ -4140,8 +4140,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 00:00 AM
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: ee6c058c3bb67cb49ba76ec0e81f1c92, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: ee6c058c3bb67cb49ba76ec0e81f1c92, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 24fd20fda58deb448890ab4935f9e8e1, type: 2}
+  m_sharedMaterial: {fileID: -6891349679822879135, guid: 24fd20fda58deb448890ab4935f9e8e1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5315,6 +5315,7 @@ MonoBehaviour:
   gameManager: {fileID: 0}
   audioManager: {fileID: 0}
   uiManager: {fileID: 363859232}
+  lightingManager: {fileID: 894702618}
   benchManager: {fileID: 8334058484928422665}
   background: {fileID: 264766883}
   endOfGame: 0
@@ -5523,7 +5524,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7397252489446104405}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.129999, y: -2.1699998, z: 4.88}
+  m_LocalPosition: {x: 16.77, y: -3.42, z: 4.88}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
     [Range(0.0f, 1000.0f), Tooltip("Time remaining in seconds")]
     public float timeRemaining;
     [Range(0.0f,1.0f), Tooltip("Internal timer that goes from 0 to 1")]
-    public float countdownTimer = 0;
+    public float main_gameTimer = 0;
     [Tooltip("current hour")]
     public int curClockHour;
     [Tooltip("current minute")]
@@ -407,15 +407,15 @@ public class GameManager : MonoBehaviour
                 timeRemaining -= Time.deltaTime;
                 if ((1 - (timeRemaining / totalGameTime_seconds)) <= 1 && (1 - (timeRemaining / totalGameTime_seconds)) >= 0)
                 {
-                    countdownTimer = (1 - (timeRemaining / totalGameTime_seconds));
+                    main_gameTimer = (1 - (timeRemaining / totalGameTime_seconds));
                 }
                 else if ((1 - (timeRemaining / totalGameTime_seconds)) > 1)
                 {
-                    countdownTimer = 1;
+                    main_gameTimer = 1;
                 }
                 else if ((1 - (timeRemaining / totalGameTime_seconds)) < 0)
                 {
-                    countdownTimer = 0;
+                    main_gameTimer = 0;
                 }
                 CalculateTime();
             }

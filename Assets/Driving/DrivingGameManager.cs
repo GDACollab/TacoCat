@@ -6,6 +6,9 @@ using UnityEngine.Rendering.Universal;
 
 public class DrivingGameManager : MonoBehaviour
 {
+    [HideInInspector]
+    public GameManager gameManager;
+
     public StageManager foregroundStageManager;
     public StageManager playAreaStageManager; // manages the generation stages
     public StageManager backgroundStageManager; // manages the generation stages
@@ -41,7 +44,7 @@ public class DrivingGameManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-
+        gameManager = GameManager.instance;
         vehicle.rb_vehicle.constraints = RigidbodyConstraints2D.FreezeAll;
 
         endOfGame = false;
@@ -106,7 +109,7 @@ public class DrivingGameManager : MonoBehaviour
         percentageTraveled = vehicleDistance / totalDistance;
         if (percentageTraveled <= 0) { percentageTraveled = 0; }
 
-
+        lightingManager.timeOfDay = gameManager.main_gameTimer;
     }
     
     public List<int> getSignDistances(int numLandmarks, int totalSignDistance){
