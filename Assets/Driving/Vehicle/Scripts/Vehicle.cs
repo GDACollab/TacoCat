@@ -149,12 +149,24 @@ public class Vehicle : MonoBehaviour
         // << NITRO STATE >>
         if (state == DRIVE_STATE.NITRO)
         {
+            float minimumNitroVelocity = 1000;
+            if (rb_vehicle.velocity.magnitude < minimumNitroVelocity)
+            {
+                rb_vehicle.velocity =  transform.up * minimumNitroVelocity;
+            }
+
             rb_vehicle.AddForce(nitroForce * rb_vehicle.mass);
         }
 
         // << PERFECT BOOST STATE >>
         if (state == DRIVE_STATE.PERFECT_LANDING)
         {
+            float minimumBoostVelocity = 1000;
+            if (rb_vehicle.velocity.magnitude < minimumBoostVelocity)
+            {
+                rb_vehicle.velocity =  transform.up * minimumBoostVelocity;
+            }
+
             rb_vehicle.AddForce(perfectLandingBoostForce * rb_vehicle.mass);
         }
 
@@ -243,15 +255,22 @@ public class Vehicle : MonoBehaviour
     }
 
     // override all states and 
-    public IEnumerator PerfectLandingBoost()
+    public IEnumerator PerfectLandingBoost(Vector2 boost, float boostTime)
     {
+        Vector2 tempLandBoost = perfectLandingBoostForce;
+        float tempBoostTime = activePerfectBoostTime;
+        perfectLandingBoostForce = boost;
+        activePerfectBoostTime = boostTime;
+        
         state = DRIVE_STATE.PERFECT_LANDING;
 
         //StartCoroutine(cameraHandler.Shake(activePerfectBoostTime, cameraHandler.perfect_camShakeMagnitude));
 
 
         yield return new WaitForSeconds(activePerfectBoostTime);
-
+        
+        perfectLandingBoostForce = tempLandBoost;
+        activePerfectBoostTime = tempBoostTime;
         state = DRIVE_STATE.NONE;
     }
 
