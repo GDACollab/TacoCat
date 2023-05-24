@@ -142,7 +142,9 @@ public class DrivingUIManager : MonoBehaviour
         transitionParent.SetActive(true);
         transitionMessage.text = message;
         endOfGame = end;
-        Time.timeScale = 0;
+        drivingGameManager.vehicle.disableInputs = true;
+        StartCoroutine(drivingGameManager.vehicle.NegateVelocityOverTime(5));
+
         GameObject.Find("GameManager").GetComponent<GameManager>().activateScene = false;
         if(end){
             drivingGameManager.endOfGame = end;

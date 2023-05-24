@@ -82,6 +82,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allStagesGenerated: 0
   meshCreator: {fileID: 3070127029581114840}
+  environmentGenerator: {fileID: 2742292303635479999}
   mainGenerationLength: 70000
   generationOffset: {x: 0, y: 0, z: 0}
   main_begPos: {x: 0, y: 0, z: 0}
@@ -154,11 +155,13 @@ MonoBehaviour:
   numSigns: 4
   spawnGasStationEnds: 0
   gasStationPrefab: {fileID: 4066191289592924326, guid: 0d92edf9460a9ba45b08ca291da21df3, type: 3}
+  playerSpawnPoint: {fileID: 0}
   gasStationSprites:
   - {fileID: 21300000, guid: bd284b101b58d4dcab5ad1dc83a47447, type: 3}
   - {fileID: 21300000, guid: bfff473ad307e4253beeddf15a1c20c8, type: 3}
   - {fileID: 21300000, guid: 10b7dc315088241d4becce87210c0c43, type: 3}
   gasStationScale: 4
+  gasStationXOffset: 0
   gasStationYOffset: 10
   gasStationGroundPointIndex: 23
 --- !u!114 &2742292303635479996
@@ -216,7 +219,7 @@ LineRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2132478623
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 1
   m_Positions:
   - {x: 0, y: 0, z: 0}
@@ -431,7 +434,7 @@ SortingGroup:
   m_GameObject: {fileID: 6329002046810275152}
   m_Enabled: 1
   m_SortingLayerID: 2132478623
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 0
 --- !u!1 &7153004905748324074
 GameObject:
@@ -603,5 +606,5 @@ SortingGroup:
   m_GameObject: {fileID: 8744683770413148027}
   m_Enabled: 1
   m_SortingLayerID: 2132478623
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: -1

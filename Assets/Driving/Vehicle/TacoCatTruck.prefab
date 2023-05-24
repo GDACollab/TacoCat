@@ -4790,7 +4790,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2117569185
-  m_SortingLayer: 10
+  m_SortingLayer: 11
   m_SortingOrder: 12
   m_RenderMode: 0
   m_MeshDistribution: 0
@@ -4894,7 +4894,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2132478623
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 9b5b88352ac7e45b483b4546cdb12d43, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4943,7 +4943,7 @@ MonoBehaviour:
   - {x: -4.2184334, y: -3.4624546, z: 0.00000067891347}
   m_ShapePathHash: 1675360583
   m_Mesh: {fileID: 0}
-  m_InstanceId: 456180
+  m_InstanceId: -663544
 --- !u!1 &1911717623523805362
 GameObject:
   m_ObjectHideFlags: 0
@@ -9945,7 +9945,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2117569185
-  m_SortingLayer: 10
+  m_SortingLayer: 11
   m_SortingOrder: 12
   m_RenderMode: 0
   m_MeshDistribution: 0
@@ -14757,7 +14757,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2117569185
-  m_SortingLayer: 10
+  m_SortingLayer: 11
   m_SortingOrder: 12
   m_RenderMode: 0
   m_MeshDistribution: 0
@@ -14860,7 +14860,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2132478623
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
   m_Color: {r: 0.972549, g: 0.6620456, b: 0, a: 1}
@@ -14944,7 +14944,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2132478623
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
   m_Color: {r: 0, g: 0.67506576, b: 0.9716981, a: 1}
@@ -19737,7 +19737,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2117569185
-  m_SortingLayer: 10
+  m_SortingLayer: 11
   m_SortingOrder: 12
   m_RenderMode: 0
   m_MeshDistribution: 0
@@ -19786,7 +19786,7 @@ GameObject:
   - component: {fileID: 7641457981194525658}
   - component: {fileID: 1067633374}
   m_Layer: 0
-  m_Name: VelocityTruck
+  m_Name: TacoCatTruck
   m_TagString: Vehicle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19801,7 +19801,7 @@ Transform:
   m_GameObject: {fileID: 5231190167668380747}
   m_LocalRotation: {x: 0, y: -0, z: 0.7071068, w: -0.7071068}
   m_LocalPosition: {x: -3033, y: 130, z: -0.2}
-  m_LocalScale: {x: 50, y: 50, z: 50}
+  m_LocalScale: {x: 75, y: 75, z: 75}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1345018034826082184}
@@ -19826,7 +19826,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b99eb8140a7b473895a4cc7a39cb687, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraHandler: {fileID: 0}
   rb_vehicle: {fileID: 5231190167668380749}
   groundLayer:
     serializedVersion: 2
@@ -19953,7 +19952,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a83e709689a442e4e9d85e2f85f6d19c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraHandler: {fileID: 0}
   crashEffectPrefab: {fileID: 2703224528215049900, guid: 142a5f505e0f2447e92c2b75c9d5f194, type: 3}
   nitroEffect: {fileID: 4357888229136328235}
   nitroParticles: {fileID: 1059348517996426111}
@@ -20007,7 +20005,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2054651144983868209
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20319,7 +20317,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2696170282613425108
 RectTransform:
   m_ObjectHideFlags: 0

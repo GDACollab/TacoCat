@@ -38,6 +38,10 @@ public class CameraHandler : MonoBehaviour
     [Header("Cam Zoom Adjustment")]
     public Vector2 zPosRange = new Vector2(-800, -2000); // the range of z positions the camera should adjust between
 
+    [Header("Override")]
+    public bool overrideCam;
+    public Vector3 overrideCamOffset;
+
     [Header("Camera Generation-Based Offset")]
     public Vector3 currCamOffset;
     public Vector3 currCamPos;
@@ -46,9 +50,7 @@ public class CameraHandler : MonoBehaviour
     public float cameraSixthOffset = 2;
 
     // Modified fixedUpdate() to work with the Zero point code
-
     float currZeroPos;
-
 
     Vector3 currApoint;
     Vector3 currBpoint;
@@ -67,7 +69,6 @@ public class CameraHandler : MonoBehaviour
     private void Start()
     {
         vehicleRb = vehicle.GetComponent<Rigidbody2D>();
-
     }
 
     public void Init()
@@ -238,7 +239,7 @@ public class CameraHandler : MonoBehaviour
     void FixedUpdate()
     {
         // Check if vehicle is found
-        if (vehicle && foundGenerationPoints)
+        if (!overrideCam && vehicle && foundGenerationPoints)
         {
             Vector3 vehiclePos = vehicle.transform.position;
 
@@ -291,6 +292,20 @@ public class CameraHandler : MonoBehaviour
             currCamPos.y = Mathf.Lerp(currCamPos.y, vehiclePos.y + newYOffset, offsetAdjustSpeed.y * Time.fixedDeltaTime);
             currCamPos.z = Mathf.Lerp(currCamPos.z, newZOffset, offsetAdjustSpeed.z * Time.fixedDeltaTime);
             
+            // Lerp the camera position to the specific offset ^^
+            transform.position = Vector3.Lerp(transform.position, currCamPos, camSpeed * Time.fixedDeltaTime);
+        }
+        else
+        {
+            currCamOffset = overrideCamOffset;
+            Vector3 vehiclePos = vehicle.transform.position;
+
+            // [[ LERP CAMERA ]]
+            // Lerp the offset / zoom individually
+            currCamPos.x = Mathf.Lerp(currCamPos.x, vehiclePos.x + overrideCamOffset.x, offsetAdjustSpeed.x * Time.fixedDeltaTime);
+            currCamPos.y = Mathf.Lerp(currCamPos.y, vehiclePos.y + overrideCamOffset.y, offsetAdjustSpeed.y * Time.fixedDeltaTime);
+            currCamPos.z = Mathf.Lerp(currCamPos.z, overrideCamOffset.z, offsetAdjustSpeed.z * Time.fixedDeltaTime);
+
             // Lerp the camera position to the specific offset ^^
             transform.position = Vector3.Lerp(transform.position, currCamPos, camSpeed * Time.fixedDeltaTime);
         }

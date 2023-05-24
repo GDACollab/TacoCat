@@ -77,9 +77,6 @@ public class EnvironmentGenerator : MonoBehaviour
     public Transform envGen2Parent;
     public List<GameObject> envPrefabs_2 = new List<GameObject>();
 
-
-
-
     [Header("Line")]
     public bool drawLine;
     public bool enableCollision;
@@ -103,10 +100,13 @@ public class EnvironmentGenerator : MonoBehaviour
     public bool spawnGasStationEnds;
     [Tooltip("Gas station prefab")]
     public GameObject gasStationPrefab;
+    public Transform playerSpawnPoint;
     [Tooltip("List of gas station sprites")]
     public List<Sprite> gasStationSprites = new List<Sprite>();
     [Tooltip("Gas station object scale")]
     public float gasStationScale;
+    [Tooltip("X offset for the gas station objects")]
+    public float gasStationXOffset;
     [Tooltip("Y offset for the gas station objects")]
     public float gasStationYOffset;
     [Tooltip("Distance in ground points that the gas stations will spawn from each end")]
@@ -186,19 +186,22 @@ public class EnvironmentGenerator : MonoBehaviour
             int levelNum = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().currLevel;
 
             // START STATION
-            GameObject startStation = Instantiate(gasStationPrefab, groundPoints[gasStationGroundPointIndex] + new Vector3(0, gasStationYOffset, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
+            GameObject startStation = Instantiate(gasStationPrefab, groundPoints[gasStationGroundPointIndex] + new Vector3(-gasStationXOffset, gasStationYOffset, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
             startStation.transform.localScale = startStation.transform.localScale * gasStationScale;
             startStation.GetComponentInChildren<SpriteRenderer>().sprite = gasStationSprites[levelNum];
-            startStation.GetComponentInChildren<BoxCollider2D>().enabled = false;
+            startStation.GetComponentInChildren<EndTrigger>().start = true;
+            startStation.GetComponentInChildren<EndTrigger>().end = false;
+
+            playerSpawnPoint = startStation.transform;
 
             // END STATION
             if (levelNum != 2)
             {
-                GameObject endStation = Instantiate(gasStationPrefab, groundPoints[groundPoints.Count - gasStationGroundPointIndex] + new Vector3(0, gasStationYOffset, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
+                GameObject endStation = Instantiate(gasStationPrefab, groundPoints[groundPoints.Count - gasStationGroundPointIndex] + new Vector3(gasStationXOffset, gasStationYOffset, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
                 endStation.GetComponentInChildren<SpriteRenderer>().sprite = gasStationSprites[levelNum + 1];
                 endStation.transform.localScale = endStation.transform.localScale * gasStationScale;
-                startStation.GetComponentInChildren<BoxCollider2D>().enabled = true;
-
+                endStation.GetComponentInChildren<EndTrigger>().start = false;
+                endStation.GetComponentInChildren<EndTrigger>().end = true;
             }
 
         }

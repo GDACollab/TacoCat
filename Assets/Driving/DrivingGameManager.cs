@@ -58,6 +58,12 @@ public class DrivingGameManager : MonoBehaviour
     {
         playAreaStageManager.BeginStageGeneration();
         yield return new WaitUntil(() => playAreaStageManager.allStagesGenerated);
+        yield return new WaitUntil(() => playAreaStageManager.environmentGenerator.environmentSpawned);
+
+        // move vehicle
+        vehicle.transform.position = playAreaStageManager.environmentGenerator.playerSpawnPoint.position;
+        camHandler.transform.position = playAreaStageManager.environmentGenerator.playerSpawnPoint.position;
+
 
         foregroundStageManager.BeginStageGeneration();
         yield return new WaitUntil(() => foregroundStageManager.allStagesGenerated);
@@ -65,6 +71,7 @@ public class DrivingGameManager : MonoBehaviour
         backgroundStageManager.BeginStageGeneration();
         yield return new WaitUntil(() => backgroundStageManager.allStagesGenerated);
 
+        //playAreaStageManager.environmentGenerator.
         vehicle.rb_vehicle.constraints = RigidbodyConstraints2D.None;
         vehicle.nitroCharges = nitroCharges;
         uiManager.updateNitro();

@@ -5,7 +5,7 @@ using UnityEngine;
 public class TruckAnimationHandler : MonoBehaviour
 {
     Vehicle vehicle;
-    public CameraHandler cameraHandler;
+    CameraHandler cameraHandler;
     
     [Space(10)]
     public GameObject crashEffectPrefab;
@@ -24,6 +24,8 @@ public class TruckAnimationHandler : MonoBehaviour
     public void Start()
     {
         vehicle = GetComponentInParent<Vehicle>();
+        cameraHandler = Camera.main.GetComponent<CameraHandler>();
+
 
     }
 
