@@ -311,7 +311,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &264766884
 Transform:
   m_ObjectHideFlags: 0
@@ -1159,7 +1159,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 3b975ec0
+  m_ApplyToSortingLayers: 3b975ec0f572dc676f2489da
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -1768,7 +1768,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: dd2b0e5e
+  m_ApplyToSortingLayers: dd2b0e5edd5a26d9
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -2131,7 +2131,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 9f0a1b7f95ac758a
+  m_ApplyToSortingLayers: 9f0a1b7f95ac758a87021546
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -2245,10 +2245,10 @@ MonoBehaviour:
   - {r: 0.9607843, g: 0.4862745, b: 0, a: 1}
   - {r: 1, g: 0.8, b: 0.5019608, a: 1}
   midDay:
-  - {r: 0.16078432, g: 0.7137255, b: 0.9647059, a: 1}
-  - {r: 0.30980393, g: 0.7647059, b: 0.96862745, a: 1}
-  - {r: 0.011764706, g: 0.60784316, b: 0.8980392, a: 1}
-  - {r: 0.5058824, g: 0.83137256, b: 0.98039216, a: 1}
+  - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 1, g: 1, b: 1, a: 1}
   eveningSunset:
   - {r: 0.9372549, g: 0.42352942, b: 0, a: 1}
   - {r: 1, g: 0.654902, b: 0.14901961, a: 1}

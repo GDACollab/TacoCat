@@ -55,7 +55,7 @@ public class Customer: MonoBehaviour
 
     void Start()
     {
-        orderUI.gameObject.SetActive(false);
+        //orderUI.gameObject.SetActive(false);
 
         Debug.Log("Species init: " + species);
 
