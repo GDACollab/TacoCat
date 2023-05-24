@@ -115,6 +115,9 @@ public class CutsceneManager : MonoBehaviour
             case 3:
                 chosenDialogue = GoodEndingDialogue;
                 break;
+            case 4:
+                chosenDialogue = BadEndingDialogue;
+                break;
             default:
                 chosenDialogue = CutsceneOneDialogue;
                 break;
@@ -142,11 +145,11 @@ public class CutsceneManager : MonoBehaviour
 
         yield return new WaitForSeconds(3);
 
-        if (chosenDialogue != GoodEndingDialogue)
+        if (chosenDialogue != GoodEndingDialogue && chosenDialogue != BadEndingDialogue)
         {
             endOfCutscene = true;
         }
-        else
+        else if (chosenDialogue == GoodEndingDialogue)
         {
             RectTransform rectTransform = jamieCallsAlexObject.GetComponent<RectTransform>();
             Vector3 startPosition = rectTransform.anchoredPosition3D;
@@ -168,9 +171,15 @@ public class CutsceneManager : MonoBehaviour
             yield return new WaitForSeconds(fadeTime);
             SceneManager.LoadScene("GoodEnding");
         }
+        else if (chosenDialogue == BadEndingDialogue)
+        {
+            StartCoroutine(FadeOut());
+            yield return new WaitForSeconds(fadeTime);
+            SceneManager.LoadScene("BadEnding");
+        }
     }
 
-    private System.Collections.IEnumerator FadeOut()
+    private IEnumerator FadeOut()
     {
         float timer = 0f;
 
