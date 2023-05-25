@@ -9,9 +9,18 @@ public class TacoUIManager : MonoBehaviour
     public TacoMakingGameManager tacoGameManager;
     CustomerManager customerManager;
 
-    [Space(10)]
-    public GameObject endText;
-    public bool endOfGame;
+    [Header("Camera")]
+    Camera cam;
+    [HideInInspector]
+    public CameraEffectManager camEffectManager;
+    public int camFadeDuration = 3;
+
+    [Header("Canvas")]
+    public GameObject tutorialCanvas;
+    public GameObject endCanvas;
+
+    public Transform windowShutter;
+
 
     [Header("Score UI")]
     public GameObject starPrefab;
@@ -45,6 +54,8 @@ public class TacoUIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        cam = Camera.main;
+        camEffectManager = cam.GetComponent<CameraEffectManager>();
         customerManager = tacoGameManager.customerManager;
 
         DisplayGas(0);
@@ -211,6 +222,26 @@ public class TacoUIManager : MonoBehaviour
             nCharge2.color = Color.black;
             nCharge3.color = Color.black;
             break;
+        }
+    }
+
+    public IEnumerator OpenWindow()
+    {
+        yield return new WaitForSeconds(1f);
+
+        float windowTime = 0f;
+        Vector3 startPos = windowShutter.transform.localPosition;
+        Vector3 endPos = startPos;
+        endPos.y = 8.54f;
+
+        float windowOpenTime = 1f;
+        while (windowTime < windowOpenTime)
+        {
+            float t = windowTime / windowOpenTime;
+            windowShutter.transform.localPosition = Vector3.Lerp(startPos, endPos, t);
+
+            windowTime += Time.deltaTime;
+            yield return null;
         }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CameraHandler : MonoBehaviour
 {
@@ -19,41 +20,34 @@ public class CameraHandler : MonoBehaviour
     public float camSpeed = 5f;
     public Vector3 offsetAdjustSpeed = new Vector3(3, 3, 3);
 
-    [Header("Camera Shake")]
-    [Range(0, 1)]
-    public float perfect_camShakeMagnitude = 0.5f;
-    [Range(0, 1)]
-    public float nitro_camShakeMagnitude = 0.5f;
-
     [Header("Cam Horz Adjustment")]
     public Vector2 xPosRange = new Vector2(0, -100); // the range of x positions the camera should adjust between
+    public Vector2 truckVelocityValueRange = new Vector2(300, 500);
+    public Vector2 truckCurrVelocity;
+    public float currVelocityPercent;
 
     [Header("Cam Height Adjustment")]
     public Vector2 yPosRange = new Vector2(0, -200); // the range of y positions the camera should adjust between
     public float heightOffsetPercentage = -0.25f;
+    public Vector2 truckHeightValueRange = new Vector2(300, 500);
+    public float truckHeight;
 
     [Header("Cam Zoom Adjustment")]
     public Vector2 zPosRange = new Vector2(-800, -2000); // the range of z positions the camera should adjust between
-    [Tooltip("Adjust the zoom of the camera based on the truck height values in this range")]
-    public Vector2 truckHeightValueRange = new Vector2(300, 500);
+
+    [Header("Override")]
+    public bool overrideCam;
+    public Vector3 overrideCamOffset;
 
     [Header("Camera Generation-Based Offset")]
     public Vector3 currCamOffset;
+    public Vector3 currCamPos;
 
     // Each value = 1/6 of the distance from the ceenter to the screen edge, + is to the left and - is to the right
     public float cameraSixthOffset = 2;
-
-    // Modified fixedUpdate() to work with the Zero point code
-
     float currZeroPos;
-    float truckHeight;
-
-
     Vector3 currApoint;
     Vector3 currBpoint;
-
-
-    // slope/constant values used in equation
     float slope;
     float constant;
     // Used for determining if new bezier points should be added to the list
@@ -62,11 +56,19 @@ public class CameraHandler : MonoBehaviour
     List<Vector3> camBezierPoints = new List<Vector3>(); //List of points used to determine where the 'zero' point should be
     public int bezierPointsListTracker = 0; //Current positioning in the list of points
 
+    [Header("Camera Shake")]
+    [Range(0, 5)]
+    public float perfect_camShakeMagnitude = 0.5f;
+    [Range(0, 5)]
+    public float nitro_camShakeMagnitude = 0.5f;
+
+    [Header("Fade Transition")]
+    public Image blackImage;
+
 
     private void Start()
     {
         vehicleRb = vehicle.GetComponent<Rigidbody2D>();
-
     }
     private void Awake(){
         audioManager = GetComponentInChildren<AudioManager>();
@@ -79,6 +81,8 @@ public class CameraHandler : MonoBehaviour
 
     public IEnumerator Initialize()
     {
+
+
         // << GET ALL GENERATION POINTS >>
         foundGenerationPoints = false;
         while (!foundGenerationPoints)
@@ -108,27 +112,28 @@ public class CameraHandler : MonoBehaviour
 
             yield return null; // Wait for the next frame
         }
-
-        // Rest of your code here
+        // set camera to player position
+        transform.position = playAreaGroundGeneration.environmentGenerator.playerSpawnPoint.position;
 
         yield return null; // Optional: Wait for the next frame
     }
 
 
-    public IEnumerator Shake(float duration, float magnitude)
+    public IEnumerator BoostShake(float duration, float magnitude)
     {
         float elapsed = 0f;
 
         while (elapsed < duration)
         {
-            float x = UnityEngine.Random.Range(-1f, 1f) * magnitude;
-            float y = UnityEngine.Random.Range(-1f, 1f) * magnitude;
+            float x = UnityEngine.Random.Range(-2f, 1f) * magnitude;
+            float y = UnityEngine.Random.Range(-0.5f, 0.5f) * magnitude;
 
             transform.position += new Vector3(x, y, 0);
             elapsed += Time.deltaTime;
-            yield return 0;
+            yield return null;
         }
     }
+
 
     //Called in the bezier generator, adds the P_1/P_2 point to the bezierPoints list
     //(To do so, whenever a P_1/2 point is made, run this function with that point before moving onto the next point)
@@ -240,14 +245,13 @@ public class CameraHandler : MonoBehaviour
     void FixedUpdate()
     {
         // Check if vehicle is found
-        if (vehicle && foundGenerationPoints)
+        if (!overrideCam && vehicle && foundGenerationPoints)
         {
             Vector3 vehiclePos = vehicle.transform.position;
 
             // Calculate the zero position based on the car's y position
             currZeroPos = GetCurrentZero();
             //Debug.Log("currZeroPos " + currZeroPos);
-
 
             truckHeight = Mathf.Abs((vehiclePos.y - currZeroPos));
             //Debug.Log("Truck height from currZero: " + truckHeight);
@@ -258,15 +262,21 @@ public class CameraHandler : MonoBehaviour
             }
 
 
+
+            // << HORZ CAMERA SHIFT >>
+            truckCurrVelocity = vehicle.GetComponent<Vehicle>().rb_vehicle.velocity;
+            // Calculate the current velocity as a percentage of the velocityRange
+            currVelocityPercent = Mathf.InverseLerp(truckVelocityValueRange.x, truckVelocityValueRange.y, vehicleRb.velocity.magnitude);
+
+
+            // Calculate the x position of the camera based on the car's x position and camera shift
+            float newXOffset = (xPosRange.y * currVelocityPercent);
+            newXOffset = Mathf.Clamp(newXOffset, xPosRange.x, xPosRange.y);
+
             // << VERT CAMERA SHIFT >>
             // Calculate the camera shift based on the difference between car's y position and zero position
             float newYOffset = -(truckHeight) * heightOffsetPercentage;
             newYOffset = Mathf.Clamp(newYOffset, yPosRange.x, yPosRange.y);
-
-            // << HORZ CAMERA SHIFT >>
-            // Calculate the x position of the camera based on the car's x position and camera shift
-            float newXOffset = truckHeight * cameraSixthOffset * (8 / 27);
-            newXOffset = Mathf.Clamp(newXOffset, xPosRange.x, xPosRange.y);
 
             // << CAMERA ZOOM >>
             // Calculate the z position of the camera based on the car's y position and camera's FOV
@@ -276,19 +286,42 @@ public class CameraHandler : MonoBehaviour
             float zoomPercentage = (float)(truckHeight / truckHeightValueRange.y);
             float newZOffset = zPosRange.y * zoomPercentage; // get zoom percentage from z pos range
             newZOffset = Mathf.Clamp(newZOffset, zPosRange.y, zPosRange.x); // clamp offset
-            //Debug.Log("newZOffset: " + newZOffset);
+
+
+            // if too tall, multiply height offset
+            if (truckHeight > truckHeightValueRange.y)
+            {
+                newYOffset = -(truckHeight) * (0.5f);
+                newZOffset = zPosRange.y * 1; // get zoom percentage from z pos range
+            }
+
+
+            currCamOffset = new Vector3(newXOffset, newYOffset, newZOffset);
 
             // [[ LERP CAMERA ]]
             // Lerp the offset / zoom individually
-            currCamOffset.x = Mathf.Lerp(currCamOffset.x, vehiclePos.x + newXOffset, offsetAdjustSpeed.x * Time.fixedDeltaTime);
-            currCamOffset.y = Mathf.Lerp(currCamOffset.y, vehiclePos.y + newYOffset, offsetAdjustSpeed.y * Time.fixedDeltaTime);
-            currCamOffset.z = Mathf.Lerp(currCamOffset.z, newZOffset, offsetAdjustSpeed.z * Time.fixedDeltaTime);
+            currCamPos.x = Mathf.Lerp(currCamPos.x, vehiclePos.x + newXOffset, offsetAdjustSpeed.x * Time.fixedDeltaTime);
+            currCamPos.y = Mathf.Lerp(currCamPos.y, vehiclePos.y + newYOffset, offsetAdjustSpeed.y * Time.fixedDeltaTime);
+            currCamPos.z = Mathf.Lerp(currCamPos.z, newZOffset, offsetAdjustSpeed.z * Time.fixedDeltaTime);
             
             // Lerp the camera position to the specific offset ^^
-            transform.position = Vector3.Lerp(transform.position, currCamOffset, camSpeed * Time.fixedDeltaTime);
+            transform.position = Vector3.Lerp(transform.position, currCamPos, camSpeed * Time.fixedDeltaTime);
+        }
+        else
+        {
+            currCamOffset = overrideCamOffset;
+            Vector3 vehiclePos = vehicle.transform.position;
+
+            // [[ LERP CAMERA ]]
+            // Lerp the offset / zoom individually
+            currCamPos.x = Mathf.Lerp(currCamPos.x, vehiclePos.x + overrideCamOffset.x, offsetAdjustSpeed.x * Time.fixedDeltaTime);
+            currCamPos.y = Mathf.Lerp(currCamPos.y, vehiclePos.y + overrideCamOffset.y, offsetAdjustSpeed.y * Time.fixedDeltaTime);
+            currCamPos.z = Mathf.Lerp(currCamPos.z, overrideCamOffset.z, offsetAdjustSpeed.z * Time.fixedDeltaTime);
+
+            // Lerp the camera position to the specific offset ^^
+            transform.position = Vector3.Lerp(transform.position, currCamPos, camSpeed * Time.fixedDeltaTime);
         }
     }
-
 
     private void OnDrawGizmos()
     {
@@ -305,8 +338,8 @@ public class CameraHandler : MonoBehaviour
 
 
         // << CURR HORZ OFFSET >>
-        Gizmos.DrawCube(new Vector3(vehiclePos.x, currCamOffset.y, 0), Vector3.one * 25);
-        Gizmos.DrawCube(new Vector3(currCamOffset.x, vehiclePos.y, 0), Vector3.one * 25);
+        Gizmos.DrawCube(new Vector3(vehiclePos.x, currCamPos.y, 0), Vector3.one * 25);
+        Gizmos.DrawCube(new Vector3(currCamPos.x, vehiclePos.y, 0), Vector3.one * 25);
 
 
         // << SHOW ALL CAM BEZIER POINTS >>

@@ -3,24 +3,34 @@ using System.Collections.Generic;
 using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class TutorialManager : MonoBehaviour {
-    public float fadeSpeed = 1f;
+
+
+    protected Vehicle truck;
+    protected DrivingGameManager drivingGameManager;
 
     // Store across levels:
-    public static class TutorialManagerInfo {
+    public static class TutorialManagerInfo
+    {
         public static bool showGas = false;
         public static bool showRotation = false;
         public static bool showNitro = false;
     }
 
-    protected Image space;
-    protected Image arrowLeft;
-    protected Image arrowRight;
-    protected Image nitro;
+    public float fadeSpeed = 1f;
 
-    protected Vehicle truck;
-    protected DrivingGameManager drivingGameManager;
+    public Image space;
+    public Image arrowLeft;
+    public Image arrowRight;
+    public Image nitro;
+
+    [Space(20)]
+    public Animator truckUIAnim;
+    public FlipTracker flipTracker;
+    public TextMeshProUGUI flipCount;
+
 
     private void Start() {
         space = transform.GetChild(0).GetComponent<Image>();
@@ -55,32 +65,54 @@ public class TutorialManager : MonoBehaviour {
         }
     }
 
-    private void Update() {
-        if (truck.rb_vehicle.velocity.x <= 0.1f) {
-            if (!TutorialManagerInfo.showGas) {
+    private void Update()
+    {
+        if (truck.rb_vehicle.velocity.x <= 0.1f)
+        {
+            if (!TutorialManagerInfo.showGas)
+            {
                 TutorialManagerInfo.showGas = true;
-                StartCoroutine(ShowTutorialMessage(space, () => {
+                StartCoroutine(ShowTutorialMessage(space, () =>
+                {
                     return Input.GetKey(KeyCode.Space);
                 }));
-            } 
+            }
 
         }
         else if (TutorialManagerInfo.showGas && truck.rb_vehicle.velocity.x > 0 && !TutorialManagerInfo.showNitro)
         {
             TutorialManagerInfo.showNitro = true;
-            StartCoroutine(ShowTutorialMessage(nitro, () => {
+            StartCoroutine(ShowTutorialMessage(nitro, () =>
+            {
                 return Input.GetKey(KeyCode.LeftShift);
             }));
         }
 
-        if (truck.rb_vehicle.velocity.y > 10 && truck.state == DRIVE_STATE.IN_AIR && !TutorialManagerInfo.showRotation) {
+        if (truck.rb_vehicle.velocity.y > 10 && truck.state == DRIVE_STATE.IN_AIR && !TutorialManagerInfo.showRotation)
+        {
             TutorialManagerInfo.showRotation = true;
-            StartCoroutine(ShowTutorialMessage(arrowLeft, () => {
+            StartCoroutine(ShowTutorialMessage(arrowLeft, () =>
+            {
                 return Input.GetKey(KeyCode.LeftArrow);
             }));
-            StartCoroutine(ShowTutorialMessage(arrowRight, () => {
+            StartCoroutine(ShowTutorialMessage(arrowRight, () =>
+            {
                 return Input.GetKey(KeyCode.RightArrow);
             }));
         }
+
+
+
+    }
+
+    public void showFlipCountUI(int count)
+    {
+        // << FLIP COUNT >>
+        flipCount.text = "" + count;
+
+        if (count <= 0) { return; }
+
+        truckUIAnim.Play("FlipCount");
+
     }
 }

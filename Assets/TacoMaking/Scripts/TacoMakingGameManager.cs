@@ -5,6 +5,8 @@ using TMPro;
 public enum INGREDIENT_TYPE { NONE, FISH, SOUR_CREAM, PICO_DE_GALLO, CABBAGE, SLICED_JALAPENOS }
 public enum scoreType { NONE, PERFECT, GOOD, OKAY, FAILED } // possible scores a taco can get.
 
+public enum TACOMAKING_STATE { LOADING, TUTORIAL, PLAY, END, END_TRANSITION }
+
 public class TacoMakingGameManager : MonoBehaviour
 {
     [HideInInspector]
@@ -12,10 +14,12 @@ public class TacoMakingGameManager : MonoBehaviour
     [HideInInspector]
     public AudioManager audioManager;
     public TacoUIManager uiManager;
+    public TacoMakingLighting lightingManager;
     public IngredientBenchManager benchManager;
     public GameObject background;
 
-    public bool endOfGame;
+    [Header("States")]
+    public TACOMAKING_STATE state = TACOMAKING_STATE.LOADING;
 
     [Header("Submission Taco")]
     public Taco submissionTaco;
@@ -46,51 +50,104 @@ public class TacoMakingGameManager : MonoBehaviour
     public List<GameObject> allIngredientPrefabs;
     public List<GameObject> allIngredientBinPrefabs;
 
-    public TMP_Text clockTime;
-    public bool activateTutorial = true;
-
     public void Start()
     {
-        difficulty = Mathf.Min(difficulty, 3);
-        customerManager.difficulty = difficulty;
-
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         audioManager = gameManager.audioManager;
         benchManager = GetComponentInChildren<IngredientBenchManager>();
         uiManager = GetComponentInChildren<TacoUIManager>();
-        
-        for(int i = 0; i < background.transform.childCount; i++){
+
+        // get difficulty
+        difficulty = Mathf.Min(difficulty, 3);
+        customerManager.difficulty = difficulty;
+
+        // enable / disable backgrounds
+        for (int i = 0; i < background.transform.childCount; i++){
             background.transform.GetChild(i).gameObject.SetActive(false);
         }
         background.transform.GetChild(difficulty-1).gameObject.SetActive(true);
         
-        activateTutorial = (difficulty!=1) ? false : activateTutorial;
-
+        // create taco to place ingredients on
         CreateNewSubmissionTaco();
 
+        // init customer count
         customersLeftToGenerate = totalCustomers;
+
+        // set lighting manager start values
+        lightingManager.timeOfDay = gameManager.main_gameTimer;
+
+        StartCoroutine(Init());
+    }
+
+    IEnumerator Init()
+    {
+        yield return new WaitForSeconds(1);
+
+        // determine if tutorial is needed
+        if (difficulty == 1)
+        {
+            state = TACOMAKING_STATE.TUTORIAL;
+            uiManager.camEffectManager.StartFadeIn(1.5f);
+        }
+        else
+        {
+            state = TACOMAKING_STATE.PLAY;
+        }
     }
 
     public void Update()
     {
-        if(activateTutorial){
-            if(Input.GetKeyDown(KeyCode.Space)){
-                activateTutorial = false;
-            }
-            if(gameManager.currGame==currGame.TACO_MAKING){
-                setTutorial(activateTutorial);
-            }
-        }
-        else{
-            CustomerRotation();
 
-            // check for end
-            // if (submittedCustomers == totalCustomers)
-            if (gasAmount >= minimumGasThreshold)
-            {
-                //uiManager.endText.SetActive(true);
-                endOfGame = true;
-            }
+        switch(state)
+        {
+            case TACOMAKING_STATE.LOADING:
+                break;
+            case TACOMAKING_STATE.TUTORIAL:
+
+                if (!uiManager.camEffectManager.isFading)
+                {
+                    uiManager.tutorialCanvas.SetActive(true);
+
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        uiManager.tutorialCanvas.SetActive(false);
+                        state = TACOMAKING_STATE.PLAY;
+                    }
+                }
+
+                break;
+            case TACOMAKING_STATE.PLAY:
+
+                StartCoroutine(uiManager.OpenWindow());
+
+                CustomerRotation();
+
+                // check for end
+                // if (submittedCustomers == totalCustomers)
+                if (gasAmount >= minimumGasThreshold)
+                {
+                    state = TACOMAKING_STATE.END;
+                }
+
+                //update lightingManager
+                lightingManager.timeOfDay = gameManager.main_gameTimer;
+                break;
+            case TACOMAKING_STATE.END:
+
+                uiManager.endCanvas.SetActive(true);
+
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    uiManager.endCanvas.SetActive(false);
+                    uiManager.camEffectManager.StartFadeOut(1.5f);
+                    state = TACOMAKING_STATE.END_TRANSITION;
+                }
+
+                break;
+            case TACOMAKING_STATE.END_TRANSITION:
+                break;
+            default:
+                break;
         }
     }
 
@@ -132,7 +189,7 @@ public class TacoMakingGameManager : MonoBehaviour
     public void SubmitTaco()
     {
         //Can't submit taco until customer is finished moving
-        if (customerManager.currCustomer.moveRoutine == null)
+        if (customerManager.currCustomer != null && customerManager.currCustomer.moveRoutine == null)
         {
             scoreType score = customerManager.currCustomer.ScoreTaco(submissionTaco);
             NewTacoScore(score);
@@ -205,13 +262,6 @@ public class TacoMakingGameManager : MonoBehaviour
         Debug.Log("gasAmout: "+gasAmount+" gameScore: "+ gameScore+" maxGameScore: "+ maxGameScore+" totalCustomers: "+ totalCustomers);
     }
     
-    private void setTutorial(bool set){
-        transform.Find("Tutorial Canvas").gameObject.SetActive(set);
-        GetComponent<InputManager>().enabled = !set;
-        Time.timeScale = (set) ? 0 : 1;
-    }
-
-
     #region HELPER FUNCTIONS ==============================================================
 
     // << GET CURRENT INGREDIENT IN BIN >>

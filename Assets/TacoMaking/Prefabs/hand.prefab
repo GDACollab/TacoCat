@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6876731286340199212}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.19, y: 7.72, z: 0}
+  m_LocalPosition: {x: -0.19, y: 3.74, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -71,9 +71,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2132478623
-  m_SortingLayer: 5
+  m_SortingLayer: 8
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: daed6635c349512439968b4ec152d58f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: accf9913762ca0948aea05db8f34b645, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -139,5 +139,6 @@ MonoBehaviour:
   approximateProximity: {x: 0.02, y: 0.02, z: 0}
   currHeldIngredient: 0
   state: 0
-  pickBin: {fileID: 0}
+  ingredientBench: {fileID: 0}
+  pickIngredientBin: {fileID: 0}
   submissionTaco: {fileID: 0}

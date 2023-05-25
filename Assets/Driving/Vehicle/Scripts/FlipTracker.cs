@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class FlipTracker : MonoBehaviour
 {
-
+    DrivingGameManager drivingGameManager;
     Vehicle vehicle;
     TruckAnimationHandler animHandler;
     RaycastHit2D hit;
     public AudioManager audioManager;
-    StageManager stageManager;
+    public StageManager stageManager;
     public int hitPointIndex;
     float initTruckRotation;
 
@@ -20,11 +20,13 @@ public class FlipTracker : MonoBehaviour
     public int flipCap = 10;
     public float percentBoost = 0.1f;
     public float timeBoost = 0.05f;
+    public bool firstFlipCounts = true;
     public GameObject boostSprite;
     float boostSpriteY;
 
-    
+
     [Space(10)]
+    public TutorialManager uiScript;
     public int flipCount;
     private bool flipCounted;
     public float currAirTime;
@@ -46,6 +48,7 @@ public class FlipTracker : MonoBehaviour
     {
         vehicle = GetComponent<Vehicle>();
         animHandler = GetComponent<TruckAnimationHandler>();
+        drivingGameManager = GameObject.FindGameObjectWithTag("DrivingGameManager").GetComponent<DrivingGameManager>();
         stageManager = GameObject.FindGameObjectWithTag("DrivingGameManager").GetComponent<DrivingGameManager>().playAreaStageManager;
         initTruckRotation = transform.rotation.eulerAngles.z;
         audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
@@ -55,6 +58,9 @@ public class FlipTracker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (drivingGameManager.state != DRIVINGGAME_STATE.PLAY) { return; }
+
         currRot = transform.rotation.eulerAngles.z - initTruckRotation;
 
         // get point underneath truck
@@ -78,31 +84,36 @@ public class FlipTracker : MonoBehaviour
         }
 
         // << TRIGGER WHEN GROUNDED >>
-        if (vehicle.state == DRIVE_STATE.GROUNDED && jumpStarted)
+        if ((vehicle.state == DRIVE_STATE.UPHILL_GROUNDED || vehicle.state == DRIVE_STATE.GROUNDED) && jumpStarted)
         {
             // set values
             jumpStarted = false;
             endJumpRot = currRot;
+
+            //Reset truck's velocity to prevent extra-bouncy landings
+            vehicle.GetComponent<Rigidbody2D>().angularVelocity = 0;
 
             groundPointRotation = stageManager.allStageGroundRotations[hitPointIndex];
 
             if (IsPerfectLanding(endJumpRot, groundPointRotation) && flipCount > 0) 
             {
                 int flips = Mathf.Min(flipCount, flipCap);
-                float flipBoost=flips*percentBoost;
-                Vector2 newBoost = new Vector2(((flipBoost)+1)*vehicle.perfectLandingBoostForce.x, 0f);
+
+
+                flips = (firstFlipCounts) ? flips : flips-1;
+                float flipBoost = flips*percentBoost;
+                Vector2 newBoost = new Vector2(((flipBoost)+1)*vehicle.perfectLandingBoostForce.x, vehicle.perfectLandingBoostForce.y);
                 float newTime = ((flips*timeBoost)+1)*vehicle.activePerfectBoostTime;
+
+
                 boostSprite.transform.localScale = new Vector3(boostSprite.transform.localScale.x, boostSpriteY*((flips*percentBoost)+1), boostSprite.transform.localScale.z);
-                StartCoroutine(vehicle.PerfectLandingBoost());
-                if(audioManager!= null){
-                    audioManager.Play(audioManager.flipBoostSFX).setParameterByName("flipBoost", flipBoost); //WEIRD LINE LOL
-                }
+                StartCoroutine(vehicle.PerfectLandingBoost(newBoost, newTime));
+                //audioManager.Play(audioManager.flipBoostSFX);
+            }
+            if(audioManager != null){
+                //audioManager.Play(audioManager.truckLandingSFX);
             }
             //PLAY AUDIO MANAGER REG LANDING
-            if(audioManager != null){
-                audioManager.Play(audioManager.truckLandingSFX);
-            }
-            
         }
 
         // track in air time
@@ -125,7 +136,8 @@ public class FlipTracker : MonoBehaviour
 
         // if rotation is within bound and enough time has passed and landing downhill
         if (Mathf.Abs(groundPointRot - landPointRot) < perfectLandingRotationBound && currAirTime > perfectLandingMinAirTime)
-        { 
+        {
+            uiScript.showFlipCountUI(flipCount);
             return true;
         }
         return false;

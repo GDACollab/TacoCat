@@ -6,16 +6,19 @@ using TMPro;
 
 public class DrivingUIManager : MonoBehaviour
 {
+    [HideInInspector]
     public DrivingGameManager drivingGameManager;
     public GameObject vehicle;
-
     Vehicle vehicle_script;
     FlipTracker flipTracker;
+
+    [HideInInspector]
+    public CameraEffectManager cameraEffectManager;
 
     private float fuelAmount = 0; // Initial fuel
     private int numNitro = 0; // Initial nitro
     private int miles = 0;
-    private List<int> signs;
+    public List<int> signDistances;
     private int signNum = 0;
 
     
@@ -41,8 +44,11 @@ public class DrivingUIManager : MonoBehaviour
 
     [Header("Toggle Progress Bar")]
     private GameObject progressBarSlider;
-    
-    [Header("Transition UI")]
+
+    [Header("Begin Canvas")]
+    public GameObject tutorialCanvas;
+
+    [Header("End Canvas")]
     public GameObject transitionParent;
     public TMP_Text transitionMessage;
     private bool endOfGame = false;
@@ -50,14 +56,16 @@ public class DrivingUIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        progressBarSlider = GameObject.Find("DistanceSlider");
+        drivingGameManager.GetComponentInParent<DrivingGameManager>();
+        cameraEffectManager = drivingGameManager.camHandler.GetComponent<CameraEffectManager>();
         vehicle_script = vehicle.GetComponent<Vehicle>();
         flipTracker = vehicle.GetComponent<FlipTracker>();
+
         initFuelNitro(vehicle_script.GetFuel(),vehicle_script.GetNitro());
         miles = totalMiles;
-        signs = drivingGameManager.getSignDistances(numSigns, totalMiles);
-        signs.Add(0);
-        signText.text = miles + " Miles Till Cat Nyansisco";
+
+        signDistances = drivingGameManager.getSignDistances(numSigns, totalMiles);
+        signDistances.Add(0);
     }
 
     // Update is called once per frame
@@ -77,22 +85,8 @@ public class DrivingUIManager : MonoBehaviour
         {
             pointer.position = Vector3.Lerp(pointerStart.position, pointerEnd.position, drivingGameManager.percentageTraveled);
         }
-        
-        // Update "x Miles Till Cat Nyansisco" sign
-        miles = (int)(totalMiles - totalMiles*(drivingGameManager.percentageTraveled));
-        if(signNum <= numSigns && miles <= signs[signNum]){
-            signText.text = signs[signNum] + " Miles Till Cat Nyansisco";
-            signNum++;
-        }
     }
 
-    // Function to initialize the fuel gauges
-    void initCircle(){
-        foreach(GameObject x in GameObject.FindGameObjectsWithTag("FuelUIGauge")){
-            x.SetActive(true);
-        }
-    }
-    
     // Function to initialize the fuel and nitro. Called outside this class.
     void initFuelNitro(float fuel, int nitro){
         fuelAmount = fuel;
@@ -144,23 +138,12 @@ public class DrivingUIManager : MonoBehaviour
         }
     }
     
-    public void transitionStop(string message, bool end = false){
+
+
+    public void GameEndCanvas(string message){
         transitionParent.SetActive(true);
         transitionMessage.text = message;
-        endOfGame = end;
-        Time.timeScale = 0;
-        GameObject.Find("GameManager").GetComponent<GameManager>().activateScene = false;
-        if(end){
-            drivingGameManager.endOfGame = end;
-        }
-        else{
-            GameObject.Find("GameManager").GetComponent<GameManager>().LoadTacoMakingScene(true);
-        }
     }
-    
-    public void transitionContinue(){
-        Time.timeScale = 1;
-        GameObject.Find("GameManager").GetComponent<GameManager>().activateScene = true;
-    }
+
 }
  

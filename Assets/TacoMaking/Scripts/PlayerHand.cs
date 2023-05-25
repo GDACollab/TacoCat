@@ -50,7 +50,8 @@ public class PlayerHand : MonoBehaviour
     [Header("States")]
     public handState state = handState.HOME;
 
-    public IngredientBin pickBin; // this is the bin the hand is picking from
+    public IngredientBenchManager ingredientBench;
+    public IngredientBin pickIngredientBin; // this is the bin the hand is picking from
     public Taco submissionTaco; // this is the taco the hand is submitting to
 
 
@@ -88,18 +89,19 @@ public class PlayerHand : MonoBehaviour
     {
         if (state == handState.PICK_FROM_BIN)
         {
+
+            ingredientBench.PlayIngredientAnim(currHeldIngredient);
+
             if (TransformProximity())
             {
                 GameObject ingr = Instantiate(tacoGameManager.GetIngredientObject(currHeldIngredient), transform);
                 ingr.transform.parent = transform;
                 state = handState.PLACE_INGR;
             }
-
         }
 
         if (state == handState.PLACE_INGR)
         {
-
             target = tacoTarget;
             if (TransformProximity())
             {
@@ -153,7 +155,7 @@ public class PlayerHand : MonoBehaviour
             
             state = handState.PICK_FROM_BIN;
 
-            pickBin = bin;
+            pickIngredientBin = bin;
             //woosh sound when starting to pick up ingredient
             if(audioManager){
                 audioManager.Play(audioManager.pawSwipeSFX);

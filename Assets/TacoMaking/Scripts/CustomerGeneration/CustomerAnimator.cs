@@ -28,13 +28,15 @@ public class CustomerAnimator : MonoBehaviour
     {
         foreach (GameObject cust in customerRigs)
         {
-            if (cust.GetComponent<RigSpecies>().species == species)
+            if (cust.GetComponentInChildren<RigSpecies>().species == species)
             {
-                currAnimator = cust.GetComponent<Animator>();
-                currAnimator.gameObject.SetActive(true);
+                currAnimator = cust.GetComponentInChildren<Animator>();
+                cust.gameObject.SetActive(true);
                 return;
             }
         }
+
+        Debug.LogError("Could not fing customer rig");
     }
 
     private void Update()

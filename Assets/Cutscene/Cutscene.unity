@@ -123,6 +123,141 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &134783947
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 134783948}
+  - component: {fileID: 134783950}
+  - component: {fileID: 134783949}
+  m_Layer: 5
+  m_Name: Text (TMP)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &134783948
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 134783947}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 717575957}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 960, y: 960}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &134783949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 134783947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: ALEEEEEEEEX!!!
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 954c5573a9a1bb74495865797560d49a, type: 2}
+  m_sharedMaterial: {fileID: -6051360038554888114, guid: 954c5573a9a1bb74495865797560d49a, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 180
+  m_fontSizeBase: 180
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &134783950
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 134783947}
+  m_CullTransparentMesh: 1
 --- !u!1 &232545248
 GameObject:
   m_ObjectHideFlags: 0
@@ -398,6 +533,153 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 616322081}
   m_CullTransparentMesh: 1
+--- !u!1 &717575956
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 717575957}
+  - component: {fileID: 717575959}
+  - component: {fileID: 717575958}
+  m_Layer: 5
+  m_Name: Jamie_calls_Alex
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &717575957
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 717575956}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 134783948}
+  - {fileID: 1847129443}
+  m_Father: {fileID: 1677111079}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -1440, y: 0}
+  m_SizeDelta: {x: 960, y: 960}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &717575958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 717575956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Texture: {fileID: 2800000, guid: 60cc24bf2f88b1049bf99f35d8663133, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+--- !u!222 &717575959
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 717575956}
+  m_CullTransparentMesh: 1
+--- !u!1 &736304095
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 736304096}
+  m_Layer: 5
+  m_Name: JamieMsgTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &736304096
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 736304095}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1572845920}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 675, y: -250.00003}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &890701895
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 890701896}
+  m_Layer: 5
+  m_Name: AlexMsgTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &890701896
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 890701895}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1572845920}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -675, y: -250.00003}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &968159566
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -428,6 +710,14 @@ PrefabInstance:
     - target: {fileID: 7004250954060202129, guid: b98e17472161422409ce954e519a82b5, type: 3}
       propertyPath: m_Name
       value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: currLevel
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: cutsceneIndex
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
       propertyPath: driving1.m_SceneName
@@ -756,128 +1046,164 @@ MonoBehaviour:
   CutsceneOneDialogue:
   - person: 0
     texts:
-    - 'jamie!! '
-    - 'how was ur last day? '
+    - Jamie!
+    - 'How was your day? '
   - person: 1
     texts:
-    - Hey hey!! It was good, the final was wayy easier than I thought.
-    - I was just about to start packing :)
+    - 'Hey hey! It was good, the final was wayy easier than I thought '
+    - 'I was just about to start packing :D '
   - person: 0
     texts:
-    - packing? wait i thought we were going to meet up after your last day
+    - 'Packing? Wait, I thought we were going to meet up after your last day '
   - person: 1
     texts:
-    - "Oh nooo, Alex I\u2019m so sorry D:"
-    - I thought I told you, I had to change my flight to leave tonight. I must have
-      forgot because of school.
+    - 'Oh no, Alex I''m so sorry :,( '
+    - 'I thought I told you, I had to change my flight to leave tonight. I was just
+      so caught up with school '
   - person: 0
     texts:
-    - "so we wont be able to see each other :\u2019("
+    - 'So we won''t be able to see each other? :,( '
   - person: 1
     texts:
-    - "No, I know this was our only chance, but I can\u2019t. I\u2019m so so sorry.
-      :\u2019\u2019("
-    - I really wish things worked out so that we could have finally met up.
+    - 'No, I know this was our only chance, but I can''t. I''m so sorry ;-; '
+    - 'I really wish we could have finally met up '
   - person: 0
     texts:
-    - wait,  ur still in CATafornia until tonight?
+    - 'Wait, you''re still in Catifornia until tonight? '
   - person: 1
     texts:
-    - 'yes :P '
+    - 'Yeah '
   - person: 0
     texts:
-    - san CATsisco, right?
+    - 'Croakland, right? '
   - person: 1
     texts:
-    - yup yup
+    - 'Yup, there '
   - person: 0
     texts:
-    - "i think\u2026i have an idea."
+    - 'I think I have an idea '
+    - 'I can drive there by tonight '
   - person: 1
     texts:
-    - 'I wish you could just teleport here ;(  '
+    - 'What?? Really? '
+    - 'Since when did you have a car? '
   - person: 0
     texts:
-    - i have the next best thing. i can get there by tonight.
+    - 'Well, it''s not really a car... '
   - person: 1
     texts:
-    - what??  really?? how??
+    - 'My flight leaves tonight and I can''t miss it. If you get to Croakland before
+      then, I''ll be in the Malmart parking lot just off the freeway! '
+    - 'I''ll wait as long as I can, but I can''t wait forever '
   - person: 0
     texts:
-    - "i\u2019ll just drive"
-  - person: 1
-    texts:
-    - Since when do you have a car???
-  - person: 0
-    texts:
-    - "well, it\u2019s not rlly a car..."
-  - person: 1
-    texts:
-    - "My flight leaves tonight. I can\u2019t miss it. If you get to CATsisco before
-      then, i\u2019ll be in the Malmart parking lot just off the freeway."
-    - "I\u2019ll wait for you as long as I can, but I can\u2019t wait forever. "
-  - person: 0
-    texts:
-    - "i\u2019ll see u soon."
+    - 'Don''t worry I''ll get there! See u soon! '
   CutsceneTwoDialogue:
   - person: 1
     texts:
     - Hey, how is it going?
   - person: 0
     texts:
-    - "There isn\u2019t really anything to look at. These long stretches of road
-      make me feel nostalgic."
-    - When u get home from traveling, wanna have another long night of (Fixinpost)?
-    - "I think I\u2019m gonna need it after this trip."
+    - 'I''m making progress, not much to look at out here, but the people buying
+      tacos are interesting  '
+    - 'When u get home from traveling, want to hop on a Dogcord call? '
+    - 'I think I''m gonna need it after this trip... '
   - person: 1
     texts:
-    - Of Course!!! Are u still playing as (class) like when we first met?
+    - 'Of course we can!!!  '
+    - 'I can''t wait to see u btw!!! :D Very excited! '
   - person: 0
     texts:
-    - "It\u2019s been so long, I forgot how to play."
+    - 'Same!!  '
   - person: 1
     texts:
-    - "Can\u2019t wait to see u btw!!! Very excited!"
+    - 'It''s a shame I can''t stay to catch Catchella with you :( '
   - person: 0
     texts:
-    - 'Same!! '
-  - person: 1
-    texts:
-    - "It\u2019s a shame I can\u2019t stay to catch Catchella with you :("
-  - person: 0
-    texts:
-    - yeah :(
-    - Gotta get back on the road now! See u tonight!
+    - 'Tbh I''m not a big party goer. Last party I went to was at my tio''s house
+      and I just ended up sitting in the corner the whole time :/  '
+    - 'But I think anywhere with you could be fun! '
+    - 'Gotta get back on the road now! See u tonight! '
   CutsceneThreeDialogue:
   - person: 1
     texts:
-    - So excited to see u! Are you getting close?
-    - "I know we can\u2019t stay for long but when I get back home, I can\u2019t
-      wait to play some (fixinpost) with u!"
+    - 'So excited to see u! Are u getting close? '
+    - 'I know we can''t stay for long but when I get back home, I can''t wait to
+      play some Feline Fantasy IX with u! '
   - person: 0
     texts:
-    - So excited to see u! Are you getting close?
-    - Absolutely!
-    - "I\u2019ve met so many neat people on my way!"
-    - Goth sheep, a fish with a leather jacket, a friendly frog, a raven in a dotted
-      shirt, and even some capybaras!
-    - After making tacos and taking orders, I feel better at talking to people.
-    - ' maybe we could go to catchella sometime?'
+    - 'I''ll be there soon!  '
+    - 'I can''t wait either :D '
+    - 'I''ve met so many neat people on my way! '
+    - 'There''s been a goth sheep, a fish with a leather jacket, '
+    - ' a friendly frog, a raven in a dotted shirt, and even some capybaras! '
+    - 'I don''t think anything could be worse than working cashier and cook at the
+      same time. '
   - person: 1
     texts:
-    - Really?! Hecc yeah dude!
+    - 'Wow! That must be hard!!! Especially with all the people you''ve had to deal
+      with '
   - person: 0
     texts:
-    - Yeah!
+    - ' Yeah but it really wasn''t as bad as I thought it would be :P I''ve been
+      thinking, maybe we could go to Catchella sometime? '
+  - person: 1
+    texts:
+    - 'Really?! Hecc yeah! '
+  - person: 0
+    texts:
+    - 'Yeah! '
+  GoodEndingDialogue:
+  - person: 0
+    texts:
+    - Jamie!! Im here!!
+    - 'Where r u? '
+    - Jamie?
+    - 'Ohno did I miss you? '
+    - 'Jamie... '
+  BadEndingDialogue:
+  - person: 0
+    texts:
+    - Jamie! I'm here!
+    - Jamie?
+  - person: 1
+    texts:
+    - 'Alex... '
+  - person: 0
+    texts:
+    - Please don't say what I think you're about to say...
+  - person: 1
+    texts:
+    - 'Alex, I''m really sorry, but I can''t afford to wait any longer. '
+  - person: 0
+    texts:
+    - 'Ur not here? '
+  - person: 1
+    texts:
+    - I know you really wanted to meet up in person, and trust me, I did too, but
+      im already on the plane to Meowsachusett
+    - im about to takeoff. ive got to put my phone in airplane mode.
+    - " I\u2019m so sorry Alex.  "
+  - person: 0
+    texts:
+    - 'Wait I had a surprise for you '
+    - 'When can I give it to you? '
+    - 'I''m so sorry jamie i rlly tried to see u, this meant so much to me ... '
+    - 'Jamie? '
+  chosenDialogue: []
   unskipableDelay: 0.25
   messageDelayAlex: 0.5
-  textSpeedAlex: 0.1
-  messageDelayJamie: 1.06
+  textSpeedAlex: 0.05
+  messageDelayJamie: 1.5
   currentBubbles: []
+  messageParent: {fileID: 1940539533}
   alexMessagePrefab: {fileID: 1265193621398757072, guid: a4dc9a200d1e9654eb6111d5fa348c20, type: 3}
-  alexMessageParent: {fileID: 1940539533}
+  alexMessageTarget: {fileID: 890701896}
   jamieMessagePrefab: {fileID: 1265193621398757072, guid: 1bb054c86d76bb3418a3969667f3056d, type: 3}
-  jamieMessageParent: {fileID: 1940539533}
+  jamieMessageTarget: {fileID: 736304096}
+  jamieCallsAlexObject: {fileID: 717575957}
+  image: {fileID: 1111964546}
+  fadeTime: 1
 --- !u!4 &1104355424
 Transform:
   m_ObjectHideFlags: 0
@@ -893,6 +1219,82 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1111964545
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1111964548}
+  - component: {fileID: 1111964547}
+  - component: {fileID: 1111964546}
+  m_Layer: 5
+  m_Name: FadeOut
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1111964546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1111964545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1111964547
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1111964545}
+  m_CullTransparentMesh: 1
+--- !u!224 &1111964548
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1111964545}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1677111079}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1940, y: 1100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1357507493
 GameObject:
   m_ObjectHideFlags: 0
@@ -903,10 +1305,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1357507494}
   - component: {fileID: 1357507496}
-  - component: {fileID: 1357507495}
   - component: {fileID: 1357507497}
   m_Layer: 5
-  m_Name: Skip Button
+  m_Name: Skip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -928,41 +1329,11 @@ RectTransform:
   m_Father: {fileID: 1677111079}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -125, y: 100}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 118}
   m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1357507495
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1357507493}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 0, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &1357507496
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -983,7 +1354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7af7873007bd21644b741a74634556c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CutsceneAsset: {fileID: 1104355423}
+  skipText: {fileID: 1403703409}
 --- !u!1 &1403703409
 GameObject:
   m_ObjectHideFlags: 0
@@ -1042,17 +1413,17 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: SKIP!!!!
+  m_text: Press SPACE to skip
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: ee6c058c3bb67cb49ba76ec0e81f1c92, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: ee6c058c3bb67cb49ba76ec0e81f1c92, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 954c5573a9a1bb74495865797560d49a, type: 2}
+  m_sharedMaterial: {fileID: -6051360038554888114, guid: 954c5573a9a1bb74495865797560d49a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 2936012800
+  m_fontColor: {r: 0, g: 0, b: 0, a: 0.6862745}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1069,8 +1440,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
-  m_fontSizeBase: 72
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1105,7 +1476,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -96.25722, y: 0, z: -114.376236, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1150,6 +1521,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1940539533}
+  - {fileID: 890701896}
+  - {fileID: 736304096}
   m_Father: {fileID: 1677111079}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1293,6 +1666,8 @@ RectTransform:
   - {fileID: 1057471385}
   - {fileID: 1572845920}
   - {fileID: 616322082}
+  - {fileID: 717575957}
+  - {fileID: 1111964548}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1301,6 +1676,79 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1847129442
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1847129443}
+  - component: {fileID: 1847129445}
+  - component: {fileID: 1847129444}
+  m_Layer: 5
+  m_Name: Bubble tick
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1847129443
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847129442}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 717575957}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 960, y: 960}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1847129444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847129442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Texture: {fileID: 2800000, guid: 05d00549b3a7cc54d9c1bb49f0acf63e, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+--- !u!222 &1847129445
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847129442}
+  m_CullTransparentMesh: 1
 --- !u!1 &1940539532
 GameObject:
   m_ObjectHideFlags: 0

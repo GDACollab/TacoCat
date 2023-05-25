@@ -6,6 +6,7 @@ public class StageManager : MonoBehaviour
 {
     public bool allStagesGenerated;
     public GroundMeshCreator meshCreator;
+    public EnvironmentGenerator environmentGenerator;
 
     [Header("[[ GENERATION LENGTHS ]]")]
     public int mainGenerationLength = 30000;

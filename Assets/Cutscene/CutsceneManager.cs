@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CutsceneManager : MonoBehaviour
 {
@@ -40,8 +42,11 @@ public class CutsceneManager : MonoBehaviour
     public List<TextList> CutsceneOneDialogue;
     public List<TextList> CutsceneTwoDialogue;
     public List<TextList> CutsceneThreeDialogue;
+    public List<TextList> GoodEndingDialogue;
+    public List<TextList> BadEndingDialogue;
 
-    private List<TextList> chosenDialogue;
+    [HideInInspector]
+    public List<TextList> chosenDialogue;
 
     public float unskipableDelay;
 
@@ -57,13 +62,17 @@ public class CutsceneManager : MonoBehaviour
     public float messageDelayJamie;
 
     public List<GameObject> currentBubbles = new List<GameObject>();
-
+    public Transform messageParent;
     public GameObject alexMessagePrefab;
-    public Transform alexMessageParent;
-
-
+    public Transform alexMessageTarget;
     public GameObject jamieMessagePrefab;
-    public Transform jamieMessageParent;
+    public Transform jamieMessageTarget;
+
+    public RectTransform jamieCallsAlexObject;
+
+    public Image image;
+    public float fadeTime = 1f;
+    private float currentAlpha = 0f;
 
     /*[Header("Typing out the message")]
     public bool typeOutJamie;
@@ -79,6 +88,8 @@ public class CutsceneManager : MonoBehaviour
         audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
         
         startingPosition = 0;
+
+        image.color = new Color(image.color.r, image.color.g, image.color.b, currentAlpha);
 
         StartCoroutine(begin());
 
@@ -98,6 +109,13 @@ public class CutsceneManager : MonoBehaviour
                 break;
             case 2:
                 chosenDialogue = CutsceneThreeDialogue;
+                GameManager.instance.cutsceneIndex++;
+                break;
+            case 3:
+                chosenDialogue = GoodEndingDialogue;
+                break;
+            case 4:
+                chosenDialogue = BadEndingDialogue;
                 break;
             default:
                 chosenDialogue = CutsceneOneDialogue;
@@ -124,8 +142,57 @@ public class CutsceneManager : MonoBehaviour
             }
         }
 
-        yield return new WaitForSeconds(4);
-        endOfCutscene = true;
+        yield return new WaitForSeconds(3);
+
+        if (chosenDialogue != GoodEndingDialogue && chosenDialogue != BadEndingDialogue)
+        {
+            endOfCutscene = true;
+        }
+        else if (chosenDialogue == GoodEndingDialogue)
+        {
+            RectTransform rectTransform = jamieCallsAlexObject.GetComponent<RectTransform>();
+            Vector3 startPosition = rectTransform.anchoredPosition3D;
+            Vector3 targetPosition = new Vector3(-360, 0, 0);
+            float duration = 0.1f;
+            float elapsedTime = 0f;
+
+            while (elapsedTime < duration)
+            {
+                rectTransform.anchoredPosition3D = Vector3.Lerp(startPosition, targetPosition, elapsedTime / duration);
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            rectTransform.anchoredPosition3D = targetPosition;
+
+            yield return new WaitForSeconds(1f);
+            StartCoroutine(FadeOut());
+            yield return new WaitForSeconds(fadeTime);
+            SceneManager.LoadScene("GoodEnding");
+        }
+        else if (chosenDialogue == BadEndingDialogue)
+        {
+            StartCoroutine(FadeOut());
+            yield return new WaitForSeconds(fadeTime);
+            SceneManager.LoadScene("BadEnding");
+        }
+    }
+
+    private IEnumerator FadeOut()
+    {
+        float timer = 0f;
+
+        while (timer < fadeTime)
+        {
+            timer += Time.deltaTime;
+            currentAlpha = Mathf.Lerp(0f, 1f, timer / fadeTime);
+
+            image.color = new Color(image.color.r, image.color.g, image.color.b, currentAlpha);
+
+            yield return null;
+        }
+
+        image.color = new Color(image.color.r, image.color.g, image.color.b, 1f);
     }
 
 
@@ -172,8 +239,8 @@ public class CutsceneManager : MonoBehaviour
         foreach (string s in l)
         {
             
-            GameObject bubble = Instantiate(alexMessagePrefab, alexMessageParent);
-            bubble.transform.position = alexMessageParent.position;
+            GameObject bubble = Instantiate(alexMessagePrefab, messageParent);
+            bubble.transform.position = alexMessageTarget.position;
             bubble.GetComponent<BubbleManager>().Init(character.ALEX, s, this);
 
             yield return StartCoroutine(bubble.GetComponent<BubbleManager>().TextCrawl(s));
@@ -197,7 +264,9 @@ public class CutsceneManager : MonoBehaviour
             //phoneText.text += l + "\n";
 
             //insert instance of jamiebubble text += l + "\n"
-            GameObject bubble = Instantiate(jamieMessagePrefab, jamieMessageParent);
+            GameObject bubble = Instantiate(jamieMessagePrefab, messageParent);
+            bubble.transform.position = jamieMessageTarget.position;
+
             bubble.GetComponent<BubbleManager>().Init(character.JAMIE, l, this);
 
             yield return StartCoroutine(bubble.GetComponent<BubbleManager>().InstantTextFill(l));

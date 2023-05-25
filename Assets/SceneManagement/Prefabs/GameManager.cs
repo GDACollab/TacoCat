@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
     [Range(0.0f, 1000.0f), Tooltip("Time remaining in seconds")]
     public float timeRemaining;
     [Range(0.0f,1.0f), Tooltip("Internal timer that goes from 0 to 1")]
-    public float countdownTimer = 0;
+    public float main_gameTimer = 0;
     [Tooltip("current hour")]
     public int curClockHour;
     [Tooltip("current minute")]
@@ -63,7 +63,9 @@ public class GameManager : MonoBehaviour
 
     [Header(" === SCENE MANAGEMENT === ")]
     public currGame currGame = currGame.NONE;
+    public currGame lastGame;
     public int currLevel = 1;
+    public bool trueEnding = true;
     public SceneObject currScene;
     public int cutsceneIndex = 0;
     [Space(5)]
@@ -186,7 +188,7 @@ public class GameManager : MonoBehaviour
         if (currGame == currGame.TACO_MAKING && tacoGameManager != null)
         {
             // check if all customers submitted , if so move to driving with gas amount
-            if (tacoGameManager.endOfGame && !isLoadingScene)
+            if (tacoGameManager.state == TACOMAKING_STATE.END_TRANSITION && !isLoadingScene && !tacoGameManager.uiManager.camEffectManager.isFading)
             {
                 nitroCharges = tacoGameManager.nitroCharges;
                 LoadDrivingScene(currLevel);
@@ -226,27 +228,23 @@ public class GameManager : MonoBehaviour
 
     public void LoadMenu()
     {
+        lastGame = currGame;
         currGame = currGame.MENU;
-        currLevel = 1;
+        //currLevel = 1;    // Deletes progress
         cutsceneIndex = 0;
         SceneManager.LoadScene(menuScene);
         audioManager.PlaySong(audioManager.menuMusicPath);
     }
 
     // **** LOAD TACO MAKING SCENE ****
-    public void LoadTacoMakingScene(bool async = false)
+    public void LoadTacoMakingScene()
     {
 
         currGame = currGame.TACO_MAKING;
-        if (async)
-        {
-            StartCoroutine(ConcurrentLoadingCoroutine(tacoMakingScene));
-        }
-        else
-        {
-            StartCoroutine(LoadingCoroutine(tacoMakingScene));
-        }
-        audioManager.PlaySong(audioManager.tacoMusicPath);
+
+        StartCoroutine(ConcurrentLoadingCoroutine(tacoMakingScene));
+
+        //audioManager.PlaySong(audioManager.tacoMusicPath);
     }
 
     // **** LOAD DRIVING SCENES ****
@@ -257,17 +255,17 @@ public class GameManager : MonoBehaviour
         if (levelNum == 1)
         {
             currLevel = 1;
-            StartCoroutine(LoadingCoroutine(driving1));
+            StartCoroutine(ConcurrentLoadingCoroutine(driving1));
         }
         else if (levelNum == 2)
         {
             currLevel = 2;
-            StartCoroutine(LoadingCoroutine(driving2));
+            StartCoroutine(ConcurrentLoadingCoroutine(driving2));
         }
         else if (levelNum == 3)
         {
             currLevel = 3;
-            StartCoroutine(LoadingCoroutine(driving3));
+            StartCoroutine(ConcurrentLoadingCoroutine(driving3));
         }
 
         audioManager.PlaySong(audioManager.drivingMusicPath);
@@ -393,30 +391,33 @@ public class GameManager : MonoBehaviour
 
     public void GameTimerUpdate()
     {
-        // is not cutscene or menu, countdown time
-        if (currGame != currGame.CUTSCENE && currGame != currGame.MENU)
+        // not if cutscene
+        if (currGame == currGame.CUTSCENE && currGame == currGame.MENU) { return; }
+
+        // not if not in play
+        if (currGame == currGame.TACO_MAKING && tacoGameManager.state != TACOMAKING_STATE.PLAY) { return; }
+        if (currGame == currGame.DRIVING && drivingGameManager.state != DRIVINGGAME_STATE.PLAY) { return; }
+
+        if ((timeRemaining - Time.deltaTime) < 0)
         {
-            if ((timeRemaining - Time.deltaTime) < 0)
+            happyEnd = false;
+        }
+        if (curClockHour != hardCapHour || curClockMinute != hardCapMinute || isAM != hardCapAM)
+        {
+            timeRemaining -= Time.deltaTime;
+            if ((1 - (timeRemaining / totalGameTime_seconds)) <= 1 && (1 - (timeRemaining / totalGameTime_seconds)) >= 0)
             {
-                happyEnd = false;
+                main_gameTimer = (1 - (timeRemaining / totalGameTime_seconds));
             }
-            if (curClockHour != hardCapHour || curClockMinute != hardCapMinute || isAM != hardCapAM)
+            else if ((1 - (timeRemaining / totalGameTime_seconds)) > 1)
             {
-                timeRemaining -= Time.deltaTime;
-                if ((1 - (timeRemaining / totalGameTime_seconds)) <= 1 && (1 - (timeRemaining / totalGameTime_seconds)) >= 0)
-                {
-                    countdownTimer = (1 - (timeRemaining / totalGameTime_seconds));
-                }
-                else if ((1 - (timeRemaining / totalGameTime_seconds)) > 1)
-                {
-                    countdownTimer = 1;
-                }
-                else if ((1 - (timeRemaining / totalGameTime_seconds)) < 0)
-                {
-                    countdownTimer = 0;
-                }
-                CalculateTime();
+                main_gameTimer = 1;
             }
+            else if ((1 - (timeRemaining / totalGameTime_seconds)) < 0)
+            {
+                main_gameTimer = 0;
+            }
+            CalculateTime();
         }
     }
 

@@ -11,7 +11,7 @@ public class Vehicle : MonoBehaviour
     GameManager gameManager;
     AudioManager audioManager;
     StageManager stageManager;
-    public CameraHandler cameraHandler;
+    CameraHandler cameraHandler;
     DrivingGameManager drivingGameManager;
     DrivingUIManager drivingUIManager;
 
@@ -30,6 +30,7 @@ public class Vehicle : MonoBehaviour
     public DRIVE_STATE state;
     public bool gasPressed; // increase gravity force on truck
     public int rotationDir;
+    public bool disableInputs;
 
     [Header("General Driving")]
     public float gravity;
@@ -80,11 +81,10 @@ public class Vehicle : MonoBehaviour
     {
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         audioManager = gameManager.audioManager;
-        cameraHandler = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraHandler>();
         drivingGameManager = GameObject.FindGameObjectWithTag("DrivingGameManager").GetComponent<DrivingGameManager>();
         drivingUIManager = drivingGameManager.uiManager;
         stageManager = drivingGameManager.playAreaStageManager;
-
+        cameraHandler = drivingGameManager.camHandler;
 
         rb_vehicle.velocity = startingVelocity;
         state = DRIVE_STATE.NONE;
@@ -112,8 +112,15 @@ public class Vehicle : MonoBehaviour
 
     void FixedUpdate() {
 
+        if (drivingGameManager.state != DRIVINGGAME_STATE.PLAY) { return; }
+
         // << CONSTANT GRAVITY >>
         rb_vehicle.AddForce(Vector2.down * gravity * rb_vehicle.mass * Time.deltaTime);
+
+
+
+        // disable inputs
+        if (disableInputs) { return; }
 
         // << CHECK FOR GROUND COLLIDERS >>
         Collider2D[] groundColliders = Physics2D.OverlapCircleAll(transform.position + new Vector3(0, groundColliderHeightOffset), groundColliderSize, groundLayer);
@@ -149,12 +156,24 @@ public class Vehicle : MonoBehaviour
         // << NITRO STATE >>
         if (state == DRIVE_STATE.NITRO)
         {
+            float minimumNitroVelocity = 1000;
+            if (rb_vehicle.velocity.magnitude < minimumNitroVelocity)
+            {
+                rb_vehicle.velocity =  transform.up * minimumNitroVelocity;
+            }
+
             rb_vehicle.AddForce(nitroForce * rb_vehicle.mass);
         }
 
         // << PERFECT BOOST STATE >>
         if (state == DRIVE_STATE.PERFECT_LANDING)
         {
+            float minimumBoostVelocity = 1000;
+            if (rb_vehicle.velocity.magnitude < minimumBoostVelocity)
+            {
+                rb_vehicle.velocity =  transform.up * minimumBoostVelocity;
+            }
+
             rb_vehicle.AddForce(perfectLandingBoostForce * rb_vehicle.mass);
         }
 
@@ -168,6 +187,8 @@ public class Vehicle : MonoBehaviour
 
     public void Inputs()
     {
+        if (disableInputs) { return; }
+
         // << GAS INPUT >>
         gasPressed = Input.GetKey(gasInputKey);
 
@@ -181,9 +202,6 @@ public class Vehicle : MonoBehaviour
         if (state != DRIVE_STATE.NITRO && Input.GetKeyDown(nitroInputKey) && nitroCharges > 0)
         {
             StartCoroutine(NitroBoost());
-            //StartCoroutine(cameraHandler.Shake(activeNitroTime, 5));
-            //StartCoroutine(cameraHandler.Shake(activeNitroTime, cameraHandler.nitro_camShakeMagnitude));
-
 
             if(audioManager != null){
                 audioManager.Play(audioManager.nitroBoostSFX); //NITRO BOOST SOUND EFFECT
@@ -229,27 +247,61 @@ public class Vehicle : MonoBehaviour
     // override all states and 
     public IEnumerator NitroBoost()
     {
-        state = DRIVE_STATE.NITRO;
-        nitroCharges--;
-        drivingUIManager.updateNitro();
+        if (!disableInputs)
+        {
 
+            state = DRIVE_STATE.NITRO;
+            nitroCharges--;
+            drivingUIManager.updateNitro();
 
-        yield return new WaitForSeconds(activeNitroTime);
+            StartCoroutine(cameraHandler.BoostShake(activeNitroTime, cameraHandler.nitro_camShakeMagnitude));
 
-        state = DRIVE_STATE.NONE;
+            yield return new WaitForSeconds(activeNitroTime);
+
+            state = DRIVE_STATE.NONE;
+        }
     }
 
     // override all states and 
-    public IEnumerator PerfectLandingBoost()
+    public IEnumerator PerfectLandingBoost(Vector2 boost, float boostTime)
     {
-        state = DRIVE_STATE.PERFECT_LANDING;
+        if (!disableInputs)
+        {
 
-        //StartCoroutine(cameraHandler.Shake(activePerfectBoostTime, cameraHandler.perfect_camShakeMagnitude));
+            Vector2 tempLandBoost = perfectLandingBoostForce;
+            float tempBoostTime = activePerfectBoostTime;
+            perfectLandingBoostForce = boost;
+            activePerfectBoostTime = boostTime;
 
+            state = DRIVE_STATE.PERFECT_LANDING;
 
-        yield return new WaitForSeconds(activePerfectBoostTime);
+            StartCoroutine(cameraHandler.BoostShake(activePerfectBoostTime, cameraHandler.perfect_camShakeMagnitude));
 
-        state = DRIVE_STATE.NONE;
+            yield return new WaitForSeconds(activePerfectBoostTime);
+
+            perfectLandingBoostForce = tempLandBoost;
+            activePerfectBoostTime = tempBoostTime;
+            state = DRIVE_STATE.NONE;
+
+        }
+    }
+
+    public IEnumerator NegateVelocityOverTime(float duration)
+    {
+
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            rb_vehicle.angularVelocity = Mathf.Lerp(rb_vehicle.angularVelocity, 0, Time.deltaTime);
+            rb_vehicle.velocity = Vector2.Lerp(rb_vehicle.velocity, Vector2.zero, Time.deltaTime);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        gravity *= 2;
+        rb_vehicle.velocity *= new Vector2(0, 1);
+        disableInputs = true;
     }
 
     public float GetFuel()
