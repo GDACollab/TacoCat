@@ -717,7 +717,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
       propertyPath: cutsceneIndex
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
       propertyPath: driving1.m_SceneName
@@ -1190,6 +1190,7 @@ MonoBehaviour:
     - 'When can I give it to you? '
     - 'I''m so sorry jamie i rlly tried to see u, this meant so much to me ... '
     - 'Jamie? '
+  chosenDialogue: []
   unskipableDelay: 0.25
   messageDelayAlex: 0.5
   textSpeedAlex: 0.05
@@ -1304,10 +1305,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1357507494}
   - component: {fileID: 1357507496}
-  - component: {fileID: 1357507495}
   - component: {fileID: 1357507497}
   m_Layer: 5
-  m_Name: Skip Button
+  m_Name: Skip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1329,41 +1329,11 @@ RectTransform:
   m_Father: {fileID: 1677111079}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -125, y: 100}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 118}
   m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1357507495
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1357507493}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 0, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &1357507496
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1384,7 +1354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7af7873007bd21644b741a74634556c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CutsceneAsset: {fileID: 1104355423}
+  skipText: {fileID: 1403703409}
 --- !u!1 &1403703409
 GameObject:
   m_ObjectHideFlags: 0
@@ -1443,7 +1413,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: SKIP!!!!
+  m_text: Press SPACE to skip
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 954c5573a9a1bb74495865797560d49a, type: 2}
   m_sharedMaterial: {fileID: -6051360038554888114, guid: 954c5573a9a1bb74495865797560d49a, type: 2}
@@ -1452,8 +1422,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 2936012800
+  m_fontColor: {r: 0, g: 0, b: 0, a: 0.6862745}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1470,8 +1440,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
-  m_fontSizeBase: 72
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1506,7 +1476,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -96.25722, y: 0, z: -114.376236, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

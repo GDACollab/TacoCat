@@ -45,7 +45,8 @@ public class CutsceneManager : MonoBehaviour
     public List<TextList> GoodEndingDialogue;
     public List<TextList> BadEndingDialogue;
 
-    private List<TextList> chosenDialogue;
+    [HideInInspector]
+    public List<TextList> chosenDialogue;
 
     public float unskipableDelay;
 

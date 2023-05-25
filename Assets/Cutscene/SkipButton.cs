@@ -3,28 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class SkipButton : MonoBehaviour, IPointerClickHandler
+public class SkipButton : MonoBehaviour
 {
-    public CutsceneManager CutsceneAsset;
+    public GameObject skipText;
 
     void Start()
     {
-        gameObject.SetActive(false);
-        /*
-        if (CutsceneAsset.chosenDialogue != CutsceneAsset.GoodEndingDialogue)
+        skipText.SetActive(false);
+
+        CutsceneManager manager = GameObject.FindGameObjectWithTag("CutsceneManager").GetComponent<CutsceneManager>();
+
+        if (manager.chosenDialogue != manager.GoodEndingDialogue && manager.chosenDialogue != manager.BadEndingDialogue)
         {
             Invoke("ShowAsset", 3f);
-        }
-        */
+        }   
     }
 
     void ShowAsset()
     {
-        gameObject.SetActive(true);
+        skipText.SetActive(true);
     }
 
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        CutsceneAsset.endOfCutscene = true;
-    }
 }
