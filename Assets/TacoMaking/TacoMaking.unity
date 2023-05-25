@@ -1336,6 +1336,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7093204509166370472, guid: b91087c3a5c7eda44bb1e64413fc0027, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b91087c3a5c7eda44bb1e64413fc0027, type: 3}
 --- !u!4 &599843040 stripped
@@ -1354,7 +1358,7 @@ GameObject:
   - component: {fileID: 621152541}
   - component: {fileID: 621152542}
   m_Layer: 0
-  m_Name: Background2 Light
+  m_Name: BackgroundLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1373,7 +1377,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 894702617}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &621152542
 MonoBehaviour:
@@ -1395,7 +1399,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 3b975ec0f572dc676f2489da
+  m_ApplyToSortingLayers: 3b975ec0f572dc676f2489da732e1a8a
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -1963,7 +1967,7 @@ GameObject:
   - component: {fileID: 771365735}
   - component: {fileID: 771365736}
   m_Layer: 0
-  m_Name: Background1 Light
+  m_Name: CustomerLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2004,7 +2008,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: dd2b0e5edd5a26d9
+  m_ApplyToSortingLayers: dd5a26d9
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -2326,7 +2330,7 @@ GameObject:
   - component: {fileID: 843539024}
   - component: {fileID: 843539025}
   m_Layer: 0
-  m_Name: PlayAreaLight
+  m_Name: InsideTruckLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2345,7 +2349,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 894702617}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &843539025
 MonoBehaviour:
@@ -2367,7 +2371,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 9f0a1b7f95ac758a87021546
+  m_ApplyToSortingLayers: 9f0a1b7f95ac758a87021546dd2b0e5e4fa10a76
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -2531,9 +2535,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 621152541}
-  - {fileID: 771365735}
   - {fileID: 843539024}
+  - {fileID: 771365735}
+  - {fileID: 621152541}
   m_Father: {fileID: 6584911828293743366}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2552,12 +2556,10 @@ MonoBehaviour:
   timeOfDay: 0.431
   dayCycleState: 0
   morningSunrise:
-  - {r: 1, g: 0.654902, b: 0.14901961, a: 1}
-  - {r: 1, g: 0.8352941, b: 0.30980393, a: 1}
-  - {r: 0.9607843, g: 0.4862745, b: 0, a: 1}
-  - {r: 1, g: 0.8, b: 0.5019608, a: 1}
-  midDay:
+  - {r: 0.9433962, g: 0.84052414, b: 0.6719473, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 0.9528302, g: 0.7942886, b: 0.4719206, a: 1}
+  midDay:
   - {r: 1, g: 1, b: 1, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
@@ -2565,20 +2567,18 @@ MonoBehaviour:
   - {r: 0.9372549, g: 0.42352942, b: 0, a: 1}
   - {r: 1, g: 0.654902, b: 0.14901961, a: 1}
   - {r: 0.9019608, g: 0.31764707, b: 0, a: 1}
-  - {r: 1, g: 0.8, b: 0.5019608, a: 1}
   night:
   - {r: 0.15686275, g: 0.20784314, b: 0.5764706, a: 1}
   - {r: 0.36078432, g: 0.41960785, b: 0.7529412, a: 1}
   - {r: 0.101960786, g: 0.13725491, b: 0.49411765, a: 1}
-  - {r: 0.62352943, g: 0.65882355, b: 0.85490197, a: 1}
   morningTimeLength: 0.1
   midDayTimeLength: 0.5
   eveningTimeLength: 0.3
   nightTimeLength: 0.1
   sunIntensities: []
   lightColorAdjustSpeed: 2
-  foregroundLight: {fileID: 771365736}
-  playAreaLight: {fileID: 843539025}
+  insideTruckLight: {fileID: 843539025}
+  customerLight: {fileID: 771365736}
   backgroundLight: {fileID: 621152542}
   skyboxLight: {fileID: 0}
   foregroundObjects: []

@@ -76,8 +76,7 @@ public class CameraHandler : MonoBehaviour
 
     public IEnumerator Initialize()
     {
-        // set camera to player position
-        transform.position = playAreaGroundGeneration.environmentGenerator.playerSpawnPoint.position;
+
 
         // << GET ALL GENERATION POINTS >>
         foundGenerationPoints = false;
@@ -108,8 +107,8 @@ public class CameraHandler : MonoBehaviour
 
             yield return null; // Wait for the next frame
         }
-
-        // Rest of your code here
+        // set camera to player position
+        transform.position = playAreaGroundGeneration.environmentGenerator.playerSpawnPoint.position;
 
         yield return null; // Optional: Wait for the next frame
     }

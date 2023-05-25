@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class FlipTracker : MonoBehaviour
 {
-
+    DrivingGameManager drivingGameManager;
     Vehicle vehicle;
     TruckAnimationHandler animHandler;
     RaycastHit2D hit;
     public AudioManager audioManager;
-    StageManager stageManager;
+    public StageManager stageManager;
     public int hitPointIndex;
     float initTruckRotation;
 
@@ -48,6 +48,7 @@ public class FlipTracker : MonoBehaviour
     {
         vehicle = GetComponent<Vehicle>();
         animHandler = GetComponent<TruckAnimationHandler>();
+        drivingGameManager = GameObject.FindGameObjectWithTag("DrivingGameManager").GetComponent<DrivingGameManager>();
         stageManager = GameObject.FindGameObjectWithTag("DrivingGameManager").GetComponent<DrivingGameManager>().playAreaStageManager;
         initTruckRotation = transform.rotation.eulerAngles.z;
         audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
@@ -57,6 +58,9 @@ public class FlipTracker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (drivingGameManager.state != DRIVINGGAME_STATE.PLAY) { return; }
+
         currRot = transform.rotation.eulerAngles.z - initTruckRotation;
 
         // get point underneath truck

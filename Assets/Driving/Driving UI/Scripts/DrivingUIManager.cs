@@ -44,7 +44,10 @@ public class DrivingUIManager : MonoBehaviour
 
     [Header("Toggle Progress Bar")]
     private GameObject progressBarSlider;
-    
+
+    [Header("Tutorial Canvas")]
+    public GameObject tutorialCanvas;
+
     [Header("Transition UI")]
     public GameObject transitionParent;
     public TMP_Text transitionMessage;
@@ -53,7 +56,6 @@ public class DrivingUIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         drivingGameManager.GetComponentInParent<DrivingGameManager>();
         cameraEffectManager = drivingGameManager.camHandler.GetComponent<CameraEffectManager>();
         vehicle_script = vehicle.GetComponent<Vehicle>();
@@ -136,25 +138,10 @@ public class DrivingUIManager : MonoBehaviour
         }
     }
     
-    public void transitionStop(string message, bool end = false){
+    public void GameEndCanvas(string message){
         transitionParent.SetActive(true);
         transitionMessage.text = message;
-        endOfGame = end;
-        drivingGameManager.vehicle.disableInputs = true;
-        StartCoroutine(drivingGameManager.vehicle.NegateVelocityOverTime(5));
+    }
 
-        GameObject.Find("GameManager").GetComponent<GameManager>().activateScene = false;
-        if(end){
-            drivingGameManager.endOfGame = end;
-        }
-        else{
-            GameObject.Find("GameManager").GetComponent<GameManager>().LoadTacoMakingScene();
-        }
-    }
-    
-    public void transitionContinue(){
-        Time.timeScale = 1;
-        GameObject.Find("GameManager").GetComponent<GameManager>().activateScene = true;
-    }
 }
  

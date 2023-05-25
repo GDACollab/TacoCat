@@ -62,6 +62,7 @@ public class DrivingGameManager : MonoBehaviour
         yield return new WaitUntil(() => playAreaStageManager.environmentGenerator.environmentSpawned);
 
         // init vehicle pos     
+        yield return new WaitUntil(() => playAreaStageManager.environmentGenerator.playerSpawnPoint != null);
         vehicle.transform.position = playAreaStageManager.environmentGenerator.playerSpawnPoint.position;
         camHandler.transform.position = playAreaStageManager.environmentGenerator.playerSpawnPoint.position;
 
@@ -88,21 +89,57 @@ public class DrivingGameManager : MonoBehaviour
         switch (state)
         {
             case DRIVINGGAME_STATE.LOADING:
+
+                vehicle.disableInputs = true;
+
                 break;
             case DRIVINGGAME_STATE.TUTORIAL:
 
                 uiManager.cameraEffectManager.StartFadeIn();
 
+                if (!uiManager.cameraEffectManager.isFading)
+                {
+                    uiManager.tutorialCanvas.SetActive(true);
+
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        uiManager.tutorialCanvas.SetActive(false);
+                        state = DRIVINGGAME_STATE.PLAY;
+                    }
+                }
+
                 break;
             case DRIVINGGAME_STATE.PLAY:
+                vehicle.disableInputs = false;
 
                 UpdatePlay();
 
+                // << END LEVEL CHECK >>
+                if (percentageTraveled >= 1 && !endOfGame)
+                {
+                    state = DRIVINGGAME_STATE.END;
+                }
+
                 break;
+
             case DRIVINGGAME_STATE.END:
+                StartCoroutine(vehicle.NegateVelocityOverTime(5));
+                vehicle.disableInputs = true;
+
+                uiManager.tutorialCanvas.SetActive(true);
+
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    uiManager.tutorialCanvas.SetActive(false);
+                    state = DRIVINGGAME_STATE.END_TRANSITION;
+
+                    uiManager.cameraEffectManager.StartFadeOut();
+                }
                 break;
+
             case DRIVINGGAME_STATE.END_TRANSITION:
                 break;
+
             default:
                 break;
 
@@ -118,9 +155,7 @@ public class DrivingGameManager : MonoBehaviour
             {
                 if (stuckTime >= stuckTimeoutDuration && !endOfGame && !endRun) // Timer is up
                 {
-                    Debug.Log(failText);
-                    uiManager.transitionStop(failText, false);
-                    endRun = true;
+                    EndOfGame(false);
                 }
                 else
                 {
@@ -133,15 +168,6 @@ public class DrivingGameManager : MonoBehaviour
             }
         }
 
-        // << END LEVEL CHECK >>
-        if (percentageTraveled >= 1 && !endOfGame)
-        {
-            //Debug.Log(successText);
-
-            state = DRIVINGGAME_STATE.END;
-            uiManager.transitionStop(successText, true);
-        }
-
         // << UPDATE DISTANCE TRACKER >>
         vehicleDistance = Vector2.Distance(playAreaStageManager.main_begPos, vehicle.transform.position);
         totalDistance = playAreaStageManager.mainGenerationLength;
@@ -152,6 +178,18 @@ public class DrivingGameManager : MonoBehaviour
         lightingManager.timeOfDay = gameManager.main_gameTimer;
     }
     
+    public void EndOfGame(bool win)
+    {
+        if (win)
+        {
+            uiManager.GameEndCanvas(successText);
+        }
+        else
+        {
+            uiManager.GameEndCanvas(failText);
+        }
+    }
+
     public List<int> getSignDistances(int numLandmarks, int totalSignDistance){
         List<int> signs = new List<int>(numLandmarks);
         int signDistance = Mathf.FloorToInt(totalSignDistance/(numLandmarks+1));

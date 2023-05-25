@@ -10,7 +10,7 @@ public class TacoMakingLighting : MonoBehaviour
 
     [Header("Time Of Day Lighting Palettes")]
     // Morning Sunrise
-    [Tooltip("0: Foreground, 1: PlayArea, 2: Background, 3: Skybox, 4: Sun")]
+    [Tooltip("0: InsideTruck, 1: Customer, 2: Background")]
     public List<Color> morningSunrise = new List<Color>
     {
         new Color32(255, 167, 38, 255),
@@ -20,7 +20,7 @@ public class TacoMakingLighting : MonoBehaviour
     };
 
     // Mid-day
-    [Tooltip("0: Foreground, 1: PlayArea, 2: Background, 3: Skybox, 4: Sun")]
+    [Tooltip("0: InsideTruck, 1: Customer, 2: Background")]
     public List<Color> midDay = new List<Color>
     {
         new Color32(41, 182, 246, 255),
@@ -30,7 +30,7 @@ public class TacoMakingLighting : MonoBehaviour
     };
 
     // Evening Sunset
-    [Tooltip("0: Foreground, 1: PlayArea, 2: Background, 3: Skybox, 4: Sun")]
+    [Tooltip("0: InsideTruck, 1: Customer, 2: Background")]
     public List<Color> eveningSunset = new List<Color>
     {
         new Color32(239, 108, 0, 255),
@@ -40,7 +40,7 @@ public class TacoMakingLighting : MonoBehaviour
     };
 
     // Night
-    [Tooltip("0: Foreground, 1: PlayArea, 2: Background, 3: Skybox, 4: Sun")]
+    [Tooltip("0: InsideTruck, 1: Customer, 2: Background")]
     public List<Color> night = new List<Color>
     {
         new Color32(40, 53, 147, 255),
@@ -65,8 +65,8 @@ public class TacoMakingLighting : MonoBehaviour
     [Space(20)]
     [Header("SETUP VARIABLES [[DONT TOUCH]]")]
     // Hold lights for each sorting layer
-    public UnityEngine.Rendering.Universal.Light2D foregroundLight;
-    public UnityEngine.Rendering.Universal.Light2D playAreaLight;
+    public UnityEngine.Rendering.Universal.Light2D insideTruckLight;
+    public UnityEngine.Rendering.Universal.Light2D customerLight;
     public UnityEngine.Rendering.Universal.Light2D backgroundLight;
     public UnityEngine.Rendering.Universal.Light2D skyboxLight;
 
@@ -99,11 +99,9 @@ public class TacoMakingLighting : MonoBehaviour
 
         List<Color> toPalette = GetPaletteAtTime(curTime);
 
-        foregroundLight.color = Color.Lerp(foregroundLight.color, toPalette[3], lightColorAdjustSpeed * Time.deltaTime);
-        playAreaLight.color = Color.Lerp(playAreaLight.color, toPalette[1], lightColorAdjustSpeed * Time.deltaTime);
+        insideTruckLight.color = Color.Lerp(insideTruckLight.color, toPalette[0], lightColorAdjustSpeed * Time.deltaTime);
+        customerLight.color = Color.Lerp(customerLight.color, toPalette[1], lightColorAdjustSpeed * Time.deltaTime);
         backgroundLight.color = Color.Lerp(backgroundLight.color, toPalette[2], lightColorAdjustSpeed * Time.deltaTime);
-        //skyboxLight.color = Color.Lerp(skyboxLight.color, toPalette[3], lightColorAdjustSpeed * Time.deltaTime);
-        //sunLight.color = Color.Lerp(sunLight.color, toPalette[4], lightColorAdjustSpeed * Time.deltaTime);
 
     }
 
