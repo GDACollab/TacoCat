@@ -17,6 +17,8 @@ public class IngredientBenchManager : MonoBehaviour
 
     public float ingredientScale = 0.1f;
 
+    [Header("Animator")]
+    public Animator anim;
 
     // Start is called before the first frame update
     void Start()
@@ -54,6 +56,30 @@ public class IngredientBenchManager : MonoBehaviour
             }
         }
 
+    }
+
+    public void PlayIngredientAnim(INGREDIENT_TYPE ingredient)
+    {
+        switch(ingredient)
+        {
+            case INGREDIENT_TYPE.CABBAGE:
+                anim.Play("CabbageShuffle");
+                break;
+            case INGREDIENT_TYPE.FISH:
+                anim.Play("FishShuffle");
+                break;
+            case INGREDIENT_TYPE.PICO_DE_GALLO:
+                anim.Play("PicoShuffle");
+                break;
+            case INGREDIENT_TYPE.SLICED_JALAPENOS:
+                anim.Play("JalShuffle");
+                break;
+            case INGREDIENT_TYPE.SOUR_CREAM:
+                anim.Play("SourCreamShuffle");
+                break;
+            default:
+                break;
+        }
     }
 
 }
