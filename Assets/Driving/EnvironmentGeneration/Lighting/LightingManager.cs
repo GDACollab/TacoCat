@@ -6,6 +6,7 @@ using UnityEditor;
 public class HideInInspectorUnlessDebugAttribute : PropertyAttribute { }
 public enum TIME_OF_DAY { MORNING, MIDDAY, EVENING, NIGHT, ERROR }
 
+[ExecuteAlways]
 public class LightingManager : MonoBehaviour
 {
 

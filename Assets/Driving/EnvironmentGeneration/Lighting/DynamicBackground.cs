@@ -33,28 +33,49 @@ public class DynamicBackground : MonoBehaviour
     public List<GameObject> nightPrefabs;
 
     [Header("Active Gameobjects")]
-    public List<GameObject> morningBackground;
-    public List<GameObject> middayBackground;
-    public List<GameObject> eveningBackground;
-    public List<GameObject> nightBackground;
+    public List<GameObject> morningBackground = new List<GameObject>();
+    public List<GameObject> middayBackground = new List<GameObject>();
+    public List<GameObject> eveningBackground = new List<GameObject>();
+    public List<GameObject> nightBackground = new List<GameObject>();
+
+    [Header("Stars")]
+    public Transform starParent;
+    public int starCount = 50;
+    public float starMoveSpeed = 50;
+    public Vector2 starScaleRange = new Vector2(500, 1000);
+    public List<GameObject> starPrefabs;
+    public List<GameObject> starsBackground = new List<GameObject>();
+
+
+    private void Awake()
+    {
+        //DestroyList(morningBackground);
+        //DestroyList(middayBackground);
+        //DestroyList(eveningBackground);
+        //DestroyList(nightBackground);
+    }
 
     private void Start()
     {
-        CreateRandomBackgroundObjects(morningPrefabs, morningCount, TIME_OF_DAY.MORNING);
+        CreateRandomBackgroundObjects(morningPrefabs, morningCount, TIME_OF_DAY.MORNING, scaleRange);
         SetObjectsAlphaToZero(morningBackground);
 
-        CreateRandomBackgroundObjects(middayPrefabs, middayCount, TIME_OF_DAY.MIDDAY);
+        CreateRandomBackgroundObjects(middayPrefabs, middayCount, TIME_OF_DAY.MIDDAY, scaleRange);
         SetObjectsAlphaToZero(middayBackground);
 
-        CreateRandomBackgroundObjects(eveningPrefabs, eveningCount, TIME_OF_DAY.EVENING);
+        CreateRandomBackgroundObjects(eveningPrefabs, eveningCount, TIME_OF_DAY.EVENING, scaleRange);
         SetObjectsAlphaToZero(eveningBackground);
 
-        CreateRandomBackgroundObjects(nightPrefabs, nightCount, TIME_OF_DAY.NIGHT);
+        CreateRandomBackgroundObjects(nightPrefabs, nightCount, TIME_OF_DAY.NIGHT, scaleRange);
         SetObjectsAlphaToZero(nightBackground);
 
+
+        CreateRandomBackgroundObjects(starPrefabs, starCount, TIME_OF_DAY.NIGHT, starScaleRange, starParent, starsBackground);
+        SetObjectsAlphaToZero(starsBackground);
+        EnableList(starsBackground, false);
     }
 
-    private void CreateRandomBackgroundObjects(List<GameObject> prefabs, int count, TIME_OF_DAY timeOfDay)
+    private void CreateRandomBackgroundObjects(List<GameObject> prefabs, int count, TIME_OF_DAY timeOfDay, Vector2 scaleRange, Transform overrideParent = null, List<GameObject> overrideList = null)
     {
         if (prefabs.Count <= 0) { return; }
 
@@ -91,17 +112,30 @@ public class DynamicBackground : MonoBehaviour
             }
 
             // Set the parent transform based on the time of day
-            SetParentTransform(timeOfDay, spawnedObject.transform);
+            SetParentTransform(timeOfDay, spawnedObject.transform, overrideParent);
 
             spawnedObject.transform.localScale = scale;
 
-            // Add the spawned object to the appropriate time of day list
-            AddObjectToTimeOfDayList(spawnedObject, timeOfDay);
+
+            if (overrideList != null) { overrideList.Add(spawnedObject); }
+            else
+            {
+                // Add the spawned object to the appropriate time of day list
+                AddObjectToTimeOfDayList(spawnedObject, timeOfDay);
+            }
+
         }
     }
-    private void SetParentTransform(TIME_OF_DAY timeOfDay, Transform objectTransform)
+    private void SetParentTransform(TIME_OF_DAY timeOfDay, Transform objectTransform, Transform overrideParent = null)
     {
-        Transform parentTransform = null;
+        if (overrideParent != null)
+        {
+            objectTransform.SetParent(overrideParent);
+            return;
+        }
+
+
+        Transform parentTransform = overrideParent;
 
         switch (timeOfDay)
         {
@@ -124,8 +158,6 @@ public class DynamicBackground : MonoBehaviour
             objectTransform.SetParent(parentTransform);
         }
     }
-
-
     private void AddObjectToTimeOfDayList(GameObject spawnedObject, TIME_OF_DAY dayTime)
     {
         switch (dayTime)
@@ -142,6 +174,27 @@ public class DynamicBackground : MonoBehaviour
             case TIME_OF_DAY.NIGHT:
                 nightBackground.Add(spawnedObject);
                 break;
+        }
+    }
+
+    public void DestroyList(List<GameObject> list)
+    {
+        for (int i = 0; i < list.Count; i++)
+        {
+            if (list[i] != null)
+            {
+                Destroy(list[i]);
+            }
+        }
+
+        list.Clear();
+    }
+
+    public void EnableList(List<GameObject> list, bool enable = true)
+    {
+        for (int i = 0; i < list.Count; i++)
+        {
+            list[i].SetActive(enable);
         }
     }
 
@@ -166,34 +219,54 @@ public class DynamicBackground : MonoBehaviour
                 FadeObjects(middayBackground, 0);
                 FadeObjects(eveningBackground, 0);
                 FadeObjects(nightBackground, 1);
+
+                FadeObjects(starsBackground, 1);
+                EnableList(starsBackground, true);
+
                 break;
             case TIME_OF_DAY.EVENING:
                 FadeObjects(morningBackground, 0);
                 FadeObjects(middayBackground, 0);
                 FadeObjects(eveningBackground, 1);
                 FadeObjects(nightBackground, 0);
+
+                FadeObjects(starsBackground, 0);
                 break;
             case TIME_OF_DAY.MIDDAY:
                 FadeObjects(morningBackground, 0);
                 FadeObjects(middayBackground, 1);
                 FadeObjects(eveningBackground, 0);
                 FadeObjects(nightBackground, 0);
+
+                FadeObjects(starsBackground, 0);
                 break;
             case TIME_OF_DAY.MORNING:
                 FadeObjects(morningBackground, 1);
                 FadeObjects(middayBackground, 0);
                 FadeObjects(eveningBackground, 0);
                 FadeObjects(nightBackground, 0);
+
+                FadeObjects(starsBackground, 0);
                 break;
         }
 
+
+
         // move the full parent dynamic background to the left slightly
-        transform.position += Vector3.left * moveSpeed * Time.deltaTime;
+        morningParent.position += Vector3.left * moveSpeed * Time.deltaTime;
+        middayParent.position += Vector3.left * moveSpeed * Time.deltaTime;
+        eveningParent.position += Vector3.left * moveSpeed * Time.deltaTime;
+        nightParent.position += Vector3.left * moveSpeed * Time.deltaTime;
+
+        starParent.position += Vector3.left * starMoveSpeed * Time.deltaTime;
+
 
     }
 
     private void FadeObjects(List<GameObject> objects, float targetAlpha)
     {
+        if (objects == null) { return; }
+
         foreach (GameObject obj in objects)
         {
             SpriteRenderer sr = obj.GetComponentInChildren<SpriteRenderer>();
@@ -205,6 +278,9 @@ public class DynamicBackground : MonoBehaviour
 
     private void SetObjectsAlphaToZero(List<GameObject> objects)
     {
+
+        if (objects == null) { return; }
+
         foreach (GameObject obj in objects)
         {
             SpriteRenderer sr = obj.GetComponentInChildren<SpriteRenderer>();

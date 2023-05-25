@@ -390,30 +390,33 @@ public class GameManager : MonoBehaviour
 
     public void GameTimerUpdate()
     {
-        // is not cutscene or menu, countdown time
-        if (currGame != currGame.CUTSCENE && currGame != currGame.MENU)
+        // not if cutscene
+        if (currGame == currGame.CUTSCENE && currGame == currGame.MENU) { return; }
+
+        // not if not in play
+        if (currGame == currGame.TACO_MAKING && tacoGameManager.state != TACOMAKING_STATE.PLAY) { return; }
+        if (currGame == currGame.DRIVING && drivingGameManager.state != DRIVINGGAME_STATE.PLAY) { return; }
+
+        if ((timeRemaining - Time.deltaTime) < 0)
         {
-            if ((timeRemaining - Time.deltaTime) < 0)
+            happyEnd = false;
+        }
+        if (curClockHour != hardCapHour || curClockMinute != hardCapMinute || isAM != hardCapAM)
+        {
+            timeRemaining -= Time.deltaTime;
+            if ((1 - (timeRemaining / totalGameTime_seconds)) <= 1 && (1 - (timeRemaining / totalGameTime_seconds)) >= 0)
             {
-                happyEnd = false;
+                main_gameTimer = (1 - (timeRemaining / totalGameTime_seconds));
             }
-            if (curClockHour != hardCapHour || curClockMinute != hardCapMinute || isAM != hardCapAM)
+            else if ((1 - (timeRemaining / totalGameTime_seconds)) > 1)
             {
-                timeRemaining -= Time.deltaTime;
-                if ((1 - (timeRemaining / totalGameTime_seconds)) <= 1 && (1 - (timeRemaining / totalGameTime_seconds)) >= 0)
-                {
-                    main_gameTimer = (1 - (timeRemaining / totalGameTime_seconds));
-                }
-                else if ((1 - (timeRemaining / totalGameTime_seconds)) > 1)
-                {
-                    main_gameTimer = 1;
-                }
-                else if ((1 - (timeRemaining / totalGameTime_seconds)) < 0)
-                {
-                    main_gameTimer = 0;
-                }
-                CalculateTime();
+                main_gameTimer = 1;
             }
+            else if ((1 - (timeRemaining / totalGameTime_seconds)) < 0)
+            {
+                main_gameTimer = 0;
+            }
+            CalculateTime();
         }
     }
 
