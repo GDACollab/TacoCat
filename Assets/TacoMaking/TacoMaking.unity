@@ -218,12 +218,12 @@ GameObject:
   - component: {fileID: 91138256}
   - component: {fileID: 91138257}
   m_Layer: 0
-  m_Name: BlueGasStation
+  m_Name: Lvl2-BlueGasStation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &91138256
 Transform:
   m_ObjectHideFlags: 0
@@ -242,7 +242,7 @@ Transform:
   - {fileID: 836936069}
   - {fileID: 1885059847}
   m_Father: {fileID: 264766884}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &91138257
 SpriteRenderer:
@@ -536,9 +536,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2009644835}
   - {fileID: 91138256}
   - {fileID: 287920533}
-  - {fileID: 2009644835}
   m_Father: {fileID: 6584911828293743366}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -553,7 +553,7 @@ GameObject:
   - component: {fileID: 287920533}
   - component: {fileID: 287920534}
   m_Layer: 0
-  m_Name: RedGasStation
+  m_Name: Lvl3-RedGasStation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -577,7 +577,7 @@ Transform:
   - {fileID: 73241627}
   - {fileID: 1409729967}
   m_Father: {fileID: 264766884}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &287920534
 SpriteRenderer:
@@ -4864,7 +4864,7 @@ GameObject:
   - component: {fileID: 2009644835}
   - component: {fileID: 2009644836}
   m_Layer: 0
-  m_Name: GreenGasStation
+  m_Name: Lvl1-GreenGasStation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4888,7 +4888,7 @@ Transform:
   - {fileID: 2050799207}
   - {fileID: 781854395}
   m_Father: {fileID: 264766884}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2009644836
 SpriteRenderer:
@@ -8209,7 +8209,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1766367129203572431, guid: 6b3e6cfc6e0e43846a3bb5f2b30bfb23, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 38.899918
+      value: 38.899902
       objectReference: {fileID: 0}
     - target: {fileID: 5410202910666737363, guid: 6b3e6cfc6e0e43846a3bb5f2b30bfb23, type: 3}
       propertyPath: m_AnchoredPosition.x
