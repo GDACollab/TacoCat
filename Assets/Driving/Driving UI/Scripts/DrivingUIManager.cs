@@ -45,10 +45,10 @@ public class DrivingUIManager : MonoBehaviour
     [Header("Toggle Progress Bar")]
     private GameObject progressBarSlider;
 
-    [Header("Tutorial Canvas")]
+    [Header("Begin Canvas")]
     public GameObject tutorialCanvas;
 
-    [Header("Transition UI")]
+    [Header("End Canvas")]
     public GameObject transitionParent;
     public TMP_Text transitionMessage;
     private bool endOfGame = false;
@@ -138,6 +138,8 @@ public class DrivingUIManager : MonoBehaviour
         }
     }
     
+
+
     public void GameEndCanvas(string message){
         transitionParent.SetActive(true);
         transitionMessage.text = message;

@@ -117,6 +117,9 @@ public class TacoMakingGameManager : MonoBehaviour
 
                 break;
             case TACOMAKING_STATE.PLAY:
+
+                StartCoroutine(uiManager.OpenWindow());
+
                 CustomerRotation();
 
                 // check for end

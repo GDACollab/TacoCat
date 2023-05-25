@@ -19,6 +19,9 @@ public class TacoUIManager : MonoBehaviour
     public GameObject tutorialCanvas;
     public GameObject endCanvas;
 
+    public Transform windowShutter;
+
+
     [Header("Score UI")]
     public GameObject starPrefab;
     public float starScale = 1;
@@ -219,6 +222,26 @@ public class TacoUIManager : MonoBehaviour
             nCharge2.color = Color.black;
             nCharge3.color = Color.black;
             break;
+        }
+    }
+
+    public IEnumerator OpenWindow()
+    {
+        yield return new WaitForSeconds(1f);
+
+        float windowTime = 0f;
+        Vector3 startPos = windowShutter.transform.localPosition;
+        Vector3 endPos = startPos;
+        endPos.y = 8.54f;
+
+        float windowOpenTime = 1f;
+        while (windowTime < windowOpenTime)
+        {
+            float t = windowTime / windowOpenTime;
+            windowShutter.transform.localPosition = Vector3.Lerp(startPos, endPos, t);
+
+            windowTime += Time.deltaTime;
+            yield return null;
         }
     }
 }
