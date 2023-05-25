@@ -264,12 +264,12 @@ public class Customer: MonoBehaviour
         }
 
         //Stops moving customer once they are at their new position
+        float currTransitionTime = 0f;
         while (currTransitionTime < transitionTime)
         {
-            //Math to make the transition ease in and out
-            interpolater = currTransitionTime / transitionTime;
-            interpolater = interpolater * interpolater * (3f - 2f * interpolater);
-            transform.position = Vector3.Lerp(prevPos, targetPos, interpolater);
+            float t = currTransitionTime / transitionTime;
+            t = t * t * (3f - 2f * t); // curve
+            transform.position = Vector3.Lerp(prevPos, targetPos, t);
             currTransitionTime += Time.deltaTime;
             yield return null;
         }
