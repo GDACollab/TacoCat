@@ -69,6 +69,7 @@ MonoBehaviour:
   tickImage: {fileID: 1564180912570553495}
   textContents: 
   characterType: 0
+  skip: 0
   lineHeight: 0
   fontAssetName: TacocatMorganFont-Regular_1 SDF
   bubbleVerticalSize: 0
@@ -201,7 +202,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: -2045117334, guid: 0c36b2836db1e6744b03670d94c0b6b3, type: 3}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -209,7 +210,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 0.5
 --- !u!114 &165732269501431660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -380,8 +381,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: db471acfc49e6364da43d3325036e4ae, type: 2}
-  m_sharedMaterial: {fileID: 8067259387376780504, guid: db471acfc49e6364da43d3325036e4ae, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 24fd20fda58deb448890ab4935f9e8e1, type: 2}
+  m_sharedMaterial: {fileID: -6891349679822879135, guid: 24fd20fda58deb448890ab4935f9e8e1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
