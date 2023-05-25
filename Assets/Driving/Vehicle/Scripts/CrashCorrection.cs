@@ -35,7 +35,9 @@ public class CrashCorrection : MonoBehaviour
             StartCoroutine(CorrectCrash());
 
             //START AUDIO EVENT FOR CRASH
-            //audioManager.Play(audioManager.crashSFX);
+            if(audioManager){
+                audioManager.Play(audioManager.crashSFX);
+            }
         }
     }
 

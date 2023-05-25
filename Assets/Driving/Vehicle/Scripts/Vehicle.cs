@@ -185,12 +185,9 @@ public class Vehicle : MonoBehaviour
             //StartCoroutine(cameraHandler.Shake(activeNitroTime, cameraHandler.nitro_camShakeMagnitude));
 
 
-            try
-            {
-                //audioManager.Play(audioManager.nitroBoostSFX); //NITRO BOOST SOUND EFFECT
+            if(audioManager != null){
+                audioManager.Play(audioManager.nitroBoostSFX); //NITRO BOOST SOUND EFFECT
             }
-            catch { Debug.LogWarning("nitroBoostSFX :: Could not find AudioManager", this.gameObject); }
-
         }
     }
 

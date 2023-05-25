@@ -271,6 +271,7 @@ public class GameManager : MonoBehaviour
         }
 
         audioManager.PlaySong(audioManager.drivingMusicPath);
+        audioManager.PlayDrivingAmbiance(0);
     }
 
     public void LoadCutscene()

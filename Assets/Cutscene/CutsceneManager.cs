@@ -178,9 +178,9 @@ public class CutsceneManager : MonoBehaviour
 
             yield return StartCoroutine(bubble.GetComponent<BubbleManager>().TextCrawl(s));
             currentBubbles.Add(bubble);
-
-            //audioManager.Play(audioManager.sendTextSFX);
-            
+            if(audioManager != null){
+                audioManager.Play(audioManager.sendTextSFX);
+            }
             yield return alexCountdown();
             yield return new WaitForSeconds(unskipableDelay);
 
@@ -203,9 +203,10 @@ public class CutsceneManager : MonoBehaviour
             yield return StartCoroutine(bubble.GetComponent<BubbleManager>().InstantTextFill(l));
 
             currentBubbles.Add(bubble);
-
-            //audioManager.Play(audioManager.recieveTextSFX);
-            Debug.Log("ReceiveTextSFX");
+            if(audioManager!= null){
+                audioManager.Play(audioManager.recieveTextSFX);
+            }
+            
             
             yield return jamieCountdown();
             yield return new WaitForSeconds(unskipableDelay);

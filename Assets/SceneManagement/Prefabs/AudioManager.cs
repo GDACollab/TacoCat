@@ -50,6 +50,12 @@ public class AudioManager : MonoBehaviour {
     public string tacoMusicPath = "event:/Music/TacoMusic";
     public string drivingMusicPath = "event:/Music/DrivingMusic";
 
+    /////////////////////////AMBIENCE//////////////////////////////
+    [Header("FMOD Driving(Ambience) Event Path Strings")]
+    
+    [Tooltip("path of ambience event")]
+    public string drivingAmbiPath;
+
     /////////////////////////SFX//////////////////////////////
 
     // CUTSCENE
@@ -76,6 +82,7 @@ public class AudioManager : MonoBehaviour {
 
     public string truckLandingSFX; //IMPLEMENTED
     public string crashSFX;
+    
 
     //TACO MAKING
 
@@ -122,6 +129,7 @@ public class AudioManager : MonoBehaviour {
 
   
     protected EventInstance currentPlaying;
+    protected EventInstance currentAmbience;
 
 
     //plays a one shot given the fmod event path
@@ -135,6 +143,7 @@ public class AudioManager : MonoBehaviour {
         }
         instance.start();
         instance.release();
+        Debug.Log("[Audio Manager] playing one shot: " + path);
 	}
 
     public void Play(string path) {
@@ -150,6 +159,7 @@ public class AudioManager : MonoBehaviour {
         var instance = RuntimeManager.CreateInstance(path);
         instance.start();
         instance.release();
+        Debug.Log("[Audio Manager] playing one shot: " + path);
     }
 
     //a little more complicated! DO MATH to give sound 1 variable to work with
@@ -168,7 +178,7 @@ public class AudioManager : MonoBehaviour {
         FMOD.RESULT result = RuntimeManager.StudioSystem.getEvent(path, out eventDescription);
         if (result != FMOD.RESULT.OK)
         {
-            Debug.LogWarning("FMOD SONG event path does not exist: " + path);
+            Debug.LogWarning("[Audio Manager] FMOD SONG event path does not exist: " + path);
             return;
         }
 
@@ -177,7 +187,33 @@ public class AudioManager : MonoBehaviour {
         song.start();
         song.release();
     }
+    public void PlayDrivingAmbiance(float value){
+        if(currentAmbience.isValid()){
+            currentAmbience.setParameterByName("carHeight", value);
+            Debug.Log("[Audio Manager] Driving Ambience updated: " + value);
+        }else{
+            EventDescription eventDescription;
+            FMOD.RESULT result = RuntimeManager.StudioSystem.getEvent(drivingAmbiPath, out eventDescription);
+            if (result != FMOD.RESULT.OK)
+            {
+                Debug.LogWarning("FMOD SONG event path does not exist: " + drivingAmbiPath);
+                return;
+            }
 
+            EventInstance ambience = RuntimeManager.CreateInstance(drivingAmbiPath);
+            currentAmbience = ambience;
+            ambience.start();
+            ambience.release();
+            Debug.Log("[Audio Manager] New Driving Ambience Event: " + value);
+        }
+
+    }
+    public void StopDrivingAmbience(){
+        Debug.Log("[Audio Manager] Stopping Driving Ambience");
+        if(currentAmbience.isValid()){
+            currentAmbience.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        }
+    }
 
     // Update is called once per frame
     void Update()
