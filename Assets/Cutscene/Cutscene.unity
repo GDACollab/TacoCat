@@ -608,6 +608,78 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 717575956}
   m_CullTransparentMesh: 1
+--- !u!1 &736304095
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 736304096}
+  m_Layer: 5
+  m_Name: JamieMsgTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &736304096
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 736304095}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1572845920}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 675, y: -250.00003}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &890701895
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 890701896}
+  m_Layer: 5
+  m_Name: AlexMsgTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &890701896
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 890701895}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1572845920}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -675, y: -250.00003}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &968159566
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1108,9 +1180,10 @@ MonoBehaviour:
     - 'Ur not here? '
   - person: 1
     texts:
-    - "I know you really wanted to meet up in person, and trust me, I did too, but
-      im already on the plane to meowsachusetts, im about to takeoff. ive got to
-      put my phone in airplane mode. I\u2019m so sorry Alex.  "
+    - I know you really wanted to meet up in person, and trust me, I did too, but
+      im already on the plane to Meowsachusett
+    - im about to takeoff. ive got to put my phone in airplane mode.
+    - " I\u2019m so sorry Alex.  "
   - person: 0
     texts:
     - 'Wait I had a surprise for you '
@@ -1119,13 +1192,14 @@ MonoBehaviour:
     - 'Jamie? '
   unskipableDelay: 0.25
   messageDelayAlex: 0.5
-  textSpeedAlex: 0.1
-  messageDelayJamie: 1.06
+  textSpeedAlex: 0.05
+  messageDelayJamie: 1.5
   currentBubbles: []
+  messageParent: {fileID: 1940539533}
   alexMessagePrefab: {fileID: 1265193621398757072, guid: a4dc9a200d1e9654eb6111d5fa348c20, type: 3}
-  alexMessageParent: {fileID: 1940539533}
+  alexMessageTarget: {fileID: 890701896}
   jamieMessagePrefab: {fileID: 1265193621398757072, guid: 1bb054c86d76bb3418a3969667f3056d, type: 3}
-  jamieMessageParent: {fileID: 1940539533}
+  jamieMessageTarget: {fileID: 736304096}
   jamieCallsAlexObject: {fileID: 717575957}
   image: {fileID: 1111964546}
   fadeTime: 1
@@ -1477,6 +1551,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1940539533}
+  - {fileID: 890701896}
+  - {fileID: 736304096}
   m_Father: {fileID: 1677111079}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

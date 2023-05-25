@@ -61,13 +61,11 @@ public class CutsceneManager : MonoBehaviour
     public float messageDelayJamie;
 
     public List<GameObject> currentBubbles = new List<GameObject>();
-
+    public Transform messageParent;
     public GameObject alexMessagePrefab;
-    public Transform alexMessageParent;
-
-
+    public Transform alexMessageTarget;
     public GameObject jamieMessagePrefab;
-    public Transform jamieMessageParent;
+    public Transform jamieMessageTarget;
 
     public RectTransform jamieCallsAlexObject;
 
@@ -240,8 +238,8 @@ public class CutsceneManager : MonoBehaviour
         foreach (string s in l)
         {
             
-            GameObject bubble = Instantiate(alexMessagePrefab, alexMessageParent);
-            bubble.transform.position = alexMessageParent.position;
+            GameObject bubble = Instantiate(alexMessagePrefab, messageParent);
+            bubble.transform.position = alexMessageTarget.position;
             bubble.GetComponent<BubbleManager>().Init(character.ALEX, s, this);
 
             yield return StartCoroutine(bubble.GetComponent<BubbleManager>().TextCrawl(s));
@@ -265,7 +263,9 @@ public class CutsceneManager : MonoBehaviour
             //phoneText.text += l + "\n";
 
             //insert instance of jamiebubble text += l + "\n"
-            GameObject bubble = Instantiate(jamieMessagePrefab, jamieMessageParent);
+            GameObject bubble = Instantiate(jamieMessagePrefab, messageParent);
+            bubble.transform.position = jamieMessageTarget.position;
+
             bubble.GetComponent<BubbleManager>().Init(character.JAMIE, l, this);
 
             yield return StartCoroutine(bubble.GetComponent<BubbleManager>().InstantTextFill(l));
