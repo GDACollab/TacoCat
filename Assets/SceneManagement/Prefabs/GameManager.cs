@@ -188,7 +188,7 @@ public class GameManager : MonoBehaviour
         if (currGame == currGame.TACO_MAKING && tacoGameManager != null)
         {
             // check if all customers submitted , if so move to driving with gas amount
-            if (tacoGameManager.endOfGame && !isLoadingScene)
+            if (tacoGameManager.state == TACOMAKING_STATE.END_TRANSITION && !isLoadingScene && !tacoGameManager.uiManager.camEffectManager.isFading)
             {
                 nitroCharges = tacoGameManager.nitroCharges;
                 LoadDrivingScene(currLevel);
@@ -237,18 +237,13 @@ public class GameManager : MonoBehaviour
     }
 
     // **** LOAD TACO MAKING SCENE ****
-    public void LoadTacoMakingScene(bool async = false)
+    public void LoadTacoMakingScene()
     {
 
         currGame = currGame.TACO_MAKING;
-        if (async)
-        {
-            StartCoroutine(ConcurrentLoadingCoroutine(tacoMakingScene));
-        }
-        else
-        {
-            StartCoroutine(LoadingCoroutine(tacoMakingScene));
-        }
+
+        StartCoroutine(ConcurrentLoadingCoroutine(tacoMakingScene));
+
         //audioManager.PlaySong(audioManager.tacoMusicPath);
     }
 
@@ -260,17 +255,17 @@ public class GameManager : MonoBehaviour
         if (levelNum == 1)
         {
             currLevel = 1;
-            StartCoroutine(LoadingCoroutine(driving1));
+            StartCoroutine(ConcurrentLoadingCoroutine(driving1));
         }
         else if (levelNum == 2)
         {
             currLevel = 2;
-            StartCoroutine(LoadingCoroutine(driving2));
+            StartCoroutine(ConcurrentLoadingCoroutine(driving2));
         }
         else if (levelNum == 3)
         {
             currLevel = 3;
-            StartCoroutine(LoadingCoroutine(driving3));
+            StartCoroutine(ConcurrentLoadingCoroutine(driving3));
         }
 
         //audioManager.PlaySong(audioManager.drivingMusicPath);

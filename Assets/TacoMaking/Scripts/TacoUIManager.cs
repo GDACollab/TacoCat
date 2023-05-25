@@ -9,9 +9,15 @@ public class TacoUIManager : MonoBehaviour
     public TacoMakingGameManager tacoGameManager;
     CustomerManager customerManager;
 
-    [Space(10)]
-    public GameObject endText;
-    public bool endOfGame;
+    [Header("Camera")]
+    Camera cam;
+    [HideInInspector]
+    public CameraEffectManager camEffectManager;
+    public int camFadeDuration = 3;
+
+    [Header("Canvas")]
+    public GameObject tutorialCanvas;
+    public GameObject endCanvas;
 
     [Header("Score UI")]
     public GameObject starPrefab;
@@ -45,6 +51,8 @@ public class TacoUIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        cam = Camera.main;
+        camEffectManager = cam.GetComponent<CameraEffectManager>();
         customerManager = tacoGameManager.customerManager;
 
         DisplayGas(0);

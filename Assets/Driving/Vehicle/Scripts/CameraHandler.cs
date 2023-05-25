@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CameraHandler : MonoBehaviour
 {
@@ -16,12 +17,6 @@ public class CameraHandler : MonoBehaviour
     [Space(10)]
     public float camSpeed = 5f;
     public Vector3 offsetAdjustSpeed = new Vector3(3, 3, 3);
-
-    [Header("Camera Shake")]
-    [Range(0, 5)]
-    public float perfect_camShakeMagnitude = 0.5f;
-    [Range(0, 5)]
-    public float nitro_camShakeMagnitude = 0.5f;
 
     [Header("Cam Horz Adjustment")]
     public Vector2 xPosRange = new Vector2(0, -100); // the range of x positions the camera should adjust between
@@ -48,15 +43,9 @@ public class CameraHandler : MonoBehaviour
 
     // Each value = 1/6 of the distance from the ceenter to the screen edge, + is to the left and - is to the right
     public float cameraSixthOffset = 2;
-
-    // Modified fixedUpdate() to work with the Zero point code
     float currZeroPos;
-
     Vector3 currApoint;
     Vector3 currBpoint;
-
-
-    // slope/constant values used in equation
     float slope;
     float constant;
     // Used for determining if new bezier points should be added to the list
@@ -64,6 +53,15 @@ public class CameraHandler : MonoBehaviour
 
     List<Vector3> camBezierPoints = new List<Vector3>(); //List of points used to determine where the 'zero' point should be
     public int bezierPointsListTracker = 0; //Current positioning in the list of points
+
+    [Header("Camera Shake")]
+    [Range(0, 5)]
+    public float perfect_camShakeMagnitude = 0.5f;
+    [Range(0, 5)]
+    public float nitro_camShakeMagnitude = 0.5f;
+
+    [Header("Fade Transition")]
+    public Image blackImage;
 
 
     private void Start()
@@ -78,6 +76,9 @@ public class CameraHandler : MonoBehaviour
 
     public IEnumerator Initialize()
     {
+        // set camera to player position
+        transform.position = playAreaGroundGeneration.environmentGenerator.playerSpawnPoint.position;
+
         // << GET ALL GENERATION POINTS >>
         foundGenerationPoints = false;
         while (!foundGenerationPoints)
@@ -128,6 +129,7 @@ public class CameraHandler : MonoBehaviour
             yield return null;
         }
     }
+
 
     //Called in the bezier generator, adds the P_1/P_2 point to the bezierPoints list
     //(To do so, whenever a P_1/2 point is made, run this function with that point before moving onto the next point)
@@ -310,7 +312,6 @@ public class CameraHandler : MonoBehaviour
             transform.position = Vector3.Lerp(transform.position, currCamPos, camSpeed * Time.fixedDeltaTime);
         }
     }
-
 
     private void OnDrawGizmos()
     {

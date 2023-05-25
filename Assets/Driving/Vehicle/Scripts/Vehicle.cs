@@ -81,11 +81,10 @@ public class Vehicle : MonoBehaviour
     {
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         audioManager = gameManager.audioManager;
-        cameraHandler = Camera.main.GetComponent<CameraHandler>();
         drivingGameManager = GameObject.FindGameObjectWithTag("DrivingGameManager").GetComponent<DrivingGameManager>();
         drivingUIManager = drivingGameManager.uiManager;
         stageManager = drivingGameManager.playAreaStageManager;
-
+        cameraHandler = drivingGameManager.camHandler;
 
         rb_vehicle.velocity = startingVelocity;
         state = DRIVE_STATE.NONE;

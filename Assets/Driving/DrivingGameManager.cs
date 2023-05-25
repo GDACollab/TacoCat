@@ -3,25 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
+public enum DRIVINGGAME_STATE { LOADING, TUTORIAL, PLAY, END, END_TRANSITION }
 
 public class DrivingGameManager : MonoBehaviour
 {
     [HideInInspector]
     public GameManager gameManager;
-
-    public StageManager foregroundStageManager;
-    public StageManager playAreaStageManager; // manages the generation stages
-    public StageManager backgroundStageManager; // manages the generation stages
-
-
     public LightingManager lightingManager;
     public DrivingUIManager uiManager;
     public Vehicle vehicle;
     public CameraHandler camHandler;
 
-
-    [Space(10)]
+    [Header("States")]
+    public DRIVINGGAME_STATE state = DRIVINGGAME_STATE.LOADING;
     public bool endOfGame;
+
+    [Header("Stages")]
+    public StageManager foregroundStageManager;
+    public StageManager playAreaStageManager; // manages the generation stages
+    public StageManager backgroundStageManager; // manages the generation stages
 
     [Header("Distance")]
     public float totalDistance;
@@ -45,6 +45,7 @@ public class DrivingGameManager : MonoBehaviour
     void Awake()
     {
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        uiManager = GetComponentInChildren<DrivingUIManager>();
         vehicle.rb_vehicle.constraints = RigidbodyConstraints2D.FreezeAll;
 
         endOfGame = false;
@@ -60,10 +61,9 @@ public class DrivingGameManager : MonoBehaviour
         yield return new WaitUntil(() => playAreaStageManager.allStagesGenerated);
         yield return new WaitUntil(() => playAreaStageManager.environmentGenerator.environmentSpawned);
 
-        // move vehicle
+        // init vehicle pos     
         vehicle.transform.position = playAreaStageManager.environmentGenerator.playerSpawnPoint.position;
         camHandler.transform.position = playAreaStageManager.environmentGenerator.playerSpawnPoint.position;
-
 
         foregroundStageManager.BeginStageGeneration();
         yield return new WaitUntil(() => foregroundStageManager.allStagesGenerated);
@@ -75,15 +75,45 @@ public class DrivingGameManager : MonoBehaviour
         vehicle.rb_vehicle.constraints = RigidbodyConstraints2D.None;
         vehicle.nitroCharges = nitroCharges;
         uiManager.updateNitro();
+
+
+        yield return new WaitForSeconds(1);
+        state = DRIVINGGAME_STATE.TUTORIAL;
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Check for stuck
+
+        switch (state)
+        {
+            case DRIVINGGAME_STATE.LOADING:
+                break;
+            case DRIVINGGAME_STATE.TUTORIAL:
+
+                uiManager.cameraEffectManager.StartFadeIn();
+
+                break;
+            case DRIVINGGAME_STATE.PLAY:
+
+                UpdatePlay();
+
+                break;
+            case DRIVINGGAME_STATE.END:
+                break;
+            case DRIVINGGAME_STATE.END_TRANSITION:
+                break;
+            default:
+                break;
+
+        }
+    }
+
+    public void UpdatePlay()
+    {
+        // << STUCK CHECK >>
         if (vehicle.GetFuel() == 0 && vehicle.GetNitro() == 0 && !endOfGame) // Out of fuel & Nitro
         {
-
             if (vehicle.GetVelocity().x < stuckMaxVelocity) // Truck is stuck
             {
                 if (stuckTime >= stuckTimeoutDuration && !endOfGame && !endRun) // Timer is up
@@ -92,7 +122,7 @@ public class DrivingGameManager : MonoBehaviour
                     uiManager.transitionStop(failText, false);
                     endRun = true;
                 }
-                else 
+                else
                 {
                     stuckTime += Time.deltaTime; // Increment the timer
                 }
@@ -102,11 +132,13 @@ public class DrivingGameManager : MonoBehaviour
                 stuckTime = 0; // Reset the clock
             }
         }
-        
-        // Check for end of level
+
+        // << END LEVEL CHECK >>
         if (percentageTraveled >= 1 && !endOfGame)
         {
-            Debug.Log(successText);
+            //Debug.Log(successText);
+
+            state = DRIVINGGAME_STATE.END;
             uiManager.transitionStop(successText, true);
         }
 
@@ -116,6 +148,7 @@ public class DrivingGameManager : MonoBehaviour
         percentageTraveled = vehicleDistance / totalDistance;
         if (percentageTraveled <= 0) { percentageTraveled = 0; }
 
+        // << UPDATE LIGHTING MANAGER >>
         lightingManager.timeOfDay = gameManager.main_gameTimer;
     }
     

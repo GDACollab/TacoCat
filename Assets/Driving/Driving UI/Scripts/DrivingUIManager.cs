@@ -6,11 +6,14 @@ using TMPro;
 
 public class DrivingUIManager : MonoBehaviour
 {
+    [HideInInspector]
     public DrivingGameManager drivingGameManager;
     public GameObject vehicle;
-
     Vehicle vehicle_script;
     FlipTracker flipTracker;
+
+    [HideInInspector]
+    public CameraEffectManager cameraEffectManager;
 
     private float fuelAmount = 0; // Initial fuel
     private int numNitro = 0; // Initial nitro
@@ -50,11 +53,15 @@ public class DrivingUIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        progressBarSlider = GameObject.Find("DistanceSlider");
+
+        drivingGameManager.GetComponentInParent<DrivingGameManager>();
+        cameraEffectManager = drivingGameManager.camHandler.GetComponent<CameraEffectManager>();
         vehicle_script = vehicle.GetComponent<Vehicle>();
         flipTracker = vehicle.GetComponent<FlipTracker>();
+
         initFuelNitro(vehicle_script.GetFuel(),vehicle_script.GetNitro());
         miles = totalMiles;
+
         signDistances = drivingGameManager.getSignDistances(numSigns, totalMiles);
         signDistances.Add(0);
     }
@@ -76,17 +83,8 @@ public class DrivingUIManager : MonoBehaviour
         {
             pointer.position = Vector3.Lerp(pointerStart.position, pointerEnd.position, drivingGameManager.percentageTraveled);
         }
-        
-
     }
 
-    // Function to initialize the fuel gauges
-    void initCircle(){
-        foreach(GameObject x in GameObject.FindGameObjectsWithTag("FuelUIGauge")){
-            x.SetActive(true);
-        }
-    }
-    
     // Function to initialize the fuel and nitro. Called outside this class.
     void initFuelNitro(float fuel, int nitro){
         fuelAmount = fuel;
@@ -150,7 +148,7 @@ public class DrivingUIManager : MonoBehaviour
             drivingGameManager.endOfGame = end;
         }
         else{
-            GameObject.Find("GameManager").GetComponent<GameManager>().LoadTacoMakingScene(true);
+            GameObject.Find("GameManager").GetComponent<GameManager>().LoadTacoMakingScene();
         }
     }
     
