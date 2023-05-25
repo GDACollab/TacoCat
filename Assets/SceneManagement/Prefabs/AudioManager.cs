@@ -132,6 +132,8 @@ public class AudioManager : MonoBehaviour {
     protected EventInstance currentAmbience;
 
 
+
+
     //plays a one shot given the fmod event path
     public void Play(string path, Dictionary<string, float> parameters = null)
 	{
@@ -146,20 +148,21 @@ public class AudioManager : MonoBehaviour {
         Debug.Log("[Audio Manager] playing one shot: " + path);
 	}
 
-    public void Play(string path) {
+    public EventInstance Play(string path) {
 
         EventDescription eventDescription;
         FMOD.RESULT result = RuntimeManager.StudioSystem.getEvent(path, out eventDescription);
         if (result != FMOD.RESULT.OK)
         {
             Debug.LogWarning("FMOD event path does not exist: " + path);
-            return;
+            return RuntimeManager.CreateInstance(path); //NEEDS TO BE CHANGED
         }
 
         var instance = RuntimeManager.CreateInstance(path);
         instance.start();
         instance.release();
         Debug.Log("[Audio Manager] playing one shot: " + path);
+        return instance;
     }
 
     //a little more complicated! DO MATH to give sound 1 variable to work with
