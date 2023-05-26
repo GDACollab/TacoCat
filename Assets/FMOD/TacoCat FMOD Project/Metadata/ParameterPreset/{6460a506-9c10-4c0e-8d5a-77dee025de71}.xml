@@ -12,6 +12,18 @@
 		</relationship>
 	</object>
 	<object class="GameParameter" id="{462a3067-4755-4809-ae7c-661e23d398c0}">
+		<property name="parameterType">
+			<value>2</value>
+		</property>
+		<property name="maximum">
+			<value>4</value>
+		</property>
+		<property name="enumerationLabels">
+			<value>Morning</value>
+			<value>Midday</value>
+			<value>Evening</value>
+			<value>Night</value>
+		</property>
 		<property name="isGlobal">
 			<value>true</value>
 		</property>

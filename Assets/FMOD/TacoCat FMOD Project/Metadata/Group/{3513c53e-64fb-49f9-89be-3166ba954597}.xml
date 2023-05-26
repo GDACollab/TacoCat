@@ -29,6 +29,7 @@
 		<relationship name="effects">
 			<destination>{b32ff0b6-732b-4ccd-bb88-9e6d91163e65}</destination>
 			<destination>{84e94dcc-b076-424b-a601-717f3ab1cab1}</destination>
+			<destination>{24960073-7d4a-4b88-b7ec-c649898f242e}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{3dcfc976-804f-4b81-9602-92e9e4da649c}" />
@@ -47,6 +48,17 @@
 			<value>3</value>
 		</property>
 	</object>
+	<object class="MultibandEqEffect" id="{24960073-7d4a-4b88-b7ec-c649898f242e}">
+		<property name="frequencyA">
+			<value>22000</value>
+		</property>
+		<property name="qualityA">
+			<value>0.340000004</value>
+		</property>
+		<relationship name="automators">
+			<destination>{2f3f59cc-d9fe-4a4a-9b8a-119bd0e5687b}</destination>
+		</relationship>
+	</object>
 	<object class="AutomationPoint" id="{5b34d12a-63f9-4315-a506-a3ad482d3fea}">
 		<property name="position">
 			<value>0</value>
@@ -64,6 +76,39 @@
 		</property>
 		<property name="value">
 			<value>0</value>
+		</property>
+	</object>
+	<object class="Automator" id="{2f3f59cc-d9fe-4a4a-9b8a-119bd0e5687b}">
+		<property name="nameOfPropertyBeingAutomated">
+			<value>frequencyA</value>
+		</property>
+		<relationship name="automationCurves">
+			<destination>{24924333-d609-497c-a0e5-601cb1f50f78}</destination>
+		</relationship>
+	</object>
+	<object class="AutomationCurve" id="{24924333-d609-497c-a0e5-601cb1f50f78}">
+		<relationship name="parameter">
+			<destination>{426420ad-82db-4250-8960-2c3f593977bd}</destination>
+		</relationship>
+		<relationship name="automationPoints">
+			<destination>{82e12f14-e2b0-411c-863b-e634841fe89e}</destination>
+			<destination>{8c770493-6f0d-4536-9b26-504c8031b92d}</destination>
+		</relationship>
+	</object>
+	<object class="AutomationPoint" id="{82e12f14-e2b0-411c-863b-e634841fe89e}">
+		<property name="position">
+			<value>0</value>
+		</property>
+		<property name="value">
+			<value>2000</value>
+		</property>
+	</object>
+	<object class="AutomationPoint" id="{8c770493-6f0d-4536-9b26-504c8031b92d}">
+		<property name="position">
+			<value>1</value>
+		</property>
+		<property name="value">
+			<value>22000</value>
 		</property>
 	</object>
 </objects>

@@ -72,6 +72,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{8f459b70-d77d-4dec-a179-08add893f00e}">
+		<property name="volume">
+			<value>-5</value>
+		</property>
 		<relationship name="effectChain">
 			<destination>{c288ef7a-7734-43aa-8848-e39d9cdf09a3}</destination>
 		</relationship>
@@ -102,6 +105,12 @@
 	</object>
 	<object class="MixerBusPanner" id="{8f674dc8-c7d6-4e72-b1ab-d51c8884bdb6}" />
 	<object class="SingleSound" id="{6f534af5-04c2-4976-8826-945f1ae9248b}">
+		<property name="startOffset">
+			<value>8</value>
+		</property>
+		<property name="pitch">
+			<value>5.5</value>
+		</property>
 		<relationship name="modulators">
 			<destination>{00b7728e-9c37-42bf-91ae-d2409dc14bd0}</destination>
 		</relationship>
@@ -113,7 +122,7 @@
 	<object class="MixerBusFader" id="{fe38c40f-25e8-486b-927b-758074b0f0a4}" />
 	<object class="DistortionEffect" id="{137c5e99-4bc5-49d0-8057-f0685612932f}">
 		<property name="level">
-			<value>0.435000002</value>
+			<value>0.36499998</value>
 		</property>
 	</object>
 	<object class="CompressorEffect" id="{52b2cdbd-9491-4a60-87a8-b0b9fcda5316}">
@@ -138,7 +147,7 @@
 			<value>pitch</value>
 		</property>
 		<property name="amount">
-			<value>8.5</value>
+			<value>15</value>
 		</property>
 	</object>
 </objects>
