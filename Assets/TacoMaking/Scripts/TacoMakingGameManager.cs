@@ -130,8 +130,8 @@ public class TacoMakingGameManager : MonoBehaviour
 
                 CustomerRotation();
 
-                // engage minimum gas threshold
-                if (submittedCustomers >= totalCustomers && gasAmount >= minimumGasThreshold)
+                // engage minimum gas threshold, or reached max gas
+                if ( (submittedCustomers >= totalCustomers && gasAmount >= minimumGasThreshold) || gasAmount > 1)
                 {
                     state = TACOMAKING_STATE.END;
                 }

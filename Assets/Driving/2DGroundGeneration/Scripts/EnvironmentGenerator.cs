@@ -188,7 +188,7 @@ public class EnvironmentGenerator : MonoBehaviour
             // START STATION
             GameObject startStation = Instantiate(gasStationPrefab, groundPoints[gasStationGroundPointIndex] + new Vector3(-gasStationXOffset, gasStationYOffset, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
             startStation.transform.localScale = startStation.transform.localScale * gasStationScale;
-            startStation.GetComponentInChildren<SpriteRenderer>().sprite = gasStationSprites[levelNum];
+            startStation.GetComponentInChildren<SpriteRenderer>().sprite = gasStationSprites[levelNum - 1];
             startStation.GetComponentInChildren<EndTrigger>().start = true;
             startStation.GetComponentInChildren<EndTrigger>().end = false;
 

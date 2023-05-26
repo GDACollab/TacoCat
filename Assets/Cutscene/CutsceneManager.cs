@@ -143,15 +143,12 @@ public class CutsceneManager : MonoBehaviour
         {
             case 0:
                 chosenDialogue = CutsceneOneDialogue;
-                GameManager.instance.currLevel++;
                 break;
             case 1:
                 chosenDialogue = CutsceneTwoDialogue;
-                GameManager.instance.currLevel++;
                 break;
             case 2:
                 chosenDialogue = CutsceneThreeDialogue;
-                GameManager.instance.currLevel++;
                 break;
             case 3:
                 chosenDialogue = GoodEndingDialogue;

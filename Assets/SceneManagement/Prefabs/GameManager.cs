@@ -260,17 +260,17 @@ public class GameManager : MonoBehaviour
         if (levelNum == 1)
         {
             currLevel = 1;
-            StartCoroutine(ConcurrentLoadingCoroutine(driving1));
+            StartCoroutine(LoadingCoroutine(driving1));
         }
         else if (levelNum == 2)
         {
             currLevel = 2;
-            StartCoroutine(ConcurrentLoadingCoroutine(driving2));
+            StartCoroutine(LoadingCoroutine(driving2));
         }
         else if (levelNum == 3)
         {
             currLevel = 3;
-            StartCoroutine(ConcurrentLoadingCoroutine(driving3));
+            StartCoroutine(LoadingCoroutine(driving3));
         }
 
         //audioManager.PlaySong(audioManager.drivingMusicPath);
