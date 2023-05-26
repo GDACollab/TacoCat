@@ -22,7 +22,7 @@ public class MenuManager : MonoBehaviour
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         pauseManager = GameObject.FindGameObjectWithTag("PauseManager").GetComponent<PauseManager>();
         level = gameManager.currLevel;
-        win = gameManager.trueEnding;
+        win = gameManager.goodEnding;
 
         if ((level > 1 && level < 4) || (gameManager.lastGame == currGame.DRIVING))
         {

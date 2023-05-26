@@ -65,10 +65,9 @@ public class GameManager : MonoBehaviour
     [Header(" === SCENE MANAGEMENT === ")]
     public currGame currGame = currGame.NONE;
     public currGame lastGame;
-    public int currLevel = 1;
-    public bool trueEnding = true;
+    public int currLevel = 0;
+    public bool goodEnding = true;
     public SceneObject currScene;
-    public int cutsceneIndex = 0;
     [Space(5)]
     public bool isLoadingScene;
     public bool activateScene = true;
@@ -162,7 +161,11 @@ public class GameManager : MonoBehaviour
                 Debug.Log("GameManager: Setup Driving");
                 determinedSceneType = true;
                 drivingGameManager = GameObject.FindGameObjectWithTag("DrivingGameManager").GetComponent<DrivingGameManager>();
-                drivingGameManager.nitroCharges = (currLevel == 1) ? Mathf.Max(nitroCharges, 1) : nitroCharges;
+
+                if (currLevel <= 1 && drivingGameManager.nitroCharges == 0)
+                {
+                    drivingGameManager.nitroCharges = 1;
+                }
                 currGame = currGame.DRIVING;
             }
             else
@@ -188,6 +191,8 @@ public class GameManager : MonoBehaviour
         // << TACO GAME MANAGER >>
         if (currGame == currGame.TACO_MAKING && tacoGameManager != null)
         {
+            if (currLevel == 0) { currLevel = 1; } // just to make sure the level is at least 1
+
             currDayCycleState = tacoGameManager.lightingManager.dayCycleState;
 
             // check if all customers submitted , if so move to driving with gas amount
@@ -201,7 +206,9 @@ public class GameManager : MonoBehaviour
         // << DRIVING GAME MANAGER >>
         if (currGame == currGame.DRIVING && drivingGameManager != null)
         {
-            if (drivingGameManager.endOfGame && !isLoadingScene)
+            if (currLevel == 0) { currLevel = 1; } // just to make sure the level is at least 1
+
+            if (drivingGameManager.state == DRIVINGGAME_STATE.END_TRANSITION && !isLoadingScene)
             {
                 currDayCycleState = drivingGameManager.lightingManager.dayCycleState;
 
@@ -230,8 +237,6 @@ public class GameManager : MonoBehaviour
     {
         lastGame = currGame;
         currGame = currGame.MENU;
-        //currLevel = 1;    // Deletes progress
-        cutsceneIndex = 0;
         SceneManager.LoadScene(menuScene);
         //audioManager.PlaySong(audioManager.menuMusicPath);
     }

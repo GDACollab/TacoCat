@@ -61,12 +61,15 @@ public class TacoMakingGameManager : MonoBehaviour
         difficulty = Mathf.Min(difficulty, 3);
         customerManager.difficulty = difficulty;
 
+        /*
         // enable / disable backgrounds
         for (int i = 0; i < background.transform.childCount; i++){
             background.transform.GetChild(i).gameObject.SetActive(false);
         }
+
         background.transform.GetChild(difficulty-1).gameObject.SetActive(true);
-        
+        */        
+
         // create taco to place ingredients on
         CreateNewSubmissionTaco();
 
@@ -98,7 +101,7 @@ public class TacoMakingGameManager : MonoBehaviour
 
         yield return new WaitUntil(() => uiManager.camEffectManager != null);
 
-        uiManager.camEffectManager.StartFadeIn(0.5f);
+        uiManager.camEffectManager.StartFadeIn(2f);
 
     }
 

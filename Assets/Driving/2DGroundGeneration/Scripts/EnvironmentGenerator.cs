@@ -174,7 +174,7 @@ public class EnvironmentGenerator : MonoBehaviour
                 int distanceIndex = Mathf.FloorToInt(mainGenerationPoints.Count * percentage);
 
                 // spawn sign
-                GameObject sign = SpawnSign((i * distanceIndex) + mainGenStartIndex, i + 1);
+                GameObject sign = SpawnSign((i * distanceIndex) + mainGenStartIndex, i);
                 sign.name = "LandmarkSign " + i + " " + percentage;
             }
         }
