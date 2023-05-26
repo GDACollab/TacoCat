@@ -219,11 +219,11 @@ public class TacoMakingGameManager : MonoBehaviour
 
             if (score == SUBMIT_TACO_SCORE.COMBO)
             {
-                submissionTaco.PlayPerfectAnim();
+                submissionTaco.PlayComboAnim();
             }
             else if (score == SUBMIT_TACO_SCORE.PERFECT)
             {
-                submissionTaco.PlayComboAnim();
+                submissionTaco.PlayPerfectAnim();
             }
             else
             {
