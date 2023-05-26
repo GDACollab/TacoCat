@@ -45,7 +45,6 @@ public class EnvironmentGenerator : MonoBehaviour
     public Vector2 env1ScaleRange = new Vector2(1, 10);
     [Space(10), Tooltip("Whether or not the trees rotate with the ground at all")]
     public bool env1_rotationEnabled = true;
-    public bool env1_flipEnabled;
 
     [Range(0, 100), Tooltip("From 0-100%, how closely will the trees align with the rotation of the ground")]
     public float env1_rotScalar = 30;
@@ -70,7 +69,6 @@ public class EnvironmentGenerator : MonoBehaviour
     public Vector2 env2ScaleRange = new Vector2(1, 10);
     [Tooltip("Whether or not the trees rotate with the ground at all")]
     public bool env2_rotationEnabled = true;
-    public bool env2_flipEnabled;
     [Range(0, 100), Tooltip("From 0-100%, how closely will the trees align with the rotation of the ground")]
     public float env2_rotScalar = 30;
 
@@ -159,10 +157,10 @@ public class EnvironmentGenerator : MonoBehaviour
         DeleteAllEnvironmentObjects();
 
         // << SPAWN ENV OBJECTS >>
-        SpawnEnvObjs(envPrefabs_1, envGen1Parent, env1_rotationEnabled, env1_flipEnabled, env1_rotScalar, env1ScaleRange, env1_minSpacing, env1_maxSpacing);
+        SpawnEnvObjs(envPrefabs_1, envGen1Parent, env1_rotationEnabled,env1_rotScalar, env1ScaleRange, env1_minSpacing, env1_maxSpacing);
         envGen1Parent.transform.position += new Vector3(0, env1ObjYOffset, 0);
 
-        SpawnEnvObjs(envPrefabs_2, envGen2Parent, env2_rotationEnabled, env2_flipEnabled, env2_rotScalar, env2ScaleRange, env2_minSpacing, env2_maxSpacing);
+        SpawnEnvObjs(envPrefabs_2, envGen2Parent, env2_rotationEnabled, env2_rotScalar, env2ScaleRange, env2_minSpacing, env2_maxSpacing);
         envGen2Parent.transform.position += new Vector3(0, env2ObjYOffset, 0);
 
         // << SPAWN SIGNS >>
@@ -176,7 +174,7 @@ public class EnvironmentGenerator : MonoBehaviour
                 int distanceIndex = Mathf.FloorToInt(mainGenerationPoints.Count * percentage);
 
                 // spawn sign
-                GameObject sign = SpawnSign((i * distanceIndex) + mainGenStartIndex, i);
+                GameObject sign = SpawnSign((i * distanceIndex) + mainGenStartIndex, i + 1);
                 sign.name = "LandmarkSign " + i + " " + percentage;
             }
         }
@@ -190,25 +188,20 @@ public class EnvironmentGenerator : MonoBehaviour
             // START STATION
             GameObject startStation = Instantiate(gasStationPrefab, groundPoints[gasStationGroundPointIndex] + new Vector3(-gasStationXOffset, gasStationYOffset, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
             startStation.transform.localScale = startStation.transform.localScale * gasStationScale;
-            startStation.GetComponentInChildren<SpriteRenderer>().sprite = gasStationSprites[levelNum - 1];
+            startStation.GetComponentInChildren<SpriteRenderer>().sprite = gasStationSprites[levelNum];
             startStation.GetComponentInChildren<EndTrigger>().start = true;
             startStation.GetComponentInChildren<EndTrigger>().end = false;
 
             playerSpawnPoint = startStation.transform;
 
             // END STATION
-            GameObject endStation;
-            endStation = Instantiate(gasStationPrefab, groundPoints[groundPoints.Count - gasStationGroundPointIndex] + new Vector3(gasStationXOffset, gasStationYOffset, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
-            endStation.transform.localScale = endStation.transform.localScale * gasStationScale;
-            endStation.GetComponentInChildren<EndTrigger>().start = false;
-            endStation.GetComponentInChildren<EndTrigger>().end = true;
-            if (levelNum < 3)
+            if (levelNum != 2)
             {
-                endStation.GetComponentInChildren<SpriteRenderer>().sprite = gasStationSprites[levelNum];
-            }
-            else
-            {
-                endStation.GetComponentInChildren<SpriteRenderer>().sprite = gasStationSprites[Random.Range(0, gasStationSprites.Count)];
+                GameObject endStation = Instantiate(gasStationPrefab, groundPoints[groundPoints.Count - gasStationGroundPointIndex] + new Vector3(gasStationXOffset, gasStationYOffset, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
+                endStation.GetComponentInChildren<SpriteRenderer>().sprite = gasStationSprites[levelNum + 1];
+                endStation.transform.localScale = endStation.transform.localScale * gasStationScale;
+                endStation.GetComponentInChildren<EndTrigger>().start = false;
+                endStation.GetComponentInChildren<EndTrigger>().end = true;
             }
 
         }
@@ -220,7 +213,7 @@ public class EnvironmentGenerator : MonoBehaviour
     }
 
 
-    public void SpawnEnvObjs(List<GameObject> envObjs, Transform parent, bool rotationEnabled, bool flipping, float rotScalar, Vector2 scaleRange, int minSpacing = 10, int maxSpacing = 40)
+    public void SpawnEnvObjs(List<GameObject> envObjs, Transform parent, bool rotationEnabled, float rotScalar, Vector2 scaleRange, int minSpacing = 10, int maxSpacing = 40)
     {
         if (envObjs.Count < 1) { Debug.Log("No ground points."); return; }
         // check ground points
@@ -237,9 +230,6 @@ public class EnvironmentGenerator : MonoBehaviour
         {
             // spawn new environment object
             int facing = Random.Range(0, 2)*2 - 1;
-            if (!flipping) { facing = 1; } // disable flipping
-
-
             float thisScale = Random.Range(scaleRange.x, scaleRange.y);
             GameObject newObj = SpawnEnvObject(GetRandomObject(envObjs), pointIndex, thisScale, facing, sortingOrder, 0);
 

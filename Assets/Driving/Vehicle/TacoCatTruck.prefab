@@ -4771,7 +4771,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  - {fileID: 2100000, guid: cfc0920b3e893da43b280bc661c729ee, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4943,7 +4943,7 @@ MonoBehaviour:
   - {x: -4.2184334, y: -3.4624546, z: 0.00000067891347}
   m_ShapePathHash: 1675360583
   m_Mesh: {fileID: 0}
-  m_InstanceId: 88900
+  m_InstanceId: -663544
 --- !u!1 &1911717623523805362
 GameObject:
   m_ObjectHideFlags: 0
@@ -9926,7 +9926,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  - {fileID: 2100000, guid: cfc0920b3e893da43b280bc661c729ee, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -14738,7 +14738,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  - {fileID: 2100000, guid: cfc0920b3e893da43b280bc661c729ee, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -19718,7 +19718,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  - {fileID: 2100000, guid: cfc0920b3e893da43b280bc661c729ee, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -19836,7 +19836,6 @@ MonoBehaviour:
   state: 1
   gasPressed: 0
   rotationDir: 0
-  disableInputs: 0
   gravity: 40000
   fuelAmount: 1700
   maxFuel: 1700
@@ -19973,7 +19972,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioManager: {fileID: 0}
-  stageManager: {fileID: 0}
   hitPointIndex: 0
   jumpStarted: 0
   flipCap: 10
@@ -19983,7 +19981,6 @@ MonoBehaviour:
   boostSprite: {fileID: 3986610690755736411}
   uiScript: {fileID: 8951670744837546374}
   flipCount: 0
-  totalLandedFlips: 0
   currAirTime: 0
   perfectLandingRotationBound: 30
   perfectLandingMinAirTime: 0.25
@@ -20161,7 +20158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbd6ac667678dc645a38d7d43dddfd2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeSpeed: 2
+  fadeSpeed: 1
   space: {fileID: 3659970972197064187}
   arrowLeft: {fileID: 5449715620992212950}
   arrowRight: {fileID: 4232308143069334310}
@@ -20429,22 +20426,6 @@ PrefabInstance:
     - target: {fileID: 5669193845856217666, guid: ab2d51f58ac036146835fb1ea38c0670, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5891938819901837825, guid: ab2d51f58ac036146835fb1ea38c0670, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5891938819901837825, guid: ab2d51f58ac036146835fb1ea38c0670, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.78
-      objectReference: {fileID: 0}
-    - target: {fileID: 5891938819901837825, guid: ab2d51f58ac036146835fb1ea38c0670, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1.0600002
-      objectReference: {fileID: 0}
-    - target: {fileID: 5891938819901837825, guid: ab2d51f58ac036146835fb1ea38c0670, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7802980272317284443, guid: ab2d51f58ac036146835fb1ea38c0670, type: 3}
       propertyPath: m_Name

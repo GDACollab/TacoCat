@@ -287,18 +287,22 @@ public class Vehicle : MonoBehaviour
         }
     }
 
-    public IEnumerator NegateVelocity(float negationSpeed)
+    public IEnumerator NegateVelocityOverTime(float duration)
     {
-        disableInputs = true;
 
-        while (rb_vehicle.velocity.x > 0)
+        float elapsed = 0f;
+
+        while (elapsed < duration)
         {
-            rb_vehicle.angularVelocity = Mathf.Lerp(rb_vehicle.angularVelocity, 0, negationSpeed * Time.deltaTime);
-            rb_vehicle.velocity = Vector2.Lerp(rb_vehicle.velocity, Vector2.zero, negationSpeed * Time.deltaTime);
+            rb_vehicle.angularVelocity = Mathf.Lerp(rb_vehicle.angularVelocity, 0, Time.deltaTime);
+            rb_vehicle.velocity = Vector2.Lerp(rb_vehicle.velocity, Vector2.zero, Time.deltaTime);
+            elapsed += Time.deltaTime;
             yield return null;
         }
 
-        yield return null;
+        gravity *= 2;
+        rb_vehicle.velocity *= new Vector2(0, 1);
+        disableInputs = true;
     }
 
     public float GetFuel()

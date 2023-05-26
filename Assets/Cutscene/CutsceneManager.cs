@@ -80,9 +80,6 @@ public class CutsceneManager : MonoBehaviour
     public RectTransform jamieCallsAlexObject;
 
 
-    [Space(10)]
-    public TextMeshProUGUI levelTMP;
-
     /*[Header("Typing out the message")]
     public bool typeOutJamie;
 
@@ -96,8 +93,8 @@ public class CutsceneManager : MonoBehaviour
         
         startingPosition = 0;
 
-        levelTMP.text = "LVL " + GameManager.instance.currLevel;
-        if (GameManager.instance.currLevel == 0)
+    
+        if (GameManager.instance.cutsceneIndex == 0)
         {
             StartCoroutine(IntroPanels());
         }
@@ -113,13 +110,13 @@ public class CutsceneManager : MonoBehaviour
     public IEnumerator IntroPanels()
     {
 
-        intro_panel1.SetActive(true);
-        intro_panel2.SetActive(false);
-        intro_panel3.SetActive(false);
-
         // << PANEL 1 >>
         camEffectManager.StartFadeIn();
         yield return new WaitUntil(() => !camEffectManager.isFading);
+
+        intro_panel1.SetActive(true);
+        intro_panel2.SetActive(false);
+        intro_panel3.SetActive(false);
 
         yield return new WaitForSeconds(2);
 
@@ -129,32 +126,34 @@ public class CutsceneManager : MonoBehaviour
         intro_panel1.SetActive(false);
         yield return new WaitForSeconds(0.25f);
 
-        StartCoroutine(BeginTextingRoutine());
-    }
-
-    public IEnumerator BeginTextingRoutine()
-    {
         camEffectManager.StartFadeIn(1);
         yield return new WaitUntil(() => !camEffectManager.isFading);
 
         yield return new WaitForSeconds(1);
 
-        switch (GameManager.instance.currLevel)
+        StartCoroutine(BeginTextingRoutine());
+    }
+
+    public IEnumerator BeginTextingRoutine()
+    {
+        switch (GameManager.instance.cutsceneIndex)
         {
             case 0:
-            case 1:
                 chosenDialogue = CutsceneOneDialogue;
+                GameManager.instance.cutsceneIndex++;
+                break;
+            case 1:
+                chosenDialogue = CutsceneTwoDialogue;
+                GameManager.instance.cutsceneIndex++;
                 break;
             case 2:
-                chosenDialogue = CutsceneTwoDialogue;
+                chosenDialogue = CutsceneThreeDialogue;
+                GameManager.instance.cutsceneIndex++;
                 break;
             case 3:
-                chosenDialogue = CutsceneThreeDialogue;
-                break;
-            case 4:
                 chosenDialogue = GoodEndingDialogue;
                 break;
-            case 5:
+            case 4:
                 chosenDialogue = BadEndingDialogue;
                 break;
             default:
