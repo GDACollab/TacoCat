@@ -12,10 +12,14 @@ using UnityEditor;
 
 public enum currGame { NONE, MENU, CUTSCENE, TACO_MAKING, DRIVING }
 
+public enum TIME_OF_DAY { MORNING, MIDDAY, EVENING, NIGHT, ERROR }
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
     public static EventSystem eventSystemInstance = null;
+
+    public TIME_OF_DAY timeState;
 
     [HideInInspector]
     public AudioManager audioManager;
@@ -26,6 +30,8 @@ public class GameManager : MonoBehaviour
     TacoMakingGameManager tacoGameManager;
     DrivingGameManager drivingGameManager;
     CutsceneManager cutsceneManager;
+
+    LightingManager lightingManager;
 
 
     [Header(" === INIT GAME TIMER === ")]
@@ -144,6 +150,7 @@ public class GameManager : MonoBehaviour
                 Debug.Log("GameManager: Setup Taco Making");
                 determinedSceneType = true;
                 tacoGameManager = GameObject.FindGameObjectWithTag("TacoGameManager").GetComponent<TacoMakingGameManager>();
+                lightingManager = GameObject.FindGameObjectWithTag("LightingManager").GetComponent<LightingManager>();
                 tacoGameManager.difficulty = currLevel;
                 currGame = currGame.TACO_MAKING;
             }
@@ -159,6 +166,7 @@ public class GameManager : MonoBehaviour
                 Debug.Log("GameManager: Setup Driving");
                 determinedSceneType = true;
                 drivingGameManager = GameObject.FindGameObjectWithTag("DrivingGameManager").GetComponent<DrivingGameManager>();
+                lightingManager = GameObject.FindGameObjectWithTag("LightingManager").GetComponent<LightingManager>();
                 drivingGameManager.nitroCharges = (currLevel == 1) ? Mathf.Max(nitroCharges, 1) : nitroCharges;
                 currGame = currGame.DRIVING;
             }
@@ -219,7 +227,9 @@ public class GameManager : MonoBehaviour
             }
         }
 
-
+        if(lightingManager!=null){
+            timeState= lightingManager.dayCycleState;
+        }
         // << UPDATE GAME TIMER >>
         GameTimerUpdate();
     }
