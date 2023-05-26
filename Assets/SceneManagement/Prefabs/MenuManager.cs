@@ -33,6 +33,7 @@ public class MenuManager : MonoBehaviour
         if (win && level > 3)
         {
             hangingSign.SetActive(true); // Enable hanging sign
+            // Redundant; On active sign already create deploy animation
             Animator signDrop = hangingSign.GetComponent<Animator>();
             Debug.Log("MenuManager: Deloying Hanging Sign");
             signDrop.Play("Deploy");
