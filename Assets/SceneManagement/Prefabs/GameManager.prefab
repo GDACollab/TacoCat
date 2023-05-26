@@ -100,8 +100,16 @@ PrefabInstance:
       value: event:/SFX/Driving/Car Crashes
       objectReference: {fileID: 0}
     - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: orderDia
+      value: event:/Dialogue/Customer_Order
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
       propertyPath: typingSFX
       value: event:/SFX/Cutscene/Texting Clicks
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: bellDingSFX
+      value: event:/SFX/Taco Making/Bell Ding
       objectReference: {fileID: 0}
     - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
       propertyPath: sendTextSFX

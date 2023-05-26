@@ -28,6 +28,7 @@ public class CustomerDialogue : MonoBehaviour
     [SerializeField] private GameObject dialogueBox;
     [SerializeField] private TextMeshProUGUI textMesh;
 
+    
     public void CreateDialogue(Customer customer, scoreType score)
     {
         //textMesh = dialogueBox.GetComponentInChildren<TextMeshProUGUI>();

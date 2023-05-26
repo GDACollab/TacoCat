@@ -24,12 +24,14 @@ public class CustomerManager : MonoBehaviour
     [Header("Misc")]
     [HideInInspector] public int difficulty = 1;
     
+    public AudioManager audioManager;
 
 
     //before calling check if customers left to generate == 0
     private void Start()
     {
         tacoGameManager = GetComponentInParent<TacoMakingGameManager>();
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
     }
 
     private void FixedUpdate()
@@ -82,6 +84,11 @@ public class CustomerManager : MonoBehaviour
                 //dialogueDelayTime = dialogueDelay;
                 currCustomer.GetComponent<CustomerDialogue>().CreateDialogue(currCustomer, tacoScore);
                 currCustomer.transitionTime = currCustomer.transitionTime * 2;
+                
+                var instance = audioManager.Play(audioManager.orderDia);
+                instance.setParameterByName("animalSpecies", (float)currCustomer.species);
+                instance.setParameterByName("Order", (float)tacoScore);
+                
             }
             currCustomer.MoveCustomer(endPosition);
             //Destroy(currCustomer.gameObject, transitionTime + currCustomer.dialoguePause);

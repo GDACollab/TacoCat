@@ -41,6 +41,8 @@ public class AudioManager : MonoBehaviour {
     public FMOD.Studio.Bus diaBus;
     public FMOD.Studio.Bus ambiBus;
 
+    public bool isPaused;
+
     #region /////////////////////////MUSIC//////////////////////////////
     
     [Header("FMOD Music")]
@@ -97,8 +99,9 @@ public class AudioManager : MonoBehaviour {
     public string ingriPlaceSFX; //IMPLEMENTED
     [Tooltip("Name of the paw swiping event")]
     public string pawSwipeSFX; //IMPLEMENTED
-    public bool isPaused;
-    
+    public string bellDingSFX;
+    public string orderDia;
+
     #endregion
 
     #region /////////////////////////UI//////////////////////////////

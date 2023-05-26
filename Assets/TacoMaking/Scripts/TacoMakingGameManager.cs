@@ -106,11 +106,16 @@ public class TacoMakingGameManager : MonoBehaviour
 
                 if (!uiManager.camEffectManager.isFading)
                 {
+                    if(!uiManager.tutorialCanvas.activeInHierarchy){
+                        audioManager.Play(audioManager.recieveTextSFX);
+                    }
                     uiManager.tutorialCanvas.SetActive(true);
+                    
 
                     if (Input.GetKeyDown(KeyCode.Space))
                     {
                         uiManager.tutorialCanvas.SetActive(false);
+                        //AUDIO MANAGER EXIT POPUP
                         state = TACOMAKING_STATE.PLAY;
                     }
                 }
@@ -118,7 +123,7 @@ public class TacoMakingGameManager : MonoBehaviour
                 break;
             case TACOMAKING_STATE.PLAY:
 
-                StartCoroutine(uiManager.OpenWindow());
+                StartCoroutine(uiManager.OpenWindow()); //sfx needed here
 
                 CustomerRotation();
 
@@ -133,12 +138,16 @@ public class TacoMakingGameManager : MonoBehaviour
                 lightingManager.timeOfDay = gameManager.main_gameTimer;
                 break;
             case TACOMAKING_STATE.END:
-
+                if(!uiManager.endCanvas.activeInHierarchy){
+                    //AUDIO MANAGER END POPUP ACTIVATION SFX
+                    audioManager.Play(audioManager.recieveTextSFX);
+                }
                 uiManager.endCanvas.SetActive(true);
 
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     uiManager.endCanvas.SetActive(false);
+                    //AUDIO MANAGER POP UP DISMISSAL SFX
                     uiManager.camEffectManager.StartFadeOut(1.5f);
                     state = TACOMAKING_STATE.END_TRANSITION;
                 }
@@ -196,7 +205,7 @@ public class TacoMakingGameManager : MonoBehaviour
         
             Debug.Log("Submitted Taco! Customer Score " + score);
 
-            //audioManager.Play("event:/SFX/Taco Making/Bell Ding");
+            audioManager.Play(audioManager.bellDingSFX);
 
             CreateNewSubmissionTaco();
 
