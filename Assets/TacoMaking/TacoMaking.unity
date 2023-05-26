@@ -4988,12 +4988,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 567059905770462073, guid: b75fe25cc9aaded4b8efe0158ef3a504, type: 3}
       propertyPath: speed
-      value: 15
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 567059905770462073, guid: b75fe25cc9aaded4b8efe0158ef3a504, type: 3}
       propertyPath: handHome
       value: 
       objectReference: {fileID: 1985941894}
+    - target: {fileID: 567059905770462073, guid: b75fe25cc9aaded4b8efe0158ef3a504, type: 3}
+      propertyPath: handDelay
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 567059905770462073, guid: b75fe25cc9aaded4b8efe0158ef3a504, type: 3}
       propertyPath: Ingredient0
       value: 
