@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
     DrivingGameManager drivingGameManager;
     CutsceneManager cutsceneManager;
 
-    LightingManager lightingManager;
+    //LightingManager lightingManager;
 
 
     [Header("TIME OF DAY")]
@@ -191,10 +191,10 @@ public class GameManager : MonoBehaviour
 
     public void Update()
     {
-
+        /*
         if(lightingManager!=null){
             timeState=lightingManager.dayCycleState;
-        }
+        }*/
         // << TACO GAME MANAGER >>
         if (currGame == currGame.TACO_MAKING && tacoGameManager != null)
         {

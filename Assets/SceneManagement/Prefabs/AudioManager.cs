@@ -330,7 +330,7 @@ public class AudioManager : MonoBehaviour {
         ambiBus.setVolume(ambianceVolume);
         if(gameManager !=null){
             if (!(gameManager.currGame == currGame.CUTSCENE || gameManager.currGame == currGame.MENU)){
-                FMODUnity.RuntimeManager.StudioSystem.setParameterByName("timeOfDay", (float)gameManager.timeState);
+                FMODUnity.RuntimeManager.StudioSystem.setParameterByName("timeOfDay", (float)gameManager.currDayCycleState);
             }
         }
 
