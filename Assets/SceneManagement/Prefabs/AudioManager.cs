@@ -143,7 +143,7 @@ public class AudioManager : MonoBehaviour {
         diaBus = FMODUnity.RuntimeManager.GetBus(diaVolBusPath);
         ambiBus = FMODUnity.RuntimeManager.GetBus(ambiVolBusPath);
         
-
+        gameManager=GameManager.instance;
         //menuMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + menuMusic);
 
         //cutsceneMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + cutsceneMusic);
@@ -328,12 +328,14 @@ public class AudioManager : MonoBehaviour {
         sfxBus.setVolume(sfxVolume);
         diaBus.setVolume(dialogueVolume);
         ambiBus.setVolume(ambianceVolume);
-        if(gameManager !=null){
+        
+        if(gameManager!=null){
+            //Debug.Log("we made it past the game manager != null check boys");
             if (!(gameManager.currGame == currGame.CUTSCENE || gameManager.currGame == currGame.MENU)){
                 FMODUnity.RuntimeManager.StudioSystem.setParameterByName("timeOfDay", (float)gameManager.currDayCycleState);
+                //Debug.Log("THIS IS THE TIME OF DAY STATE FOR AUDIO CHECK: " + (float)gameManager.currDayCycleState);
             }
         }
-
 
     }
 }

@@ -46,10 +46,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7846e2187297056448d1c65d3f432aeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeState: 0
   audioManager: {fileID: 10505627301420208}
   pauseManager: {fileID: 0}
   currDayCycleState: 0
-  totalGameTime_seconds: 300
+  totalGameTime_seconds: 200
   startTime_24hr: 8
   endTime_24hr: 20
   updateClockEvery_Minutes: 30

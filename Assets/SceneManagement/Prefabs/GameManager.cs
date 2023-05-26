@@ -12,7 +12,7 @@ using UnityEditor;
 
 public enum currGame { NONE, MENU, CUTSCENE, TACO_MAKING, DRIVING }
 
-public enum TIME_OF_DAY { MORNING, MIDDAY, EVENING, NIGHT, ERROR }
+//public enum TIME_OF_DAY { MORNING, MIDDAY, EVENING, NIGHT, ERROR }
 
 public class GameManager : MonoBehaviour
 {
@@ -211,10 +211,10 @@ public class GameManager : MonoBehaviour
         // << DRIVING GAME MANAGER >>
         if (currGame == currGame.DRIVING && drivingGameManager != null)
         {
+            currDayCycleState = drivingGameManager.lightingManager.dayCycleState;
+            
             if (drivingGameManager.endOfGame && !isLoadingScene)
             {
-                currDayCycleState = drivingGameManager.lightingManager.dayCycleState;
-
                 currLevel++;
                 Debug.Log("Current Level: " + currLevel);
                 StartCoroutine(ConcurrentLoadingCoroutine(cutscene));
