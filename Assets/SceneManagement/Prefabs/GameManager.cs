@@ -34,6 +34,9 @@ public class GameManager : MonoBehaviour
     LightingManager lightingManager;
 
 
+    [Header("TIME OF DAY")]
+    public TIME_OF_DAY currDayCycleState;
+
     [Header(" === INIT GAME TIMER === ")]
     [Tooltip("Total duration of game in seconds")]
     public float totalGameTime_seconds = 300;
@@ -195,6 +198,8 @@ public class GameManager : MonoBehaviour
         // << TACO GAME MANAGER >>
         if (currGame == currGame.TACO_MAKING && tacoGameManager != null)
         {
+            currDayCycleState = tacoGameManager.lightingManager.dayCycleState;
+
             // check if all customers submitted , if so move to driving with gas amount
             if (tacoGameManager.state == TACOMAKING_STATE.END_TRANSITION && !isLoadingScene && !tacoGameManager.uiManager.camEffectManager.isFading)
             {
@@ -207,12 +212,9 @@ public class GameManager : MonoBehaviour
         if (currGame == currGame.DRIVING && drivingGameManager != null)
         {
             if (drivingGameManager.endOfGame && !isLoadingScene)
-            {   
-                /*
-                if (currLevel == 3) {
-                    LoadMenu(); 
-                }
-                */
+            {
+                currDayCycleState = drivingGameManager.lightingManager.dayCycleState;
+
                 currLevel++;
                 Debug.Log("Current Level: " + currLevel);
                 StartCoroutine(ConcurrentLoadingCoroutine(cutscene));
