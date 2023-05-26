@@ -5,7 +5,7 @@ using TMPro;
 public enum INGREDIENT_TYPE { NONE, FISH, SOUR_CREAM, PICO_DE_GALLO, CABBAGE, SLICED_JALAPENOS }
 public enum scoreType { NONE, PERFECT, GOOD, OKAY, FAILED } // possible scores a taco can get.
 
-public enum TACOMAKING_STATE { LOADING, TUTORIAL, PLAY, END, END_TRANSITION }
+public enum TACOMAKING_STATE { LOADING, TUTORIAL, ENTER_PLAY, PLAY, END, END_TRANSITION }
 
 public class TacoMakingGameManager : MonoBehaviour
 {
@@ -116,14 +116,17 @@ public class TacoMakingGameManager : MonoBehaviour
                     {
                         uiManager.tutorialCanvas.SetActive(false);
                         //AUDIO MANAGER EXIT POPUP
-                        state = TACOMAKING_STATE.PLAY;
+                        state = TACOMAKING_STATE.ENTER_PLAY;
                     }
                 }
 
                 break;
-            case TACOMAKING_STATE.PLAY:
-
+            case TACOMAKING_STATE.ENTER_PLAY:
                 StartCoroutine(uiManager.OpenWindow()); //sfx needed here
+                //audioManager.playBeep(); is called in uiManager.OpenWindow
+                state = TACOMAKING_STATE.PLAY;
+                break;
+            case TACOMAKING_STATE.PLAY:
 
                 CustomerRotation();
 

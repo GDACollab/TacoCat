@@ -8,6 +8,8 @@ public class TacoUIManager : MonoBehaviour
 {
     public TacoMakingGameManager tacoGameManager;
     CustomerManager customerManager;
+    
+    public AudioManager audioManager;
 
     [Header("Camera")]
     Camera cam;
@@ -62,7 +64,7 @@ public class TacoUIManager : MonoBehaviour
         DisplayNitro(tacoGameManager.nitroCharges);
 
         DisplayScore(scoreType.FAILED);
-
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
     }
 
     // Update is called once per frame
@@ -228,7 +230,7 @@ public class TacoUIManager : MonoBehaviour
     public IEnumerator OpenWindow()
     {
         yield return new WaitForSeconds(1f);
-
+        audioManager.playBeep();
         float windowTime = 0f;
         Vector3 startPos = windowShutter.transform.localPosition;
         Vector3 endPos = startPos;
