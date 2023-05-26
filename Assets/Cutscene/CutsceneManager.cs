@@ -290,9 +290,17 @@ public class CutsceneManager : MonoBehaviour
     {
         foreach (string s in l)
         {
-            
+
+
+
+
             GameObject bubble = Instantiate(alexMessagePrefab, messageParent);
+            bubble.SetActive(false);
             bubble.transform.position = alexMessageTarget.position;
+
+            yield return new WaitForSeconds(0.1f);
+            bubble.SetActive(true);
+
             bubble.GetComponent<BubbleManager>().Init(character.ALEX, s, this);
 
             yield return StartCoroutine(bubble.GetComponent<BubbleManager>().TextCrawl(s));
@@ -317,7 +325,11 @@ public class CutsceneManager : MonoBehaviour
 
             //insert instance of jamiebubble text += l + "\n"
             GameObject bubble = Instantiate(jamieMessagePrefab, messageParent);
+            bubble.SetActive(false);
             bubble.transform.position = jamieMessageTarget.position;
+
+            yield return new WaitForSeconds(0.1f);
+            bubble.SetActive(true);
 
             bubble.GetComponent<BubbleManager>().Init(character.JAMIE, l, this);
 
