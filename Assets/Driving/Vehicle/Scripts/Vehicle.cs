@@ -112,6 +112,8 @@ public class Vehicle : MonoBehaviour
 
     void FixedUpdate() {
 
+        if (drivingGameManager.state != DRIVINGGAME_STATE.PLAY) { return; }
+
         // << CONSTANT GRAVITY >>
         rb_vehicle.AddForce(Vector2.down * gravity * rb_vehicle.mass * Time.deltaTime);
 

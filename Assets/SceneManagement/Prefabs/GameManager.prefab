@@ -95,6 +95,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7004250954060202135}
     m_Modifications:
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: typingSFX
+      value: event:/SFX/Cutscene/Texting Clicks
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: sendTextSFX
+      value: event:/SFX/Cutscene/Send Text
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: recieveTextSFX
+      value: event:/SFX/Cutscene/Receive Text
+      objectReference: {fileID: 0}
     - target: {fileID: 3569120199698855514, guid: ce38256018985f14987391b520377013, type: 3}
       propertyPath: m_RootOrder
       value: 0
