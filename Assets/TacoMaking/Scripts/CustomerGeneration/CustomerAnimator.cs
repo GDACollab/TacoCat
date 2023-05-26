@@ -21,7 +21,6 @@ public class CustomerAnimator : MonoBehaviour
         {
             customer.SetActive(false);
         }
-
     }
 
     public void ChooseSpeciesRig(CUST_SPECIES species)

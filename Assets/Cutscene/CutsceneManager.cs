@@ -12,6 +12,7 @@ public class CutsceneManager : MonoBehaviour
     public bool endOfCutscene;
 
     public AudioManager audioManager;
+    public CameraEffectManager camEffectManager;
 
     public float startingPosition;
 
@@ -39,7 +40,15 @@ public class CutsceneManager : MonoBehaviour
         public List<string> texts;
     }
 
+
+
     public List<TextList> CutsceneOneDialogue;
+    public GameObject intro_panel1;
+    public GameObject intro_panel2;
+    public GameObject intro_panel3;
+
+
+    [Space(10)]
     public List<TextList> CutsceneTwoDialogue;
     public List<TextList> CutsceneThreeDialogue;
     public List<TextList> GoodEndingDialogue;
@@ -70,17 +79,12 @@ public class CutsceneManager : MonoBehaviour
 
     public RectTransform jamieCallsAlexObject;
 
-    public Image image;
-    public float fadeTime = 1f;
-    private float currentAlpha = 0f;
 
     /*[Header("Typing out the message")]
     public bool typeOutJamie;
 
     [Range(0.0f, 0.5f)]
     public float textSpeedJamie;*/
-
-
 
     // Start is called before the first frame update
     void Start()
@@ -89,13 +93,48 @@ public class CutsceneManager : MonoBehaviour
         
         startingPosition = 0;
 
-        image.color = new Color(image.color.r, image.color.g, image.color.b, currentAlpha);
-
-        StartCoroutine(begin());
-
-    }
     
-    public IEnumerator begin()
+        if (GameManager.instance.cutsceneIndex == 0)
+        {
+            StartCoroutine(IntroPanels());
+        }
+        else
+        {
+            intro_panel1.SetActive(false);
+            intro_panel2.SetActive(false);
+            intro_panel3.SetActive(false);
+            StartCoroutine(BeginTextingRoutine());
+        }
+    }
+
+    public IEnumerator IntroPanels()
+    {
+
+        // << PANEL 1 >>
+        camEffectManager.StartFadeIn();
+        yield return new WaitUntil(() => !camEffectManager.isFading);
+
+        intro_panel1.SetActive(true);
+        intro_panel2.SetActive(false);
+        intro_panel3.SetActive(false);
+
+        yield return new WaitForSeconds(2);
+
+        camEffectManager.StartFadeOut(1);
+        yield return new WaitUntil(() => !camEffectManager.isFading);
+        yield return new WaitForSeconds(1);
+
+        intro_panel1.SetActive(false);
+
+        camEffectManager.StartFadeIn(1);
+        yield return new WaitUntil(() => !camEffectManager.isFading);
+
+        yield return new WaitForSeconds(1);
+
+        StartCoroutine(BeginTextingRoutine());
+    }
+
+    public IEnumerator BeginTextingRoutine()
     {
         switch (GameManager.instance.cutsceneIndex)
         {
@@ -122,6 +161,7 @@ public class CutsceneManager : MonoBehaviour
                 break;
         }
 
+
         foreach (TextList textLine in chosenDialogue)
         {
             if (textLine.person == 0)
@@ -142,10 +182,40 @@ public class CutsceneManager : MonoBehaviour
             }
         }
 
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
 
         if (chosenDialogue != GoodEndingDialogue && chosenDialogue != BadEndingDialogue)
         {
+            if (chosenDialogue == CutsceneOneDialogue)
+            {
+                // << SHOW PANEL 2 >>
+                camEffectManager.StartFadeOut();
+                yield return new WaitUntil(() => !camEffectManager.isFading);
+
+                intro_panel2.SetActive(true);
+                yield return new WaitForSeconds(1);
+
+                camEffectManager.StartFadeIn();
+                yield return new WaitUntil(() => !camEffectManager.isFading);
+
+                yield return new WaitForSeconds(3);
+
+
+                // << SHOW PANEL 3 >>
+                camEffectManager.StartFadeOut();
+                yield return new WaitUntil(() => !camEffectManager.isFading);
+
+                intro_panel2.SetActive(false);
+                intro_panel3.SetActive(true);
+                yield return new WaitForSeconds(1);
+
+                camEffectManager.StartFadeIn();
+                yield return new WaitUntil(() => !camEffectManager.isFading);
+
+                yield return new WaitForSeconds(3);
+            }
+
+            camEffectManager.StartFadeOut();
             endOfCutscene = true;
         }
         else if (chosenDialogue == GoodEndingDialogue)
@@ -166,37 +236,22 @@ public class CutsceneManager : MonoBehaviour
             rectTransform.anchoredPosition3D = targetPosition;
 
             yield return new WaitForSeconds(1f);
-            StartCoroutine(FadeOut());
-            yield return new WaitForSeconds(fadeTime);
+
+            camEffectManager.StartFadeOut();
+            yield return new WaitUntil(() => !camEffectManager.isFading);
+
             SceneManager.LoadScene("GoodEnding");
         }
         else if (chosenDialogue == BadEndingDialogue)
         {
-            StartCoroutine(FadeOut());
-            yield return new WaitForSeconds(fadeTime);
+            camEffectManager.StartFadeOut();
+            yield return new WaitUntil(() => !camEffectManager.isFading);
+
             SceneManager.LoadScene("BadEnding");
         }
     }
 
-    private IEnumerator FadeOut()
-    {
-        float timer = 0f;
-
-        while (timer < fadeTime)
-        {
-            timer += Time.deltaTime;
-            currentAlpha = Mathf.Lerp(0f, 1f, timer / fadeTime);
-
-            image.color = new Color(image.color.r, image.color.g, image.color.b, currentAlpha);
-
-            yield return null;
-        }
-
-        image.color = new Color(image.color.r, image.color.g, image.color.b, 1f);
-    }
-
-
-    IEnumerator jamieCountdown()
+    IEnumerator JamieCountdown()
     {
         for (float timer = messageDelayJamie; timer >= 0; timer -= Time.deltaTime)
         {
@@ -209,7 +264,7 @@ public class CutsceneManager : MonoBehaviour
 
     }
 
-    IEnumerator alexCountdown()
+    IEnumerator AlexCountdown()
     {
         for (float timer = messageDelayAlex; timer >= 0; timer -= Time.deltaTime)
         {
@@ -221,8 +276,6 @@ public class CutsceneManager : MonoBehaviour
         }
 
     }
-
-
 
     public void MoveBubblesUp(float amount)
     {
@@ -248,7 +301,7 @@ public class CutsceneManager : MonoBehaviour
 
             //audioManager.Play(audioManager.sendTextSFX);
             
-            yield return alexCountdown();
+            yield return AlexCountdown();
             yield return new WaitForSeconds(unskipableDelay);
 
         }
@@ -276,12 +329,10 @@ public class CutsceneManager : MonoBehaviour
             //audioManager.Play(audioManager.recieveTextSFX);
             Debug.Log("ReceiveTextSFX");
             
-            yield return jamieCountdown();
+            yield return JamieCountdown();
             yield return new WaitForSeconds(unskipableDelay);
         }
     }
-
-
 
     // Update is called once per frame
     void Update()
