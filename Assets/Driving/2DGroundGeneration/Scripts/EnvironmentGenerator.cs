@@ -195,13 +195,18 @@ public class EnvironmentGenerator : MonoBehaviour
             playerSpawnPoint = startStation.transform;
 
             // END STATION
-            if (levelNum != 2)
+            GameObject endStation;
+            endStation = Instantiate(gasStationPrefab, groundPoints[groundPoints.Count - gasStationGroundPointIndex] + new Vector3(gasStationXOffset, gasStationYOffset, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
+            endStation.transform.localScale = endStation.transform.localScale * gasStationScale;
+            endStation.GetComponentInChildren<EndTrigger>().start = false;
+            endStation.GetComponentInChildren<EndTrigger>().end = true;
+            if (levelNum < 3)
             {
-                GameObject endStation = Instantiate(gasStationPrefab, groundPoints[groundPoints.Count - gasStationGroundPointIndex] + new Vector3(gasStationXOffset, gasStationYOffset, 0), Quaternion.Euler(new Vector3(0, 0, 0)));
-                endStation.GetComponentInChildren<SpriteRenderer>().sprite = gasStationSprites[levelNum + 1];
-                endStation.transform.localScale = endStation.transform.localScale * gasStationScale;
-                endStation.GetComponentInChildren<EndTrigger>().start = false;
-                endStation.GetComponentInChildren<EndTrigger>().end = true;
+                endStation.GetComponentInChildren<SpriteRenderer>().sprite = gasStationSprites[levelNum];
+            }
+            else
+            {
+                endStation.GetComponentInChildren<SpriteRenderer>().sprite = gasStationSprites[Random.Range(0, gasStationSprites.Count)];
             }
 
         }
