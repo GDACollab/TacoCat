@@ -272,17 +272,17 @@ public class AudioManager : MonoBehaviour {
     public void PlayRPM(float value){
         if(currentRPM.isValid()){
             currentRPM.setParameterByName("RPM", value);
-            Debug.Log("[Audio Manager] RPM updated: " + value);
+            //Debug.Log("[Audio Manager] RPM updated: " + value);
         }else{
             EventDescription eventDescription;
-            FMOD.RESULT result = RuntimeManager.StudioSystem.getEvent(drivingAmbiPath, out eventDescription);
+            FMOD.RESULT result = RuntimeManager.StudioSystem.getEvent(rpmSFX, out eventDescription);
             if (result != FMOD.RESULT.OK)
             {
-                Debug.LogWarning("FMOD SONG event path does not exist: " + drivingAmbiPath);
+                Debug.LogWarning("FMOD SONG event path does not exist: " + rpmSFX);
                 return;
             }
 
-            EventInstance rpm = RuntimeManager.CreateInstance(drivingAmbiPath);
+            EventInstance rpm = RuntimeManager.CreateInstance(rpmSFX);
             currentRPM = rpm;
             rpm.start();
             rpm.release();
@@ -328,5 +328,12 @@ public class AudioManager : MonoBehaviour {
         sfxBus.setVolume(sfxVolume);
         diaBus.setVolume(dialogueVolume);
         ambiBus.setVolume(ambianceVolume);
+        if(gameManager !=null){
+            if (!(gameManager.currGame == currGame.CUTSCENE || gameManager.currGame == currGame.MENU)){
+                FMODUnity.RuntimeManager.StudioSystem.setParameterByName("timeOfDay", gameManager.timeRemaining);
+            }
+        }
+
+
     }
 }
