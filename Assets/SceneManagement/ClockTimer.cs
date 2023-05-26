@@ -8,6 +8,8 @@ public class ClockTimer : MonoBehaviour
     public TMP_Text clockTime;
     void Update()
     {
+        if (GameManager.instance == null) { return; }
+
         string clockHour = GameManager.instance.curClockHour.ToString();
         string clockMinute = GameManager.instance.curClockMinute.ToString();
         if (clockMinute.Length == 1)

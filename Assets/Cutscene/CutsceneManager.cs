@@ -122,9 +122,9 @@ public class CutsceneManager : MonoBehaviour
 
         camEffectManager.StartFadeOut(1);
         yield return new WaitUntil(() => !camEffectManager.isFading);
-        yield return new WaitForSeconds(1);
 
         intro_panel1.SetActive(false);
+        yield return new WaitForSeconds(0.25f);
 
         camEffectManager.StartFadeIn(1);
         yield return new WaitUntil(() => !camEffectManager.isFading);
@@ -182,40 +182,39 @@ public class CutsceneManager : MonoBehaviour
             }
         }
 
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
 
         if (chosenDialogue != GoodEndingDialogue && chosenDialogue != BadEndingDialogue)
         {
             if (chosenDialogue == CutsceneOneDialogue)
             {
                 // << SHOW PANEL 2 >>
-                camEffectManager.StartFadeOut();
+                camEffectManager.StartFadeOut(2);
                 yield return new WaitUntil(() => !camEffectManager.isFading);
 
                 intro_panel2.SetActive(true);
                 yield return new WaitForSeconds(1);
 
-                camEffectManager.StartFadeIn();
+                camEffectManager.StartFadeIn(1);
                 yield return new WaitUntil(() => !camEffectManager.isFading);
 
-                yield return new WaitForSeconds(3);
-
+                yield return new WaitForSeconds(2);
 
                 // << SHOW PANEL 3 >>
-                camEffectManager.StartFadeOut();
+                camEffectManager.StartFadeOut(0.5f);
                 yield return new WaitUntil(() => !camEffectManager.isFading);
 
                 intro_panel2.SetActive(false);
                 intro_panel3.SetActive(true);
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(0.5f);
 
-                camEffectManager.StartFadeIn();
+                camEffectManager.StartFadeIn(0.5f);
                 yield return new WaitUntil(() => !camEffectManager.isFading);
 
                 yield return new WaitForSeconds(3);
             }
 
-            camEffectManager.StartFadeOut();
+            camEffectManager.StartFadeOut(0.5f);
             endOfCutscene = true;
         }
         else if (chosenDialogue == GoodEndingDialogue)
