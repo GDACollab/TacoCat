@@ -210,7 +210,7 @@ public class DynamicBackground : MonoBehaviour
     private void Update()
     {
         currentDayCycle = lightManager.dayCycleState;
-        Debug.Log(lightManager.dayCycleState);
+        //Debug.Log(lightManager.dayCycleState);
 
         switch (currentDayCycle)
         {

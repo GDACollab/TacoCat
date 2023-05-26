@@ -113,7 +113,7 @@ public class FlipTracker : MonoBehaviour
             if(audioManager != null){
                 //audioManager.Play(audioManager.truckLandingSFX);
             }
-            //PLAY AUDIO MANAGER REG LANDING
+            audioManager.Play(audioManager.truckLandingSFX);
         }
 
         // track in air time
