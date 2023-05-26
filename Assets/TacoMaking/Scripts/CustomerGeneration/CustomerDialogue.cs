@@ -28,41 +28,41 @@ public class CustomerDialogue : MonoBehaviour
     [SerializeField] private GameObject dialogueBox;
     [SerializeField] private TextMeshProUGUI textMesh;
 
-    public void CreateDialogue(Customer customer, scoreType score)
+    public void CreateDialogue(Customer customer, SUBMIT_TACO_SCORE score)
     {
         //textMesh = dialogueBox.GetComponentInChildren<TextMeshProUGUI>();
         textMesh.text = PickDialogue(customer.species, score);
         dialogueBox.SetActive(true);
     }
 
-    private string PickDialogue(CUST_SPECIES species, scoreType score)
+    private string PickDialogue(CUST_SPECIES species, SUBMIT_TACO_SCORE score)
     {
     
         switch (species)
         {
             case CUST_SPECIES.Capybara:
-                if (score == scoreType.PERFECT) { return capybaraBarksGood[Random.Range(0, capybaraBarksGood.Count - 1)];}
-                else if (score == scoreType.FAILED) {return capybaraBarksBad[Random.Range(0, capybaraBarksBad.Count - 1)]; }
+                if (score == SUBMIT_TACO_SCORE.PERFECT) { return capybaraBarksGood[Random.Range(0, capybaraBarksGood.Count - 1)];}
+                else if (score == SUBMIT_TACO_SCORE.FAILED) {return capybaraBarksBad[Random.Range(0, capybaraBarksBad.Count - 1)]; }
                 else { return capybaraBarksNeutral[Random.Range(0, capybaraBarksNeutral.Count - 1)]; }
 
             case CUST_SPECIES.Frog:
-                if (score == scoreType.PERFECT) { return frogBarksGood[Random.Range(0, frogBarksGood.Count - 1)];}
-                else if (score == scoreType.FAILED) {return frogBarksBad[Random.Range(0, frogBarksBad.Count - 1)]; }
+                if (score == SUBMIT_TACO_SCORE.PERFECT) { return frogBarksGood[Random.Range(0, frogBarksGood.Count - 1)];}
+                else if (score == SUBMIT_TACO_SCORE.FAILED) {return frogBarksBad[Random.Range(0, frogBarksBad.Count - 1)]; }
                 else { return frogBarksNeutral[Random.Range(0, frogBarksNeutral.Count - 1)]; }
 
             case CUST_SPECIES.Raven:
-                if (score == scoreType.PERFECT) { return ravenBarksGood[Random.Range(0, ravenBarksGood.Count - 1)];}
-                else if (score == scoreType.FAILED) {return ravenBarksBad[Random.Range(0, ravenBarksBad.Count - 1)]; }
+                if (score == SUBMIT_TACO_SCORE.PERFECT) { return ravenBarksGood[Random.Range(0, ravenBarksGood.Count - 1)];}
+                else if (score == SUBMIT_TACO_SCORE.FAILED) {return ravenBarksBad[Random.Range(0, ravenBarksBad.Count - 1)]; }
                 else { return ravenBarksNeutral[Random.Range(0, ravenBarksNeutral.Count - 1)]; }
 
             case CUST_SPECIES.Sheep:
-                if (score == scoreType.PERFECT) { return sheepBarksGood[Random.Range(0, sheepBarksGood.Count - 1)];}
-                else if (score == scoreType.FAILED) {return sheepBarksBad[Random.Range(0, sheepBarksBad.Count - 1)]; }
+                if (score == SUBMIT_TACO_SCORE.PERFECT) { return sheepBarksGood[Random.Range(0, sheepBarksGood.Count - 1)];}
+                else if (score == SUBMIT_TACO_SCORE.FAILED) {return sheepBarksBad[Random.Range(0, sheepBarksBad.Count - 1)]; }
                 else { return sheepBarksNeutral[Random.Range(0, sheepBarksNeutral.Count - 1)]; }
 
             case CUST_SPECIES.Fish:
-                if (score == scoreType.PERFECT) { return fishBarksGood[Random.Range(0, fishBarksGood.Count - 1)];}
-                else if (score == scoreType.FAILED) {return fishBarksBad[Random.Range(0, fishBarksBad.Count - 1)]; }
+                if (score == SUBMIT_TACO_SCORE.PERFECT) { return fishBarksGood[Random.Range(0, fishBarksGood.Count - 1)];}
+                else if (score == SUBMIT_TACO_SCORE.FAILED) {return fishBarksBad[Random.Range(0, fishBarksBad.Count - 1)]; }
                 else { return fishBarksNeutral[Random.Range(0, fishBarksNeutral.Count - 1)]; }
 
             default:

@@ -57,7 +57,7 @@ public class TacoUIManager : MonoBehaviour
         DisplayGas(0);
         DisplayNitro(tacoGameManager.nitroCharges);
 
-        DisplayScore(scoreType.FAILED);
+        DisplayScore(SUBMIT_TACO_SCORE.FAILED);
 
     }
 
@@ -79,26 +79,26 @@ public class TacoUIManager : MonoBehaviour
     }
     
     // Call this function to display the score. Takes in the score.
-    public void DisplayScore(scoreType score){
+    public void DisplayScore(SUBMIT_TACO_SCORE score){
         ClearDisplayScore();
 
         // Display stars and set text based on score
-        if (score == scoreType.PERFECT)
+        if (score == SUBMIT_TACO_SCORE.PERFECT)
         {
             //scoreText.text = "Perfect Taco!";
             SpawnStars(3, starPosition);
         }
-        else if (score == scoreType.GOOD)
+        else if (score == SUBMIT_TACO_SCORE.GOOD)
         {
             //scoreText.text = "Good Taco!";
             SpawnStars(2, starPosition);
         }
-        else if (score == scoreType.OKAY)
+        else if (score == SUBMIT_TACO_SCORE.OKAY)
         {
             //scoreText.text = "Okay Taco...";
             SpawnStars(1, starPosition);
         }
-        else if (score == scoreType.FAILED)
+        else if (score == SUBMIT_TACO_SCORE.FAILED)
         {
             //scoreText.text = "Failed Taco...";
             SpawnStars(3, starPosition);

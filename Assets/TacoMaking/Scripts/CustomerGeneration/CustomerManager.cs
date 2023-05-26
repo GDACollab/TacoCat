@@ -4,7 +4,6 @@ using UnityEngine;
 [System.Serializable]
 public class CustomerManager : MonoBehaviour
 {
-    
     [HideInInspector]
     public TacoMakingGameManager tacoGameManager;
 
@@ -23,8 +22,6 @@ public class CustomerManager : MonoBehaviour
 
     [Header("Misc")]
     [HideInInspector] public int difficulty = 1;
-    
-
 
     //before calling check if customers left to generate == 0
     private void Start()
@@ -66,7 +63,7 @@ public class CustomerManager : MonoBehaviour
     }
 
     //Member used to remove the current customer
-    public void RemoveCurrentCustomer(scoreType tacoScore)
+    public void RemoveCurrentCustomer(SUBMIT_TACO_SCORE tacoScore)
     {
         //If there is a current customer, then starts its transition out of frame
         if (currCustomer != null)

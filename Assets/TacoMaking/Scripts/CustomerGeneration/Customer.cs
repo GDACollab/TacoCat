@@ -152,20 +152,20 @@ public class Customer: MonoBehaviour
 
 
     // compares the list of ingredients in the taco submitted and the list of ingredients in the customer's order returns the taco's score
-    public scoreType ScoreTaco(Taco tacoToScore)
+    public SUBMIT_TACO_SCORE ScoreTaco(Taco tacoToScore)
     {
         // [[ INGREDIENT COUNT]] =========================================================
         int ingredientCountDifference = tacoToScore.ingredients.Count - order.Count;
         Debug.Log("Ingredient Count Difference : " + ingredientCountDifference);
 
         // if no ingredients in taco, fail
-        if (tacoToScore.ingredients.Count == 0) { return scoreType.FAILED; }
+        if (tacoToScore.ingredients.Count == 0) { return SUBMIT_TACO_SCORE.FAILED; }
 
         // if +-2 ingredients in taco than order, fail
-        else if (Mathf.Abs(ingredientCountDifference) >= 2) { return scoreType.FAILED; }
+        else if (Mathf.Abs(ingredientCountDifference) >= 2) { return SUBMIT_TACO_SCORE.FAILED; }
 
         // if +-1 ingredients in taco than order, then okay
-        else if (Mathf.Abs(ingredientCountDifference) == 1) { return scoreType.OKAY; }
+        else if (Mathf.Abs(ingredientCountDifference) == 1) { return SUBMIT_TACO_SCORE.OKAY; }
 
         // [[ SAME INGREDIENTS // INGREDIENT ORDER ]] ====================================
         int numSameIngredients = compareIngredients(tacoToScore);
@@ -174,22 +174,22 @@ public class Customer: MonoBehaviour
         // << PERFECT >> ingredients are the same and order is perfect
         if (numSameIngredients == order.Count && correctPlacementCount == order.Count)
         {
-            return scoreType.PERFECT;
+            return SUBMIT_TACO_SCORE.PERFECT;
         }
         // << GOOD >> ingredients are the same, but order is wrong
         else if (numSameIngredients == order.Count && correctPlacementCount != order.Count)
         {
-            return scoreType.GOOD;
+            return SUBMIT_TACO_SCORE.GOOD;
         }
         // << OKAY TACO >>  1 missing/extra ingredients, incorrect order
         else if ((numSameIngredients == order.Count - 1) && correctPlacementCount != order.Count)
         {
-            return scoreType.OKAY;
+            return SUBMIT_TACO_SCORE.OKAY;
         }
         // << FAILED TACO >>
         else
         {
-            return scoreType.FAILED;
+            return SUBMIT_TACO_SCORE.FAILED;
         }
     }
 
@@ -277,7 +277,7 @@ public class Customer: MonoBehaviour
     }
 
     // Changes this customer's sprite appearance based on the score of their taco
-    public void CustomerReaction(scoreType tacoScore)
+    public void CustomerReaction(SUBMIT_TACO_SCORE tacoScore)
     {
         SpriteRenderer mySpriteRenderer = GetComponent<SpriteRenderer>();
         mySpriteRenderer.color = colorAfterTacoFinished[(int)tacoScore];

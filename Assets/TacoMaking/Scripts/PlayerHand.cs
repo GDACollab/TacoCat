@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerHand : MonoBehaviour
 {
-    public enum handState { HOME, PICK_FROM_BIN, PLACE_INGR }
+    public enum HAND_STATE { HOME, PICK_FROM_BIN, PLACE_INGR, DISABLED }
 
     // << MOVE HAND TOWARDS TARGET >>
     // instead of one big function that takes care of the entire movement,
@@ -48,7 +48,7 @@ public class PlayerHand : MonoBehaviour
     // because this hand is going to need to do specific things once it reaches its target,
     // we should use a state machine to set different "states of being"
     [Header("States")]
-    public handState state = handState.HOME;
+    public HAND_STATE state = HAND_STATE.DISABLED;
 
     public IngredientBenchManager ingredientBench;
     public IngredientBin pickIngredientBin; // this is the bin the hand is picking from
@@ -68,39 +68,41 @@ public class PlayerHand : MonoBehaviour
 
     public void Update()
     {
-        // << MOVE HAND TOWARDS TARGET >>
-        // if the target is valid,
-        if (target != null)
+        if (state != HAND_STATE.DISABLED)
         {
-            // move the transform of the object the script is attached to over time
-            transform.position = Vector3.Lerp(transform.position, target.position, speed * Time.deltaTime);
+            // << MOVE HAND TOWARDS TARGET >>
+            // if the target is valid,
+            if (target != null)
+            {
+                // move the transform of the object the script is attached to over time
+                transform.position = Vector3.Lerp(transform.position, target.position, speed * Time.deltaTime);
 
-            //             Lerp interpolates between point a^ and point b^ at a set speed^
-            //                                                                 Time.delta time is based on frame rate
+                //             Lerp interpolates between point a^ and point b^ at a set speed^
+                //                                                                 Time.delta time is based on frame rate
+            }
+            else { target = handHome.transform; }
+
+            // << RUN STATE MACHINE >>
+            StateMachine();
         }
-        else { target = handHome.transform; }
-
-        // << RUN STATE MACHINE >>
-        StateMachine();
     }
 
     // << STATE MACHINE >> runs every frame in the update function
     public void StateMachine()
     {
-        if (state == handState.PICK_FROM_BIN)
+        if (state == HAND_STATE.PICK_FROM_BIN)
         {
-
             ingredientBench.PlayIngredientAnim(currHeldIngredient);
 
             if (TransformProximity())
             {
                 GameObject ingr = Instantiate(tacoGameManager.GetIngredientObject(currHeldIngredient), transform);
                 ingr.transform.parent = transform;
-                state = handState.PLACE_INGR;
+                state = HAND_STATE.PLACE_INGR;
             }
         }
 
-        if (state == handState.PLACE_INGR)
+        if (state == HAND_STATE.PLACE_INGR)
         {
             target = tacoTarget;
             if (TransformProximity())
@@ -109,13 +111,13 @@ public class PlayerHand : MonoBehaviour
                 Destroy(transform.GetChild(transform.childCount-1).gameObject);
                 tacoGameManager.AddIngredientToTaco(currHeldIngredient);
                 currHeldIngredient = new INGREDIENT_TYPE();
-                state = handState.HOME;
+                state = HAND_STATE.HOME;
                 //pop sound when placed
                 //audioManager.Play(audioManager.ingriPlaceSFX);
             }
         }
 
-        if (state == handState.HOME)
+        if (state == HAND_STATE.HOME)
         {
             // target -> home
             // all other states are not true
@@ -130,7 +132,7 @@ public class PlayerHand : MonoBehaviour
     //(Checking if they're actually equal will return false because lerp's speed decreases over distance)
     public bool TransformProximity()
     {
-        if (target == null) { state = handState.HOME; return false; }
+        if (target == null) { state = HAND_STATE.HOME; return false; }
 
         return (((target.position.x - approximateProximity.x <= transform.position.x) && (transform.position.x <= target.position.x + approximateProximity.x)) && 
             ((target.position.y - approximateProximity.y <= transform.position.y) && (transform.position.y <= target.position.y + approximateProximity.y)));
@@ -145,13 +147,13 @@ public class PlayerHand : MonoBehaviour
     {
         // sets target to bin.transform, and tacotarget to whatever the taco location is.
         // Also sets up variables that control status
-        if (state == handState.HOME)
+        if (state == HAND_STATE.HOME)
         {
             target = bin.transform;
             tacoTarget = submissionTaco.transform;
             currHeldIngredient = bin.ingredientType;
             
-            state = handState.PICK_FROM_BIN;
+            state = HAND_STATE.PICK_FROM_BIN;
 
             pickIngredientBin = bin;
             //woosh sound when starting to pick up ingredient
@@ -164,14 +166,14 @@ public class PlayerHand : MonoBehaviour
     public void PlaceIngredient(Taco submissionTaco)
     {
         // set proper states && current submission taco
-        if (state == handState.PICK_FROM_BIN && TransformProximity())
+        if (state == HAND_STATE.PICK_FROM_BIN && TransformProximity())
         {
             target = submissionTaco.transform;
-            StartCoroutine(DelayedStateChange(0.25f, handState.PLACE_INGR));
+            StartCoroutine(DelayedStateChange(0.25f, HAND_STATE.PLACE_INGR));
         }
     }
 
-    public IEnumerator DelayedStateChange(float delay, handState newState)
+    public IEnumerator DelayedStateChange(float delay, HAND_STATE newState)
     {
         yield return new WaitForSeconds(delay);
 
