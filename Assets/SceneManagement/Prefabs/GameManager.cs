@@ -149,7 +149,16 @@ public class GameManager : MonoBehaviour
                 currGame = currGame.MENU;
                 timeRemaining = totalGameTime_seconds;
             }
-            if (GameObject.FindGameObjectWithTag("CutsceneManager"))
+            else if (GameObject.FindGameObjectWithTag("TacoGameManager"))
+            {
+                Debug.Log("GameManager: Setup Taco Making");
+                determinedSceneType = true;
+                tacoGameManager = GameObject.FindGameObjectWithTag("TacoGameManager").GetComponent<TacoMakingGameManager>();
+                
+                tacoGameManager.difficulty = currLevel;
+                currGame = currGame.TACO_MAKING;
+            }
+            else if (GameObject.FindGameObjectWithTag("CutsceneManager"))
             {
                 Debug.Log("GameManager: Setup Cutscene");
                 determinedSceneType = true;
@@ -202,8 +211,10 @@ public class GameManager : MonoBehaviour
         // << TACO GAME MANAGER >>
         if (currGame == currGame.TACO_MAKING && tacoGameManager != null)
         {
-            //currDayCycleState = tacoGameManager.lightingManager.dayCycleState;
-            
+            if (currLevel == 0) { currLevel = 1; }
+
+            currDayCycleState = tacoGameManager.lightingManager.dayCycleState;
+
             // check if all customers submitted , if so move to driving with gas amount
             if (tacoGameManager.state == TACOMAKING_STATE.END_TRANSITION && !isLoadingScene && !tacoGameManager.uiManager.camEffectManager.isFading)
             {
@@ -222,15 +233,15 @@ public class GameManager : MonoBehaviour
 
         if (currGame == currGame.DRIVING && drivingGameManager != null)
         {
-            Debug.Log("we made it to the currgame == driving & drivingGameManager != null BOOOYYZZZZ. lightingManager.dayCycleState =  " + drivingGameManager.lightingManager.dayCycleState + "currDayCycleState = drivingGameManager.lightingManager.dayCycleState: " + currDayCycleState);
-            //currDayCycleState = drivingGameManager.lightingManager.dayCycleState;
+            if (currLevel == 0) { currLevel = 1; }
+
+            currDayCycleState = drivingGameManager.lightingManager.dayCycleState;
             
-            if (drivingGameManager.endOfGame && !isLoadingScene)
+            if (drivingGameManager.state == DRIVINGGAME_STATE.END_TRANSITION && !isLoadingScene)
             {
                 currLevel++;
                 Debug.Log("Current Level: " + currLevel);
-                StartCoroutine(ConcurrentLoadingCoroutine(cutscene));
-                // LoadCutscene();
+                LoadCutscene();
             }
         }
 
@@ -252,8 +263,7 @@ public class GameManager : MonoBehaviour
     {
         lastGame = currGame;
         currGame = currGame.MENU;
-        //currLevel = 1;    // Deletes progress //MIGHT NEED TO BE CHANGED IF WE WANT TO "SAVE" PLAYERS PROGRESS
-        cutsceneIndex = 0;
+        //currLevel = 1;    // Deletes progress
         SceneManager.LoadScene(menuScene);
         audioManager.PlaySong(audioManager.menuMusicPath);
     }
@@ -264,7 +274,6 @@ public class GameManager : MonoBehaviour
         currGame = currGame.TACO_MAKING;
 
         StartCoroutine(ConcurrentLoadingCoroutine(tacoMakingScene));
-        //lightingManager = GameObject.FindGameObjectWithTag("LightingManager").GetComponent<LightingManager>();
         audioManager.PlaySong(audioManager.tacoMusicPath);
     }
 
@@ -297,7 +306,7 @@ public class GameManager : MonoBehaviour
     public void LoadCutscene()
     {
         currGame = currGame.CUTSCENE;
-        SceneManager.LoadScene(cutscene);
+        StartCoroutine(ConcurrentLoadingCoroutine(cutscene));
         Debug.Log("PLAYING " + audioManager.storyMusicPath);
         audioManager.StopDrivingAmbience();
         audioManager.StopRPM();
