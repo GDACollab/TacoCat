@@ -57,10 +57,6 @@ public class TacoMakingGameManager : MonoBehaviour
         benchManager = GetComponentInChildren<IngredientBenchManager>();
         uiManager = GetComponentInChildren<TacoUIManager>();
 
-        gameManager.tacoGameManager = GetComponent<TacoMakingGameManager>();
-        gameManager.currGame = currGame.TACO_MAKING;
-
-
         // get difficulty
         customerManager.difficulty = gameManager.currLevel;
 
