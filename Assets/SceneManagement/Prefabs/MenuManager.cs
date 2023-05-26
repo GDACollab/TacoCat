@@ -11,6 +11,7 @@ public class MenuManager : MonoBehaviour
     int level;
     bool win;
     [Header("Signs")]
+    public GameObject newGameSign;
     public GameObject continueSign;
     public GameObject hangingSign;
     public GameObject pole;
@@ -26,10 +27,16 @@ public class MenuManager : MonoBehaviour
         if ((level > 1 && level < 4) || (gameManager.lastGame == currGame.DRIVING))
         {
             continueSign.SetActive(true); // Enable continue sign
+            newGameSign.SetActive(false);
             // Adjust pole to fit continue sign
             RectTransform poleBox = pole.GetComponent<RectTransform>();
             poleBox.sizeDelta = new Vector2(100, 1500);
         }
+        else
+        {
+            newGameSign.SetActive(true);
+        }
+
         if (win && level > 3)
         {
             hangingSign.SetActive(true); // Enable hanging sign
