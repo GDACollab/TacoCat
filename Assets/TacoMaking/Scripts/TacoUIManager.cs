@@ -19,7 +19,6 @@ public class TacoUIManager : MonoBehaviour
 
     public Transform windowShutter;
 
-
     [Header("Score UI")]
     public GameObject starPrefab;
     public float starScale = 1;
@@ -39,11 +38,6 @@ public class TacoUIManager : MonoBehaviour
     [Header("Gas/Nitro UI")]
     public Image fuelBar;
     public Image nCharge1, nCharge2, nCharge3;
-
-    [Header("Test Gas/Nitro UI")]
-    public float fuelAmount = 0;
-    public float maxFuelAmount = 1;
-    public int numNitroCharges = 0;
     
     
     public List<GameObject> starTracker = new List<GameObject>();
@@ -75,6 +69,9 @@ public class TacoUIManager : MonoBehaviour
             DisplayOrder(customerManager.currCustomer.order);
             newOrderTaken = true;
         }
+
+
+        endCanvas.GetComponent<UI_PopUp_Card>().SetBody("You earned <color=#00A0FF><b>" + tacoGameManager.nitroCharges + " Nitro</b></color>!");
 
     }
     
@@ -230,7 +227,7 @@ public class TacoUIManager : MonoBehaviour
         Vector3 endPos = startPos;
         endPos.y = 8.54f;
 
-        float windowOpenTime = 1f;
+        float windowOpenTime = 0.75f;
         while (windowTime < windowOpenTime)
         {
             float t = windowTime / windowOpenTime;
