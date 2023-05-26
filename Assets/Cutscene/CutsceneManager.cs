@@ -277,6 +277,7 @@ public class CutsceneManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                audioManager.Play(audioManager.skipSFX);
                 yield break;
             }
             yield return null;
@@ -311,10 +312,6 @@ public class CutsceneManager : MonoBehaviour
     {
         foreach (string s in l)
         {
-
-
-
-
             GameObject bubble = Instantiate(alexMessagePrefab, messageParent);
             bubble.SetActive(false);
             bubble.transform.position = alexMessageTarget.position;
@@ -326,9 +323,7 @@ public class CutsceneManager : MonoBehaviour
 
             yield return StartCoroutine(bubble.GetComponent<BubbleManager>().TextCrawl(s));
             currentBubbles.Add(bubble);
-            if(audioManager != null){
-                audioManager.Play(audioManager.sendTextSFX);
-            }
+
             yield return AlexCountdown();
             yield return new WaitForSeconds(unskipableDelay);
 

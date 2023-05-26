@@ -7,7 +7,7 @@ using TMPro;
 public class BubbleManager : MonoBehaviour
 {
     public CutsceneManager cutsceneManager;
-
+    public AudioManager audioManager;
     public TextMeshProUGUI messageText;
     public Image backgroundImage;
     public Image tickImage;
@@ -28,6 +28,7 @@ public class BubbleManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
     }
 
     // Update is called once per frame
@@ -100,11 +101,17 @@ public class BubbleManager : MonoBehaviour
             {
 
                 messageText.text += c;
+                if(!skip){cutsceneManager.audioManager.Play(cutsceneManager.audioManager.typingSFX);}
                 yield return alexCrawlCountdown();
             }
             messageText.text += " ";
             UpdateBubbleHeight();
             
+        }
+        if(skip){
+            cutsceneManager.audioManager.Play(cutsceneManager.audioManager.skipSFX);
+        }else{ //IF NOT SKIPPING PLAY SEND TEXT
+            cutsceneManager.audioManager.Play(cutsceneManager.audioManager.sendTextSFX);
         }
         //waitTime = 0.1f;
         skip = false;
@@ -123,9 +130,10 @@ public class BubbleManager : MonoBehaviour
         //Debug.Log("new alexCrawlCountdown" + skip + skipAmount);
         if (Input.GetKey(KeyCode.Space))
         {
-                skip = true;
-                //Debug.Log("hit space, skip value: " + skip + skipAmount);
-                yield break;
+            skip = true;
+            //Debug.Log("hit space, skip value: " + skip + skipAmount);
+            
+            yield break;
         }
         yield return new WaitForSeconds(skipAmount);
 
