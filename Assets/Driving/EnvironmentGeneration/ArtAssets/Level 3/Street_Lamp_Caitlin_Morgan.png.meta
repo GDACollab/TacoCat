@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a4f817a5183bc284ea644813bff42d53
+guid: df6b5c0be83df3e4b89b261e35a45cf4
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -42,7 +42,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -127,7 +127,49 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Street_Lamp_Caitlin_Morgan_0
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 442
+        width: 989
+        height: 1364
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2dbf006e76300bc42bc335a8e4ffc0ab
+      internalID: -160883119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Street_Lamp_Caitlin_Morgan_1
+      rect:
+        serializedVersion: 2
+        x: 1272
+        y: 443
+        width: 536
+        height: 1363
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bcaa4521dfb1bd74986809c34efb745d
+      internalID: -336976573
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -138,7 +180,9 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Street_Lamp_Caitlin_Morgan_0: -160883119
+      Street_Lamp_Caitlin_Morgan_1: -336976573
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

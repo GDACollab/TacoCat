@@ -45,6 +45,7 @@ public class EnvironmentGenerator : MonoBehaviour
     public Vector2 env1ScaleRange = new Vector2(1, 10);
     [Space(10), Tooltip("Whether or not the trees rotate with the ground at all")]
     public bool env1_rotationEnabled = true;
+    public bool env1_flipEnabled;
 
     [Range(0, 100), Tooltip("From 0-100%, how closely will the trees align with the rotation of the ground")]
     public float env1_rotScalar = 30;
@@ -69,6 +70,7 @@ public class EnvironmentGenerator : MonoBehaviour
     public Vector2 env2ScaleRange = new Vector2(1, 10);
     [Tooltip("Whether or not the trees rotate with the ground at all")]
     public bool env2_rotationEnabled = true;
+    public bool env2_flipEnabled;
     [Range(0, 100), Tooltip("From 0-100%, how closely will the trees align with the rotation of the ground")]
     public float env2_rotScalar = 30;
 
@@ -157,10 +159,10 @@ public class EnvironmentGenerator : MonoBehaviour
         DeleteAllEnvironmentObjects();
 
         // << SPAWN ENV OBJECTS >>
-        SpawnEnvObjs(envPrefabs_1, envGen1Parent, env1_rotationEnabled,env1_rotScalar, env1ScaleRange, env1_minSpacing, env1_maxSpacing);
+        SpawnEnvObjs(envPrefabs_1, envGen1Parent, env1_rotationEnabled, env1_flipEnabled, env1_rotScalar, env1ScaleRange, env1_minSpacing, env1_maxSpacing);
         envGen1Parent.transform.position += new Vector3(0, env1ObjYOffset, 0);
 
-        SpawnEnvObjs(envPrefabs_2, envGen2Parent, env2_rotationEnabled, env2_rotScalar, env2ScaleRange, env2_minSpacing, env2_maxSpacing);
+        SpawnEnvObjs(envPrefabs_2, envGen2Parent, env2_rotationEnabled, env2_flipEnabled, env2_rotScalar, env2ScaleRange, env2_minSpacing, env2_maxSpacing);
         envGen2Parent.transform.position += new Vector3(0, env2ObjYOffset, 0);
 
         // << SPAWN SIGNS >>
@@ -218,7 +220,7 @@ public class EnvironmentGenerator : MonoBehaviour
     }
 
 
-    public void SpawnEnvObjs(List<GameObject> envObjs, Transform parent, bool rotationEnabled, float rotScalar, Vector2 scaleRange, int minSpacing = 10, int maxSpacing = 40)
+    public void SpawnEnvObjs(List<GameObject> envObjs, Transform parent, bool rotationEnabled, bool flipping, float rotScalar, Vector2 scaleRange, int minSpacing = 10, int maxSpacing = 40)
     {
         if (envObjs.Count < 1) { Debug.Log("No ground points."); return; }
         // check ground points
@@ -235,6 +237,9 @@ public class EnvironmentGenerator : MonoBehaviour
         {
             // spawn new environment object
             int facing = Random.Range(0, 2)*2 - 1;
+            if (!flipping) { facing = 1; } // disable flipping
+
+
             float thisScale = Random.Range(scaleRange.x, scaleRange.y);
             GameObject newObj = SpawnEnvObject(GetRandomObject(envObjs), pointIndex, thisScale, facing, sortingOrder, 0);
 

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a4f817a5183bc284ea644813bff42d53
+guid: f0fd5df5ab0e7bb4a8796db3981a8c14
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -42,7 +42,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -127,7 +127,49 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Street_Lamp_Just_Bulbs_Caitlin_Morgan_0
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 1464
+        width: 929
+        height: 294
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87649322cb13d1f4eb5552bbb8248155
+      internalID: 1749592681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Street_Lamp_Just_Bulbs_Caitlin_Morgan_2
+      rect:
+        serializedVersion: 2
+        x: 1312
+        y: 1555
+        width: 218
+        height: 126
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d96ec53b747a624f955752aaaff9d58
+      internalID: 1475847127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -138,7 +180,10 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Street_Lamp_Just_Bulbs_Caitlin_Morgan_2: 1475847127
+      Street_Lamp_Just_Bulbs_Caitlin_Morgan_1: 103204595
+      Street_Lamp_Just_Bulbs_Caitlin_Morgan_0: 1749592681
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
