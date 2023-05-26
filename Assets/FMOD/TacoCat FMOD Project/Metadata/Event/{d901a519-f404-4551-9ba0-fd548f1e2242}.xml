@@ -73,7 +73,7 @@
 	</object>
 	<object class="EventMixerMaster" id="{41525cd1-325d-4394-af58-d919aa048968}">
 		<property name="volume">
-			<value>-4.5</value>
+			<value>-7</value>
 		</property>
 		<relationship name="effectChain">
 			<destination>{6279a087-daf3-4546-b34f-d31c00ddb620}</destination>
@@ -87,7 +87,7 @@
 	</object>
 	<object class="MultiSound" id="{5a287979-ee85-4bf5-be32-0812f8854e50}">
 		<relationship name="sounds">
-			<destination>{41594751-1682-4901-8a5e-726920430090}</destination>
+			<destination>{f80d55f3-eee5-495a-b30c-864a14b5668c}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusEffectChain" id="{134c9fbe-e4cd-44f2-9aee-f7b652b46632}">
@@ -99,21 +99,24 @@
 	<object class="MixerBusEffectChain" id="{6279a087-daf3-4546-b34f-d31c00ddb620}">
 		<relationship name="effects">
 			<destination>{8af9174f-fa08-4e34-be22-ea39b20ef7a0}</destination>
-			<destination>{b1d992bb-1c6f-4bd6-80f7-1713b52e7d81}</destination>
+			<destination>{db812cdc-6b33-42e4-a8c0-fc46c016636a}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{97125b2b-ef62-467c-ab65-53886d1f2d13}" />
-	<object class="SingleSound" id="{41594751-1682-4901-8a5e-726920430090}">
+	<object class="SingleSound" id="{f80d55f3-eee5-495a-b30c-864a14b5668c}">
 		<property name="startOffset">
-			<value>14</value>
+			<value>10.5</value>
+		</property>
+		<property name="pitch">
+			<value>-0.900000036</value>
 		</property>
 		<relationship name="audioFile">
-			<destination>{dab61d38-c700-4cf4-a9df-c5aa79979d0e}</destination>
+			<destination>{8150d0e2-11a2-4dfb-83dc-5b454721b650}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{c5a41c65-765f-485a-a1d5-ab8ebb83df61}" />
 	<object class="MixerBusFader" id="{8af9174f-fa08-4e34-be22-ea39b20ef7a0}" />
-	<object class="MultibandEqEffect" id="{b1d992bb-1c6f-4bd6-80f7-1713b52e7d81}">
+	<object class="MultibandEqEffect" id="{db812cdc-6b33-42e4-a8c0-fc46c016636a}">
 		<property name="filterTypeA">
 			<value>9</value>
 		</property>
@@ -121,13 +124,19 @@
 			<value>4</value>
 		</property>
 		<property name="frequencyA">
-			<value>7336.98682</value>
+			<value>5963.97363</value>
 		</property>
 		<property name="frequencyB">
-			<value>74</value>
+			<value>96.5813828</value>
+		</property>
+		<property name="qualityA">
+			<value>1.64999998</value>
+		</property>
+		<property name="qualityB">
+			<value>0.840758622</value>
 		</property>
 		<property name="gainA">
-			<value>8.79310417</value>
+			<value>7.24137783</value>
 		</property>
 	</object>
 </objects>
