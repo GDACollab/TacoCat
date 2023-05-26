@@ -87,12 +87,16 @@ public class TacoMakingGameManager : MonoBehaviour
         if (difficulty == 1)
         {
             state = TACOMAKING_STATE.TUTORIAL;
-            uiManager.camEffectManager.StartFadeIn(1.5f);
         }
         else
         {
             state = TACOMAKING_STATE.PLAY;
         }
+
+        yield return new WaitUntil(() => uiManager.camEffectManager != null);
+
+        uiManager.camEffectManager.StartFadeIn(1.5f);
+
     }
 
     public void Update()
@@ -119,7 +123,6 @@ public class TacoMakingGameManager : MonoBehaviour
                         state = TACOMAKING_STATE.ENTER_PLAY;
                     }
                 }
-
                 break;
             case TACOMAKING_STATE.ENTER_PLAY:
                 StartCoroutine(uiManager.OpenWindow()); //sfx needed here

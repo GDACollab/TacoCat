@@ -59,8 +59,6 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public bool happyEnd = true;
 
-
-
     [Header(" === SCENE MANAGEMENT === ")]
     public currGame currGame = currGame.NONE;
     public currGame lastGame;
@@ -392,11 +390,16 @@ public class GameManager : MonoBehaviour
     public void GameTimerUpdate()
     {
         // not if cutscene
-        if (currGame == currGame.CUTSCENE && currGame == currGame.MENU) { return; }
+        if (currGame == currGame.CUTSCENE || currGame == currGame.MENU) { return; }
 
         // not if not in play
-        if (currGame == currGame.TACO_MAKING && tacoGameManager.state != TACOMAKING_STATE.PLAY) { return; }
-        if (currGame == currGame.DRIVING && drivingGameManager.state != DRIVINGGAME_STATE.PLAY) { return; }
+        if (currGame == currGame.TACO_MAKING && tacoGameManager != null){
+            if (tacoGameManager.state != TACOMAKING_STATE.PLAY) { return; }
+        }
+        if (currGame == currGame.DRIVING && drivingGameManager != null) {
+            if (drivingGameManager.state != DRIVINGGAME_STATE.PLAY) { return; }
+        }
+
 
         if ((timeRemaining - Time.deltaTime) < 0)
         {

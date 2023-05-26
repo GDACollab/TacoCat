@@ -13,7 +13,6 @@ public class TacoUIManager : MonoBehaviour
 
     [Header("Camera")]
     Camera cam;
-    [HideInInspector]
     public CameraEffectManager camEffectManager;
     public int camFadeDuration = 3;
 
