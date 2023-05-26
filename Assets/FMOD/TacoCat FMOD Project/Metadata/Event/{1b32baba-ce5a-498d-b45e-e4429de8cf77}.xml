@@ -147,7 +147,7 @@
 	</object>
 	<object class="EventMixerMaster" id="{978bd9f2-e91a-4607-9beb-8847153569d2}">
 		<property name="volume">
-			<value>-11.5</value>
+			<value>-1.5</value>
 		</property>
 		<relationship name="modulators">
 			<destination>{6fec6024-d295-4c8f-a735-a0c540ec1644}</destination>
@@ -224,6 +224,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{bb41fc4a-d1a3-4d3d-b6f6-e9689c31470a}">
+		<property name="volume">
+			<value>3</value>
+		</property>
 		<property name="name">
 			<value>Car Beeps</value>
 		</property>
@@ -735,7 +738,7 @@
 	</object>
 	<object class="SFXReverbEffect" id="{4c4c6491-64ef-4ec9-8f2f-338b1cc90588}">
 		<property name="decayTime">
-			<value>5000</value>
+			<value>4200</value>
 		</property>
 		<property name="earlyDelay">
 			<value>32</value>
