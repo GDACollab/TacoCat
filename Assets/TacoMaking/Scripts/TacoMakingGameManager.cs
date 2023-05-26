@@ -276,6 +276,7 @@ public class TacoMakingGameManager : MonoBehaviour
                 if (nitroCharges < 3)
                 {
                     nitroCharges++;
+                    audioManager.Play(audioManager.comboSFX);
                 }
                 uiManager.DisplayNitro(nitroCharges); //updates the nitro display
             }

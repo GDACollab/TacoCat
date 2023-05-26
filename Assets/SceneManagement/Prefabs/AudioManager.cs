@@ -73,7 +73,7 @@ public class AudioManager : MonoBehaviour {
     [Tooltip("path of the typing event")]
     public string typingSFX;
 
-    
+    public string skipSFX;
 
     // DRIVING
 
@@ -104,6 +104,7 @@ public class AudioManager : MonoBehaviour {
     [Tooltip("Name of the paw swiping event")]
     public string pawSwipeSFX; //IMPLEMENTED
     public string bellDingSFX;
+    public string comboSFX;
     public string orderDia;
 
     #endregion

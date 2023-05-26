@@ -149,15 +149,6 @@ public class GameManager : MonoBehaviour
                 currGame = currGame.MENU;
                 timeRemaining = totalGameTime_seconds;
             }
-            else if (GameObject.FindGameObjectWithTag("TacoGameManager"))
-            {
-                Debug.Log("GameManager: Setup Taco Making");
-                determinedSceneType = true;
-                tacoGameManager = GameObject.FindGameObjectWithTag("TacoGameManager").GetComponent<TacoMakingGameManager>();
-                
-                tacoGameManager.difficulty = currLevel;
-                currGame = currGame.TACO_MAKING;
-            }
             else if (GameObject.FindGameObjectWithTag("CutsceneManager"))
             {
                 Debug.Log("GameManager: Setup Cutscene");

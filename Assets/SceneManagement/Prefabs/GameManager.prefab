@@ -102,6 +102,14 @@ PrefabInstance:
       value: event:/SFX/Driving/Truck Engine
       objectReference: {fileID: 0}
     - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: skipSFX
+      value: event:/SFX/Cutscene/Skip Scene
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
+      propertyPath: comboSFX
+      value: event:/SFX/Taco Making/Nitro Combo
+      objectReference: {fileID: 0}
+    - target: {fileID: 381768075892565994, guid: ce38256018985f14987391b520377013, type: 3}
       propertyPath: crashSFX
       value: event:/SFX/Driving/Car Crashes
       objectReference: {fileID: 0}
