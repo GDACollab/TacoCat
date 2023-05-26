@@ -4,18 +4,24 @@ using UnityEngine;
 
 public class Taco : MonoBehaviour
 {
+    public Transform ingredientParent;
+    public Animator anim;
+
     public List<INGREDIENT_TYPE> ingredients; //ingredients currently on the taco
+
+    #region INGREDIENTS ==========================
     public void addIngredient(INGREDIENT_TYPE newIngredient){ 
         //called when key has been inputed for ingredient in taco making
         ingredients.Add(newIngredient);
     }
+
     public void addingredientObject(GameObject obj)
     {
         GameObject ingr = Instantiate(obj, transform.position + new Vector3(0, 0.2f * ingredients.Count + 0.1f, 0), Quaternion.identity, transform);
-        // Revise
+        ingr.transform.parent = ingredientParent;
 
         // ingredient sorting order =  count + taco current sorting order
-        ingr.GetComponent<SpriteRenderer>().sortingOrder = ingredients.Count + GetComponent<SpriteRenderer>().sortingOrder;
+        ingr.GetComponent<SpriteRenderer>().sortingOrder = ingredients.Count;
 
         // Check if the ingredient count number is even
         bool isEven = ingredients.Count % 2 == 0;
@@ -43,7 +49,33 @@ public class Taco : MonoBehaviour
         }
         return ingredientMatch;
     }
+    #endregion
 
+
+    #region ANIMATIONS ===========================
+
+    public void PlayEnterAnim()
+    {
+        anim.Play("Enter");
+    }
+
+    public void PlayExitAnim()
+    {
+        anim.Play("Exit");
+    }
+
+    public void PlayPerfectAnim()
+    {
+        anim.Play("Perfect");
+    }
+
+    public void PlayComboAnim()
+    {
+        anim.Play("Combo");
+    }
+
+
+    #endregion
 
 
 }

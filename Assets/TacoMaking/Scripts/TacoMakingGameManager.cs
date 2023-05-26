@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 public enum INGREDIENT_TYPE { NONE, FISH, SOUR_CREAM, PICO_DE_GALLO, CABBAGE, SLICED_JALAPENOS }
-public enum scoreType { NONE, PERFECT, GOOD, OKAY, FAILED } // possible scores a taco can get.
+public enum SUBMIT_TACO_SCORE { NONE, COMBO, PERFECT, GOOD, OKAY, FAILED } // possible scores a taco can get.
 
 public enum TACOMAKING_STATE { LOADING, TUTORIAL, ENTER_PLAY, PLAY, END, END_TRANSITION }
 
@@ -101,7 +101,6 @@ public class TacoMakingGameManager : MonoBehaviour
 
     public void Update()
     {
-
         switch(state)
         {
             case TACOMAKING_STATE.LOADING:
@@ -130,6 +129,8 @@ public class TacoMakingGameManager : MonoBehaviour
                 state = TACOMAKING_STATE.PLAY;
                 break;
             case TACOMAKING_STATE.PLAY:
+
+                if (hand.state == PlayerHand.HAND_STATE.DISABLED) { hand.state = PlayerHand.HAND_STATE.HOME; }
 
                 CustomerRotation();
 
@@ -168,12 +169,19 @@ public class TacoMakingGameManager : MonoBehaviour
 
     public void CreateNewSubmissionTaco()
     {
+        StartCoroutine(NewSubmissionTaco());
+    }
+
+    IEnumerator NewSubmissionTaco()
+    {
+        yield return new WaitForSeconds(0.5f);
         if (submissionTaco != null) { Destroy(submissionTaco.gameObject); }
 
         // create init submission taco
-        GameObject taco = Instantiate(tacoPrefab, GetComponentInChildren<IngredientBenchManager>().tacoSpawnPoint.position, Quaternion.identity);
+        GameObject taco = Instantiate(tacoPrefab, benchManager.tacoSpawnPoint);
         submissionTaco = taco.GetComponent<Taco>();
-        taco.transform.parent = transform;
+
+        submissionTaco.PlayEnterAnim();
     }
 
 
@@ -206,9 +214,23 @@ public class TacoMakingGameManager : MonoBehaviour
         //Can't submit taco until customer is finished moving
         if (customerManager.currCustomer != null && customerManager.currCustomer.moveRoutine == null)
         {
-            scoreType score = customerManager.currCustomer.ScoreTaco(submissionTaco);
+            SUBMIT_TACO_SCORE score = customerManager.currCustomer.ScoreTaco(submissionTaco);
             NewTacoScore(score);
-        
+
+            if (score == SUBMIT_TACO_SCORE.COMBO)
+            {
+                submissionTaco.PlayPerfectAnim();
+            }
+            else if (score == SUBMIT_TACO_SCORE.PERFECT)
+            {
+                submissionTaco.PlayComboAnim();
+            }
+            else
+            {
+                submissionTaco.PlayExitAnim();
+            }
+
+
             Debug.Log("Submitted Taco! Customer Score " + score);
 
             audioManager.Play(audioManager.bellDingSFX);
@@ -224,10 +246,10 @@ public class TacoMakingGameManager : MonoBehaviour
 
     // Parameter: score from completed Taco
     // Updates gameScore, perfectCounter and comboCounter as necessary
-    public void NewTacoScore(scoreType score)
+    public void NewTacoScore(SUBMIT_TACO_SCORE score)
     {
         uiManager.DisplayScore(score);
-        if (score == scoreType.PERFECT)
+        if (score == SUBMIT_TACO_SCORE.PERFECT)
         {
             gameScore += 3;
             
@@ -235,6 +257,8 @@ public class TacoMakingGameManager : MonoBehaviour
    
             if (perfectCounter % 3 == 0 && perfectCounter != 0 && submittedCustomers <= totalCustomers)
             {
+                score = SUBMIT_TACO_SCORE.COMBO;
+
                 comboCounter++;
                 if (nitroCharges < 3)
                 {
@@ -248,17 +272,17 @@ public class TacoMakingGameManager : MonoBehaviour
             perfectCounter = 0;
         }
 
-        if (score == scoreType.GOOD)
+        if (score == SUBMIT_TACO_SCORE.GOOD)
         {
             gameScore += 2;
         }
 
-        if (score == scoreType.OKAY)
+        if (score == SUBMIT_TACO_SCORE.OKAY)
         {
             gameScore += 1;
         }
 
-        if (score == scoreType.FAILED)
+        if (score == SUBMIT_TACO_SCORE.FAILED)
         {
             gameScore += 0;
         }
