@@ -242,7 +242,7 @@ public class GameManager : MonoBehaviour
 
         StartCoroutine(ConcurrentLoadingCoroutine(tacoMakingScene));
 
-        //audioManager.PlaySong(audioManager.tacoMusicPath);
+        audioManager.PlaySong(audioManager.tacoMusicPath);
     }
 
     // **** LOAD DRIVING SCENES ****
@@ -274,6 +274,7 @@ public class GameManager : MonoBehaviour
     {
         currGame = currGame.CUTSCENE;
         SceneManager.LoadScene(cutscene);
+        Debug.Log("PLAYING " + audioManager.storyMusicPath);
         audioManager.PlaySong(audioManager.storyMusicPath);
     }
 

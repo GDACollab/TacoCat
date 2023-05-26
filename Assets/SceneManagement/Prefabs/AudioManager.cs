@@ -152,6 +152,7 @@ public class AudioManager : MonoBehaviour {
     protected EventInstance currentPlaying;
     protected EventInstance currentAmbience;
 
+    protected FMOD.Studio.PLAYBACK_STATE playbackState;
 
 
 
@@ -195,7 +196,30 @@ public class AudioManager : MonoBehaviour {
     public void PlaySong(string path){
         Debug.Log("[Audio Manager] Playing Song: " + path);
         if (currentPlaying.isValid()) {
-            currentPlaying.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            StartCoroutine(RestOfPlaySong(path));
+        }else{
+            EventDescription eventDescription;
+            FMOD.RESULT result = RuntimeManager.StudioSystem.getEvent(path, out eventDescription);
+            if (result != FMOD.RESULT.OK)
+            {
+                Debug.LogWarning("[Audio Manager] FMOD SONG event path does not exist: " + path);
+                return;
+            }
+
+            EventInstance song = RuntimeManager.CreateInstance(path);
+            currentPlaying = song;
+            song.start();
+            song.release();
+        }
+    }
+
+    public IEnumerator RestOfPlaySong(string path){
+        Debug.Log(currentPlaying);
+        currentPlaying.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        currentPlaying.getPlaybackState(out playbackState);
+        while(playbackState != FMOD.Studio.PLAYBACK_STATE.STOPPED){
+            currentPlaying.getPlaybackState(out playbackState);
+            yield return null;
         }
 
         EventDescription eventDescription;
@@ -203,15 +227,13 @@ public class AudioManager : MonoBehaviour {
         if (result != FMOD.RESULT.OK)
         {
             Debug.LogWarning("[Audio Manager] FMOD SONG event path does not exist: " + path);
-            return;
+        }else{
+            EventInstance song = RuntimeManager.CreateInstance(path);
+            currentPlaying = song;
+            song.start();
+            song.release();
         }
-
-        EventInstance song = RuntimeManager.CreateInstance(path);
-        currentPlaying = song;
-        song.start();
-        song.release();
     }
-
 
     public void PlayDrivingAmbiance(float value){
         if(currentAmbience.isValid()){
