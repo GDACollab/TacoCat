@@ -139,6 +139,7 @@ public class TacoMakingGameManager : MonoBehaviour
                 if (submittedCustomers >= totalCustomers && gasAmount >= minimumGasThreshold)
                 {
                     state = TACOMAKING_STATE.END;
+                    Debug.Log("we here boys, taco making state == end nowww");
                 }
 
                 //update lightingManager

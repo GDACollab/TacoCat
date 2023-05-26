@@ -149,14 +149,14 @@ public class GameManager : MonoBehaviour
                 currGame = currGame.MENU;
                 timeRemaining = totalGameTime_seconds;
             }
-            else if (GameObject.FindGameObjectWithTag("CutsceneManager"))
+            if (GameObject.FindGameObjectWithTag("CutsceneManager"))
             {
                 Debug.Log("GameManager: Setup Cutscene");
                 determinedSceneType = true;
                 cutsceneManager = GameObject.FindGameObjectWithTag("CutsceneManager").GetComponent<CutsceneManager>();
                 currGame = currGame.CUTSCENE;
             }
-            else if (GameObject.FindGameObjectWithTag("DrivingGameManager"))
+            if (GameObject.FindGameObjectWithTag("DrivingGameManager"))
             {
                 Debug.Log("GameManager: Setup Driving");
                 determinedSceneType = true;
@@ -166,7 +166,7 @@ public class GameManager : MonoBehaviour
                 currGame = currGame.DRIVING;
                 Debug.Log("drivingGameManager found? " + drivingGameManager!=null + "currGame: " + currGame);
             }
-            else if (GameObject.FindGameObjectWithTag("TacoGameManager"))
+            if (GameObject.FindGameObjectWithTag("TacoGameManager"))
             {
                 Debug.Log("GameManager: Setup Taco Making");
                 determinedSceneType = true;
@@ -209,6 +209,7 @@ public class GameManager : MonoBehaviour
             {
                 nitroCharges = tacoGameManager.nitroCharges;
                 LoadDrivingScene(currLevel);
+                Debug.Log("we loading the driving scene NOWWW");
             }
         }
 
