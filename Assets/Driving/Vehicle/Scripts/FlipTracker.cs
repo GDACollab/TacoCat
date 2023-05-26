@@ -105,15 +105,16 @@ public class FlipTracker : MonoBehaviour
                 Vector2 newBoost = new Vector2(((flipBoost)+1)*vehicle.perfectLandingBoostForce.x, vehicle.perfectLandingBoostForce.y);
                 float newTime = ((flips*timeBoost)+1)*vehicle.activePerfectBoostTime;
 
+                var instance = audioManager.Play(audioManager.flipBoostSFX);
+                Debug.Log("FLIP BOOST %: " + flipBoost);
+                instance.setParameterByName("flipBoost", flipBoost);
 
                 boostSprite.transform.localScale = new Vector3(boostSprite.transform.localScale.x, boostSpriteY*((flips*percentBoost)+1), boostSprite.transform.localScale.z);
                 StartCoroutine(vehicle.PerfectLandingBoost(newBoost, newTime));
-                //audioManager.Play(audioManager.flipBoostSFX);
+                
+            }else{
+                audioManager.Play(audioManager.truckLandingSFX);
             }
-            if(audioManager != null){
-                //audioManager.Play(audioManager.truckLandingSFX);
-            }
-            audioManager.Play(audioManager.truckLandingSFX);
         }
 
         // track in air time
