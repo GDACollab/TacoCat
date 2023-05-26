@@ -73,6 +73,8 @@ public class AudioManager : MonoBehaviour {
     [Tooltip("path of the typing event")]
     public string typingSFX;
 
+    
+
     // DRIVING
 
     [Header("FMOD Driving(SFX) Event Path Strings")]
@@ -87,6 +89,8 @@ public class AudioManager : MonoBehaviour {
 
     public string truckLandingSFX; //IMPLEMENTED
     public string crashSFX;
+
+    public string rpmSFX;
     
 
     //TACO MAKING
@@ -151,6 +155,8 @@ public class AudioManager : MonoBehaviour {
   
     protected EventInstance currentPlaying;
     protected EventInstance currentAmbience;
+
+    protected EventInstance currentRPM;
 
     protected FMOD.Studio.PLAYBACK_STATE playbackState;
 
@@ -235,7 +241,7 @@ public class AudioManager : MonoBehaviour {
         }
     }
 
-    public void PlayDrivingAmbiance(float value){
+    public void PlayDrivingAmbience(float value){
         if(currentAmbience.isValid()){
             currentAmbience.setParameterByName("carHeight", value);
             Debug.Log("[Audio Manager] Driving Ambience updated: " + value);
@@ -263,7 +269,32 @@ public class AudioManager : MonoBehaviour {
         }
     }
 
+    public void PlayRPM(float value){
+        if(currentRPM.isValid()){
+            currentRPM.setParameterByName("RPM", value);
+            Debug.Log("[Audio Manager] RPM updated: " + value);
+        }else{
+            EventDescription eventDescription;
+            FMOD.RESULT result = RuntimeManager.StudioSystem.getEvent(drivingAmbiPath, out eventDescription);
+            if (result != FMOD.RESULT.OK)
+            {
+                Debug.LogWarning("FMOD SONG event path does not exist: " + drivingAmbiPath);
+                return;
+            }
 
+            EventInstance rpm = RuntimeManager.CreateInstance(drivingAmbiPath);
+            currentRPM = rpm;
+            rpm.start();
+            rpm.release();
+            Debug.Log("[Audio Manager] New RPM Event: " + value);
+        }
+    }
+    public void StopRPM(){
+        Debug.Log("[Audio Manager] Stopping RPM");
+        if(currentRPM.isValid()){
+            currentRPM.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        }
+    }
 
     public void playSelect(){
         Play(selectUI);

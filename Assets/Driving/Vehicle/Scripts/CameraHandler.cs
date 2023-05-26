@@ -258,7 +258,8 @@ public class CameraHandler : MonoBehaviour
             
             //AUDIOMANAGER STUFF HERE FOR AMBIENCE
             if(audioManager!=null){
-                audioManager.PlayDrivingAmbiance(Math.Max(0,truckHeight-currZeroPos));
+                audioManager.PlayDrivingAmbience(Math.Max(0,truckHeight-currZeroPos));
+                Debug.Log("PLAYDRIVINGAMBIENCE UPDATE: "+ Math.Max(0,truckHeight-currZeroPos));
             }
 
 

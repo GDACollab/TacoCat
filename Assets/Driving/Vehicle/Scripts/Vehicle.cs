@@ -105,7 +105,8 @@ public class Vehicle : MonoBehaviour
         Inputs();
         StateMachine();
 
-        rpm = rb_vehicle.velocity.x;
+        rpm = Mathf.Clamp(rb_vehicle.velocity.x, 0, 2000);
+        audioManager.PlayRPM(rpm);
         //GetComponent<StudioEventEmitter>().SetParameter("RPM", rpm);
         //Debug.Log(emitter.Params[0].Value);
     }

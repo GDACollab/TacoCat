@@ -267,7 +267,8 @@ public class GameManager : MonoBehaviour
         }
 
         audioManager.PlaySong(audioManager.drivingMusicPath);
-        audioManager.PlayDrivingAmbiance(0);
+        audioManager.PlayDrivingAmbience(0);
+        audioManager.PlayRPM(0);
     }
 
     public void LoadCutscene()
@@ -275,6 +276,8 @@ public class GameManager : MonoBehaviour
         currGame = currGame.CUTSCENE;
         SceneManager.LoadScene(cutscene);
         Debug.Log("PLAYING " + audioManager.storyMusicPath);
+        audioManager.StopDrivingAmbience();
+        audioManager.StopRPM();
         audioManager.PlaySong(audioManager.storyMusicPath);
     }
 
