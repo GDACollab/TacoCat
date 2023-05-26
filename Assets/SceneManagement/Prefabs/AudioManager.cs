@@ -41,7 +41,8 @@ public class AudioManager : MonoBehaviour {
     public FMOD.Studio.Bus diaBus;
     public FMOD.Studio.Bus ambiBus;
 
-    /////////////////////////MUSIC//////////////////////////////
+    #region /////////////////////////MUSIC//////////////////////////////
+    
     [Header("FMOD Music")]
 
     [Tooltip("FMOD Event Path for the folder that contains all the music")]
@@ -49,14 +50,16 @@ public class AudioManager : MonoBehaviour {
     public string storyMusicPath = "event:/Music/StoryMusic";
     public string tacoMusicPath = "event:/Music/TacoMusic";
     public string drivingMusicPath = "event:/Music/DrivingMusic";
-
-    /////////////////////////AMBIENCE//////////////////////////////
+    #endregion
+    
+    #region /////////////////////////AMBIENCE//////////////////////////////
     [Header("FMOD Driving(Ambience) Event Path Strings")]
     
     [Tooltip("path of ambience event")]
     public string drivingAmbiPath;
-
-    /////////////////////////SFX//////////////////////////////
+    #endregion
+    
+    #region /////////////////////////SFX//////////////////////////////
 
     // CUTSCENE
     [Header("FMOD Cutscene(SFX) Event Path Strings")]
@@ -96,8 +99,23 @@ public class AudioManager : MonoBehaviour {
     public string pawSwipeSFX; //IMPLEMENTED
     public bool isPaused;
     
-    
+    #endregion
 
+    #region /////////////////////////UI//////////////////////////////
+    [Header("FMOD UI(SFX) Event Path Strings")]
+    
+    [Tooltip("path of UI Select")]
+
+    public string selectUI = "event:/SFX/UI & Menu/UI Select";
+    public string hoverUI = "event:/SFX/UI & Menu/UI Hover";
+    public string creakHoverUI = "event:/SFX/UI & Menu/UI Hover Sign";
+    public string sliderUI = "event:/SFX/UI & Menu/UI Slider Feedback";
+    public string signDrop = "event:/SFX/UI & Menu/Sign Drop";
+    public string meow = "event:/SFX/UI & Menu/Meow Button";
+    public string beep = "event:/SFX/UI & Menu/Beep-Beep Button";
+
+
+    #endregion
     //need to have name of parameter and variable
     //FOR GLOBAL PARAMETERS FMOD Parameter name, variable name
     //FMODUnity.RuntimeManager.StudioSystem.setParameterByName("", x);
@@ -190,6 +208,8 @@ public class AudioManager : MonoBehaviour {
         song.start();
         song.release();
     }
+
+
     public void PlayDrivingAmbiance(float value){
         if(currentAmbience.isValid()){
             currentAmbience.setParameterByName("carHeight", value);
@@ -216,6 +236,31 @@ public class AudioManager : MonoBehaviour {
         if(currentAmbience.isValid()){
             currentAmbience.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         }
+    }
+
+
+
+    public void playSelect(){
+        Play(selectUI);
+    }
+    public void playHover(){
+        Play(hoverUI);
+    }
+    public void playCreakHover(){
+        Debug.Log(creakHoverUI);
+        Play(creakHoverUI);
+    }
+    public void playSlider(){
+        Play(sliderUI);
+    }
+    public void playDrop(){
+        Play(signDrop);
+    }
+    public void playMeow(){
+        Play(meow);
+    }
+    public void playBeep(){
+        Play(beep);
     }
 
     // Update is called once per frame

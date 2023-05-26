@@ -186,6 +186,7 @@ public class DrivingGameManager : MonoBehaviour
         }
         else
         {
+            
             uiManager.GameEndCanvas(failText);
         }
     }
