@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-//using FMODUnity;
+using FMODUnity;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
     public static EventSystem eventSystemInstance = null;
+
+    public TIME_OF_DAY timeState;
 
     [HideInInspector]
     public AudioManager audioManager;
@@ -146,6 +148,7 @@ public class GameManager : MonoBehaviour
                 Debug.Log("GameManager: Setup Taco Making");
                 determinedSceneType = true;
                 tacoGameManager = GameObject.FindGameObjectWithTag("TacoGameManager").GetComponent<TacoMakingGameManager>();
+                
                 tacoGameManager.difficulty = currLevel;
                 currGame = currGame.TACO_MAKING;
             }
@@ -181,7 +184,7 @@ public class GameManager : MonoBehaviour
         // Start Menu Music
         if (currGame == currGame.MENU)
         {
-            //audioManager.PlaySong(audioManager.menuMusicPath);
+            audioManager.PlaySong(audioManager.menuMusicPath);
         }
     }
 
@@ -191,8 +194,6 @@ public class GameManager : MonoBehaviour
         // << TACO GAME MANAGER >>
         if (currGame == currGame.TACO_MAKING && tacoGameManager != null)
         {
-            if (currLevel == 0) { currLevel = 1; } // just to make sure the level is at least 1
-
             currDayCycleState = tacoGameManager.lightingManager.dayCycleState;
 
             // check if all customers submitted , if so move to driving with gas amount
@@ -206,12 +207,10 @@ public class GameManager : MonoBehaviour
         // << DRIVING GAME MANAGER >>
         if (currGame == currGame.DRIVING && drivingGameManager != null)
         {
-            if (currLevel == 0) { currLevel = 1; } // just to make sure the level is at least 1
-
-            if (drivingGameManager.state == DRIVINGGAME_STATE.END_TRANSITION && !isLoadingScene)
+            currDayCycleState = drivingGameManager.lightingManager.dayCycleState;
+            
+            if (drivingGameManager.endOfGame && !isLoadingScene)
             {
-                currDayCycleState = drivingGameManager.lightingManager.dayCycleState;
-
                 currLevel++;
                 Debug.Log("Current Level: " + currLevel);
                 StartCoroutine(ConcurrentLoadingCoroutine(cutscene));
@@ -237,19 +236,19 @@ public class GameManager : MonoBehaviour
     {
         lastGame = currGame;
         currGame = currGame.MENU;
+        //currLevel = 1;    // Deletes progress
+        cutsceneIndex = 0;
         SceneManager.LoadScene(menuScene);
-        //audioManager.PlaySong(audioManager.menuMusicPath);
+        audioManager.PlaySong(audioManager.menuMusicPath);
     }
 
     // **** LOAD TACO MAKING SCENE ****
     public void LoadTacoMakingScene()
     {
-
         currGame = currGame.TACO_MAKING;
 
         StartCoroutine(ConcurrentLoadingCoroutine(tacoMakingScene));
-
-        //audioManager.PlaySong(audioManager.tacoMusicPath);
+        audioManager.PlaySong(audioManager.tacoMusicPath);
     }
 
     // **** LOAD DRIVING SCENES ****
@@ -260,27 +259,32 @@ public class GameManager : MonoBehaviour
         if (levelNum == 1)
         {
             currLevel = 1;
-            StartCoroutine(LoadingCoroutine(driving1));
+            StartCoroutine(ConcurrentLoadingCoroutine(driving1));
         }
         else if (levelNum == 2)
         {
             currLevel = 2;
-            StartCoroutine(LoadingCoroutine(driving2));
+            StartCoroutine(ConcurrentLoadingCoroutine(driving2));
         }
         else if (levelNum == 3)
         {
             currLevel = 3;
-            StartCoroutine(LoadingCoroutine(driving3));
+            StartCoroutine(ConcurrentLoadingCoroutine(driving3));
         }
-
-        //audioManager.PlaySong(audioManager.drivingMusicPath);
+        
+        audioManager.PlaySong(audioManager.drivingMusicPath);
+        audioManager.PlayDrivingAmbience(0);
+        audioManager.PlayRPM(0);
     }
 
     public void LoadCutscene()
     {
         currGame = currGame.CUTSCENE;
         SceneManager.LoadScene(cutscene);
-        //audioManager.PlaySong(audioManager.storyMusicPath);
+        Debug.Log("PLAYING " + audioManager.storyMusicPath);
+        audioManager.StopDrivingAmbience();
+        audioManager.StopRPM();
+        audioManager.PlaySong(audioManager.storyMusicPath);
     }
 
     public void Quit()
