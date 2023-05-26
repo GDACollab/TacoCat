@@ -199,25 +199,35 @@ public class TacoMakingGameManager : MonoBehaviour
     // submit taco to customer to be graded
     public void SubmitTaco()
     {
+        StartCoroutine(SubmitTacoRoutine());
+    }
+
+    IEnumerator SubmitTacoRoutine()
+    {
         //Can't submit taco until customer is finished moving
         if (customerManager.currCustomer != null && customerManager.currCustomer.moveRoutine == null)
         {
             SUBMIT_TACO_SCORE score = customerManager.currCustomer.ScoreTaco(submissionTaco);
-            NewTacoScore(score);
+            SUBMIT_TACO_SCORE comboContextScore = NewTacoScore(score);
 
-            if (score == SUBMIT_TACO_SCORE.COMBO)
+            uiManager.ClearDisplayOrder();
+
+            // play the corresponding taco anim
+            if (comboContextScore == SUBMIT_TACO_SCORE.COMBO)
             {
                 submissionTaco.PlayComboAnim();
+                yield return new WaitForSeconds(1.5f);
+
             }
-            else if (score == SUBMIT_TACO_SCORE.PERFECT)
+            else if (comboContextScore == SUBMIT_TACO_SCORE.PERFECT)
             {
                 submissionTaco.PlayPerfectAnim();
+                yield return new WaitForSeconds(1);
             }
             else
             {
                 submissionTaco.PlayExitAnim();
             }
-
 
             Debug.Log("Submitted Taco! Customer Score " + score);
 
@@ -234,8 +244,10 @@ public class TacoMakingGameManager : MonoBehaviour
 
     // Parameter: score from completed Taco
     // Updates gameScore, perfectCounter and comboCounter as necessary
-    public void NewTacoScore(SUBMIT_TACO_SCORE score)
+    public SUBMIT_TACO_SCORE NewTacoScore(SUBMIT_TACO_SCORE score)
     {
+        
+
         uiManager.DisplayScore(score);
         if (score == SUBMIT_TACO_SCORE.PERFECT)
         {
@@ -274,9 +286,11 @@ public class TacoMakingGameManager : MonoBehaviour
         {
             gameScore += 0;
         }
+
         SetGasAmount();
-        uiManager.DisplayGas(gasAmount); //100 is the max fuel amount, 
-        //DisplayGas ^^ needs to be changed later so that you don't need to insert max fuel everytime you want to update the bar
+        uiManager.DisplayGas(gasAmount);
+
+        return score;
     }
 
 
