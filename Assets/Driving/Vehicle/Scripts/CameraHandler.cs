@@ -238,7 +238,7 @@ public class CameraHandler : MonoBehaviour
         }
 
         //If no vehicle was grabbed, defaults to 0
-        Debug.Log("D RETURN");
+        //Debug.Log("D RETURN");
         return 0.0f;
     }
 

@@ -74,7 +74,7 @@ public class GroundMeshCreator : MonoBehaviour
 
         int triSize = Mathf.FloorToInt(genCurvePoints.Count / chunkCount); //get number of chunks based on chunk size
 
-        Debug.Log("Underground Mesh Creator :: chunkCount " + chunkCount + " // underground_height " + underground_height + " // chunkSize: "  + triSize);
+        //Debug.Log("Underground Mesh Creator :: chunkCount " + chunkCount + " // underground_height " + underground_height + " // chunkSize: "  + triSize);
 
         //DONT TOUCH THIS OR I WILL CASTRATE YOU
         //For some reason this fixes positioning problems
@@ -115,7 +115,7 @@ public class GroundMeshCreator : MonoBehaviour
             edgeCollider.enabled = false;
         }
 
-        Debug.Log("Underground Mesh Created", gameObject);
+        //Debug.Log("Underground Mesh Created", gameObject);
         meshCreated = true;
     }
 
@@ -171,7 +171,7 @@ public class GroundMeshCreator : MonoBehaviour
 
         }
 
-        Debug.Log("undergroundMesh vertice count :: " + verticesList.Count);
+        //Debug.Log("undergroundMesh vertice count :: " + verticesList.Count);
 
         return verticesList.ToArray();
     }
@@ -215,7 +215,7 @@ public class GroundMeshCreator : MonoBehaviour
             }
         }
 
-        Debug.Log("undergroundMesh triangles count :: " + trianglesList.Count);
+        //Debug.Log("undergroundMesh triangles count :: " + trianglesList.Count);
 
         return trianglesList.ToArray();
     }

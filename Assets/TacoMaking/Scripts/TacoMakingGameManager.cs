@@ -133,10 +133,10 @@ public class TacoMakingGameManager : MonoBehaviour
                 if (hand.state == PlayerHand.HAND_STATE.DISABLED) { hand.state = PlayerHand.HAND_STATE.HOME; }
 
                 CustomerRotation();
-
+                gameManager.currDayCycleState = lightingManager.dayCycleState;
                 // check for end
-                // if (submittedCustomers == totalCustomers)
-                if (gasAmount >= minimumGasThreshold)
+                // if ()
+                if (submittedCustomers >= totalCustomers && gasAmount >= minimumGasThreshold)
                 {
                     state = TACOMAKING_STATE.END;
                 }
@@ -154,8 +154,9 @@ public class TacoMakingGameManager : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     uiManager.endCanvas.SetActive(false);
-                    //AUDIO MANAGER POP UP DISMISSAL SFX
                     uiManager.camEffectManager.StartFadeOut(1.5f);
+                    //[AUDIO MANAGER] UI POP UP ~DISMISSAL~ SFX
+                    audioManager.Play(audioManager.sendTextSFX);
                     state = TACOMAKING_STATE.END_TRANSITION;
                 }
 

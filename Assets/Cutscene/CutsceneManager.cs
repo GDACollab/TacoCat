@@ -43,6 +43,7 @@ public class CutsceneManager : MonoBehaviour
 
 
     public List<TextList> CutsceneOneDialogue;
+    public List<TextList> CutsceneOneAndAHalfDialogue;
     public GameObject intro_panel1;
     public GameObject intro_panel2;
     public GameObject intro_panel3;
@@ -135,12 +136,13 @@ public class CutsceneManager : MonoBehaviour
     }
 
     public IEnumerator BeginTextingRoutine()
-    {
+    {   
+        Debug.Log("BeginTextingRouting: " + GameManager.instance.cutsceneIndex);
         switch (GameManager.instance.cutsceneIndex)
         {
             case 0:
                 chosenDialogue = CutsceneOneDialogue;
-                GameManager.instance.cutsceneIndex++;
+                GameManager.instance.cutsceneIndex = 5;
                 break;
             case 1:
                 chosenDialogue = CutsceneTwoDialogue;
@@ -155,6 +157,10 @@ public class CutsceneManager : MonoBehaviour
                 break;
             case 4:
                 chosenDialogue = BadEndingDialogue;
+                break;
+            case 5:
+                chosenDialogue = CutsceneOneAndAHalfDialogue;
+                GameManager.instance.cutsceneIndex = 1;
                 break;
             default:
                 chosenDialogue = CutsceneOneDialogue;
@@ -212,10 +218,25 @@ public class CutsceneManager : MonoBehaviour
                 yield return new WaitUntil(() => !camEffectManager.isFading);
 
                 yield return new WaitForSeconds(3);
-            }
 
-            camEffectManager.StartFadeOut(0.5f);
-            endOfCutscene = true;
+                camEffectManager.StartFadeOut(1);
+                yield return new WaitUntil(() => !camEffectManager.isFading);
+
+                intro_panel3.SetActive(false);
+                yield return new WaitForSeconds(0.25f);
+
+                camEffectManager.StartFadeIn(1);
+                yield return new WaitUntil(() => !camEffectManager.isFading);
+
+                yield return new WaitForSeconds(1);
+
+                StartCoroutine(BeginTextingRoutine());
+                
+            }else if(chosenDialogue == CutsceneOneAndAHalfDialogue){
+                Debug.Log("starting end of cutscene");
+                camEffectManager.StartFadeOut(0.5f);
+                endOfCutscene = true;
+            }
         }
         else if (chosenDialogue == GoodEndingDialogue)
         {
@@ -279,7 +300,7 @@ public class CutsceneManager : MonoBehaviour
     public void MoveBubblesUp(float amount)
     {
         amount *= scrollFactor;
-        Debug.Log("moved bubbles up by: " + amount);
+        //Debug.Log("moved bubbles up by: " + amount);
         foreach (GameObject existingBubble in currentBubbles)
         {
             existingBubble.transform.position += new Vector3(0, amount, 0);

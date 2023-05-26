@@ -31,7 +31,7 @@ public class CrashCorrection : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("CollisionTerrain"))
         {
-            Debug.Log("Truck Crash with " + collision.name);
+            //Debug.Log("Truck Crash with " + collision.name);
             StartCoroutine(CorrectCrash());
 
             //START AUDIO EVENT FOR CRASH

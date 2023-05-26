@@ -120,11 +120,11 @@ public class BubbleManager : MonoBehaviour
         {
             skipAmount = 0f;
         }
-        Debug.Log("new alexCrawlCountdown" + skip + skipAmount);
+        //Debug.Log("new alexCrawlCountdown" + skip + skipAmount);
         if (Input.GetKey(KeyCode.Space))
         {
                 skip = true;
-                Debug.Log("hit space, skip value: " + skip + skipAmount);
+                //Debug.Log("hit space, skip value: " + skip + skipAmount);
                 yield break;
         }
         yield return new WaitForSeconds(skipAmount);

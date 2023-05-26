@@ -120,6 +120,8 @@ public class DrivingGameManager : MonoBehaviour
                     state = DRIVINGGAME_STATE.END;
                 }
 
+                gameManager.currDayCycleState= lightingManager.dayCycleState; 
+
                 break;
 
             case DRIVINGGAME_STATE.END:
