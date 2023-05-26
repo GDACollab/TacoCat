@@ -52,14 +52,13 @@ public class TacoMakingGameManager : MonoBehaviour
 
     public void Start()
     {
-        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        gameManager = GameManager.instance;
         audioManager = gameManager.audioManager;
         benchManager = GetComponentInChildren<IngredientBenchManager>();
         uiManager = GetComponentInChildren<TacoUIManager>();
 
         // get difficulty
-        difficulty = Mathf.Min(difficulty, 3);
-        customerManager.difficulty = difficulty;
+        customerManager.difficulty = gameManager.currLevel;
 
         /*
         // enable / disable backgrounds
@@ -96,7 +95,7 @@ public class TacoMakingGameManager : MonoBehaviour
         }
         else
         {
-            state = TACOMAKING_STATE.PLAY;
+            state = TACOMAKING_STATE.ENTER_PLAY;
         }
 
         yield return new WaitUntil(() => uiManager.camEffectManager != null);

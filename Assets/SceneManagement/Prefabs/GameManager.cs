@@ -194,6 +194,8 @@ public class GameManager : MonoBehaviour
         // << TACO GAME MANAGER >>
         if (currGame == currGame.TACO_MAKING && tacoGameManager != null)
         {
+            if (currLevel == 0) { currLevel = 1; }
+
             currDayCycleState = tacoGameManager.lightingManager.dayCycleState;
 
             // check if all customers submitted , if so move to driving with gas amount
@@ -207,14 +209,15 @@ public class GameManager : MonoBehaviour
         // << DRIVING GAME MANAGER >>
         if (currGame == currGame.DRIVING && drivingGameManager != null)
         {
+            if (currLevel == 0) { currLevel = 1; }
+
             currDayCycleState = drivingGameManager.lightingManager.dayCycleState;
             
-            if (drivingGameManager.endOfGame && !isLoadingScene)
+            if (drivingGameManager.state == DRIVINGGAME_STATE.END_TRANSITION && !isLoadingScene)
             {
                 currLevel++;
                 Debug.Log("Current Level: " + currLevel);
-                StartCoroutine(ConcurrentLoadingCoroutine(cutscene));
-                // LoadCutscene();
+                LoadCutscene();
             }
         }
 
@@ -237,7 +240,6 @@ public class GameManager : MonoBehaviour
         lastGame = currGame;
         currGame = currGame.MENU;
         //currLevel = 1;    // Deletes progress
-        cutsceneIndex = 0;
         SceneManager.LoadScene(menuScene);
         audioManager.PlaySong(audioManager.menuMusicPath);
     }
@@ -280,7 +282,7 @@ public class GameManager : MonoBehaviour
     public void LoadCutscene()
     {
         currGame = currGame.CUTSCENE;
-        SceneManager.LoadScene(cutscene);
+        StartCoroutine(ConcurrentLoadingCoroutine(cutscene));
         Debug.Log("PLAYING " + audioManager.storyMusicPath);
         audioManager.StopDrivingAmbience();
         audioManager.StopRPM();
