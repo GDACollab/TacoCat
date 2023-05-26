@@ -21,7 +21,6 @@ public class TacoUIManager : MonoBehaviour
 
     public Transform windowShutter;
 
-
     [Header("Score UI")]
     public GameObject starPrefab;
     public float starScale = 1;
@@ -35,17 +34,11 @@ public class TacoUIManager : MonoBehaviour
     public float ingredientSpacing = 2f;
     public Transform ingredientPointParent;
     public bool newOrderTaken;
-    [Header("Test Order Window UI")]
-    public List<INGREDIENT_TYPE> testIngredients = new List<INGREDIENT_TYPE>(4);
+    public List<GameObject> uiIngredients = new List<GameObject>();
     
     [Header("Gas/Nitro UI")]
     public Image fuelBar;
     public Image nCharge1, nCharge2, nCharge3;
-
-    [Header("Test Gas/Nitro UI")]
-    public float fuelAmount = 0;
-    public float maxFuelAmount = 1;
-    public int numNitroCharges = 0;
     
     
     public List<GameObject> starTracker = new List<GameObject>();
@@ -78,6 +71,9 @@ public class TacoUIManager : MonoBehaviour
             DisplayOrder(customerManager.currCustomer.order);
             newOrderTaken = true;
         }
+
+
+        endCanvas.GetComponent<UI_PopUp_Card>().SetBody("You earned <color=#00A0FF><b>" + tacoGameManager.nitroCharges + " Nitro</b></color>!");
 
     }
     
@@ -171,17 +167,35 @@ public class TacoUIManager : MonoBehaviour
         {
             Vector3 position = new Vector3(ingredientPointParent.position.x, startY + i * ingredientSpacing, ingredientPointParent.position.z);
 
-            GameObject ingredient = tacoGameManager.GetIngredientObject(order[i]);
+            GameObject ingredient = GetUIIngredient(order[i]);
 
             GameObject newIngredient = Instantiate(ingredient, position, Quaternion.identity);
             newIngredient.transform.parent = ingredientPointParent;
             newIngredient.transform.localScale = Vector3.one * ingredientScale;
 
-            newIngredient.GetComponent<SpriteRenderer>().sortingLayerName = "PlayArea";
-            newIngredient.GetComponent<SpriteRenderer>().sortingOrder = 2;
+            //newIngredient.GetComponent<SpriteRenderer>().sortingLayerName = "PlayArea";
+            //newIngredient.GetComponent<SpriteRenderer>().sortingOrder = 2;
 
             orderIngredientObjects.Add(newIngredient);
         }
+    }
+
+    // return prefab that is related to the input enum type
+    public GameObject GetUIIngredient(INGREDIENT_TYPE ingrType)
+    {
+        // for each object in prefab list
+        foreach (GameObject obj in uiIngredients)
+        {
+            // look at the ingredient script inside prefab
+            if (obj.GetComponent<Ingredient>().type == ingrType)
+            {
+                return obj;
+            }
+        }
+
+        Debug.Log("Could not find " + ingrType + " prefab");
+
+        return null;
     }
 
     // Clears the displayed order
@@ -233,7 +247,7 @@ public class TacoUIManager : MonoBehaviour
         Vector3 endPos = startPos;
         endPos.y = 8.54f;
 
-        float windowOpenTime = 1f;
+        float windowOpenTime = 0.75f;
         while (windowTime < windowOpenTime)
         {
             float t = windowTime / windowOpenTime;

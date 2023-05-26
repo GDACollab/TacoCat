@@ -11,6 +11,7 @@ public class MenuManager : MonoBehaviour
     int level;
     bool win;
     [Header("Signs")]
+    public GameObject newGameSign;
     public GameObject continueSign;
     public GameObject hangingSign;
     public GameObject pole;
@@ -21,18 +22,25 @@ public class MenuManager : MonoBehaviour
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         pauseManager = GameObject.FindGameObjectWithTag("PauseManager").GetComponent<PauseManager>();
         level = gameManager.currLevel;
-        win = gameManager.trueEnding;
+        win = gameManager.goodEnding;
 
         if ((level > 1 && level < 4) || (gameManager.lastGame == currGame.DRIVING))
         {
             continueSign.SetActive(true); // Enable continue sign
+            newGameSign.SetActive(false);
             // Adjust pole to fit continue sign
             RectTransform poleBox = pole.GetComponent<RectTransform>();
             poleBox.sizeDelta = new Vector2(100, 1500);
         }
+        else
+        {
+            newGameSign.SetActive(true);
+        }
+
         if (win && level > 3)
         {
             hangingSign.SetActive(true); // Enable hanging sign
+            // Redundant; On active sign already create deploy animation
             Animator signDrop = hangingSign.GetComponent<Animator>();
             Debug.Log("MenuManager: Deloying Hanging Sign");
             signDrop.Play("Deploy");

@@ -61,12 +61,15 @@ public class TacoMakingGameManager : MonoBehaviour
         difficulty = Mathf.Min(difficulty, 3);
         customerManager.difficulty = difficulty;
 
+        /*
         // enable / disable backgrounds
         for (int i = 0; i < background.transform.childCount; i++){
             background.transform.GetChild(i).gameObject.SetActive(false);
         }
+
         background.transform.GetChild(difficulty-1).gameObject.SetActive(true);
-        
+        */        
+
         // create taco to place ingredients on
         CreateNewSubmissionTaco();
 
@@ -87,6 +90,9 @@ public class TacoMakingGameManager : MonoBehaviour
         if (difficulty == 1)
         {
             state = TACOMAKING_STATE.TUTORIAL;
+            nitroCharges = 1;
+            uiManager.DisplayNitro(nitroCharges); //updates the nitro display
+
         }
         else
         {
@@ -95,7 +101,7 @@ public class TacoMakingGameManager : MonoBehaviour
 
         yield return new WaitUntil(() => uiManager.camEffectManager != null);
 
-        uiManager.camEffectManager.StartFadeIn(1.5f);
+        uiManager.camEffectManager.StartFadeIn(2f);
 
     }
 
@@ -106,7 +112,6 @@ public class TacoMakingGameManager : MonoBehaviour
             case TACOMAKING_STATE.LOADING:
                 break;
             case TACOMAKING_STATE.TUTORIAL:
-
                 if (!uiManager.camEffectManager.isFading)
                 {
                     if(!uiManager.tutorialCanvas.activeInHierarchy){
@@ -129,14 +134,12 @@ public class TacoMakingGameManager : MonoBehaviour
                 state = TACOMAKING_STATE.PLAY;
                 break;
             case TACOMAKING_STATE.PLAY:
-
                 if (hand.state == PlayerHand.HAND_STATE.DISABLED) { hand.state = PlayerHand.HAND_STATE.HOME; }
 
                 CustomerRotation();
 
-                // check for end
-                // if (submittedCustomers == totalCustomers)
-                if (gasAmount >= minimumGasThreshold)
+                // engage minimum gas threshold, or reached max gas
+                if ( (submittedCustomers >= totalCustomers && gasAmount >= minimumGasThreshold) || gasAmount > 1)
                 {
                     state = TACOMAKING_STATE.END;
                 }
@@ -149,6 +152,8 @@ public class TacoMakingGameManager : MonoBehaviour
                     //AUDIO MANAGER END POPUP ACTIVATION SFX
                     audioManager.Play(audioManager.recieveTextSFX);
                 }
+                uiManager.endCanvas.SetActive(true);
+
                 uiManager.endCanvas.SetActive(true);
 
                 if (Input.GetKeyDown(KeyCode.Space))
@@ -169,13 +174,13 @@ public class TacoMakingGameManager : MonoBehaviour
 
     public void CreateNewSubmissionTaco()
     {
-        StartCoroutine(NewSubmissionTaco());
-    }
+        if (submissionTaco != null)
+        {
+            GameObject oldTaco = submissionTaco.gameObject;
+            Destroy(oldTaco, 3);
 
-    IEnumerator NewSubmissionTaco()
-    {
-        yield return new WaitForSeconds(0.5f);
-        if (submissionTaco != null) { Destroy(submissionTaco.gameObject); }
+            submissionTaco = null;
+        }
 
         // create init submission taco
         GameObject taco = Instantiate(tacoPrefab, benchManager.tacoSpawnPoint);
@@ -183,7 +188,6 @@ public class TacoMakingGameManager : MonoBehaviour
 
         submissionTaco.PlayEnterAnim();
     }
-
 
     // continue through remaining customers
     public void CustomerRotation()
@@ -211,11 +215,6 @@ public class TacoMakingGameManager : MonoBehaviour
     // submit taco to customer to be graded
     public void SubmitTaco()
     {
-        StartCoroutine(SubmitTacoRoutine());
-    }
-
-    IEnumerator SubmitTacoRoutine()
-    {
         //Can't submit taco until customer is finished moving
         if (customerManager.currCustomer != null && customerManager.currCustomer.moveRoutine == null)
         {
@@ -228,13 +227,13 @@ public class TacoMakingGameManager : MonoBehaviour
             if (comboContextScore == SUBMIT_TACO_SCORE.COMBO)
             {
                 submissionTaco.PlayComboAnim();
-                yield return new WaitForSeconds(1.5f);
+                //yield return new WaitForSeconds(1.5f);
 
             }
             else if (comboContextScore == SUBMIT_TACO_SCORE.PERFECT)
             {
                 submissionTaco.PlayPerfectAnim();
-                yield return new WaitForSeconds(1);
+                //yield return new WaitForSeconds(1);
             }
             else
             {
@@ -253,6 +252,7 @@ public class TacoMakingGameManager : MonoBehaviour
             uiManager.newOrderTaken = false;
         }
     }
+
 
     // Parameter: score from completed Taco
     // Updates gameScore, perfectCounter and comboCounter as necessary

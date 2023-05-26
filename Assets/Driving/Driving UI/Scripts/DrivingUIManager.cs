@@ -42,16 +42,21 @@ public class DrivingUIManager : MonoBehaviour
     public Transform pointerStart;
     public Transform pointerEnd;
 
-    [Header("Toggle Progress Bar")]
-    private GameObject progressBarSlider;
+    [Header("Pop Up Canvas")]
+    public List<string> cityNames = new List<string>();
 
-    [Header("Begin Canvas")]
-    public GameObject tutorialCanvas;
+    public string startHeader = "Next Stop :";
+    public string startBody = "Land flips to get extra boosts, and <b>SHIFT</b> to use <b>NITRO</b>";
 
-    [Header("End Canvas")]
-    public GameObject transitionParent;
-    public TMP_Text transitionMessage;
-    private bool endOfGame = false;
+    public string completeDrivingHeader = "You made it to ";
+    public string completeDrivingBody = "One step closer to Jamie! :3!~";
+
+    public string failDrivingHeader = "You ran out of gas.";
+    public string failDrivingBody = "A tow truck took you back to ";
+
+    [Space(10)]
+    public GameObject beginningCanvas;
+    public GameObject endCanvas;
     
     // Start is called before the first frame update
     void Start()
@@ -75,7 +80,6 @@ public class DrivingUIManager : MonoBehaviour
         //updateNitro();
         
         velocityText.text = "Velocity: " + vehicle.GetComponent<Rigidbody2D>().velocity.x;
-
         flipText.text = "Flip Count: " + flipTracker.flipCount;
         
         // update the distance travelled
@@ -137,12 +141,29 @@ public class DrivingUIManager : MonoBehaviour
             }
         }
     }
-    
 
+    public void ShowBegLevelCanvas()
+    {
+        beginningCanvas.SetActive(true);
 
-    public void GameEndCanvas(string message){
-        transitionParent.SetActive(true);
-        transitionMessage.text = message;
+        beginningCanvas.GetComponent<UI_PopUp_Card>().SetHeader(startHeader + cityNames[GameManager.instance.currLevel - 1] + "!");
+        beginningCanvas.GetComponent<UI_PopUp_Card>().SetBody(startBody);
+    }
+
+    public void ShowEndLevelCanvas(bool levelComplete)
+    {
+        endCanvas.SetActive(true);
+
+        if (levelComplete)
+        {
+            endCanvas.GetComponent<UI_PopUp_Card>().SetHeader(completeDrivingHeader + cityNames[GameManager.instance.currLevel - 1] + "!!");
+            endCanvas.GetComponent<UI_PopUp_Card>().SetBody("You landed <b>" + flipTracker.totalLandedFlips + "</b> flips!" + completeDrivingBody);
+        }
+        else
+        {
+            endCanvas.GetComponent<UI_PopUp_Card>().SetHeader(failDrivingHeader);
+            endCanvas.GetComponent<UI_PopUp_Card>().SetBody(failDrivingBody + cityNames[GameManager.instance.currLevel - 1]);
+        }
     }
 
 }

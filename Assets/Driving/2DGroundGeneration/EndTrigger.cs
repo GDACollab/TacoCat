@@ -23,9 +23,7 @@ public class EndTrigger : MonoBehaviour
             if (end)
             {
                 Debug.Log("Player hit end driving trigger");
-
-
-                //drivingGameManager.endOfGame = true;
+                drivingGameManager.state = DRIVINGGAME_STATE.COMPLETE;
             }
         }
     }

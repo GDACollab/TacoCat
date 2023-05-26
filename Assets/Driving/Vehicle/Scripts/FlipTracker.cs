@@ -29,6 +29,7 @@ public class FlipTracker : MonoBehaviour
     public TutorialManager uiScript;
     public int flipCount;
     private bool flipCounted;
+    public int totalLandedFlips;
     public float currAirTime;
 
     [Space(10)]
@@ -125,7 +126,7 @@ public class FlipTracker : MonoBehaviour
             ActiveFlipCounter();
         }
         else 
-        { 
+        {
             currAirTime = 0;
             flipCount = 0;
         }
@@ -139,6 +140,8 @@ public class FlipTracker : MonoBehaviour
         if (Mathf.Abs(groundPointRot - landPointRot) < perfectLandingRotationBound && currAirTime > perfectLandingMinAirTime)
         {
             uiScript.showFlipCountUI(flipCount);
+            totalLandedFlips += flipCount;
+
             return true;
         }
         return false;

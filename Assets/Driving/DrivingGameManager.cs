@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public enum DRIVINGGAME_STATE { LOADING, TUTORIAL, PLAY, END, END_TRANSITION }
+public enum DRIVINGGAME_STATE { LOADING, TUTORIAL, PLAY, COMPLETE, FAIL, END_TRANSITION }
 
 public class DrivingGameManager : MonoBehaviour
 {
@@ -16,7 +16,6 @@ public class DrivingGameManager : MonoBehaviour
 
     [Header("States")]
     public DRIVINGGAME_STATE state = DRIVINGGAME_STATE.LOADING;
-    public bool endOfGame;
 
     [Header("Stages")]
     public StageManager foregroundStageManager;
@@ -32,12 +31,7 @@ public class DrivingGameManager : MonoBehaviour
     public int stuckMaxVelocity;
     public int stuckTimeoutDuration;
     public float stuckTime;
-    private bool endRun = false;
-    
-    [Header("Transition")]
-    public string successText = "You made it to the next city. One step closer to Jamie!";
-    public string failText = "You ran out of gas. A tow truck took you back to the prevous city";
-    
+
     [Header("Nitro Carry")]
     public int nitroCharges = 3;
 
@@ -47,8 +41,8 @@ public class DrivingGameManager : MonoBehaviour
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         uiManager = GetComponentInChildren<DrivingUIManager>();
         vehicle.rb_vehicle.constraints = RigidbodyConstraints2D.FreezeAll;
+        vehicle.disableInputs = true;
 
-        endOfGame = false;
         stuckTime = 0;
 
         StartCoroutine(Initialize());
@@ -82,7 +76,7 @@ public class DrivingGameManager : MonoBehaviour
         state = DRIVINGGAME_STATE.TUTORIAL;
     }
 
-    // Update is called once per frame
+    Coroutine endStateRoutine; // Variable to store the coroutine
     void Update()
     {
 
@@ -95,15 +89,14 @@ public class DrivingGameManager : MonoBehaviour
                 break;
             case DRIVINGGAME_STATE.TUTORIAL:
 
-                uiManager.cameraEffectManager.StartFadeIn();
+                uiManager.cameraEffectManager.StartFadeIn(1.5f);
 
                 if (!uiManager.cameraEffectManager.isFading)
                 {
-                    uiManager.tutorialCanvas.SetActive(true);
-
+                    uiManager.ShowBegLevelCanvas();
                     if (Input.GetKeyDown(KeyCode.Space))
                     {
-                        uiManager.tutorialCanvas.SetActive(false);
+                        uiManager.beginningCanvas.SetActive(false);
                         state = DRIVINGGAME_STATE.PLAY;
                     }
                 }
@@ -114,26 +107,18 @@ public class DrivingGameManager : MonoBehaviour
 
                 UpdatePlay();
 
-                // << END LEVEL CHECK >>
-                if (percentageTraveled >= 1 && !endOfGame)
-                {
-                    state = DRIVINGGAME_STATE.END;
-                }
-
                 break;
 
-            case DRIVINGGAME_STATE.END:
-                StartCoroutine(vehicle.NegateVelocityOverTime(5));
-                vehicle.disableInputs = true;
-
-                uiManager.tutorialCanvas.SetActive(true);
-
-                if (Input.GetKeyDown(KeyCode.Space))
+            case DRIVINGGAME_STATE.COMPLETE:
+                if (endStateRoutine == null)
                 {
-                    uiManager.tutorialCanvas.SetActive(false);
-                    state = DRIVINGGAME_STATE.END_TRANSITION;
-
-                    uiManager.cameraEffectManager.StartFadeOut();
+                    endStateRoutine = StartCoroutine(EndStateRoutine(true));
+                }
+                break;
+            case DRIVINGGAME_STATE.FAIL:
+                if (endStateRoutine == null)
+                {
+                    endStateRoutine = StartCoroutine(EndStateRoutine(false));
                 }
                 break;
 
@@ -149,13 +134,13 @@ public class DrivingGameManager : MonoBehaviour
     public void UpdatePlay()
     {
         // << STUCK CHECK >>
-        if (vehicle.GetFuel() == 0 && vehicle.GetNitro() == 0 && !endOfGame) // Out of fuel & Nitro
+        if (vehicle.GetFuel() == 0 && vehicle.GetNitro() == 0) // Out of fuel & Nitro
         {
             if (vehicle.GetVelocity().x < stuckMaxVelocity) // Truck is stuck
             {
-                if (stuckTime >= stuckTimeoutDuration && !endOfGame && !endRun) // Timer is up
+                if (stuckTime >= stuckTimeoutDuration) // Timer is up
                 {
-                    EndOfGame(false);
+                    state = DRIVINGGAME_STATE.FAIL;
                 }
                 else
                 {
@@ -177,18 +162,28 @@ public class DrivingGameManager : MonoBehaviour
         // << UPDATE LIGHTING MANAGER >>
         lightingManager.timeOfDay = gameManager.main_gameTimer;
     }
-    
-    public void EndOfGame(bool win)
+
+    IEnumerator EndStateRoutine(bool level_complete)
     {
-        if (win)
+        StartCoroutine(vehicle.NegateVelocity(2));
+        vehicle.disableInputs = true;
+
+        uiManager.ShowEndLevelCanvas(level_complete);
+
+        yield return new WaitForSeconds(1f);
+
+        while (state != DRIVINGGAME_STATE.END_TRANSITION)
         {
-            uiManager.GameEndCanvas(successText);
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                uiManager.beginningCanvas.SetActive(false);
+                uiManager.cameraEffectManager.StartFadeOut();
+                state = DRIVINGGAME_STATE.END_TRANSITION;
+            }
+            yield return null;
         }
-        else
-        {
-            
-            uiManager.GameEndCanvas(failText);
-        }
+
+
     }
 
     public List<int> getSignDistances(int numLandmarks, int totalSignDistance){

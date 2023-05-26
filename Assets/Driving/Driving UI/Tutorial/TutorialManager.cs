@@ -67,42 +67,43 @@ public class TutorialManager : MonoBehaviour {
 
     private void Update()
     {
-        if (truck.rb_vehicle.velocity.x <= 0.1f)
+
+        if (drivingGameManager.state == DRIVINGGAME_STATE.PLAY)
         {
-            if (!TutorialManagerInfo.showGas)
+            if (truck.rb_vehicle.velocity.x <= 0.1f)
             {
-                TutorialManagerInfo.showGas = true;
-                StartCoroutine(ShowTutorialMessage(space, () =>
+                if (!TutorialManagerInfo.showGas)
                 {
-                    return Input.GetKey(KeyCode.Space);
+                    TutorialManagerInfo.showGas = true;
+                    StartCoroutine(ShowTutorialMessage(space, () =>
+                    {
+                        return Input.GetKey(KeyCode.Space);
+                    }));
+                }
+
+            }
+            else if (TutorialManagerInfo.showGas && truck.rb_vehicle.velocity.x > 0 && !TutorialManagerInfo.showNitro)
+            {
+                TutorialManagerInfo.showNitro = true;
+                StartCoroutine(ShowTutorialMessage(nitro, () =>
+                {
+                    return Input.GetKey(KeyCode.LeftShift);
                 }));
             }
 
-        }
-        else if (TutorialManagerInfo.showGas && truck.rb_vehicle.velocity.x > 0 && !TutorialManagerInfo.showNitro)
-        {
-            TutorialManagerInfo.showNitro = true;
-            StartCoroutine(ShowTutorialMessage(nitro, () =>
+            if (truck.rb_vehicle.velocity.y > 10 && truck.state == DRIVE_STATE.IN_AIR && !TutorialManagerInfo.showRotation)
             {
-                return Input.GetKey(KeyCode.LeftShift);
-            }));
+                TutorialManagerInfo.showRotation = true;
+                StartCoroutine(ShowTutorialMessage(arrowLeft, () =>
+                {
+                    return Input.GetKey(KeyCode.LeftArrow);
+                }));
+                StartCoroutine(ShowTutorialMessage(arrowRight, () =>
+                {
+                    return Input.GetKey(KeyCode.RightArrow);
+                }));
+            }
         }
-
-        if (truck.rb_vehicle.velocity.y > 10 && truck.state == DRIVE_STATE.IN_AIR && !TutorialManagerInfo.showRotation)
-        {
-            TutorialManagerInfo.showRotation = true;
-            StartCoroutine(ShowTutorialMessage(arrowLeft, () =>
-            {
-                return Input.GetKey(KeyCode.LeftArrow);
-            }));
-            StartCoroutine(ShowTutorialMessage(arrowRight, () =>
-            {
-                return Input.GetKey(KeyCode.RightArrow);
-            }));
-        }
-
-
-
     }
 
     public void showFlipCountUI(int count)
