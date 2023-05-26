@@ -150,7 +150,7 @@ public class GameManager : MonoBehaviour
                 Debug.Log("GameManager: Setup Taco Making");
                 determinedSceneType = true;
                 tacoGameManager = GameObject.FindGameObjectWithTag("TacoGameManager").GetComponent<TacoMakingGameManager>();
-                lightingManager = GameObject.FindGameObjectWithTag("LightingManager").GetComponent<LightingManager>();
+                
                 tacoGameManager.difficulty = currLevel;
                 currGame = currGame.TACO_MAKING;
             }
@@ -166,7 +166,6 @@ public class GameManager : MonoBehaviour
                 Debug.Log("GameManager: Setup Driving");
                 determinedSceneType = true;
                 drivingGameManager = GameObject.FindGameObjectWithTag("DrivingGameManager").GetComponent<DrivingGameManager>();
-                lightingManager = GameObject.FindGameObjectWithTag("LightingManager").GetComponent<LightingManager>();
                 drivingGameManager.nitroCharges = (currLevel == 1) ? Mathf.Max(nitroCharges, 1) : nitroCharges;
                 currGame = currGame.DRIVING;
             }
@@ -190,6 +189,9 @@ public class GameManager : MonoBehaviour
     public void Update()
     {
 
+        if(lightingManager!=null){
+            timeState=lightingManager.dayCycleState;
+        }
         // << TACO GAME MANAGER >>
         if (currGame == currGame.TACO_MAKING && tacoGameManager != null)
         {
@@ -227,9 +229,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if(lightingManager!=null){
-            timeState= lightingManager.dayCycleState;
-        }
+
         // << UPDATE GAME TIMER >>
         GameTimerUpdate();
     }
@@ -247,11 +247,10 @@ public class GameManager : MonoBehaviour
     // **** LOAD TACO MAKING SCENE ****
     public void LoadTacoMakingScene()
     {
-
         currGame = currGame.TACO_MAKING;
 
         StartCoroutine(ConcurrentLoadingCoroutine(tacoMakingScene));
-
+        //lightingManager = GameObject.FindGameObjectWithTag("LightingManager").GetComponent<LightingManager>();
         audioManager.PlaySong(audioManager.tacoMusicPath);
     }
 
@@ -275,7 +274,7 @@ public class GameManager : MonoBehaviour
             currLevel = 3;
             StartCoroutine(ConcurrentLoadingCoroutine(driving3));
         }
-
+        
         audioManager.PlaySong(audioManager.drivingMusicPath);
         audioManager.PlayDrivingAmbience(0);
         audioManager.PlayRPM(0);

@@ -2223,7 +2223,7 @@ GameObject:
   - component: {fileID: 894702618}
   m_Layer: 0
   m_Name: Lighting Manager
-  m_TagString: Untagged
+  m_TagString: LightingManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6141,6 +6141,7 @@ MonoBehaviour:
   dialogueDelay: 1
   dialogueChance: 0.65
   difficulty: 1
+  audioManager: {fileID: 0}
 --- !u!212 &7093204508692422263
 SpriteRenderer:
   m_ObjectHideFlags: 0

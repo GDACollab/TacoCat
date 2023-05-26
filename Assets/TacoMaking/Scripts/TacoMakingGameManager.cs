@@ -118,7 +118,7 @@ public class TacoMakingGameManager : MonoBehaviour
                     if (Input.GetKeyDown(KeyCode.Space))
                     {
                         uiManager.tutorialCanvas.SetActive(false);
-                        //AUDIO MANAGER EXIT POPUP
+                        audioManager.Play(audioManager.sendTextSFX);
                         state = TACOMAKING_STATE.ENTER_PLAY;
                     }
                 }
