@@ -170,7 +170,9 @@ public class GameManager : MonoBehaviour
                 determinedSceneType = true;
                 drivingGameManager = GameObject.FindGameObjectWithTag("DrivingGameManager").GetComponent<DrivingGameManager>();
                 drivingGameManager.nitroCharges = (currLevel == 1) ? Mathf.Max(nitroCharges, 1) : nitroCharges;
+
                 currGame = currGame.DRIVING;
+                Debug.Log("drivingGameManager found? " + drivingGameManager!=null + "currGame: " + currGame);
             }
             else
             {
@@ -195,11 +197,12 @@ public class GameManager : MonoBehaviour
         if(lightingManager!=null){
             timeState=lightingManager.dayCycleState;
         }*/
+
         // << TACO GAME MANAGER >>
         if (currGame == currGame.TACO_MAKING && tacoGameManager != null)
         {
             currDayCycleState = tacoGameManager.lightingManager.dayCycleState;
-
+            
             // check if all customers submitted , if so move to driving with gas amount
             if (tacoGameManager.state == TACOMAKING_STATE.END_TRANSITION && !isLoadingScene && !tacoGameManager.uiManager.camEffectManager.isFading)
             {
@@ -209,8 +212,15 @@ public class GameManager : MonoBehaviour
         }
 
         // << DRIVING GAME MANAGER >>
+        if (currGame == currGame.DRIVING){
+            Debug.Log("currgame == driving");
+        }if(drivingGameManager != null){
+            Debug.Log("drivingGameManager != null");
+        }
+
         if (currGame == currGame.DRIVING && drivingGameManager != null)
         {
+            Debug.Log("we made it to the currgame == driving & drivingGameManager != null BOOOYYZZZZ. lightingManager.dayCycleState =  " + drivingGameManager.lightingManager.dayCycleState + "currDayCycleState = drivingGameManager.lightingManager.dayCycleState: " + currDayCycleState);
             currDayCycleState = drivingGameManager.lightingManager.dayCycleState;
             
             if (drivingGameManager.endOfGame && !isLoadingScene)
