@@ -10,7 +10,6 @@ public class TacoUIManager : MonoBehaviour
     CustomerManager customerManager;
 
     [Header("Camera")]
-    Camera cam;
     public CameraEffectManager camEffectManager;
     public int camFadeDuration = 3;
 
@@ -53,8 +52,6 @@ public class TacoUIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        cam = Camera.main;
-        camEffectManager = cam.GetComponent<CameraEffectManager>();
         customerManager = tacoGameManager.customerManager;
 
         DisplayGas(0);
