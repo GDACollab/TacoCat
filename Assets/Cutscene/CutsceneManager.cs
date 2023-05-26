@@ -11,6 +11,7 @@ public class CutsceneManager : MonoBehaviour
     //public TextMeshProUGUI phoneText;
     public bool endOfCutscene;
 
+    GameManager gameManager;
     public AudioManager audioManager;
     public CameraEffectManager camEffectManager;
 
@@ -92,11 +93,18 @@ public class CutsceneManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = GameManager.instance;
         audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
         
         startingPosition = 0;
 
-        levelTMP.text = "LVL " + GameManager.instance.currLevel;
+        gameManager.cutsceneManager = GetComponent<CutsceneManager>();
+        gameManager.currGame = currGame.CUTSCENE;
+
+
+        // debug level 
+        levelTMP.text = "" + gameManager.currLevel;
+
         if (GameManager.instance.currLevel == 0)
         {
             StartCoroutine(IntroPanels());

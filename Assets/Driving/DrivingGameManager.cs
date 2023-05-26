@@ -38,7 +38,10 @@ public class DrivingGameManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        gameManager = GameManager.instance;
+        gameManager.drivingGameManager = GetComponent<DrivingGameManager>();
+        gameManager.currGame = currGame.DRIVING;
+
         uiManager = GetComponentInChildren<DrivingUIManager>();
         vehicle.rb_vehicle.constraints = RigidbodyConstraints2D.FreezeAll;
         vehicle.disableInputs = true;
@@ -183,7 +186,7 @@ public class DrivingGameManager : MonoBehaviour
             yield return null;
         }
 
-
+        endStateRoutine = null;
     }
 
     public List<int> getSignDistances(int numLandmarks, int totalSignDistance){
