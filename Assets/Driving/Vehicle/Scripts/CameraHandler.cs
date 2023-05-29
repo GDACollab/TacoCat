@@ -237,6 +237,7 @@ public class CameraHandler : MonoBehaviour
         return 0.0f;
     }
 
+
     void FixedUpdate()
     {
         // Check if vehicle is found
@@ -280,8 +281,19 @@ public class CameraHandler : MonoBehaviour
             // if too tall, multiply height offset
             if (truckHeight > truckHeightValueRange.y)
             {
-                newYOffset = -(truckHeight) * (0.5f);
+                newYOffset = -(truckHeight) * (0.9f);
                 newZOffset = zPosRange.y * 1; // get zoom percentage from z pos range
+            }
+
+            newZOffset = -(vehiclePos.x + 6500);
+            newZOffset = Mathf.Max(newZOffset, -10000);
+            newYOffset -= (newZOffset + 10f) * 0.2f;
+            newXOffset = -5.0f;
+
+            if (vehiclePos.x > 5000) {
+                newZOffset = -10000;
+                newXOffset = 5000 - vehiclePos.x;
+                newYOffset = 3000 - vehiclePos.y;
             }
 
 

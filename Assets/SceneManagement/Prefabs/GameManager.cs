@@ -164,7 +164,7 @@ public class GameManager : MonoBehaviour
 
                 if (currLevel <= 1 && drivingGameManager.nitroCharges == 0)
                 {
-                    drivingGameManager.nitroCharges = 1;
+                    drivingGameManager.nitroCharges = 3;
                 }
                 currGame = currGame.DRIVING;
             }

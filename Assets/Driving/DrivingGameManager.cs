@@ -93,12 +93,13 @@ public class DrivingGameManager : MonoBehaviour
 
                 if (!uiManager.cameraEffectManager.isFading)
                 {
-                    uiManager.ShowBegLevelCanvas();
+                    state = DRIVINGGAME_STATE.PLAY;
+                    /*uiManager.ShowBegLevelCanvas();
                     if (Input.GetKeyDown(KeyCode.Space))
                     {
                         uiManager.beginningCanvas.SetActive(false);
                         state = DRIVINGGAME_STATE.PLAY;
-                    }
+                    }*/
                 }
 
                 break;

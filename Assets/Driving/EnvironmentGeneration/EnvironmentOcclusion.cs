@@ -12,7 +12,7 @@ public class EnvironmentOcclusion : MonoBehaviour
 
     private void Update()
     {
-        OccludeEnvironmentObjects();
+        // OccludeEnvironmentObjects();
     }
 
     public void OccludeStages()
