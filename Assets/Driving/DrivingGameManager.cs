@@ -16,6 +16,7 @@ public class DrivingGameManager : MonoBehaviour
 
     [Header("States")]
     public DRIVINGGAME_STATE state = DRIVINGGAME_STATE.LOADING;
+    public bool completedLevel;
 
     [Header("Stages")]
     public StageManager foregroundStageManager;
@@ -139,6 +140,11 @@ public class DrivingGameManager : MonoBehaviour
         // << STUCK CHECK >>
         if (vehicle.GetFuel() == 0 && vehicle.GetNitro() == 0) // Out of fuel & Nitro
         {
+
+            state = DRIVINGGAME_STATE.FAIL;
+
+
+            /*
             if (vehicle.GetVelocity().x < stuckMaxVelocity) // Truck is stuck
             {
                 if (stuckTime >= stuckTimeoutDuration) // Timer is up
@@ -154,6 +160,7 @@ public class DrivingGameManager : MonoBehaviour
             {
                 stuckTime = 0; // Reset the clock
             }
+            */
         }
 
         // << UPDATE DISTANCE TRACKER >>
@@ -172,6 +179,9 @@ public class DrivingGameManager : MonoBehaviour
         vehicle.disableInputs = true;
 
         uiManager.ShowEndLevelCanvas(level_complete);
+
+        completedLevel = level_complete; // for gamemanager reference
+
 
         yield return new WaitForSeconds(1f);
 

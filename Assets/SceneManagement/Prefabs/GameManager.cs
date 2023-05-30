@@ -10,7 +10,7 @@ using FMODUnity;
 using UnityEditor;
 #endif
 
-public enum currGame { NONE, MENU, CUTSCENE, TACO_MAKING, DRIVING }
+public enum currGame { NONE, MENU, CUTSCENE, TACO_MAKING, DRIVING, BAD_ENDING, GOOD_ENDING, CREDITS }
 
 public class GameManager : MonoBehaviour
 {
@@ -86,7 +86,6 @@ public class GameManager : MonoBehaviour
     [Space(10)]
     public SceneObject tacoMakingScene;
     public SceneObject cutscene;
-    public SceneObject creditscene;
 
     [Header("--SCENE VARIABLE TRANSFER--")]
     public int nitroCharges = 3;
@@ -211,15 +210,30 @@ public class GameManager : MonoBehaviour
             // check for ending
             if (drivingGameManager.state == DRIVINGGAME_STATE.END_TRANSITION && !isLoadingScene)
             {
-                currLevel++;
-                Debug.Log("Current Level: " + currLevel);
-                LoadCutscene();
+
+                if (currDayCycleState == TIME_OF_DAY.MIDNIGHT)
+                {
+                    currLevel = 5;
+                    Debug.Log("Bad Ending: " + currLevel);
+                    LoadCutscene();
+                }
+                else if (!drivingGameManager.completedLevel)
+                {
+                    Debug.Log("Bad Ending: " + currLevel);
+                    LoadTacoMakingScene();
+                }
+                else
+                {
+                    currLevel++;
+                    Debug.Log("Current Level: " + currLevel);
+                    LoadCutscene();
+                }
             }
         }
 
 
         // << CUTSCENE MANAGER >>
-        if (currGame == currGame.CUTSCENE && cutsceneManager != null)
+        if ( (currGame == currGame.CUTSCENE || currGame == currGame.CREDITS) && cutsceneManager != null)
         {
             if (!cutsceneManager)
             {
@@ -234,22 +248,26 @@ public class GameManager : MonoBehaviour
             // check for end
             if (cutsceneManager.endOfCutscene && !isLoadingScene)
             {
-                LoadTacoMakingScene();
+
+                if (currGame == currGame.CREDITS) { LoadMenu(true); }
+                else { LoadTacoMakingScene(); }
+                
             }
         }
-
 
         // << UPDATE GAME TIMER >>
         GameTimerUpdate();
     }
 
-    public void LoadMenu()
+    public void LoadMenu(bool game_reset)
     {
         lastGame = currGame;
         currGame = currGame.MENU;
-        //currLevel = 1;    // Deletes progress
-        SceneManager.LoadScene(menuScene);
-        audioManager.PlaySong(audioManager.menuMusicPath);
+        if (game_reset)
+        {
+            currLevel = 1;    // Deletes progress
+        }
+        StartCoroutine(ConcurrentLoadingCoroutine(menuScene));
     }
 
     // **** LOAD TACO MAKING SCENE ****
@@ -269,17 +287,17 @@ public class GameManager : MonoBehaviour
         if (levelNum == 1)
         {
             currLevel = 1;
-            StartCoroutine(ConcurrentLoadingCoroutine(driving1));
+            StartCoroutine(LoadingCoroutine(driving1));
         }
         else if (levelNum == 2)
         {
             currLevel = 2;
-            StartCoroutine(ConcurrentLoadingCoroutine(driving2));
+            StartCoroutine(LoadingCoroutine(driving2));
         }
         else if (levelNum == 3)
         {
             currLevel = 3;
-            StartCoroutine(ConcurrentLoadingCoroutine(driving3));
+            StartCoroutine(LoadingCoroutine(driving3));
         }
         
         audioManager.PlaySong(audioManager.drivingMusicPath);
@@ -296,6 +314,24 @@ public class GameManager : MonoBehaviour
         audioManager.StopDrivingAmbience();
         audioManager.StopRPM();
         audioManager.PlaySong(audioManager.storyMusicPath);
+    }
+
+    public void LoadCredits()
+    {
+        currLevel = 6;
+        currGame = currGame.CREDITS;
+        StartCoroutine(ConcurrentLoadingCoroutine(cutscene));
+
+        Debug.Log("PLAYING " + audioManager.storyMusicPath);
+        audioManager.StopDrivingAmbience();
+        audioManager.StopRPM();
+        audioManager.PlaySong(audioManager.storyMusicPath);
+    }
+
+    public void StartBadEnding()
+    {
+        currGame = currGame.BAD_ENDING;
+
     }
 
     public void Quit()
@@ -464,7 +500,7 @@ public class GameManager : MonoBehaviour
     }
 
     #region SceneObjects
-#if UNITY_EDITOR
+    #if UNITY_EDITOR
             [CustomPropertyDrawer(typeof(SceneObject))]
             public class SceneObjectEditor : PropertyDrawer
             {
@@ -513,7 +549,7 @@ public class GameManager : MonoBehaviour
                     }
                 }
             }
-#endif
+    #endif
     #endregion
 
 

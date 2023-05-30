@@ -44,16 +44,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 399d30af4f863cf488de9a77942e1814, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  masterVolume: 1
-  musicVolume: 1
-  sfxVolume: 1
-  dialogueVolume: 1
-  ambianceVolume: 1
-  music:
-  - event:/Music/MenuMusic
-  - event:/Music/TacoMusic
-  - event:/Music/DrivingMusic
-  - event:/Music/StoryMusic
+  masterVolume: 0.5
+  musicVolume: 0.5
+  sfxVolume: 0.5
+  dialogueVolume: 0.5
+  ambianceVolume: 0.5
+  masVolBusPath: bus:/
+  musVolBusPath: bus:/Music
+  sfxVolBusPath: bus:/SFX
+  diaVolBusPath: bus:/Dialogue
+  ambiVolBusPath: bus:/Ambience
+  isPaused: 0
+  menuMusicPath: event:/Music/MenuMusic
+  storyMusicPath: event:/Music/StoryMusic
+  tacoMusicPath: event:/Music/TacoMusic
+  drivingMusicPath: event:/Music/DrivingMusic
+  drivingAmbiPath: 
   recieveTextSFX: Recieve Text
   sendTextSFX: Send Text
   typingSFX: Texting Clicks
@@ -62,7 +68,16 @@ MonoBehaviour:
   flipBoostSFX: event:/SFX/Driving/Flip Boost
   truckLandingSFX: 
   crashSFX: 
+  rpmSFX: 
   submitTacoSFX: Bell Ding
   ingriPlaceSFX: event:/SFX/Taco Making/Plop Ingredients
   pawSwipeSFX: event:/SFX/Taco Making/Swipe Ingredients
-  isPaused: 0
+  bellDingSFX: 
+  orderDia: 
+  selectUI: event:/SFX/UI & Menu/UI Select
+  hoverUI: event:/SFX/UI & Menu/UI Hover
+  creakHoverUI: event:/SFX/UI & Menu/UI Hover Sign
+  sliderUI: event:/SFX/UI & Menu/UI Slider Feedback
+  signDrop: event:/SFX/UI & Menu/Sign Drop
+  meow: event:/SFX/UI & Menu/Meow Button
+  beep: event:/SFX/UI & Menu/Beep-Beep Button

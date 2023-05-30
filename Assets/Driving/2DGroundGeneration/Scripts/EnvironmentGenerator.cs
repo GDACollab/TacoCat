@@ -185,7 +185,7 @@ public class EnvironmentGenerator : MonoBehaviour
         if (spawnGasStationEnds)
         {
             // << SPAWN GAS STATIONS >>
-            int levelNum = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().currLevel;
+            int levelNum = GameManager.instance.currLevel;
 
             // START STATION
             GameObject startStation = Instantiate(gasStationPrefab, groundPoints[gasStationGroundPointIndex] + new Vector3(-gasStationXOffset, gasStationYOffset, 0), Quaternion.Euler(new Vector3(0, 0, 0)));

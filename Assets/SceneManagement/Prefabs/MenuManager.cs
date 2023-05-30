@@ -6,8 +6,8 @@ public class MenuManager : MonoBehaviour
 {
     // UI Elements
     [Header("Game States")]
-    GameManager gameManager;
-    PauseManager pauseManager;
+    public GameManager gameManager;
+    public PauseManager pauseManager;
     int level;
     bool win;
     [Header("Signs")]
@@ -19,8 +19,9 @@ public class MenuManager : MonoBehaviour
     void Start()
     {
         // Get GameManager
-        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
-        pauseManager = GameObject.FindGameObjectWithTag("PauseManager").GetComponent<PauseManager>();
+        gameManager = GameManager.instance;
+        pauseManager = gameManager.pauseManager;
+
         level = gameManager.currLevel;
         win = gameManager.goodEnding;
 
@@ -73,12 +74,13 @@ public class MenuManager : MonoBehaviour
 
     public void Settings()
     {
-        pauseManager.Settings();
+        pauseManager = GameManager.instance.pauseManager;
+        pauseManager.ShowVolumeSettings();
     }
 
     public void Credits()
     {
-        
+        gameManager.LoadCredits();
     }
 
     public void Exit()

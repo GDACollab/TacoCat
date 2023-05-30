@@ -162,7 +162,7 @@ public class DrivingUIManager : MonoBehaviour
         else
         {
             endCanvas.GetComponent<UI_PopUp_Card>().SetHeader(failDrivingHeader);
-            endCanvas.GetComponent<UI_PopUp_Card>().SetBody(failDrivingBody + cityNames[GameManager.instance.currLevel - 1]);
+            endCanvas.GetComponent<UI_PopUp_Card>().SetBody(failDrivingBody + cityNames[GameManager.instance.currLevel - 2]);
         }
     }
 

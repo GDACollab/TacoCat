@@ -555,7 +555,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "Make 3 perfect tacos in a row to earn a\n <color=#00A0FF><b>NITRO BOOST</b></color>.\n\nWe
-    don't have much time until Alex leaves!\n"
+    don't have much time until Jamie leaves!\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 24fd20fda58deb448890ab4935f9e8e1, type: 2}
   m_sharedMaterial: {fileID: -6891349679822879135, guid: 24fd20fda58deb448890ab4935f9e8e1, type: 2}
@@ -6151,7 +6151,7 @@ MonoBehaviour:
   gameScore: 0
   maxGameScore: 0
   gasAmount: 0
-  minimumGasThreshold: 0.5
+  minimumGasThreshold: 1
   nitroCharges: 0
   tacoPrefab: {fileID: 7059686471766786423, guid: 863fba71dcdc2fd4c9dbafcb4a47ce2a, type: 3}
   allIngredientPrefabs:
@@ -6242,6 +6242,7 @@ MonoBehaviour:
   dialogueDelay: 1
   dialogueChance: 0.65
   difficulty: 1
+  audioManager: {fileID: 0}
 --- !u!212 &7093204508692422263
 SpriteRenderer:
   m_ObjectHideFlags: 0

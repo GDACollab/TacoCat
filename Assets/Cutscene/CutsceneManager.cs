@@ -38,6 +38,7 @@ public class CutsceneManager : MonoBehaviour
     public struct TextList
     {
         public character person;
+        [TextArea(3, 10)]
         public List<string> texts;
     }
 
@@ -54,6 +55,7 @@ public class CutsceneManager : MonoBehaviour
     public List<TextList> CutsceneThreeDialogue;
     public List<TextList> GoodEndingDialogue;
     public List<TextList> BadEndingDialogue;
+    public List<TextList> credits;
 
     [HideInInspector]
     public List<TextList> chosenDialogue;
@@ -99,7 +101,11 @@ public class CutsceneManager : MonoBehaviour
         startingPosition = 0;
 
         gameManager.cutsceneManager = GetComponent<CutsceneManager>();
-        gameManager.currGame = currGame.CUTSCENE;
+        
+        if (gameManager.currGame != currGame.CREDITS)
+        {
+            gameManager.currGame = currGame.CUTSCENE;
+        }
 
 
         // debug level 
@@ -165,6 +171,9 @@ public class CutsceneManager : MonoBehaviour
             case 5:
                 chosenDialogue = BadEndingDialogue;
                 break;
+            case 6:
+                chosenDialogue = credits;
+                break;
             default:
                 chosenDialogue = CutsceneOneDialogue;
                 break;
@@ -181,10 +190,6 @@ public class CutsceneManager : MonoBehaviour
             }
             else
             {
-                //Jamie
-                //slight pause so Jamie doesn't respond instantly
-
-                
                 //yield return jamieCountdown();
                 //yield return new WaitForSeconds(unskipableDelay);
                 yield return StartCoroutine(JamieText_InstantPrint(textLine.texts));
@@ -228,6 +233,7 @@ public class CutsceneManager : MonoBehaviour
         }
         else if (chosenDialogue == GoodEndingDialogue)
         {
+            // Move in ALEXXXX !!!! msg
             RectTransform rectTransform = jamieCallsAlexObject.GetComponent<RectTransform>();
             Vector3 startPosition = rectTransform.anchoredPosition3D;
             Vector3 targetPosition = new Vector3(-360, 0, 0);

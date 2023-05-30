@@ -16,7 +16,7 @@ public class AudioManager : MonoBehaviour {
     //SLIDERS FOR VOLUME, SHOULD BE A VALUE BETWEEN 0 & 1
     [Header("Volumes (sliders)")]
     [Range(0f, 1f)]
-    public float masterVolume;
+    public float masterVolume = 0.5f;
     [Range(0f, 1f)]
     public float musicVolume;
     [Range(0f, 1f)]
@@ -203,7 +203,8 @@ public class AudioManager : MonoBehaviour {
         Debug.Log("[Audio Manager] Playing Song: " + path);
         if (currentPlaying.isValid()) {
             StartCoroutine(RestOfPlaySong(path));
-        }else{
+        }
+        else{
             EventDescription eventDescription;
             FMOD.RESULT result = RuntimeManager.StudioSystem.getEvent(path, out eventDescription);
             if (result != FMOD.RESULT.OK)
