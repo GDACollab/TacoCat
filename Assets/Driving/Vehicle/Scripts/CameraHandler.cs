@@ -285,15 +285,22 @@ public class CameraHandler : MonoBehaviour
                 newZOffset = zPosRange.y * 1; // get zoom percentage from z pos range
             }
 
-            newZOffset = -(vehiclePos.x + 6500);
-            newZOffset = Mathf.Max(newZOffset, -10000);
-            newYOffset -= (newZOffset + 10f) * 0.2f;
-            newXOffset = -5.0f;
+            if (vehiclePos.x < 14000) {
 
-            if (vehiclePos.x > 5000) {
-                newZOffset = -10000;
-                newXOffset = 5000 - vehiclePos.x;
-                newYOffset = 3000 - vehiclePos.y;
+                newZOffset = -(vehiclePos.x + 9000) * 0.4f;
+                newZOffset = Mathf.Max(newZOffset, -10000);
+                newYOffset -= (newZOffset) * 0.2f + 150f;
+                newXOffset = -5.0f;
+            }
+
+            if (vehiclePos.x > 3000 && vehiclePos.x < 14000) {
+                newZOffset = -9000;
+                newXOffset = 8000 - vehiclePos.x;
+                newYOffset = 3200 - vehiclePos.y;
+            } else if (vehiclePos.x > -4000 && vehiclePos.x < -2000) {
+                newZOffset = -2500;
+                newXOffset = -3600 - vehiclePos.x;
+                newYOffset = 941 - vehiclePos.y;
             }
 
 
