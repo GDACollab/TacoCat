@@ -43,7 +43,7 @@ public class MenuManager : MonoBehaviour
             // Redundant; On active sign already create deploy animation
             Animator signDrop = hangingSign.GetComponent<Animator>();
             Debug.Log("MenuManager: Deloying Hanging Sign");
-            signDrop.Play("Deploy");
+            //signDrop.Play("Deploy"); //<<SECRET>>
         }
     }
 

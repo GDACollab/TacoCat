@@ -137,7 +137,7 @@ public class GameManager : MonoBehaviour
         cutsceneManager = null;
 
         // wait till music is loaded
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(3);
 
         // Start Menu Music
         if (currGame == currGame.MENU)
