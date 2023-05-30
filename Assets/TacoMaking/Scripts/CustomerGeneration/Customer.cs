@@ -5,6 +5,8 @@ using UnityEngine;
 public enum CUST_SPECIES { None, Fish, Raven, Sheep, Frog, Capybara }; //species selectable by CreateCustomerOrder
 public class Customer: MonoBehaviour
 {
+    private static bool spawnedFish = false;
+
     CustomerManager customerManager;
     TacoMakingGameManager tacoGameManager;
     [HideInInspector]
@@ -135,6 +137,10 @@ public class Customer: MonoBehaviour
 
     public CUST_SPECIES ChooseRandomSpecies()    //Generates a Random Species
     {
+        if (!spawnedFish) {
+            spawnedFish = true;
+            return CUST_SPECIES.Fish;
+        }
         return (CUST_SPECIES)Random.Range(1,6);
     }
 

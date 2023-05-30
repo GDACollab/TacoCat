@@ -25,7 +25,7 @@ public class CustomerDialogue : MonoBehaviour
     [SerializeField] private List<string> sheepBarksBad;
     [SerializeField] private List<string> fishBarksBad;
     [Header("Dialouge Box")]
-    [SerializeField] private GameObject dialogueBox;
+    [SerializeField] public GameObject dialogueBox;
     [SerializeField] private TextMeshProUGUI textMesh;
 
     public void CreateDialogue(Customer customer, SUBMIT_TACO_SCORE score)

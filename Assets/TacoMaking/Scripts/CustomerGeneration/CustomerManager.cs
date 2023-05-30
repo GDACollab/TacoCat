@@ -88,6 +88,50 @@ public class CustomerManager : MonoBehaviour
         }
     }
 
+    IEnumerator CreateTrailerDialogue(Customer c) {
+        yield return new WaitForSeconds(2.5f);
+        currCustomer.GetComponent<CustomerDialogue>().CreateDialogue(currCustomer, SUBMIT_TACO_SCORE.OKAY);
+
+        yield return new WaitForSeconds(2f);
+
+        var bubble = currCustomer.GetComponent<CustomerDialogue>().dialogueBox.transform
+                .GetChild(0).GetChild(0).GetChild(0).GetComponent<UnityEngine.UI.Image>();
+        var text = bubble.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>();
+        Debug.Log(text);
+
+        var alpha = 1f;
+        while (alpha > 0) {
+            yield return new WaitForEndOfFrame();
+            alpha -= Time.deltaTime * 0.5f;
+            bubble.color = new Color(1, 1, 1, alpha);
+            text.color = new Color(text.color.r, text.color.g, text.color.b, alpha);
+        }
+        var head = c.anim.currAnimator.transform.GetChild(0).GetChild(0).GetChild(0).GetChild(0);
+        head.GetChild(0).gameObject.SetActive(true);
+        var burst = head.GetChild(2);
+        burst.gameObject.SetActive(true);
+
+        var scale = 0f;
+        var baseScale = new Vector2(burst.localScale.x, burst.localScale.y);
+        var scaleUp = true;
+        while (true) {
+            burst.localScale = new Vector3(baseScale.x * scale, baseScale.y * scale);
+            if (scaleUp) {
+                scale += Time.deltaTime * 20f;
+                if (scale > 1.3f) {
+                    scaleUp = false;
+                }
+            } else {
+                scale -= Time.deltaTime * 20f;
+                if (scale < 0.85f) {
+                    scaleUp = true;
+                }
+            }
+            yield return new WaitForSeconds(0.1f);
+        }
+        // c.anim.currAnimator
+    }
+
     //Member to update the positions of all the customers in line
     private void UpdateCustomers()
     {
@@ -98,6 +142,7 @@ public class CustomerManager : MonoBehaviour
 
             currCustomer.anim.hasOrdered = true;
 
+            StartCoroutine(CreateTrailerDialogue(currCustomer));
             //tacoAudioManager.OrderAudio(); //needs to be edited later
         }
 
