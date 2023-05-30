@@ -47,6 +47,9 @@ public class DrivingGameManager : MonoBehaviour
         vehicle.rb_vehicle.constraints = RigidbodyConstraints2D.FreezeAll;
         vehicle.disableInputs = true;
 
+        // << UPDATE LIGHTING MANAGER >>
+        lightingManager.timeOfDay = gameManager.main_gameTimer;
+
         stuckTime = 0;
 
         StartCoroutine(Initialize());

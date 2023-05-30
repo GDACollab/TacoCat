@@ -190,7 +190,7 @@ MonoBehaviour:
   m_LightType: 4
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
-  m_Color: {r: 0.5116948, g: 0.5496975, b: 0.81184536, a: 1}
+  m_Color: {r: 0.6273581, g: 0.6745943, b: 0.9999996, a: 1}
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
@@ -363,7 +363,7 @@ MonoBehaviour:
   m_LightType: 4
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
-  m_Color: {r: 0.090646155, g: 0.10703946, b: 0.19811323, a: 1}
+  m_Color: {r: 0.19237265, g: 0.20936522, b: 0.31132057, a: 1}
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
@@ -510,7 +510,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeOfDay: 1
-  dayCycleState: 3
+  dayCycleState: 4
   morningSunrise:
   - {r: 0.77254903, g: 0.70980394, b: 0.7254902, a: 1}
   - {r: 0.7254902, g: 0.6627451, b: 0.7254902, a: 1}
@@ -621,9 +621,9 @@ MonoBehaviour:
   morningParent: {fileID: 607796436276058399}
   morningCount: 50
   morningPrefabs:
-  - {fileID: 5691963823481247081, guid: acb3c15ccc5face4ab4d86f54eed3805, type: 3}
-  - {fileID: 334199361784943701, guid: 3e7312ef6ba8ca14695afcd2f4cdf44e, type: 3}
-  - {fileID: 6682212915930639279, guid: 49f77383e40026b4b8ad425249d1f416, type: 3}
+  - {fileID: 4166135674726958864, guid: 7a8b078d9f933294884928dd1a140be8, type: 3}
+  - {fileID: 2169505260499256152, guid: acfca56e8b9116c4c83f5262ed30b6f1, type: 3}
+  - {fileID: 32852987738948952, guid: fcbfdbe5825c0e243bc058458810f2d5, type: 3}
   middayParent: {fileID: 5966730230024094960}
   middayCount: 25
   middayPrefabs:
@@ -633,9 +633,9 @@ MonoBehaviour:
   eveningParent: {fileID: 5765387888092065996}
   eveningCount: 50
   eveningPrefabs:
-  - {fileID: 7737956203644409067, guid: 4cb6d2e73d2bb0f418a8939b2d410b30, type: 3}
-  - {fileID: 1179624295091646253, guid: 520009f253a7c6941bbd4cfeccbcd103, type: 3}
-  - {fileID: 6069557636326319083, guid: 4b7a72829f32adf42a7ead307748c26c, type: 3}
+  - {fileID: 5691963823481247081, guid: acb3c15ccc5face4ab4d86f54eed3805, type: 3}
+  - {fileID: 334199361784943701, guid: 3e7312ef6ba8ca14695afcd2f4cdf44e, type: 3}
+  - {fileID: 6682212915930639279, guid: 49f77383e40026b4b8ad425249d1f416, type: 3}
   nightParent: {fileID: 5759499370353351064}
   nightCount: 25
   nightPrefabs:
@@ -737,7 +737,7 @@ MonoBehaviour:
   m_LightType: 4
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
-  m_Color: {r: 0.16592081, g: 0.15241194, b: 0.23584911, a: 1}
+  m_Color: {r: 0.33392644, g: 0.30153057, b: 0.5283015, a: 1}
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
