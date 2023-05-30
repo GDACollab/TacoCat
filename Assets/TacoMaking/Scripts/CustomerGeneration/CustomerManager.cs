@@ -117,12 +117,12 @@ public class CustomerManager : MonoBehaviour
         while (true) {
             burst.localScale = new Vector3(baseScale.x * scale, baseScale.y * scale);
             if (scaleUp) {
-                scale += Time.deltaTime * 20f;
+                scale += 0.1f;
                 if (scale > 1.3f) {
                     scaleUp = false;
                 }
             } else {
-                scale -= Time.deltaTime * 20f;
+                scale -= 0.1f;
                 if (scale < 0.85f) {
                     scaleUp = true;
                 }
