@@ -179,7 +179,7 @@ public class LightingManager : MonoBehaviour
             return palettes[3];
         }
 
-        dayCycleState = TIME_OF_DAY.ERROR;
+        //dayCycleState = TIME_OF_DAY.ERROR;
         return palettes[3];
 
 
