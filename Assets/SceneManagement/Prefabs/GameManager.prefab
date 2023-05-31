@@ -59,6 +59,7 @@ MonoBehaviour:
   updateClockEvery_Minutes: 15
   hardCapHour: 23
   hardCapMinute: 59
+  hardCapAM: 0
   timeRemaining: 0
   main_gameTimer: 0
   curClockHour: 0
@@ -66,7 +67,7 @@ MonoBehaviour:
   isAM: 1
   currGame: 0
   lastGame: 0
-  currLevel: 0
+  currLevel: 1
   currHappyEnding: 1
   fullGameComplete: 0
   currScene:

@@ -240,7 +240,7 @@ public class CutsceneManager : MonoBehaviour
 
             if (gameManager.currHappyEnding)
             {
-                audioManager.currentPlaying.setParameterByName("happyEnding", gameManager.currHappyEnding? 0 : 1);
+                //audioManager.currentPlaying.setParameterByName("happyEnding", gameManager.currHappyEnding? 0 : 1);
             }
 
             while (elapsedTime < duration)

@@ -56,9 +56,6 @@ public class GameManager : MonoBehaviour
     public int curClockHour;
     [Tooltip("current minute")]
     public int curClockMinute;
-
-    private bool hardCapAM;
-    [HideInInspector]
     public bool isAM = true;
 
     [Header(" === SCENE MANAGEMENT === ")]
@@ -117,9 +114,8 @@ public class GameManager : MonoBehaviour
         audioManager = GetComponentInChildren<AudioManager>();
         pauseManager = GetComponentInChildren<PauseManager>();
 
-        // << START GAME TIMER >>
-        totalGameTime_startValue = totalGameTime_seconds;
-        GameTimerStart();
+        totalGameTime_startValue = totalGameTime_seconds; // save init value
+        GameTimerReset();
 
         StartCoroutine(SceneSetup());
 
@@ -267,7 +263,6 @@ public class GameManager : MonoBehaviour
                     }
                     else if (!drivingGameManager.completedLevel)
                     {
-                        currHappyEnding = true;
                         Debug.Log("Good Ending: " + currLevel);
                         LoadTacoMakingScene();
                     }
@@ -404,7 +399,7 @@ public class GameManager : MonoBehaviour
 
         if (reset_timer)
         {
-            GameTimerStart(endlessGameTimerCount); // reset game timer
+            GameTimerReset(endlessGameTimerCount); // reset game timer
         }
 
         StartCoroutine(ConcurrentLoadingCoroutine(endlessTacoScene));
@@ -501,19 +496,23 @@ public class GameManager : MonoBehaviour
         // in total minutes
         float totalClockTime = (totalGameTime_seconds - timeRemaining + (totalGameTime_seconds * 60 * startTime_24hr / 60 / (endTime_24hr - startTime_24hr))) * (60 * (endTime_24hr - startTime_24hr) / totalGameTime_seconds);
         curClockHour = (int)(totalClockTime) / 60;
+        
         if (curClockHour > 11)
         {
             isAM = false;
         }
-        while (curClockHour > 12)
+
+        if (curClockHour > 12)
         {
             curClockHour = curClockHour - 12;
         }
         curClockMinute = (int)(totalClockTime) % 60;
     }
 
-    public void GameTimerStart(int manualGameTime = -1)
+    public void GameTimerReset(int manualGameTime = -1)
     {
+
+        // manual reset
         if (manualGameTime == -1)
         {
             totalGameTime_seconds = totalGameTime_startValue;
@@ -523,10 +522,7 @@ public class GameManager : MonoBehaviour
             totalGameTime_seconds = manualGameTime;
         }
 
-
-        timeRemaining = totalGameTime_seconds;
-        main_gameTimer = 0;
-
+        // << Set AM >>
         if (startTime_24hr < 12)
         {
             isAM = true;
@@ -535,15 +531,12 @@ public class GameManager : MonoBehaviour
         {
             isAM = false;
         }
-        if (hardCapHour > 12)
-        {
-            hardCapHour -= 12;
-            hardCapAM = false;
-        }
-        else
-        {
-            hardCapAM = true;
-        }
+
+
+        timeRemaining = totalGameTime_seconds; // leftover time
+        main_gameTimer = 0; // set main updating timer to 0
+
+
         CalculateTime();
     }
 
@@ -565,22 +558,28 @@ public class GameManager : MonoBehaviour
         {
             currHappyEnding = false;
         }
-        if (curClockHour != hardCapHour || curClockMinute != hardCapMinute || isAM != hardCapAM)
+
+        // don't calclate time if at hard cap
+        if (curClockHour != hardCapHour || curClockMinute != hardCapMinute)
         {
-            timeRemaining -= Time.deltaTime;
-            if ((1 - (timeRemaining / totalGameTime_seconds)) <= 1 && (1 - (timeRemaining / totalGameTime_seconds)) >= 0)
-            {
-                main_gameTimer = (1 - (timeRemaining / totalGameTime_seconds));
-            }
-            else if ((1 - (timeRemaining / totalGameTime_seconds)) > 1)
-            {
-                main_gameTimer = 1;
-            }
-            else if ((1 - (timeRemaining / totalGameTime_seconds)) < 0)
-            {
-                main_gameTimer = 0;
-            }
+
             CalculateTime();
+        }
+
+
+        // update main game timer
+        timeRemaining -= Time.deltaTime;
+        if ((1 - (timeRemaining / totalGameTime_seconds)) <= 1 && (1 - (timeRemaining / totalGameTime_seconds)) >= 0)
+        {
+            main_gameTimer = (1 - (timeRemaining / totalGameTime_seconds));
+        }
+        else if ((1 - (timeRemaining / totalGameTime_seconds)) > 1)
+        {
+            main_gameTimer = 1;
+        }
+        else if ((1 - (timeRemaining / totalGameTime_seconds)) < 0)
+        {
+            main_gameTimer = 0;
         }
     }
 
