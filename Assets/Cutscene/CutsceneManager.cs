@@ -42,13 +42,10 @@ public class CutsceneManager : MonoBehaviour
         public List<string> texts;
     }
 
-
-
     public List<TextList> CutsceneOneDialogue;
     public GameObject intro_panel1;
     public GameObject intro_panel2;
     public GameObject intro_panel3;
-
 
     [Space(10)]
     public List<TextList> CutsceneTwoDialogue;

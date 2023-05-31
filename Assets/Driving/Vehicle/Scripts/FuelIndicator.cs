@@ -22,7 +22,7 @@ public class FuelIndicator : MonoBehaviour
         // NO GAS UI
         if (vehicle.fuelAmount <= 0)
         {
-            anim.Play("NoGas");
+            anim.Play("NoGasIndicator");
         }
 
 
