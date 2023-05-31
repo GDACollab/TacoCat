@@ -10,10 +10,11 @@ public class ClockTimer : MonoBehaviour
     private void Start()
     {
         GameManager gameManager = GameManager.instance;
-
-
         string clockHour = gameManager.curClockHour.ToString();
         string clockMinute = gameManager.curClockMinute.ToString();
+
+        if (gameManager.curClockHour > 12) { clockHour = (gameManager.curClockHour - 12).ToString(); }
+
         if (clockMinute.Length == 1)
         {
             clockMinute = "0" + clockMinute;

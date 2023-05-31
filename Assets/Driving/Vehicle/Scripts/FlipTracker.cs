@@ -57,7 +57,7 @@ public class FlipTracker : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
 
         if (drivingGameManager.state != DRIVINGGAME_STATE.PLAY) { return; }
@@ -147,17 +147,44 @@ public class FlipTracker : MonoBehaviour
         return false;
     }
 
+    private float accumulatedRotation;
+    private bool isRotatingClockwise;
     public void ActiveFlipCounter()
     {
-        if ((currRot < -250) && (currRot > -270) && !flipCounted)
+        float currentRotation = transform.rotation.eulerAngles.z;
+
+        if (isRotatingClockwise && currentRotation < 90f)
         {
-            flipCount++;
-            flipCounted = true;
+            // Crossed from clockwise to counterclockwise rotation
+            if (accumulatedRotation >= 360f || accumulatedRotation <= 270f)
+            {
+                flipCount++;
+                accumulatedRotation %= 360f;
+            }
+            isRotatingClockwise = false;
         }
-        else if ((currRot < 10) && (currRot > -10))
+        else if (!isRotatingClockwise && currentRotation > 270f)
         {
-            flipCounted = false;
+            // Crossed from counterclockwise to clockwise rotation
+            if (accumulatedRotation <= -360f || accumulatedRotation >= -90f)
+            {
+                flipCount++;
+                accumulatedRotation %= 360f;
+            }
+            isRotatingClockwise = true;
         }
+
+        // Update accumulated rotation
+        float rotationDelta = currentRotation - accumulatedRotation;
+        if (rotationDelta > 180f)
+        {
+            rotationDelta -= 360f;
+        }
+        else if (rotationDelta < -180f)
+        {
+            rotationDelta += 360f;
+        }
+        accumulatedRotation += rotationDelta;
     }
 
     private void OnDrawGizmos()
