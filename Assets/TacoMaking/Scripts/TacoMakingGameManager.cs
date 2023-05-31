@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
+
 public enum INGREDIENT_TYPE { NONE, FISH, SOUR_CREAM, PICO_DE_GALLO, CABBAGE, SLICED_JALAPENOS }
 public enum SUBMIT_TACO_SCORE { NONE, COMBO, PERFECT, GOOD, OKAY, FAILED } // possible scores a taco can get.
 
@@ -64,14 +66,14 @@ public class TacoMakingGameManager : MonoBehaviour
         // get difficulty
         customerManager.difficulty = gameManager.currLevel;
 
-        /*
+        difficulty = gameManager.currLevel;
+
         // enable / disable backgrounds
         for (int i = 0; i < background.transform.childCount; i++){
             background.transform.GetChild(i).gameObject.SetActive(false);
         }
 
-        background.transform.GetChild(difficulty-1).gameObject.SetActive(true);
-        */        
+        background.transform.GetChild(difficulty-1).gameObject.SetActive(true);    
 
         // create taco to place ingredients on
         CreateNewSubmissionTaco();
