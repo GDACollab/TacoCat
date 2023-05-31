@@ -167,8 +167,6 @@ public class AudioManager : MonoBehaviour {
         ambiBus = FMODUnity.RuntimeManager.GetBus(ambiVolBusPath);
         */
 
-        LoadBanksAndBuses();
-
         //menuMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + menuMusic);
         //cutsceneMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + cutsceneMusic);
         //tacoMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + tacoMusic);
@@ -177,8 +175,7 @@ public class AudioManager : MonoBehaviour {
 
     public void LoadBanksAndBuses()
     {
-
-
+        StartCoroutine(LoadBanksAndBusesRoutine());
     }
 
     public IEnumerator LoadBanksAndBusesRoutine()
