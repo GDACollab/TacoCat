@@ -1333,6 +1333,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &878030368 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 10505627301420208, guid: b98e17472161422409ce954e519a82b5, type: 3}
+  m_PrefabInstance: {fileID: 1236715028}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 399d30af4f863cf488de9a77942e1814, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &921153074
 GameObject:
   m_ObjectHideFlags: 0
@@ -1866,26 +1877,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 10505627301420208, guid: b98e17472161422409ce954e519a82b5, type: 3}
-      propertyPath: sfxVolume
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 10505627301420208, guid: b98e17472161422409ce954e519a82b5, type: 3}
-      propertyPath: musicVolume
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 10505627301420208, guid: b98e17472161422409ce954e519a82b5, type: 3}
-      propertyPath: masterVolume
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 10505627301420208, guid: b98e17472161422409ce954e519a82b5, type: 3}
-      propertyPath: ambianceVolume
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 10505627301420208, guid: b98e17472161422409ce954e519a82b5, type: 3}
-      propertyPath: dialogueVolume
-      value: 0.2
-      objectReference: {fileID: 0}
     - target: {fileID: 5120949041857759932, guid: b98e17472161422409ce954e519a82b5, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -1990,6 +1981,10 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6227995025564232334, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 878030368}
     - target: {fileID: 7004250954060202129, guid: b98e17472161422409ce954e519a82b5, type: 3}
       propertyPath: m_Name
       value: GameManager

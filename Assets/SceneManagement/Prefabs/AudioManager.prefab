@@ -46,11 +46,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bankDirectoryPath: 
-  masterVolume: 0.5
-  musicVolume: 0.5
-  sfxVolume: 0.5
-  dialogueVolume: 0.5
-  ambianceVolume: 0.5
+  masterVolume: 0.2
+  musicVolume: 0.2
+  sfxVolume: 0.2
+  dialogueVolume: 0.2
+  ambianceVolume: 0.2
   masVolBusPath: bus:/
   musVolBusPath: bus:/Music
   sfxVolBusPath: bus:/SFX
@@ -83,6 +83,10 @@ MonoBehaviour:
   signDrop: event:/SFX/UI & Menu/Sign Drop
   meow: event:/SFX/UI & Menu/Meow Button
   beep: event:/SFX/UI & Menu/Beep-Beep Button
+  busListOk: 0
+  sysemIsOk: 0
+  allBanksLoaded: 0
+  allBusesLoaded: 0
 --- !u!114 &6921200386482857714
 MonoBehaviour:
   m_ObjectHideFlags: 0

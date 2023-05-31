@@ -179,6 +179,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5536608039652035106, guid: e1b009394b5c2f24bb844b6948eaabb8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 10505627301420208}
+    - target: {fileID: 5536608039652035106, guid: e1b009394b5c2f24bb844b6948eaabb8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: playMeow
+      objectReference: {fileID: 0}
     - target: {fileID: 5536608039708702151, guid: e1b009394b5c2f24bb844b6948eaabb8, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -238,6 +246,18 @@ PrefabInstance:
     - target: {fileID: 5536608039789153867, guid: e1b009394b5c2f24bb844b6948eaabb8, type: 3}
       propertyPath: m_Name
       value: PauseManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 5536608039841798616, guid: e1b009394b5c2f24bb844b6948eaabb8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 10505627301420208}
+    - target: {fileID: 5536608039841798616, guid: e1b009394b5c2f24bb844b6948eaabb8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: playBeep
+      objectReference: {fileID: 0}
+    - target: {fileID: 5536608039841798618, guid: e1b009394b5c2f24bb844b6948eaabb8, type: 3}
+      propertyPath: m_Name
+      value: BeepButton
       objectReference: {fileID: 0}
     - target: {fileID: 5536608040046005624, guid: e1b009394b5c2f24bb844b6948eaabb8, type: 3}
       propertyPath: m_AnchorMax.x

@@ -16,7 +16,7 @@ public class PauseManager : MonoBehaviour
 
     AudioManager audioManager;
     protected bool isPaused = false;
-    protected bool updateVolume = false;
+    protected bool slidersUpdateVolume = false;
 
     protected List<Slider> volumeSliders = new List<Slider>();
 
@@ -37,7 +37,8 @@ public class PauseManager : MonoBehaviour
 
     public void Pause() {
         isPaused = !isPaused;
-        Time.timeScale = isPaused ? 0 : 1;
+
+        OverwriteVolumeSliders();
 
         // Reset pause menu on close
         if (isPaused)
@@ -51,37 +52,14 @@ public class PauseManager : MonoBehaviour
             CloseMainPauseMenu();
         }
 
-        // set sliders to current values
-        for (int i = 0; i < volumeSliders.Count; i++)
-        {
-            var slider = volumeSliders[i];
-            switch (i)
-            {
-                case 0:
-                    slider.value = audioManager.masterVolume;
-                    break;
-                case 1:
-                    slider.value = audioManager.musicVolume;
-                    break;
-                case 2:
-                    slider.value = audioManager.ambianceVolume;
-                    break;
-                case 3:
-                    slider.value = audioManager.sfxVolume;
-                    break;
-                case 4:
-                    slider.value = audioManager.dialogueVolume;
-                    break;
-            }
-        }
-
-        updateVolume = true;
+        slidersUpdateVolume = true;
     }
 
     public void ShowMainPauseMenu()
     {
         // Pause Game
         isPaused = true;
+        slidersUpdateVolume = true;
 
         // Open settings menu
         Debug.Log("PauseManager: Opening Pause Menu");
@@ -95,7 +73,7 @@ public class PauseManager : MonoBehaviour
     {
         // Unpause Game
         isPaused = false;
-        updateVolume = false;
+        slidersUpdateVolume = false;
 
         // Open settings menu
         Debug.Log("PauseManager: Close Pause Menu");
@@ -133,26 +111,56 @@ public class PauseManager : MonoBehaviour
         levelSwap.SetActive(true);
     }
 
+    void OverwriteVolumeSliders()
+    {
+        // set sliders to current values
+        for (int i = 0; i < volumeSliders.Count; i++)
+        {
+            var slider = volumeSliders[i];
+            switch (i)
+            {
+                case 0:
+                    slider.value = audioManager.masterVolume;
+                    break;
+                case 1:
+                    slider.value = audioManager.musicVolume;
+                    break;
+                case 2:
+                    slider.value = audioManager.ambianceVolume;
+                    break;
+                case 3:
+                    slider.value = audioManager.sfxVolume;
+                    break;
+                case 4:
+                    slider.value = audioManager.dialogueVolume;
+                    break;
+            }
+        }
+    }
+
     public void LoadMenuScene_Continue()
     {
+        CloseMainPauseMenu();
         GameManager.instance.LoadMenu(false);
     }
 
     public void LoadMenuScene_Reset()
     {
+        CloseMainPauseMenu();
         GameManager.instance.LoadMenu(true);
     }
 
     private void Update() {
 
         audioManager.isPaused = isPaused;
+        Time.timeScale = isPaused ? 0 : 1;
 
 
         if (Input.GetKeyDown(pauseKey)) {
             Pause();
         }
 
-        if (updateVolume) {
+        if (slidersUpdateVolume) {
 
             // ... Switch statements. Please change AudioManager.cs to a list or something. I hate switch statements.
             for (var i = 0; i < volumeSliders.Count; i++) {
