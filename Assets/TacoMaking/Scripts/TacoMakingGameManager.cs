@@ -219,7 +219,7 @@ public class TacoMakingGameManager : MonoBehaviour
     public void SubmitTaco()
     {
         //Can't submit taco until customer is finished moving
-        if (customerManager.currCustomer != null && customerManager.currCustomer.moveRoutine == null)
+        if (customerManager.currCustomer != null && customerManager.currCustomer.moveRoutine == null && hand.state == PlayerHand.HAND_STATE.HOME)
         {
             SUBMIT_TACO_SCORE score = customerManager.currCustomer.ScoreTaco(submissionTaco);
             SUBMIT_TACO_SCORE comboContextScore = NewTacoScore(score);

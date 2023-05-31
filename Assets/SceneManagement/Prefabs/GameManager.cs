@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     public TacoMakingGameManager tacoGameManager;
     public DrivingGameManager drivingGameManager;
     public CutsceneManager cutsceneManager;
+    public MenuManager menuManager;
 
 
     [Header("TIME OF DAY")]
@@ -110,6 +111,10 @@ public class GameManager : MonoBehaviour
 
         // << START GAME TIMER >>
         GameTimerStart();
+
+
+        StartCoroutine(SceneSetup());
+
     }
 
     private void OnEnable()
@@ -134,9 +139,10 @@ public class GameManager : MonoBehaviour
         drivingGameManager = null;
         tacoGameManager = null;
         cutsceneManager = null;
+        menuManager = null;
 
         // wait till music is loaded
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
 
         // Start Menu Music
         if (currGame == currGame.MENU)

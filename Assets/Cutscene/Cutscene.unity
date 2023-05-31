@@ -815,7 +815,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &849687546
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1387,7 +1387,7 @@ MonoBehaviour:
     - WOW MUCH CUTE :33
   chosenDialogue: []
   unskipableDelay: 0.15
-  messageDelayAlex: 0.5
+  messageDelayAlex: 0.6
   textSpeedAlex: 0.05
   messageDelayJamie: 1.5
   currentBubbles: []
@@ -1423,6 +1423,10 @@ PrefabInstance:
     - target: {fileID: 7004250954060202129, guid: b98e17472161422409ce954e519a82b5, type: 3}
       propertyPath: m_Name
       value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: currLevel
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7004250954060202135, guid: b98e17472161422409ce954e519a82b5, type: 3}
       propertyPath: m_RootOrder

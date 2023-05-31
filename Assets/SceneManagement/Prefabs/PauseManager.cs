@@ -36,7 +36,19 @@ public class PauseManager : MonoBehaviour
 
     public void Pause() {
         isPaused = !isPaused;
-        pauseCanvas.SetActive(isPaused);
+        Time.timeScale = isPaused ? 0 : 1;
+
+        // Reset pause menu on close
+        if (isPaused)
+        {
+            ShowMainPauseMenu();
+        }
+
+        // Reset pause menu on close
+        if (!isPaused)
+        {
+            CloseMainPauseMenu();
+        }
 
         // set sliders to current values
         for (int i = 0; i < volumeSliders.Count; i++)
@@ -62,28 +74,32 @@ public class PauseManager : MonoBehaviour
             }
         }
 
-        // Reset pause menu on close
-        if (!isPaused)
-        {
-            Debug.Log("PauseManager: Resetting Pause Menu");
-            baseMenu.SetActive(false);
-            volumeSettings.SetActive(false);
-            levelSwap.SetActive(false);
 
-        }
 
-        Time.timeScale = isPaused ? 0 : 1;
     }
 
     public void ShowMainPauseMenu()
     {
         // Pause Game
         isPaused = true;
-        pauseCanvas.SetActive(true);
 
         // Open settings menu
         Debug.Log("PauseManager: Opening Pause Menu");
+        pauseCanvas.SetActive(true);
         baseMenu.SetActive(true);
+        volumeSettings.SetActive(false);
+        levelSwap.SetActive(false);
+    }
+
+    public void CloseMainPauseMenu()
+    {
+        // Unpause Game
+        isPaused = false;
+
+        // Open settings menu
+        Debug.Log("PauseManager: Close Pause Menu");
+        pauseCanvas.SetActive(false);
+        baseMenu.SetActive(false);
         volumeSettings.SetActive(false);
         levelSwap.SetActive(false);
     }
@@ -100,6 +116,30 @@ public class PauseManager : MonoBehaviour
         baseMenu.SetActive(false);
         volumeSettings.SetActive(true);
         levelSwap.SetActive(false);
+    }
+
+    // Level Select
+    public void ShowLevelSelect()
+    {
+        // Pause Game
+        isPaused = true;
+        pauseCanvas.SetActive(true);
+
+        // Open settings menu
+        Debug.Log("PauseManager: Opening Level Select");
+        baseMenu.SetActive(false);
+        volumeSettings.SetActive(false);
+        levelSwap.SetActive(true);
+    }
+
+    public void LoadMenuScene_Continue()
+    {
+        GameManager.instance.LoadMenu(false);
+    }
+
+    public void LoadMenuScene_Reset()
+    {
+        GameManager.instance.LoadMenu(true);
     }
 
     private void Update() {

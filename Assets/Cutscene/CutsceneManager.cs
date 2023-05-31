@@ -62,7 +62,7 @@ public class CutsceneManager : MonoBehaviour
 
     public float unskipableDelay;
 
-    [Range(0.0f, 0.5f)]
+    [Range(0.0f, 1f)]
     public float messageDelayAlex;
 
     [Range(0.0f, 0.5f)]
