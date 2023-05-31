@@ -169,28 +169,33 @@ public class AudioManager : MonoBehaviour {
 
         LoadBanksAndBuses();
 
-
         //menuMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + menuMusic);
         //cutsceneMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + cutsceneMusic);
         //tacoMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + tacoMusic);
         //drivingMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + drivingMusic);*/
-
     }
 
     public void LoadBanksAndBuses()
     {
+
+
+    }
+
+    public IEnumerator LoadBanksAndBusesRoutine()
+    {
+        Debug.Log("  << LOAD BANKS AND BUSES >>  ");
+
         // ============================================= LOAD ============================
         FMODUnity.RuntimeManager.StudioSystem.getBankList(out FMOD.Studio.Bank[] loadedBanks);
-
         foreach (FMOD.Studio.Bank bank in loadedBanks)
         {
             // Get the path of the bank
             bank.getPath(out string bankPath);
-            Debug.Log("Bank Path: " + bankPath);
 
             // Load the bank
             FMOD.RESULT bankLoadResult = bank.loadSampleData();
-            Debug.Log("Bank Load Result: " + bankLoadResult);
+            Debug.Log("|| AUDIOMANAGER || Bank Load Result: " + bankPath + " -> " + bankLoadResult);
+
 
             // Retrieve the list of buses associated with the bank
             busListOk = bank.getBusList(out myBuses);
@@ -205,11 +210,10 @@ public class AudioManager : MonoBehaviour {
                 {
                     // Get the path of each bus
                     bus.getPath(out busPath);
-                    Debug.Log("Bus Path: " + busPath);
 
                     // Load the bus
                     FMOD.RESULT busLoadResult = bus.lockChannelGroup();
-                    Debug.Log("Bus Load Result: " + busLoadResult);
+                    Debug.Log("|| AUDIOMANAGER || Bus Load Result: " + busPath + " -> " + busLoadResult);
 
                     // Save the bus to the appropriate variable
                     if (busPath == masVolBusPath)
@@ -253,7 +257,6 @@ public class AudioManager : MonoBehaviour {
             bank.loadSampleData();
 
             // Check if all banks are loaded
-
             FMOD.Studio.LOADING_STATE bankLoadingState;
             bank.getLoadingState(out bankLoadingState);
 
@@ -280,10 +283,13 @@ public class AudioManager : MonoBehaviour {
 
 
         Debug.Log("AudioManager : All Banks Loaded " + allBanksLoaded);
-
         Debug.Log("AudioManager : All Buses Loaded " + allBusesLoaded);
 
-
+        if (!allBanksLoaded || !allBusesLoaded)
+        {
+            yield return new WaitForSeconds(1);
+            LoadBanksAndBuses();
+        }
     }
 
     //plays a one shot given the fmod event path
