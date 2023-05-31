@@ -190,8 +190,10 @@ public class DrivingGameManager : MonoBehaviour
 
         while (state != DRIVINGGAME_STATE.END_TRANSITION)
         {
+            Debug.Log("WAITING FOR INPUT");
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                Debug.Log("READ INPUT");
                 uiManager.beginningCanvas.SetActive(false);
                 uiManager.cameraEffectManager.StartFadeOut();
                 state = DRIVINGGAME_STATE.END_TRANSITION;
