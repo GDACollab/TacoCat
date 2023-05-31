@@ -297,7 +297,7 @@ public class CameraHandler : MonoBehaviour
                 newZOffset = zPosRange.y * 1; // get zoom percentage from z pos range
             }
 
-            if (vehiclePos.x < 14000) {
+            /*if (vehiclePos.x < 14000) { // TRAILER STUFF
 
                 newZOffset = -(vehiclePos.x + 9000) * 0.4f;
                 newZOffset = Mathf.Max(newZOffset, -10000);
@@ -313,7 +313,7 @@ public class CameraHandler : MonoBehaviour
                 newZOffset = -2500;
                 newXOffset = -3600 - vehiclePos.x;
                 newYOffset = 941 - vehiclePos.y;
-            }
+            }*/
 
 
             currCamOffset = new Vector3(newXOffset, newYOffset, newZOffset);
