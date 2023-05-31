@@ -151,7 +151,7 @@ public class CustomerManager : MonoBehaviour
 
             currCustomer.anim.hasOrdered = true;
 
-            StartCoroutine(CreateTrailerDialogue(currCustomer));
+            //StartCoroutine(CreateTrailerDialogue(currCustomer));
             //tacoAudioManager.OrderAudio(); //needs to be edited later
         }
 
