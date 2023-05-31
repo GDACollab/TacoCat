@@ -95,11 +95,11 @@ public class TutorialManager : MonoBehaviour {
                 TutorialManagerInfo.showRotation = true;
                 StartCoroutine(ShowTutorialMessage(arrowLeft, () =>
                 {
-                    return Input.GetKey(KeyCode.LeftArrow);
+                    return (Input.GetKey(KeyCode.LeftArrow)||Input.GetKey(KeyCode.RightArrow));
                 }));
                 StartCoroutine(ShowTutorialMessage(arrowRight, () =>
                 {
-                    return Input.GetKey(KeyCode.RightArrow);
+                    return (Input.GetKey(KeyCode.LeftArrow)||Input.GetKey(KeyCode.RightArrow));
                 }));
             }
         }
