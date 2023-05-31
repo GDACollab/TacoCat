@@ -54,6 +54,9 @@ public class AudioManager : MonoBehaviour {
     public string storyMusicPath = "event:/Music/StoryMusic";
     public string tacoMusicPath = "event:/Music/TacoMusic";
     public string drivingMusicPath = "event:/Music/DrivingMusic";
+
+    public string endingAmbiencePath = "event:/Music/Credits/HappyEnding&Ambience";
+    public string sadCreditsPath = "event:/Music/Credits/SadEnding";
     #endregion
     
     #region /////////////////////////AMBIENCE//////////////////////////////
@@ -138,7 +141,7 @@ public class AudioManager : MonoBehaviour {
     public FMOD.RESULT busListOk;
     public FMOD.RESULT sysemIsOk;
 
-    protected EventInstance currentPlaying;
+    public EventInstance currentPlaying;
     protected EventInstance currentAmbience;
 
     protected EventInstance currentRPM;

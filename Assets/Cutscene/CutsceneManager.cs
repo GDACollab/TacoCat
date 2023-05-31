@@ -173,6 +173,7 @@ public class CutsceneManager : MonoBehaviour
                 break;
             case 6:
                 chosenDialogue = credits;
+                audioManager.PlaySong(audioManager.sadCreditsPath);
                 break;
             default:
                 chosenDialogue = CutsceneOneDialogue;
@@ -239,6 +240,9 @@ public class CutsceneManager : MonoBehaviour
             Vector3 targetPosition = new Vector3(-360, 0, 0);
             float duration = 0.1f;
             float elapsedTime = 0f;
+            if(gameManager.happyEnd){
+                audioManager.currentPlaying.setParameterByName("happyEnding", gameManager.happyEnd? 0 : 1);
+            }
 
             while (elapsedTime < duration)
             {

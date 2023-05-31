@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
 
     public TIME_OF_DAY timeState;
 
+    
     [HideInInspector]
     public AudioManager audioManager;
     [HideInInspector]
@@ -322,7 +323,11 @@ public class GameManager : MonoBehaviour
         Debug.Log("PLAYING " + audioManager.storyMusicPath);
         audioManager.StopDrivingAmbience();
         audioManager.StopRPM();
-        audioManager.PlaySong(audioManager.storyMusicPath);
+        if(currLevel==4||currLevel==5){
+            audioManager.PlaySong(audioManager.endingAmbiencePath);
+        }else{
+            audioManager.PlaySong(audioManager.storyMusicPath);
+        }
     }
 
     public void LoadCredits()
