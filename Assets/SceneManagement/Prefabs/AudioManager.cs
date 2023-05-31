@@ -129,10 +129,30 @@ public class AudioManager : MonoBehaviour {
     //FOR GLOBAL PARAMETERS FMOD Parameter name, variable name
     //FMODUnity.RuntimeManager.StudioSystem.setParameterByName("", x);
 
+    private FMOD.Studio.Bus[] myBuses = new FMOD.Studio.Bus[12];
+    private string busesList;
+    private string buf;
+    private FMOD.Studio.Bank myBank;
+
+    private string BusPath;
+    public FMOD.RESULT busListOk;
+    public FMOD.RESULT sysemIsOk;
+
+    protected EventInstance currentPlaying;
+    protected EventInstance currentAmbience;
+
+    protected EventInstance currentRPM;
+
+    protected FMOD.Studio.PLAYBACK_STATE playbackState;
+
+    public bool allBanksLoaded = false;
+    public bool allBusesLoaded = false;
+
     void Awake()
     {
         gameManager = GameManager.instance;
 
+        /*
         // Load the FMOD banks from the specified directory
         RuntimeManager.LoadBank(bankDirectoryPath + "/Master");
         RuntimeManager.LoadBank(bankDirectoryPath + "/SFX");
@@ -145,24 +165,126 @@ public class AudioManager : MonoBehaviour {
         sfxBus = FMODUnity.RuntimeManager.GetBus(sfxVolBusPath);
         diaBus = FMODUnity.RuntimeManager.GetBus(diaVolBusPath);
         ambiBus = FMODUnity.RuntimeManager.GetBus(ambiVolBusPath);
+        */
+
+        LoadBanksAndBuses();
+
 
         //menuMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + menuMusic);
-
         //cutsceneMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + cutsceneMusic);
         //tacoMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + tacoMusic);
         //drivingMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + drivingMusic);*/
 
     }
 
-  
-    protected EventInstance currentPlaying;
-    protected EventInstance currentAmbience;
+    public void LoadBanksAndBuses()
+    {
+        // ============================================= LOAD ============================
+        FMODUnity.RuntimeManager.StudioSystem.getBankList(out FMOD.Studio.Bank[] loadedBanks);
 
-    protected EventInstance currentRPM;
+        foreach (FMOD.Studio.Bank bank in loadedBanks)
+        {
+            // Get the path of the bank
+            bank.getPath(out string bankPath);
+            Debug.Log("Bank Path: " + bankPath);
 
-    protected FMOD.Studio.PLAYBACK_STATE playbackState;
+            // Load the bank
+            FMOD.RESULT bankLoadResult = bank.loadSampleData();
+            Debug.Log("Bank Load Result: " + bankLoadResult);
+
+            // Retrieve the list of buses associated with the bank
+            busListOk = bank.getBusList(out myBuses);
+
+            int busCount;
+            string busPath;
+            bank.getBusCount(out busCount);
+            if (busCount > 0)
+            {
+                // Iterate through the buses in the bank
+                foreach (var bus in myBuses)
+                {
+                    // Get the path of each bus
+                    bus.getPath(out busPath);
+                    Debug.Log("Bus Path: " + busPath);
+
+                    // Load the bus
+                    FMOD.RESULT busLoadResult = bus.lockChannelGroup();
+                    Debug.Log("Bus Load Result: " + busLoadResult);
+
+                    // Save the bus to the appropriate variable
+                    if (busPath == masVolBusPath)
+                    {
+                        masBus = FMODUnity.RuntimeManager.GetBus(busPath);
+                        masBus.setVolume(masterVolume);
+
+                    }
+                    else if (busPath == musVolBusPath)
+                    {
+                        musBus = bus;
+                        musBus.setVolume(musicVolume);
+
+                    }
+                    else if (busPath == sfxVolBusPath)
+                    {
+                        sfxBus = bus;
+                        sfxBus.setVolume(sfxVolume);
+
+                    }
+                    else if (busPath == diaVolBusPath)
+                    {
+                        diaBus = bus;
+                        diaBus.setVolume(dialogueVolume);
+
+                    }
+                    else if (busPath == ambiVolBusPath)
+                    {
+                        ambiBus = bus;
+                        ambiBus.setVolume(ambianceVolume);
+                    }
+                }
+            }
+        }
+
+        // ========================================== CONFIRM LOAD =======================
+
+        foreach (FMOD.Studio.Bank bank in loadedBanks)
+        {
+            // Load each bank
+            bank.loadSampleData();
+
+            // Check if all banks are loaded
+
+            FMOD.Studio.LOADING_STATE bankLoadingState;
+            bank.getLoadingState(out bankLoadingState);
+
+            if (!allBanksLoaded && bankLoadingState == FMOD.Studio.LOADING_STATE.LOADED)
+            {
+                allBanksLoaded = true;
+            }
+
+            // Retrieve the list of buses associated with the bank
+            bank.getBusList(out FMOD.Studio.Bus[] buses);
+
+            foreach (FMOD.Studio.Bus bus in buses)
+            {
+                // Load each bus
+                bus.lockChannelGroup();
+
+                // Check if all buses are loaded
+                if (!allBusesLoaded && bus.isValid())
+                {
+                    allBusesLoaded = true;
+                }
+            }
+        }
 
 
+        Debug.Log("AudioManager : All Banks Loaded " + allBanksLoaded);
+
+        Debug.Log("AudioManager : All Buses Loaded " + allBusesLoaded);
+
+
+    }
 
     //plays a one shot given the fmod event path
     public void Play(string path, Dictionary<string, float> parameters = null)

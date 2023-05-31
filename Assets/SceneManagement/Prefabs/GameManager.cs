@@ -142,7 +142,7 @@ public class GameManager : MonoBehaviour
         menuManager = null;
 
         // wait till music is loaded
-        yield return new WaitForSeconds(2);
+        yield return new WaitUntil(() => audioManager.allBanksLoaded && audioManager.allBusesLoaded);
 
         // Start Menu Music
         if (currGame == currGame.MENU)

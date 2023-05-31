@@ -16,6 +16,7 @@ public class PauseManager : MonoBehaviour
 
     AudioManager audioManager;
     protected bool isPaused = false;
+    protected bool updateVolume = false;
 
     protected List<Slider> volumeSliders = new List<Slider>();
 
@@ -74,8 +75,7 @@ public class PauseManager : MonoBehaviour
             }
         }
 
-
-
+        updateVolume = true;
     }
 
     public void ShowMainPauseMenu()
@@ -95,6 +95,7 @@ public class PauseManager : MonoBehaviour
     {
         // Unpause Game
         isPaused = false;
+        updateVolume = false;
 
         // Open settings menu
         Debug.Log("PauseManager: Close Pause Menu");
@@ -150,7 +151,8 @@ public class PauseManager : MonoBehaviour
         if (Input.GetKeyDown(pauseKey)) {
             Pause();
         }
-        if (isPaused) {
+
+        if (updateVolume) {
 
             // ... Switch statements. Please change AudioManager.cs to a list or something. I hate switch statements.
             for (var i = 0; i < volumeSliders.Count; i++) {
