@@ -147,7 +147,7 @@ public class DrivingGameManager : MonoBehaviour
 
             if (vehicle.GetVelocity().x < stuckMaxVelocity) // Truck is stuck
             {
-                if (stuckTime >= stuckTimeoutDuration) // Timer is up
+                if (stuckTime >= stuckTimeoutDuration || vehicle.state == DRIVE_STATE.CRASH) // Timer is up
                 {
                     state = DRIVINGGAME_STATE.FAIL;
                 }

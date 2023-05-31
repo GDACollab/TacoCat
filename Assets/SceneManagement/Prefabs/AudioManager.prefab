@@ -46,11 +46,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bankDirectoryPath: 
-  masterVolume: 0.2
-  musicVolume: 0.2
-  sfxVolume: 0.2
-  dialogueVolume: 0.2
-  ambianceVolume: 0.2
+  masterVolume: 0.5
+  musicVolume: 0.5
+  sfxVolume: 0.4
+  dialogueVolume: 0.3
+  ambianceVolume: 0.3
   masVolBusPath: bus:/
   musVolBusPath: bus:/Music
   sfxVolBusPath: bus:/SFX
@@ -61,6 +61,8 @@ MonoBehaviour:
   storyMusicPath: event:/Music/StoryMusic
   tacoMusicPath: event:/Music/TacoMusic
   drivingMusicPath: event:/Music/DrivingMusic
+  endingAmbiencePath: event:/Music/Credits/HappyEnding&Ambience
+  sadCreditsPath: event:/Music/Credits/SadEnding
   drivingAmbiPath: event:/Ambience/City Ambience
   recieveTextSFX: event:/SFX/Cutscene/Receive Text
   sendTextSFX: event:/SFX/Cutscene/Send Text

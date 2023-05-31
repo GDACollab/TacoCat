@@ -6,19 +6,39 @@ using TMPro;
 public class ClockTimer : MonoBehaviour
 {
     public TMP_Text clockTime;
+
+    private void Start()
+    {
+        GameManager gameManager = GameManager.instance;
+
+
+        string clockHour = gameManager.curClockHour.ToString();
+        string clockMinute = gameManager.curClockMinute.ToString();
+        if (gameManager.isAM == true)
+        {
+            clockTime.text = clockHour + ":" + clockMinute + " AM";
+        }
+        else
+        {
+            clockTime.text = clockHour + ":" + clockMinute + " PM";
+        }
+
+    }
+
     void Update()
     {
-        if (GameManager.instance == null) { return; }
+        GameManager gameManager = GameManager.instance;
 
-        string clockHour = GameManager.instance.curClockHour.ToString();
-        string clockMinute = GameManager.instance.curClockMinute.ToString();
+        string clockHour = gameManager.curClockHour.ToString();
+        string clockMinute = gameManager.curClockMinute.ToString();
         if (clockMinute.Length == 1)
         {
             clockMinute = "0" + clockMinute;
         }
-        if (GameManager.instance.curClockMinute % GameManager.instance.updateClockEvery_Minutes == 0)
+
+        if (gameManager.curClockMinute % gameManager.updateClockEvery_Minutes == 0)
         {
-            if (GameManager.instance.isAM == true)
+            if (gameManager.isAM == true)
             {
                 clockTime.text = clockHour + ":" + clockMinute + " AM";
             }

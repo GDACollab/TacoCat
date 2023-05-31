@@ -46,7 +46,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7846e2187297056448d1c65d3f432aeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeState: 0
   audioManager: {fileID: 10505627301420208}
   pauseManager: {fileID: 0}
   tacoGameManager: {fileID: 0}
@@ -171,6 +170,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7004250954060202135}
     m_Modifications:
+    - target: {fileID: 3166576002434016463, guid: e1b009394b5c2f24bb844b6948eaabb8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5536608039522049474, guid: e1b009394b5c2f24bb844b6948eaabb8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5536608039646406266, guid: e1b009394b5c2f24bb844b6948eaabb8, type: 3}
       propertyPath: m_AnchorMax.x
       value: 1
