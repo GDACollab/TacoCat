@@ -196,14 +196,21 @@ public class Customer: MonoBehaviour
     public int compareIngredients(Taco taco)
     {
         int sameIngredientCount = 0;
+        List<INGREDIENT_TYPE> correctOrder = new List<INGREDIENT_TYPE>(order);
 
         foreach(INGREDIENT_TYPE ingr in taco.ingredients)
         {
-            if (order.Contains(ingr))
+            // if (order.Contains(ingr))
+            // {
+            //     sameIngredientCount++;
+            // }
+            if (correctOrder.Contains(ingr))
             {
-                sameIngredientCount++;
+                correctOrder.Remove(ingr);
             }
         }
+        
+        sameIngredientCount = order.Count-correctOrder.Count;
 
         return sameIngredientCount;
     }
