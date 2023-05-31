@@ -57,6 +57,12 @@ public class DrivingUIManager : MonoBehaviour
     [Space(10)]
     public GameObject beginningCanvas;
     public GameObject endCanvas;
+
+
+    [Space(10)]
+    public string randomEndlessCity;
+
+    public List<string> endlessCities;
     
     // Start is called before the first frame update
     void Start()
@@ -71,6 +77,9 @@ public class DrivingUIManager : MonoBehaviour
 
         signDistances = drivingGameManager.getSignDistances(numSigns, totalMiles);
         signDistances.Add(0);
+
+        randomEndlessCity = endlessCities[Random.Range(0, endlessCities.Count - 1)];
+
     }
 
     // Update is called once per frame
@@ -146,7 +155,16 @@ public class DrivingUIManager : MonoBehaviour
     {
         beginningCanvas.SetActive(true);
 
-        beginningCanvas.GetComponent<UI_PopUp_Card>().SetHeader(startHeader + cityNames[GameManager.instance.currLevel - 1] + "!");
+
+        if (GameManager.instance.endlessModeActive)
+        {
+            beginningCanvas.GetComponent<UI_PopUp_Card>().SetHeader(startHeader + randomEndlessCity + "!");
+        }
+        else
+        {
+            beginningCanvas.GetComponent<UI_PopUp_Card>().SetHeader(startHeader + cityNames[GameManager.instance.currLevel - 1] + "!");
+        }
+
         beginningCanvas.GetComponent<UI_PopUp_Card>().SetBody(startBody);
     }
 
@@ -156,14 +174,15 @@ public class DrivingUIManager : MonoBehaviour
 
         if (levelComplete)
         {
-            endCanvas.GetComponent<UI_PopUp_Card>().SetHeader(completeDrivingHeader + cityNames[GameManager.instance.currLevel - 1] + "!!");
 
             if (GameManager.instance.endlessModeActive)
             {
+                endCanvas.GetComponent<UI_PopUp_Card>().SetHeader(completeDrivingHeader + randomEndlessCity + "!!");
                 endCanvas.GetComponent<UI_PopUp_Card>().SetBody("You landed <b>" + flipTracker.totalLandedFlips + "</b> flips, and have visited <b>" + GameManager.instance.endlessCitiesVisited + "</b> cities so far!");
             }
             else
             {
+                endCanvas.GetComponent<UI_PopUp_Card>().SetHeader(completeDrivingHeader + cityNames[GameManager.instance.currLevel - 1] + "!!");
                 endCanvas.GetComponent<UI_PopUp_Card>().SetBody("You landed <b>" + flipTracker.totalLandedFlips + "</b> flips!" + completeDrivingBody);
             }
         }

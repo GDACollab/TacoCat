@@ -90,10 +90,18 @@ MonoBehaviour:
   nitroCharges: 0
   gasAmount: 0
   endlessModeActive: 0
+  endlessGameTimerCount: 300
+  endlessCitiesVisited: 0
+  endlessCitiesHighscore: 0
   endlessTacoScene:
     m_SceneName: EndlessTacoMaking
   endlessDrivingScenes:
-  - m_SceneName: EndlessDriving1
+  - m_SceneName: EndlessFarm_1
+  - m_SceneName: EndlessWater_1
+  - m_SceneName: EndlessCity_1
+  - m_SceneName: Endless_DiaDeLosMuertos
+  - m_SceneName: Endless_PixelArt
+  - m_SceneName: Endless_PixelArtCity
   loadProgress: 0
 --- !u!1001 &389845888435534682
 PrefabInstance:

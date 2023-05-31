@@ -75,7 +75,7 @@ public class MenuManager : MonoBehaviour
 
     public void NewGame()
     {
-
+        gameManager.endlessModeActive = false;
 
         gameManager.currLevel = 1;
         gameManager.LoadCutscene();
