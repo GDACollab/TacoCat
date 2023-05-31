@@ -31,7 +31,7 @@ public class DrivingGameManager : MonoBehaviour
     [Header("Stuck")]
     public int stuckMaxVelocity;
     public int stuckTimeoutDuration;
-    public float stuckTime;
+    private float stuckTime = 2;
 
     [Header("Nitro Carry")]
     public int nitroCharges = 3;
@@ -146,8 +146,6 @@ public class DrivingGameManager : MonoBehaviour
 
             state = DRIVINGGAME_STATE.FAIL;
 
-
-            /*
             if (vehicle.GetVelocity().x < stuckMaxVelocity) // Truck is stuck
             {
                 if (stuckTime >= stuckTimeoutDuration) // Timer is up
@@ -163,7 +161,7 @@ public class DrivingGameManager : MonoBehaviour
             {
                 stuckTime = 0; // Reset the clock
             }
-            */
+            
         }
 
         // << UPDATE DISTANCE TRACKER >>

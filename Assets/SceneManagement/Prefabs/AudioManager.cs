@@ -12,19 +12,21 @@ using FMODUnity;
 //customer order
 public class AudioManager : MonoBehaviour {
     GameManager gameManager;
+    public string bankDirectoryPath = "Assets/FMOD/TacoCat FMOD Project/Build/Mobile"; // Directory path to the banks
+
 
     //SLIDERS FOR VOLUME, SHOULD BE A VALUE BETWEEN 0 & 1
     [Header("Volumes (sliders)")]
     [Range(0f, 1f)]
     public float masterVolume = 0.5f;
     [Range(0f, 1f)]
-    public float musicVolume;
+    public float musicVolume = 0.5f;
     [Range(0f, 1f)]
-    public float sfxVolume;
+    public float sfxVolume = 0.5f;
     [Range(0f, 1f)]
-    public float dialogueVolume;
+    public float dialogueVolume = 0.5f;
     [Range(0f, 1f)]
-    public float ambianceVolume;
+    public float ambianceVolume = 0.5f;
 
     [Header("Bus Paths")]
     public string masVolBusPath = "bus:/";
@@ -129,21 +131,15 @@ public class AudioManager : MonoBehaviour {
 
     void Awake()
     {
-        
-        // Load the FMOD banks
-        RuntimeManager.LoadBank("Master");
-        RuntimeManager.LoadBank("SFX");
-        RuntimeManager.LoadBank("Music");
-        RuntimeManager.LoadBank("Dialogue");
-        RuntimeManager.LoadBank("Ambience");
 
-        masBus = FMODUnity.RuntimeManager.GetBus(masVolBusPath);
-        musBus = FMODUnity.RuntimeManager.GetBus(musVolBusPath);
-        sfxBus = FMODUnity.RuntimeManager.GetBus(sfxVolBusPath);
-        diaBus = FMODUnity.RuntimeManager.GetBus(diaVolBusPath);
-        ambiBus = FMODUnity.RuntimeManager.GetBus(ambiVolBusPath);
-        
-        gameManager=GameManager.instance;
+        // Load the FMOD banks from the specified directory
+        RuntimeManager.LoadBank(bankDirectoryPath + "/Master");
+        RuntimeManager.LoadBank(bankDirectoryPath + "/SFX");
+        RuntimeManager.LoadBank(bankDirectoryPath + "/Music");
+        RuntimeManager.LoadBank(bankDirectoryPath + "/Dialogue");
+        RuntimeManager.LoadBank(bankDirectoryPath + "/Ambience");
+
+        gameManager =GameManager.instance;
         //menuMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + menuMusic);
 
         //cutsceneMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + cutsceneMusic);
