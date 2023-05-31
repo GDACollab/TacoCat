@@ -83,6 +83,7 @@ public class TacoMakingGameManager : MonoBehaviour
 
         // set lighting manager start values
         lightingManager.timeOfDay = gameManager.main_gameTimer;
+        lightingManager.OverwriteLightingPalette(gameManager.main_gameTimer);
 
         StartCoroutine(Init());
     }

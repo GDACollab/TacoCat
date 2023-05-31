@@ -213,6 +213,17 @@ public class LightingManager : MonoBehaviour
         }
     }
 
+    public void OverwriteLightingPalette(float curTime)
+    {
+        List<Color> toPalette = GetPaletteAtTime(curTime);
+
+        foregroundLight.color = Color.Lerp(foregroundLight.color, toPalette[0], lightColorAdjustSpeed * Time.deltaTime);
+        playAreaLight.color = Color.Lerp(playAreaLight.color, toPalette[1], lightColorAdjustSpeed * Time.deltaTime);
+        backgroundLight.color = Color.Lerp(backgroundLight.color, toPalette[2], lightColorAdjustSpeed * Time.deltaTime);
+        skyboxLight.color = Color.Lerp(skyboxLight.color, toPalette[3], lightColorAdjustSpeed * Time.deltaTime);
+        sunLight.color = Color.Lerp(sunLight.color, toPalette[4], lightColorAdjustSpeed * Time.deltaTime);
+    }
+
 #if UNITY_EDITOR
     [CustomPropertyDrawer(typeof(HideInInspectorUnlessDebugAttribute))]
     public class HideInInspectorUnlessDebugDrawer : PropertyDrawer
