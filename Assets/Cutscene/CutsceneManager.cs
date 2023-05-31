@@ -237,8 +237,10 @@ public class CutsceneManager : MonoBehaviour
             Vector3 targetPosition = new Vector3(-360, 0, 0);
             float duration = 0.1f;
             float elapsedTime = 0f;
-            if(gameManager.happyEnd){
-                audioManager.currentPlaying.setParameterByName("happyEnding", gameManager.happyEnd? 0 : 1);
+
+            if (gameManager.currHappyEnding)
+            {
+                audioManager.currentPlaying.setParameterByName("happyEnding", gameManager.currHappyEnding? 0 : 1);
             }
 
             while (elapsedTime < duration)
@@ -255,14 +257,14 @@ public class CutsceneManager : MonoBehaviour
             camEffectManager.StartFadeOut();
             yield return new WaitUntil(() => !camEffectManager.isFading);
 
-            SceneManager.LoadScene("GoodEnding");
+            gameManager.LoadGoodEnding();
         }
         else if (chosenDialogue == BadEndingDialogue)
         {
             camEffectManager.StartFadeOut();
             yield return new WaitUntil(() => !camEffectManager.isFading);
 
-            SceneManager.LoadScene("BadEnding");
+            gameManager.LoadBadEnding();
         }
     }
 

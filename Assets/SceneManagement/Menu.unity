@@ -692,7 +692,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_fontColor: {r: 0.066037714, g: 0.066037714, b: 0.066037714, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2000,6 +2000,18 @@ PrefabInstance:
     - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
       propertyPath: currLevel
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: fullGameComplete
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: endlessModeActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: endlessTacoScene.m_SceneName
+      value: EndlessTacoMaking
       objectReference: {fileID: 0}
     - target: {fileID: 7004250954060202135, guid: b98e17472161422409ce954e519a82b5, type: 3}
       propertyPath: m_RootOrder

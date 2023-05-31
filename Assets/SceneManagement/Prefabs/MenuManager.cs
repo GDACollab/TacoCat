@@ -9,7 +9,7 @@ public class MenuManager : MonoBehaviour
     public GameManager gameManager;
     public PauseManager pauseManager;
     int level;
-    bool win;
+    bool fullGameComplete;
     [Header("Signs")]
     public GameObject newGameSign;
     public GameObject continueSign;
@@ -23,7 +23,7 @@ public class MenuManager : MonoBehaviour
         pauseManager = gameManager.pauseManager;
 
         level = gameManager.currLevel;
-        win = gameManager.goodEnding;
+        fullGameComplete = gameManager.fullGameComplete;
 
         if ((level > 1 && level < 4) || (gameManager.lastGame == currGame.DRIVING))
         {
@@ -38,13 +38,13 @@ public class MenuManager : MonoBehaviour
             newGameSign.SetActive(true);
         }
 
-        if (win && level > 3)
+        if (fullGameComplete)
         {
             hangingSign.SetActive(true); // Enable hanging sign
             // Redundant; On active sign already create deploy animation
             Animator signDrop = hangingSign.GetComponent<Animator>();
             Debug.Log("MenuManager: Deloying Hanging Sign");
-            //signDrop.Play("Deploy"); //<<SECRET>>
+            signDrop.Play("Deploy"); //<<SECRET>>
         }
     }
 

@@ -7211,7 +7211,7 @@ MonoBehaviour:
   customerManager: {fileID: 6584911828306364962}
   perfectCounter: 0
   comboCounter: 0
-  totalCustomers: 12
+  totalCustomers: 18
   customersLeftToGenerate: 0
   difficulty: 1
   submittedCustomers: 0
@@ -7219,7 +7219,7 @@ MonoBehaviour:
   gameScore: 0
   maxGameScore: 0
   gasAmount: 0
-  minimumGasThreshold: 1
+  minimumGasThreshold: 0.65
   nitroCharges: 0
   tacoPrefab: {fileID: 7059686471766786423, guid: 863fba71dcdc2fd4c9dbafcb4a47ce2a, type: 3}
   allIngredientPrefabs:
@@ -8560,7 +8560,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1766367129203572431, guid: 6b3e6cfc6e0e43846a3bb5f2b30bfb23, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 38.899918
+      value: 38.899902
       objectReference: {fileID: 0}
     - target: {fileID: 5410202910666737363, guid: 6b3e6cfc6e0e43846a3bb5f2b30bfb23, type: 3}
       propertyPath: m_AnchoredPosition.x

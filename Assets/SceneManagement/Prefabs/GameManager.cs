@@ -59,14 +59,15 @@ public class GameManager : MonoBehaviour
     private bool hardCapAM;
     [HideInInspector]
     public bool isAM = true;
-    [HideInInspector]
-    public bool happyEnd = true;
 
     [Header(" === SCENE MANAGEMENT === ")]
     public currGame currGame = currGame.NONE;
     public currGame lastGame;
     public int currLevel = 0;
-    public bool goodEnding = true;
+    public bool currHappyEnding = true;
+    public bool fullGameComplete;
+
+    [Space(10)]
     public SceneObject currScene;
     [Space(5)]
     public bool isLoadingScene;
@@ -88,6 +89,12 @@ public class GameManager : MonoBehaviour
     [Header("--SCENE VARIABLE TRANSFER--")]
     public int nitroCharges = 3;
     public int gasAmount;
+
+
+    [Header("Endless Mode")]
+    public bool endlessModeActive;
+    public SceneObject endlessTacoScene;
+    public List<SceneObject> endlessDrivingScenes;
 
 
     private void Awake()
@@ -175,8 +182,16 @@ public class GameManager : MonoBehaviour
             // check if all customers submitted , if so move to driving with gas amount
             if (tacoGameManager.state == TACOMAKING_STATE.END_TRANSITION && !isLoadingScene && !tacoGameManager.uiManager.camEffectManager.isFading)
             {
-                nitroCharges = tacoGameManager.nitroCharges;
-                LoadDrivingScene(currLevel);
+
+                if (endlessModeActive)
+                {
+                    LoadRandomEndlessDriving();
+                }
+                else
+                {
+                    nitroCharges = tacoGameManager.nitroCharges;
+                    LoadDrivingScene(currLevel);
+                }
             }
         }
 
@@ -215,24 +230,45 @@ public class GameManager : MonoBehaviour
             // check for ending
             if (drivingGameManager.state == DRIVINGGAME_STATE.END_TRANSITION && !isLoadingScene)
             {
+                if (endlessModeActive)
+                {
+                    if (drivingGameManager.completedLevel)
+                    {
+                        if (currDayCycleState == TIME_OF_DAY.MIDNIGHT)
+                        {
+                            GameTimerStart(); // reset game timer
+                        }
 
-                if (currDayCycleState == TIME_OF_DAY.MIDNIGHT)
-                {
-                    currLevel = 5;
-                    Debug.Log("Bad Ending: " + currLevel);
-                    LoadCutscene();
-                }
-                else if (!drivingGameManager.completedLevel)
-                {
-                    Debug.Log("Bad Ending: " + currLevel);
-                    LoadTacoMakingScene();
+                        LoadEndlessTacoMaking(); // start endless taco making
+                    }
+                    else
+                    {
+                        LoadMenu(true);
+                    }
                 }
                 else
                 {
-                    currLevel++;
-                    Debug.Log("Current Level: " + currLevel);
-                    LoadCutscene();
+                    if (currDayCycleState == TIME_OF_DAY.MIDNIGHT)
+                    {
+                        currLevel = 5;
+                        currHappyEnding = false;
+                        Debug.Log("Bad Ending: " + currLevel);
+                        LoadCutscene();
+                    }
+                    else if (!drivingGameManager.completedLevel)
+                    {
+                        currHappyEnding = true;
+                        Debug.Log("Good Ending: " + currLevel);
+                        LoadTacoMakingScene();
+                    }
+                    else
+                    {
+                        currLevel++;
+                        Debug.Log("Current Level: " + currLevel);
+                        LoadCutscene();
+                    }
                 }
+
             }
         }
 
@@ -271,6 +307,7 @@ public class GameManager : MonoBehaviour
         if (game_reset)
         {
             currLevel = 1;    // Deletes progress
+            GameTimerStart();
         }
         StartCoroutine(ConcurrentLoadingCoroutine(menuScene));
     }
@@ -337,11 +374,41 @@ public class GameManager : MonoBehaviour
         audioManager.PlaySong(audioManager.storyMusicPath);
     }
 
-    public void StartBadEnding()
+    public void LoadGoodEnding()
+    {
+        currGame = currGame.GOOD_ENDING;
+        SceneManager.LoadScene("GoodEnding");
+        fullGameComplete = true;
+    }
+
+    public void LoadBadEnding()
     {
         currGame = currGame.BAD_ENDING;
-
+        SceneManager.LoadScene("BadEnding");
     }
+
+    public void LoadEndlessTacoMaking()
+    {
+        currGame = currGame.TACO_MAKING;
+        endlessModeActive = true;
+
+        StartCoroutine(ConcurrentLoadingCoroutine(endlessTacoScene));
+        audioManager.PlaySong(audioManager.tacoMusicPath);
+    }
+
+    public void LoadRandomEndlessDriving()
+    {
+        currGame = currGame.DRIVING;
+        endlessModeActive = true;
+
+        SceneObject randDrivingScene = endlessDrivingScenes[Random.Range(0, endlessDrivingScenes.Count)];
+        StartCoroutine(LoadingCoroutine(randDrivingScene));
+
+        audioManager.PlaySong(audioManager.drivingMusicPath);
+        audioManager.PlayDrivingAmbience(0);
+        audioManager.PlayRPM(0);
+    }
+
 
     public void Quit()
     {
@@ -469,7 +536,7 @@ public class GameManager : MonoBehaviour
         // UPDATE TIMER
         if ((timeRemaining - Time.deltaTime) < 0)
         {
-            happyEnd = false;
+            currHappyEnding = false;
         }
         if (curClockHour != hardCapHour || curClockMinute != hardCapMinute || isAM != hardCapAM)
         {
