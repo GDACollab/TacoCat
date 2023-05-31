@@ -14,6 +14,10 @@ public class ClockTimer : MonoBehaviour
 
         string clockHour = gameManager.curClockHour.ToString();
         string clockMinute = gameManager.curClockMinute.ToString();
+        if (clockMinute.Length == 1)
+        {
+            clockMinute = "0" + clockMinute;
+        }
         if (gameManager.isAM == true)
         {
             clockTime.text = clockHour + ":" + clockMinute + " AM";
