@@ -73,7 +73,7 @@ public class TacoMakingGameManager : MonoBehaviour
             background.transform.GetChild(i).gameObject.SetActive(false);
         }
 
-        background.transform.GetChild(Mathf.Max(1,difficulty-1)).gameObject.SetActive(true);    
+        background.transform.GetChild(Mathf.Min(Mathf.Max(0,difficulty-1), 2)).gameObject.SetActive(true);    
 
         // create taco to place ingredients on
         CreateNewSubmissionTaco();
