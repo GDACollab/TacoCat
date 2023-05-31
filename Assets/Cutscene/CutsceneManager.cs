@@ -11,6 +11,7 @@ public class CutsceneManager : MonoBehaviour
     //public TextMeshProUGUI phoneText;
     public bool endOfCutscene;
 
+    GameManager gameManager;
     public AudioManager audioManager;
     public CameraEffectManager camEffectManager;
 
@@ -37,6 +38,7 @@ public class CutsceneManager : MonoBehaviour
     public struct TextList
     {
         public character person;
+        [TextArea(3, 10)]
         public List<string> texts;
     }
 
@@ -53,13 +55,14 @@ public class CutsceneManager : MonoBehaviour
     public List<TextList> CutsceneThreeDialogue;
     public List<TextList> GoodEndingDialogue;
     public List<TextList> BadEndingDialogue;
+    public List<TextList> credits;
 
     [HideInInspector]
     public List<TextList> chosenDialogue;
 
     public float unskipableDelay;
 
-    [Range(0.0f, 0.5f)]
+    [Range(0.0f, 1f)]
     public float messageDelayAlex;
 
     [Range(0.0f, 0.5f)]
@@ -92,11 +95,22 @@ public class CutsceneManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = GameManager.instance;
         audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
         
         startingPosition = 0;
 
-        levelTMP.text = "LVL " + GameManager.instance.currLevel;
+        gameManager.cutsceneManager = GetComponent<CutsceneManager>();
+        
+        if (gameManager.currGame != currGame.CREDITS)
+        {
+            gameManager.currGame = currGame.CUTSCENE;
+        }
+
+
+        // debug level 
+        levelTMP.text = "" + gameManager.currLevel;
+
         if (GameManager.instance.currLevel == 0)
         {
             StartCoroutine(IntroPanels());
@@ -157,6 +171,9 @@ public class CutsceneManager : MonoBehaviour
             case 5:
                 chosenDialogue = BadEndingDialogue;
                 break;
+            case 6:
+                chosenDialogue = credits;
+                break;
             default:
                 chosenDialogue = CutsceneOneDialogue;
                 break;
@@ -173,10 +190,6 @@ public class CutsceneManager : MonoBehaviour
             }
             else
             {
-                //Jamie
-                //slight pause so Jamie doesn't respond instantly
-
-                
                 //yield return jamieCountdown();
                 //yield return new WaitForSeconds(unskipableDelay);
                 yield return StartCoroutine(JamieText_InstantPrint(textLine.texts));
@@ -220,6 +233,7 @@ public class CutsceneManager : MonoBehaviour
         }
         else if (chosenDialogue == GoodEndingDialogue)
         {
+            // Move in ALEXXXX !!!! msg
             RectTransform rectTransform = jamieCallsAlexObject.GetComponent<RectTransform>();
             Vector3 startPosition = rectTransform.anchoredPosition3D;
             Vector3 targetPosition = new Vector3(-360, 0, 0);
@@ -306,9 +320,9 @@ public class CutsceneManager : MonoBehaviour
 
             yield return StartCoroutine(bubble.GetComponent<BubbleManager>().TextCrawl(s));
             currentBubbles.Add(bubble);
-
-            //audioManager.Play(audioManager.sendTextSFX);
-            
+            if(audioManager != null){
+                audioManager.Play(audioManager.sendTextSFX);
+            }
             yield return AlexCountdown();
             yield return new WaitForSeconds(unskipableDelay);
 
@@ -337,9 +351,10 @@ public class CutsceneManager : MonoBehaviour
             yield return StartCoroutine(bubble.GetComponent<BubbleManager>().InstantTextFill(l));
 
             currentBubbles.Add(bubble);
-
-            //audioManager.Play(audioManager.recieveTextSFX);
-            Debug.Log("ReceiveTextSFX");
+            if(audioManager!= null){
+                audioManager.Play(audioManager.recieveTextSFX);
+            }
+            
             
             yield return JamieCountdown();
             yield return new WaitForSeconds(unskipableDelay);

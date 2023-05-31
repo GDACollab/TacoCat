@@ -42,7 +42,7 @@ public class SunCycle : MonoBehaviour
         UpdateSunPos();
 
 
-        if (currentDayCycle == TIME_OF_DAY.NIGHT)
+        if (currentDayCycle == TIME_OF_DAY.NIGHT || currentDayCycle == TIME_OF_DAY.MIDNIGHT)
         {
             sunObj.SetActive(false);
             moonObj.SetActive(true);

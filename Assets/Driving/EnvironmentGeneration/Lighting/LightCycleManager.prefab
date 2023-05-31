@@ -190,7 +190,7 @@ MonoBehaviour:
   m_LightType: 4
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
-  m_Color: {r: 0.5116948, g: 0.5496975, b: 0.81184536, a: 1}
+  m_Color: {r: 0.6273581, g: 0.6745943, b: 0.9999996, a: 1}
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
@@ -363,7 +363,7 @@ MonoBehaviour:
   m_LightType: 4
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
-  m_Color: {r: 0.090646155, g: 0.10703946, b: 0.19811323, a: 1}
+  m_Color: {r: 0.19237265, g: 0.20936522, b: 0.31132057, a: 1}
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
@@ -469,7 +469,7 @@ GameObject:
   - component: {fileID: 6155609679398230000}
   m_Layer: 0
   m_Name: LightCycleManager
-  m_TagString: Untagged
+  m_TagString: LightingManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -510,17 +510,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeOfDay: 1
-  dayCycleState: 3
+  dayCycleState: 4
   morningSunrise:
   - {r: 0.77254903, g: 0.70980394, b: 0.7254902, a: 1}
   - {r: 0.7254902, g: 0.6627451, b: 0.7254902, a: 1}
   - {r: 0.61960787, g: 0.5137255, b: 0.59607846, a: 1}
-  - {r: 0.4392157, g: 0.4, b: 0.5529412, a: 1}
+  - {r: 0.8962264, g: 0.6799468, b: 0.4438857, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
   midDay:
-  - {r: 0.42745098, g: 0.59607846, b: 0.9647059, a: 1}
+  - {r: 0.7971698, g: 0.8608318, b: 1, a: 1}
   - {r: 0.9607843, g: 0.9254902, b: 0.87058824, a: 1}
-  - {r: 0.8443396, g: 0.9335943, b: 1, a: 1}
+  - {r: 0.94509804, g: 0.8117647, b: 0.6901961, a: 1}
   - {r: 0.95686275, g: 0.7372549, b: 0.5294118, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
   eveningSunset:
@@ -530,18 +530,18 @@ MonoBehaviour:
   - {r: 0.8784314, g: 0.78039217, b: 0.69803923, a: 1}
   - {r: 1, g: 0.8, b: 0.5019608, a: 1}
   night:
-  - {r: 0.6273585, g: 0.6745947, b: 1, a: 1}
-  - {r: 0.36078432, g: 0.41960785, b: 0.7529412, a: 1}
-  - {r: 0.33392665, g: 0.30153078, b: 0.5283019, a: 1}
-  - {r: 0.19237275, g: 0.20936532, b: 0.31132078, a: 1}
+  - {r: 0.08321468, g: 0.08321468, b: 0.20754719, a: 1}
+  - {r: 0.27999288, g: 0.27999288, b: 0.41509432, a: 1}
+  - {r: 0.10666609, g: 0.11359657, b: 0.16037738, a: 1}
+  - {r: 0.28627452, g: 0.2901961, b: 0.36078432, a: 1}
   - {r: 0.09064614, g: 0.107039444, b: 0.1981132, a: 1}
   morningTimeLength: 0.2
   midDayTimeLength: 0.3
   eveningTimeLength: 0.3
   nightTimeLength: 0.2
   sunIntensities:
-  - 0.2
-  - 0.2
+  - 0
+  - 0.4
   - 0.3
   - 0.1
   lightColorAdjustSpeed: 0.5
@@ -621,9 +621,9 @@ MonoBehaviour:
   morningParent: {fileID: 607796436276058399}
   morningCount: 50
   morningPrefabs:
-  - {fileID: 5691963823481247081, guid: acb3c15ccc5face4ab4d86f54eed3805, type: 3}
-  - {fileID: 334199361784943701, guid: 3e7312ef6ba8ca14695afcd2f4cdf44e, type: 3}
-  - {fileID: 6682212915930639279, guid: 49f77383e40026b4b8ad425249d1f416, type: 3}
+  - {fileID: 4166135674726958864, guid: 7a8b078d9f933294884928dd1a140be8, type: 3}
+  - {fileID: 2169505260499256152, guid: acfca56e8b9116c4c83f5262ed30b6f1, type: 3}
+  - {fileID: 32852987738948952, guid: fcbfdbe5825c0e243bc058458810f2d5, type: 3}
   middayParent: {fileID: 5966730230024094960}
   middayCount: 25
   middayPrefabs:
@@ -633,9 +633,9 @@ MonoBehaviour:
   eveningParent: {fileID: 5765387888092065996}
   eveningCount: 50
   eveningPrefabs:
-  - {fileID: 7737956203644409067, guid: 4cb6d2e73d2bb0f418a8939b2d410b30, type: 3}
-  - {fileID: 1179624295091646253, guid: 520009f253a7c6941bbd4cfeccbcd103, type: 3}
-  - {fileID: 6069557636326319083, guid: 4b7a72829f32adf42a7ead307748c26c, type: 3}
+  - {fileID: 5691963823481247081, guid: acb3c15ccc5face4ab4d86f54eed3805, type: 3}
+  - {fileID: 334199361784943701, guid: 3e7312ef6ba8ca14695afcd2f4cdf44e, type: 3}
+  - {fileID: 6682212915930639279, guid: 49f77383e40026b4b8ad425249d1f416, type: 3}
   nightParent: {fileID: 5759499370353351064}
   nightCount: 25
   nightPrefabs:
@@ -737,7 +737,7 @@ MonoBehaviour:
   m_LightType: 4
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
-  m_Color: {r: 0.16592081, g: 0.15241194, b: 0.23584911, a: 1}
+  m_Color: {r: 0.33392644, g: 0.30153057, b: 0.5283015, a: 1}
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0

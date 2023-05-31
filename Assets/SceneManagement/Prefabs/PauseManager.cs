@@ -8,12 +8,12 @@ public class PauseManager : MonoBehaviour
     public KeyCode pauseKey = KeyCode.Escape;
     public GameObject pauseCanvas;
     public GameObject volumeSliderParent;
+
     [Header("Groups")]
     public GameObject baseMenu;
-    public GameObject settingsMenu;
-    public GameObject settingsBackButton;
-    public GameObject settingsBackToMenu;
-    public GameObject switchMenu;
+    public GameObject volumeSettings;
+    public GameObject levelSwap;
+
     AudioManager audioManager;
     protected bool isPaused = false;
 
@@ -27,6 +27,7 @@ public class PauseManager : MonoBehaviour
             var child = sliderTransform.GetChild(i);
             if (child.TryGetComponent<Slider>(out var slider)) {
                 volumeSliders.Add(slider);
+                slider.value = 0.5f;
             }
         }
 
@@ -35,40 +36,122 @@ public class PauseManager : MonoBehaviour
 
     public void Pause() {
         isPaused = !isPaused;
-        pauseCanvas.SetActive(isPaused);
-        audioManager.isPaused = isPaused;
+        Time.timeScale = isPaused ? 0 : 1;
+
+        // Reset pause menu on close
+        if (isPaused)
+        {
+            ShowMainPauseMenu();
+        }
+
         // Reset pause menu on close
         if (!isPaused)
         {
-            Debug.Log("PauseManager: Resetting Pause Menu");
-            baseMenu.SetActive(true);
-            settingsMenu.SetActive(false);
-            settingsBackButton.SetActive(true);
-            settingsBackToMenu.SetActive(false);
-            switchMenu.SetActive(false);
+            CloseMainPauseMenu();
         }
-        Time.timeScale = isPaused ? 0 : 1;
+
+        // set sliders to current values
+        for (int i = 0; i < volumeSliders.Count; i++)
+        {
+            var slider = volumeSliders[i];
+            switch (i)
+            {
+                case 0:
+                    slider.value = audioManager.masterVolume;
+                    break;
+                case 1:
+                    slider.value = audioManager.musicVolume;
+                    break;
+                case 2:
+                    slider.value = audioManager.ambianceVolume;
+                    break;
+                case 3:
+                    slider.value = audioManager.sfxVolume;
+                    break;
+                case 4:
+                    slider.value = audioManager.dialogueVolume;
+                    break;
+            }
+        }
+
+
+
+    }
+
+    public void ShowMainPauseMenu()
+    {
+        // Pause Game
+        isPaused = true;
+
+        // Open settings menu
+        Debug.Log("PauseManager: Opening Pause Menu");
+        pauseCanvas.SetActive(true);
+        baseMenu.SetActive(true);
+        volumeSettings.SetActive(false);
+        levelSwap.SetActive(false);
+    }
+
+    public void CloseMainPauseMenu()
+    {
+        // Unpause Game
+        isPaused = false;
+
+        // Open settings menu
+        Debug.Log("PauseManager: Close Pause Menu");
+        pauseCanvas.SetActive(false);
+        baseMenu.SetActive(false);
+        volumeSettings.SetActive(false);
+        levelSwap.SetActive(false);
     }
 
     // Quick access settings menu
-    public void Settings()
+    public void ShowVolumeSettings()
     {
         // Pause Game
-        Pause();
+        isPaused = true;
+        pauseCanvas.SetActive(true);
+
         // Open settings menu
         Debug.Log("PauseManager: Opening Settings Menu");
-        baseMenu.SetActive(false);      // Disable normal options
-        settingsMenu.SetActive(true);   // Enable Settings
-        settingsBackButton.SetActive(false);    // Disable access to normal options (main menu only)
-        settingsBackToMenu.SetActive(true);    // Close Settings (main menu only)
-        
+        baseMenu.SetActive(false);
+        volumeSettings.SetActive(true);
+        levelSwap.SetActive(false);
+    }
+
+    // Level Select
+    public void ShowLevelSelect()
+    {
+        // Pause Game
+        isPaused = true;
+        pauseCanvas.SetActive(true);
+
+        // Open settings menu
+        Debug.Log("PauseManager: Opening Level Select");
+        baseMenu.SetActive(false);
+        volumeSettings.SetActive(false);
+        levelSwap.SetActive(true);
+    }
+
+    public void LoadMenuScene_Continue()
+    {
+        GameManager.instance.LoadMenu(false);
+    }
+
+    public void LoadMenuScene_Reset()
+    {
+        GameManager.instance.LoadMenu(true);
     }
 
     private void Update() {
+
+        audioManager.isPaused = isPaused;
+
+
         if (Input.GetKeyDown(pauseKey)) {
             Pause();
         }
         if (isPaused) {
+
             // ... Switch statements. Please change AudioManager.cs to a list or something. I hate switch statements.
             for (var i = 0; i < volumeSliders.Count; i++) {
                 var slider = volumeSliders[i];

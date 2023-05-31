@@ -9,8 +9,8 @@ public class CanvasMainMenu : MonoBehaviour
     public AudioManager audioManager;
     void Start()
     {
-        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
-        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        gameManager = GameManager.instance;
+        audioManager = gameManager.audioManager;
     }
 
     // Update is called once per frame

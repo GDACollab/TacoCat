@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
-//using FMOD.Studio;
-//using FMODUnity;
+using FMOD.Studio;
+using FMODUnity;
 
 //EVENTS W/ PARAMETERS
 //music events, isPaused
@@ -16,7 +16,7 @@ public class AudioManager : MonoBehaviour {
     //SLIDERS FOR VOLUME, SHOULD BE A VALUE BETWEEN 0 & 1
     [Header("Volumes (sliders)")]
     [Range(0f, 1f)]
-    public float masterVolume;
+    public float masterVolume = 0.5f;
     [Range(0f, 1f)]
     public float musicVolume;
     [Range(0f, 1f)]
@@ -34,15 +34,17 @@ public class AudioManager : MonoBehaviour {
     public string ambiVolBusPath = "bus:/Ambience";
 
     //BUSES
-    /*
+
     public FMOD.Studio.Bus masBus;
     public FMOD.Studio.Bus musBus;
     public FMOD.Studio.Bus sfxBus;
     public FMOD.Studio.Bus diaBus;
     public FMOD.Studio.Bus ambiBus;
-    */
 
-    /////////////////////////MUSIC//////////////////////////////
+    public bool isPaused;
+
+    #region /////////////////////////MUSIC//////////////////////////////
+    
     [Header("FMOD Music")]
 
     [Tooltip("FMOD Event Path for the folder that contains all the music")]
@@ -50,8 +52,16 @@ public class AudioManager : MonoBehaviour {
     public string storyMusicPath = "event:/Music/StoryMusic";
     public string tacoMusicPath = "event:/Music/TacoMusic";
     public string drivingMusicPath = "event:/Music/DrivingMusic";
-
-    /////////////////////////SFX//////////////////////////////
+    #endregion
+    
+    #region /////////////////////////AMBIENCE//////////////////////////////
+    [Header("FMOD Driving(Ambience) Event Path Strings")]
+    
+    [Tooltip("path of ambience event")]
+    public string drivingAmbiPath;
+    #endregion
+    
+    #region /////////////////////////SFX//////////////////////////////
 
     // CUTSCENE
     [Header("FMOD Cutscene(SFX) Event Path Strings")]
@@ -62,6 +72,8 @@ public class AudioManager : MonoBehaviour {
     public string sendTextSFX;
     [Tooltip("path of the typing event")]
     public string typingSFX;
+
+    
 
     // DRIVING
 
@@ -78,6 +90,9 @@ public class AudioManager : MonoBehaviour {
     public string truckLandingSFX; //IMPLEMENTED
     public string crashSFX;
 
+    public string rpmSFX;
+    
+
     //TACO MAKING
 
     [Header("FMOD Taco(SFX) Event Path Strings")]
@@ -88,17 +103,33 @@ public class AudioManager : MonoBehaviour {
     public string ingriPlaceSFX; //IMPLEMENTED
     [Tooltip("Name of the paw swiping event")]
     public string pawSwipeSFX; //IMPLEMENTED
-    public bool isPaused;
+    public string bellDingSFX;
+    public string orderDia;
 
-    //FMODUnity.RuntimeManager.StudioSystem.setParameterByName("isPaused", isPaused);
+    #endregion
 
+    #region /////////////////////////UI//////////////////////////////
+    [Header("FMOD UI(SFX) Event Path Strings")]
+    
+    [Tooltip("path of UI Select")]
+
+    public string selectUI = "event:/SFX/UI & Menu/UI Select";
+    public string hoverUI = "event:/SFX/UI & Menu/UI Hover";
+    public string creakHoverUI = "event:/SFX/UI & Menu/UI Hover Sign";
+    public string sliderUI = "event:/SFX/UI & Menu/UI Slider Feedback";
+    public string signDrop = "event:/SFX/UI & Menu/Sign Drop";
+    public string meow = "event:/SFX/UI & Menu/Meow Button";
+    public string beep = "event:/SFX/UI & Menu/Beep-Beep Button";
+
+
+    #endregion
     //need to have name of parameter and variable
-    // FOR GLOBAL PARAMETERS FMOD Parameter name, variable name
+    //FOR GLOBAL PARAMETERS FMOD Parameter name, variable name
     //FMODUnity.RuntimeManager.StudioSystem.setParameterByName("", x);
 
     void Awake()
     {
-        /*
+        
         // Load the FMOD banks
         RuntimeManager.LoadBank("Master");
         RuntimeManager.LoadBank("SFX");
@@ -111,18 +142,24 @@ public class AudioManager : MonoBehaviour {
         sfxBus = FMODUnity.RuntimeManager.GetBus(sfxVolBusPath);
         diaBus = FMODUnity.RuntimeManager.GetBus(diaVolBusPath);
         ambiBus = FMODUnity.RuntimeManager.GetBus(ambiVolBusPath);
-        */
+        
+        gameManager=GameManager.instance;
+        //menuMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + menuMusic);
 
-        /*menuMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + menuMusic);
-
-        cutsceneMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + cutsceneMusic);
-        tacoMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + tacoMusic);
-        drivingMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + drivingMusic);*/
+        //cutsceneMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + cutsceneMusic);
+        //tacoMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + tacoMusic);
+        //drivingMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + drivingMusic);*/
 
     }
 
-    /*
+  
     protected EventInstance currentPlaying;
+    protected EventInstance currentAmbience;
+
+    protected EventInstance currentRPM;
+
+    protected FMOD.Studio.PLAYBACK_STATE playbackState;
+
 
 
     //plays a one shot given the fmod event path
@@ -136,21 +173,24 @@ public class AudioManager : MonoBehaviour {
         }
         instance.start();
         instance.release();
+        Debug.Log("[Audio Manager] playing one shot: " + path);
 	}
 
-    public void Play(string path) {
+    public EventInstance Play(string path) {
 
         EventDescription eventDescription;
         FMOD.RESULT result = RuntimeManager.StudioSystem.getEvent(path, out eventDescription);
         if (result != FMOD.RESULT.OK)
         {
             Debug.LogWarning("FMOD event path does not exist: " + path);
-            return;
+            return RuntimeManager.CreateInstance(path); //NEEDS TO BE CHANGED
         }
 
         var instance = RuntimeManager.CreateInstance(path);
         instance.start();
         instance.release();
+        Debug.Log("[Audio Manager] playing one shot: " + path);
+        return instance;
     }
 
     //a little more complicated! DO MATH to give sound 1 variable to work with
@@ -162,23 +202,123 @@ public class AudioManager : MonoBehaviour {
     public void PlaySong(string path){
         Debug.Log("[Audio Manager] Playing Song: " + path);
         if (currentPlaying.isValid()) {
-            currentPlaying.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            StartCoroutine(RestOfPlaySong(path));
+        }
+        else{
+            EventDescription eventDescription;
+            FMOD.RESULT result = RuntimeManager.StudioSystem.getEvent(path, out eventDescription);
+            if (result != FMOD.RESULT.OK)
+            {
+                Debug.LogWarning("[Audio Manager] FMOD SONG event path does not exist: " + path);
+                return;
+            }
+
+            EventInstance song = RuntimeManager.CreateInstance(path);
+            currentPlaying = song;
+            song.start();
+            song.release();
+        }
+    }
+
+    public IEnumerator RestOfPlaySong(string path){
+        Debug.Log(currentPlaying);
+        currentPlaying.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        currentPlaying.getPlaybackState(out playbackState);
+        while(playbackState != FMOD.Studio.PLAYBACK_STATE.STOPPED){
+            currentPlaying.getPlaybackState(out playbackState);
+            yield return null;
         }
 
         EventDescription eventDescription;
         FMOD.RESULT result = RuntimeManager.StudioSystem.getEvent(path, out eventDescription);
         if (result != FMOD.RESULT.OK)
         {
-            Debug.LogWarning("FMOD SONG event path does not exist: " + path);
-            return;
+            Debug.LogWarning("[Audio Manager] FMOD SONG event path does not exist: " + path);
+        }else{
+            EventInstance song = RuntimeManager.CreateInstance(path);
+            currentPlaying = song;
+            song.start();
+            song.release();
         }
-
-        EventInstance song = RuntimeManager.CreateInstance(path);
-        currentPlaying = song;
-        song.start();
-        song.release();
     }
 
+    public void PlayDrivingAmbience(float value){
+        if(currentAmbience.isValid()){
+            currentAmbience.setParameterByName("carHeight", value);
+            Debug.Log("[Audio Manager] Driving Ambience updated: " + value);
+        }else{
+            EventDescription eventDescription;
+            FMOD.RESULT result = RuntimeManager.StudioSystem.getEvent(drivingAmbiPath, out eventDescription);
+            if (result != FMOD.RESULT.OK)
+            {
+                Debug.LogWarning("FMOD SONG event path does not exist: " + drivingAmbiPath);
+                return;
+            }
+
+            EventInstance ambience = RuntimeManager.CreateInstance(drivingAmbiPath);
+            currentAmbience = ambience;
+            ambience.start();
+            ambience.release();
+            Debug.Log("[Audio Manager] New Driving Ambience Event: " + value);
+        }
+
+    }
+    public void StopDrivingAmbience(){
+        Debug.Log("[Audio Manager] Stopping Driving Ambience");
+        if(currentAmbience.isValid()){
+            currentAmbience.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        }
+    }
+
+    public void PlayRPM(float value){
+        if(currentRPM.isValid()){
+            currentRPM.setParameterByName("RPM", value);
+            //Debug.Log("[Audio Manager] RPM updated: " + value);
+        }else{
+            EventDescription eventDescription;
+            FMOD.RESULT result = RuntimeManager.StudioSystem.getEvent(rpmSFX, out eventDescription);
+            if (result != FMOD.RESULT.OK)
+            {
+                Debug.LogWarning("FMOD SONG event path does not exist: " + rpmSFX);
+                return;
+            }
+
+            EventInstance rpm = RuntimeManager.CreateInstance(rpmSFX);
+            currentRPM = rpm;
+            rpm.start();
+            rpm.release();
+            Debug.Log("[Audio Manager] New RPM Event: " + value);
+        }
+    }
+    public void StopRPM(){
+        Debug.Log("[Audio Manager] Stopping RPM");
+        if(currentRPM.isValid()){
+            currentRPM.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        }
+    }
+
+    public void playSelect(){
+        Play(selectUI);
+    }
+    public void playHover(){
+        Play(hoverUI);
+    }
+    public void playCreakHover(){
+        Debug.Log(creakHoverUI);
+        Play(creakHoverUI);
+    }
+    public void playSlider(){
+        Play(sliderUI);
+    }
+    public void playDrop(){
+        Play(signDrop);
+    }
+    public void playMeow(){
+        Play(meow);
+    }
+    public void playBeep(){
+        Play(beep);
+    }
 
     // Update is called once per frame
     void Update()
@@ -189,6 +329,14 @@ public class AudioManager : MonoBehaviour {
         sfxBus.setVolume(sfxVolume);
         diaBus.setVolume(dialogueVolume);
         ambiBus.setVolume(ambianceVolume);
+        
+        if(gameManager!=null){
+            //Debug.Log("we made it past the game manager != null check boys");
+            if (!(gameManager.currGame == currGame.CUTSCENE || gameManager.currGame == currGame.MENU)){
+                FMODUnity.RuntimeManager.StudioSystem.setParameterByName("timeOfDay", (float)gameManager.currDayCycleState);
+                //Debug.Log("THIS IS THE TIME OF DAY STATE FOR AUDIO CHECK: " + (float)gameManager.currDayCycleState);
+            }
+        }
+
     }
-    */
 }

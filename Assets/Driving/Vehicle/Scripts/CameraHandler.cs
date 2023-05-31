@@ -11,6 +11,8 @@ public class CameraHandler : MonoBehaviour
     public GameObject vehicle;
     public StageManager playAreaGroundGeneration;
 
+    public AudioManager audioManager;
+
     [Space(10)]
     public bool foundGenerationPoints;
 
@@ -67,6 +69,9 @@ public class CameraHandler : MonoBehaviour
     private void Start()
     {
         vehicleRb = vehicle.GetComponent<Rigidbody2D>();
+    }
+    private void Awake(){
+        audioManager = GetComponentInChildren<AudioManager>();
     }
 
     public void Init()
@@ -251,6 +256,13 @@ public class CameraHandler : MonoBehaviour
 
             truckHeight = Mathf.Abs((vehiclePos.y - currZeroPos));
             //Debug.Log("Truck height from currZero: " + truckHeight);
+            
+            //AUDIOMANAGER STUFF HERE FOR AMBIENCE
+            if(audioManager!=null){
+                audioManager.PlayDrivingAmbience(Math.Max(0,truckHeight-currZeroPos));
+                Debug.Log("PLAYDRIVINGAMBIENCE UPDATE: "+ Math.Max(0,truckHeight-currZeroPos));
+            }
+
 
 
             // << HORZ CAMERA SHIFT >>

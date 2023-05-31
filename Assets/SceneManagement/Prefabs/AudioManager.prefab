@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3569120199698855514}
   - component: {fileID: 381768075892565994}
+  - component: {fileID: 6921200386482857714}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: AudioManager
@@ -44,25 +45,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 399d30af4f863cf488de9a77942e1814, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  masterVolume: 1
-  musicVolume: 1
-  sfxVolume: 1
-  dialogueVolume: 1
-  ambianceVolume: 1
-  music:
-  - event:/Music/MenuMusic
-  - event:/Music/TacoMusic
-  - event:/Music/DrivingMusic
-  - event:/Music/StoryMusic
-  recieveTextSFX: Recieve Text
-  sendTextSFX: Send Text
-  typingSFX: Texting Clicks
+  masterVolume: 0.5
+  musicVolume: 0.5
+  sfxVolume: 0.5
+  dialogueVolume: 0.5
+  ambianceVolume: 0.5
+  masVolBusPath: bus:/
+  musVolBusPath: bus:/Music
+  sfxVolBusPath: bus:/SFX
+  diaVolBusPath: bus:/Dialogue
+  ambiVolBusPath: bus:/Ambience
+  isPaused: 0
+  menuMusicPath: event:/Music/MenuMusic
+  storyMusicPath: event:/Music/StoryMusic
+  tacoMusicPath: event:/Music/TacoMusic
+  drivingMusicPath: event:/Music/DrivingMusic
+  drivingAmbiPath: event:/Ambience/City Ambience
+  recieveTextSFX: event:/SFX/Cutscene/Receive Text
+  sendTextSFX: event:/SFX/Cutscene/Send Text
+  typingSFX: event:/SFX/Cutscene/Texting Clicks
   drivingSFXPath: event:/SFX/Driving
   nitroBoostSFX: event:/SFX/Driving/Nitro Boost
   flipBoostSFX: event:/SFX/Driving/Flip Boost
-  truckLandingSFX: 
-  crashSFX: 
-  submitTacoSFX: Bell Ding
+  truckLandingSFX: event:/SFX/Driving/Car Lands
+  crashSFX: event:/SFX/Driving/Car Crashes
+  rpmSFX: event:/SFX/Driving/Truck Engine
+  submitTacoSFX: event:/SFX/Taco Making/Bell Ding
   ingriPlaceSFX: event:/SFX/Taco Making/Plop Ingredients
   pawSwipeSFX: event:/SFX/Taco Making/Swipe Ingredients
-  isPaused: 0
+  bellDingSFX: event:/SFX/Taco Making/Bell Ding
+  orderDia: event:/Dialogue/Customer_Order
+  selectUI: event:/SFX/UI & Menu/UI Select
+  hoverUI: event:/SFX/UI & Menu/UI Hover
+  creakHoverUI: event:/SFX/UI & Menu/UI Hover Sign
+  sliderUI: event:/SFX/UI & Menu/UI Slider Feedback
+  signDrop: event:/SFX/UI & Menu/Sign Drop
+  meow: event:/SFX/UI & Menu/Meow Button
+  beep: event:/SFX/UI & Menu/Beep-Beep Button
+--- !u!114 &6921200386482857714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4310913368992377565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 0}

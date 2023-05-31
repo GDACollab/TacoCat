@@ -5,7 +5,7 @@ using TMPro;
 public enum INGREDIENT_TYPE { NONE, FISH, SOUR_CREAM, PICO_DE_GALLO, CABBAGE, SLICED_JALAPENOS }
 public enum SUBMIT_TACO_SCORE { NONE, COMBO, PERFECT, GOOD, OKAY, FAILED } // possible scores a taco can get.
 
-public enum TACOMAKING_STATE { LOADING, TUTORIAL, PLAY, END, END_TRANSITION }
+public enum TACOMAKING_STATE { LOADING, TUTORIAL, ENTER_PLAY, PLAY, END, END_TRANSITION }
 
 public class TacoMakingGameManager : MonoBehaviour
 {
@@ -52,14 +52,17 @@ public class TacoMakingGameManager : MonoBehaviour
 
     public void Start()
     {
-        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        gameManager = GameManager.instance;
         audioManager = gameManager.audioManager;
         benchManager = GetComponentInChildren<IngredientBenchManager>();
         uiManager = GetComponentInChildren<TacoUIManager>();
 
+        gameManager.tacoGameManager = GetComponent<TacoMakingGameManager>();
+        gameManager.currGame = currGame.TACO_MAKING;
+
+
         // get difficulty
-        difficulty = Mathf.Min(difficulty, 3);
-        customerManager.difficulty = difficulty;
+        customerManager.difficulty = gameManager.currLevel;
 
         /*
         // enable / disable backgrounds
@@ -96,7 +99,7 @@ public class TacoMakingGameManager : MonoBehaviour
         }
         else
         {
-            state = TACOMAKING_STATE.PLAY;
+            state = TACOMAKING_STATE.ENTER_PLAY;
         }
 
         yield return new WaitUntil(() => uiManager.camEffectManager != null);
@@ -114,19 +117,27 @@ public class TacoMakingGameManager : MonoBehaviour
             case TACOMAKING_STATE.TUTORIAL:
                 if (!uiManager.camEffectManager.isFading)
                 {
+                    if(!uiManager.tutorialCanvas.activeInHierarchy){
+                        audioManager.Play(audioManager.recieveTextSFX);
+                    }
                     uiManager.tutorialCanvas.SetActive(true);
+                    
 
                     if (Input.GetKeyDown(KeyCode.Space))
                     {
                         uiManager.tutorialCanvas.SetActive(false);
-                        state = TACOMAKING_STATE.PLAY;
+                        audioManager.Play(audioManager.sendTextSFX);
+                        state = TACOMAKING_STATE.ENTER_PLAY;
                     }
                 }
                 break;
+            case TACOMAKING_STATE.ENTER_PLAY:
+                StartCoroutine(uiManager.OpenWindow()); //sfx needed here
+                //audioManager.playBeep(); is called in uiManager.OpenWindow
+                state = TACOMAKING_STATE.PLAY;
+                break;
             case TACOMAKING_STATE.PLAY:
                 if (hand.state == PlayerHand.HAND_STATE.DISABLED) { hand.state = PlayerHand.HAND_STATE.HOME; }
-
-                StartCoroutine(uiManager.OpenWindow());
 
                 CustomerRotation();
 
@@ -140,7 +151,10 @@ public class TacoMakingGameManager : MonoBehaviour
                 lightingManager.timeOfDay = gameManager.main_gameTimer;
                 break;
             case TACOMAKING_STATE.END:
-
+                if(!uiManager.endCanvas.activeInHierarchy){
+                    //AUDIO MANAGER END POPUP ACTIVATION SFX
+                    audioManager.Play(audioManager.recieveTextSFX);
+                }
                 uiManager.endCanvas.SetActive(true);
 
                 uiManager.endCanvas.SetActive(true);
@@ -148,6 +162,7 @@ public class TacoMakingGameManager : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     uiManager.endCanvas.SetActive(false);
+                    //AUDIO MANAGER POP UP DISMISSAL SFX
                     uiManager.camEffectManager.StartFadeOut(1.5f);
                     state = TACOMAKING_STATE.END_TRANSITION;
                 }
@@ -204,7 +219,7 @@ public class TacoMakingGameManager : MonoBehaviour
     public void SubmitTaco()
     {
         //Can't submit taco until customer is finished moving
-        if (customerManager.currCustomer != null && customerManager.currCustomer.moveRoutine == null)
+        if (customerManager.currCustomer != null && customerManager.currCustomer.moveRoutine == null && hand.state == PlayerHand.HAND_STATE.HOME)
         {
             SUBMIT_TACO_SCORE score = customerManager.currCustomer.ScoreTaco(submissionTaco);
             SUBMIT_TACO_SCORE comboContextScore = NewTacoScore(score);
@@ -230,7 +245,7 @@ public class TacoMakingGameManager : MonoBehaviour
 
             Debug.Log("Submitted Taco! Customer Score " + score);
 
-            //audioManager.Play("event:/SFX/Taco Making/Bell Ding");
+            audioManager.Play(audioManager.bellDingSFX);
 
             CreateNewSubmissionTaco();
 

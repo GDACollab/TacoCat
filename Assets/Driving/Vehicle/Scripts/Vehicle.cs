@@ -105,7 +105,8 @@ public class Vehicle : MonoBehaviour
         Inputs();
         StateMachine();
 
-        rpm = rb_vehicle.velocity.x;
+        rpm = Mathf.Clamp(rb_vehicle.velocity.x, 0, 3000);
+        audioManager.PlayRPM(rpm);
         //GetComponent<StudioEventEmitter>().SetParameter("RPM", rpm);
         //Debug.Log(emitter.Params[0].Value);
     }
@@ -203,12 +204,9 @@ public class Vehicle : MonoBehaviour
         {
             StartCoroutine(NitroBoost());
 
-            try
-            {
-                //audioManager.Play(audioManager.nitroBoostSFX); //NITRO BOOST SOUND EFFECT
+            if(audioManager != null){
+                audioManager.Play(audioManager.nitroBoostSFX); //NITRO BOOST SOUND EFFECT
             }
-            catch { Debug.LogWarning("nitroBoostSFX :: Could not find AudioManager", this.gameObject); }
-
         }
     }
 

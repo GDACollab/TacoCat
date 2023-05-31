@@ -120,6 +120,7 @@ MonoBehaviour:
   env1_maxSpacing: 40
   env1ScaleRange: {x: 1, y: 10}
   env1_rotationEnabled: 1
+  env1_flipEnabled: 0
   env1_rotScalar: 30
   env1ObjYOffset: 0
   envGen1Parent: {fileID: 5571463960001830364}
@@ -131,6 +132,7 @@ MonoBehaviour:
   env2_maxSpacing: 40
   env2ScaleRange: {x: 1, y: 2}
   env2_rotationEnabled: 1
+  env2_flipEnabled: 0
   env2_rotScalar: 30
   env2ObjYOffset: 0
   envGen2Parent: {fileID: 373459222918562849}
@@ -143,6 +145,10 @@ MonoBehaviour:
   - {fileID: 5599035235879907881, guid: 55982595c6a3c8745bcff64d3364dfb3, type: 3}
   - {fileID: 5599035235879907881, guid: 9634ec2d6ab08e64dba927c31e28b673, type: 3}
   - {fileID: 5599035235879907881, guid: 9f5d5e25191638e489fec2055ac13cb5, type: 3}
+  - {fileID: 853560496764453950, guid: 085bb8be02f42f14bac83152b5b702b8, type: 3}
+  - {fileID: 4374546414965943084, guid: ee50681ef7e218d4e953ee1fd34a5f15, type: 3}
+  - {fileID: 5553471328575815462, guid: bad0417075ec30f479baac8b50e87fc6, type: 3}
+  - {fileID: 1618036048100565575, guid: 160bcd5e0cdda934e83bdf00aeaaa0fe, type: 3}
   drawLine: 1
   enableCollision: 1
   lineWidth: 100
@@ -368,7 +374,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6329002046810275152}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 36061, y: 0, z: -100}
+  m_LocalPosition: {x: 36061, y: 0, z: -500}
   m_LocalScale: {x: 25000, y: 1, z: 1957.9}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -435,7 +441,7 @@ SortingGroup:
   m_Enabled: 1
   m_SortingLayerID: 2132478623
   m_SortingLayer: 8
-  m_SortingOrder: 0
+  m_SortingOrder: 10
 --- !u!1 &7153004905748324074
 GameObject:
   m_ObjectHideFlags: 0

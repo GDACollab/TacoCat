@@ -210,10 +210,12 @@ public class DynamicBackground : MonoBehaviour
     private void Update()
     {
         currentDayCycle = lightManager.dayCycleState;
+        //Debug.Log(lightManager.dayCycleState);
 
         switch (currentDayCycle)
         {
             case TIME_OF_DAY.NIGHT:
+            case TIME_OF_DAY.MIDNIGHT:
                 FadeObjects(morningBackground, 0);
                 FadeObjects(middayBackground, 0);
                 FadeObjects(eveningBackground, 0);

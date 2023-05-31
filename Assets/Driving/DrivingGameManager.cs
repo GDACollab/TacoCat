@@ -16,6 +16,7 @@ public class DrivingGameManager : MonoBehaviour
 
     [Header("States")]
     public DRIVINGGAME_STATE state = DRIVINGGAME_STATE.LOADING;
+    public bool completedLevel;
 
     [Header("Stages")]
     public StageManager foregroundStageManager;
@@ -38,10 +39,16 @@ public class DrivingGameManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        gameManager = GameManager.instance;
+        gameManager.drivingGameManager = GetComponent<DrivingGameManager>();
+        gameManager.currGame = currGame.DRIVING;
+
         uiManager = GetComponentInChildren<DrivingUIManager>();
         vehicle.rb_vehicle.constraints = RigidbodyConstraints2D.FreezeAll;
         vehicle.disableInputs = true;
+
+        // << UPDATE LIGHTING MANAGER >>
+        lightingManager.timeOfDay = gameManager.main_gameTimer;
 
         stuckTime = 0;
 
@@ -137,6 +144,11 @@ public class DrivingGameManager : MonoBehaviour
         // << STUCK CHECK >>
         if (vehicle.GetFuel() == 0 && vehicle.GetNitro() == 0) // Out of fuel & Nitro
         {
+
+            state = DRIVINGGAME_STATE.FAIL;
+
+
+            /*
             if (vehicle.GetVelocity().x < stuckMaxVelocity) // Truck is stuck
             {
                 if (stuckTime >= stuckTimeoutDuration) // Timer is up
@@ -152,6 +164,7 @@ public class DrivingGameManager : MonoBehaviour
             {
                 stuckTime = 0; // Reset the clock
             }
+            */
         }
 
         // << UPDATE DISTANCE TRACKER >>
@@ -171,6 +184,9 @@ public class DrivingGameManager : MonoBehaviour
 
         uiManager.ShowEndLevelCanvas(level_complete);
 
+        completedLevel = level_complete; // for gamemanager reference
+
+
         yield return new WaitForSeconds(1f);
 
         while (state != DRIVINGGAME_STATE.END_TRANSITION)
@@ -184,7 +200,7 @@ public class DrivingGameManager : MonoBehaviour
             yield return null;
         }
 
-
+        endStateRoutine = null;
     }
 
     public List<int> getSignDistances(int numLandmarks, int totalSignDistance){

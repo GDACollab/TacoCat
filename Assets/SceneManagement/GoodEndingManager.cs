@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GoodEndingManager : MonoBehaviour
 {
+    GameManager gameManager;
     public Image image;
     public float fadeTime = 1f;
     private float currentAlpha = 1f;
@@ -13,6 +14,7 @@ public class GoodEndingManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = GameManager.instance;
         image.color = new Color(image.color.r, image.color.g, image.color.b, currentAlpha);
         StartCoroutine(FadeInAndOut());
     }
@@ -22,7 +24,7 @@ public class GoodEndingManager : MonoBehaviour
         yield return StartCoroutine(FadeIn());
         yield return new WaitForSeconds(3f);
         yield return StartCoroutine(FadeOut());
-        SceneManager.LoadScene("Credits");
+        gameManager.LoadCredits();
     }
 
     private IEnumerator FadeIn()

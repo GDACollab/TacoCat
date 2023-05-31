@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEditor;
 public class HideInInspectorUnlessDebugAttribute : PropertyAttribute { }
-public enum TIME_OF_DAY { MORNING, MIDDAY, EVENING, NIGHT, ERROR }
+public enum TIME_OF_DAY { MORNING, MIDDAY, EVENING, NIGHT, MIDNIGHT, ERROR }
 
 [ExecuteAlways]
 public class LightingManager : MonoBehaviour
@@ -167,13 +167,19 @@ public class LightingManager : MonoBehaviour
             return palettes[2];
         }
         // NIGHT
-        if (curTime > (morningTimeLength + midDayTimeLength + eveningTimeLength))
+        if (curTime > (morningTimeLength + midDayTimeLength + eveningTimeLength) && curTime < 1)
         {
             dayCycleState = TIME_OF_DAY.NIGHT;
             return palettes[3];
         }
+        // MIDNIGHT
+        if (curTime >= 1)
+        {
+            dayCycleState = TIME_OF_DAY.MIDNIGHT;
+            return palettes[3];
+        }
 
-        dayCycleState = TIME_OF_DAY.ERROR;
+        //dayCycleState = TIME_OF_DAY.ERROR;
         return palettes[3];
 
 
