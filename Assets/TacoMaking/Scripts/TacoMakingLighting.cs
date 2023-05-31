@@ -146,6 +146,16 @@ public class TacoMakingLighting : MonoBehaviour
 
     }
 
+
+    public void OverwriteLightingPalette(float curTime)
+    {
+        List<Color> toPalette = GetPaletteAtTime(curTime);
+
+        insideTruckLight.color = Color.Lerp(insideTruckLight.color, toPalette[0], lightColorAdjustSpeed * Time.deltaTime);
+        customerLight.color = Color.Lerp(customerLight.color, toPalette[1], lightColorAdjustSpeed * Time.deltaTime);
+        backgroundLight.color = Color.Lerp(backgroundLight.color, toPalette[2], lightColorAdjustSpeed * Time.deltaTime);
+    }
+
     public void SetZPositions()
     {
         // << SET Z POSITIONS >>

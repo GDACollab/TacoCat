@@ -49,6 +49,7 @@ public class DrivingGameManager : MonoBehaviour
 
         // << UPDATE LIGHTING MANAGER >>
         lightingManager.timeOfDay = gameManager.main_gameTimer;
+        lightingManager.OverwriteLightingPalette(gameManager.main_gameTimer);
 
         stuckTime = 0;
 
@@ -143,8 +144,6 @@ public class DrivingGameManager : MonoBehaviour
         // << STUCK CHECK >>
         if (vehicle.GetFuel() == 0 && vehicle.GetNitro() == 0) // Out of fuel & Nitro
         {
-
-            state = DRIVINGGAME_STATE.FAIL;
 
             if (vehicle.GetVelocity().x < stuckMaxVelocity) // Truck is stuck
             {

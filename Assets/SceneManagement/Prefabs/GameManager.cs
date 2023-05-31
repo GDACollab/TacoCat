@@ -17,8 +17,6 @@ public class GameManager : MonoBehaviour
     public static GameManager instance = null;
     public static EventSystem eventSystemInstance = null;
 
-    public TIME_OF_DAY timeState;
-
     [HideInInspector]
     public AudioManager audioManager;
     [HideInInspector]
@@ -29,7 +27,6 @@ public class GameManager : MonoBehaviour
     public DrivingGameManager drivingGameManager;
     public CutsceneManager cutsceneManager;
     public MenuManager menuManager;
-
 
     [Header("TIME OF DAY")]
     public TIME_OF_DAY currDayCycleState;
@@ -168,7 +165,6 @@ public class GameManager : MonoBehaviour
                 catch { }
                 return;
             }
-
 
             if (currLevel == 0) { currLevel = 1; }
 
