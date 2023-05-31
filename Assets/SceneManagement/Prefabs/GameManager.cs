@@ -145,14 +145,8 @@ public class GameManager : MonoBehaviour
         cutsceneManager = null;
         menuManager = null;
 
-
-        if (!audioManager.allBanksLoaded || !audioManager.allBusesLoaded)
-        {
-            audioManager.LoadBanksAndBuses();
-
-            // wait till music is loaded
-            yield return new WaitUntil(() => audioManager.allBanksLoaded && audioManager.allBusesLoaded);
-        }
+        // wait till music is loaded
+        yield return new WaitUntil(() => audioManager.allBanksLoaded && audioManager.allBusesLoaded);
 
         // Start Menu Music
         if (currGame == currGame.MENU)

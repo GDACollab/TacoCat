@@ -176,6 +176,12 @@ public class AudioManager : MonoBehaviour {
         //drivingMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + drivingMusic);*/
     }
 
+
+    private void Start()
+    {
+        LoadBanksAndBuses();
+    }
+
     public void LoadBanksAndBuses()
     {
         StartCoroutine(LoadBanksAndBusesRoutine());
