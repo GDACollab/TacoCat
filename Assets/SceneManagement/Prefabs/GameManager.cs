@@ -170,6 +170,7 @@ public class GameManager : MonoBehaviour
 
             tacoGameManager.difficulty = currLevel;
             currDayCycleState = tacoGameManager.lightingManager.dayCycleState;
+            Debug.Log("taco making curr day cycle" +currDayCycleState);
 
             // check if all customers submitted , if so move to driving with gas amount
             if (tacoGameManager.state == TACOMAKING_STATE.END_TRANSITION && !isLoadingScene && !tacoGameManager.uiManager.camEffectManager.isFading)
@@ -208,6 +209,7 @@ public class GameManager : MonoBehaviour
 
             // get day state
             currDayCycleState = drivingGameManager.lightingManager.dayCycleState;
+            Debug.Log("driving curr day cycle" +currDayCycleState);
 
 
             // check for ending
@@ -316,7 +318,11 @@ public class GameManager : MonoBehaviour
         Debug.Log("PLAYING " + audioManager.storyMusicPath);
         audioManager.StopDrivingAmbience();
         audioManager.StopRPM();
-        audioManager.PlaySong(audioManager.storyMusicPath);
+        if(currLevel==4||currLevel==5){
+            audioManager.PlaySong(audioManager.endingAmbiencePath);
+        }else{
+            audioManager.PlaySong(audioManager.storyMusicPath);
+        }
     }
 
     public void LoadCredits()

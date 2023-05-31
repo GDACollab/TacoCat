@@ -47,6 +47,9 @@ public class CameraEffectManager : MonoBehaviour
                 }
 
                 elapsedTime += Time.deltaTime;
+                if(Input.GetKeyDown(KeyCode.Space)){
+                    break;
+                }
                 yield return null;
             }
 
