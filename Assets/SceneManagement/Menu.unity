@@ -1867,8 +1867,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 10505627301420208, guid: b98e17472161422409ce954e519a82b5, type: 3}
-      propertyPath: bankDirectoryPath
-      value: Assets/FMOD/TacoCat FMOD Project/Build/Mobile
+      propertyPath: sfxVolume
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 10505627301420208, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: musicVolume
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 10505627301420208, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: masterVolume
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 10505627301420208, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: ambianceVolume
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 10505627301420208, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: dialogueVolume
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 5120949041857759932, guid: b98e17472161422409ce954e519a82b5, type: 3}
       propertyPath: m_IsActive

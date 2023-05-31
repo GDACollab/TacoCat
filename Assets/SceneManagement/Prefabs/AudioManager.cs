@@ -12,7 +12,7 @@ using FMODUnity;
 //customer order
 public class AudioManager : MonoBehaviour {
     GameManager gameManager;
-    public string bankDirectoryPath = "Assets/FMOD/TacoCat FMOD Project/Build/Mobile"; // Directory path to the banks
+    public string bankDirectoryPath = ""; // Directory path to the banks
 
 
     //SLIDERS FOR VOLUME, SHOULD BE A VALUE BETWEEN 0 & 1
@@ -131,6 +131,7 @@ public class AudioManager : MonoBehaviour {
 
     void Awake()
     {
+        gameManager = GameManager.instance;
 
         // Load the FMOD banks from the specified directory
         RuntimeManager.LoadBank(bankDirectoryPath + "/Master");
@@ -139,7 +140,12 @@ public class AudioManager : MonoBehaviour {
         RuntimeManager.LoadBank(bankDirectoryPath + "/Dialogue");
         RuntimeManager.LoadBank(bankDirectoryPath + "/Ambience");
 
-        gameManager =GameManager.instance;
+        masBus = FMODUnity.RuntimeManager.GetBus(masVolBusPath);
+        musBus = FMODUnity.RuntimeManager.GetBus(musVolBusPath);
+        sfxBus = FMODUnity.RuntimeManager.GetBus(sfxVolBusPath);
+        diaBus = FMODUnity.RuntimeManager.GetBus(diaVolBusPath);
+        ambiBus = FMODUnity.RuntimeManager.GetBus(ambiVolBusPath);
+
         //menuMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + menuMusic);
 
         //cutsceneMusicInst = FMODUnity.RuntimeManager.CreateInstance(musicPath + cutsceneMusic);
