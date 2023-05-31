@@ -75,7 +75,7 @@ public class MenuManager : MonoBehaviour
     public void Settings()
     {
         pauseManager = GameManager.instance.pauseManager;
-        pauseManager.ShowVolumeSettings();
+        pauseManager.ShowVolumeSettings(true);
     }
 
     public void Credits()

@@ -84,7 +84,7 @@ public class PauseManager : MonoBehaviour
     }
 
     // Quick access settings menu
-    public void ShowVolumeSettings()
+    public void ShowVolumeSettings(bool settings = false)
     {
         // Pause Game
         isPaused = true;
@@ -95,6 +95,7 @@ public class PauseManager : MonoBehaviour
         baseMenu.SetActive(false);
         volumeSettings.SetActive(true);
         levelSwap.SetActive(false);
+        volumeSettings.transform.Find("BackButton(Settings)").gameObject.SetActive(settings);
     }
 
     // Level Select
