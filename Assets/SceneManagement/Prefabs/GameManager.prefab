@@ -59,7 +59,6 @@ MonoBehaviour:
   updateClockEvery_Minutes: 15
   hardCapHour: 23
   hardCapMinute: 59
-  hardCapAM: 0
   timeRemaining: 0
   main_gameTimer: 0
   curClockHour: 0
@@ -99,10 +98,14 @@ MonoBehaviour:
   endlessDrivingScenes:
   - m_SceneName: EndlessFarm_1
   - m_SceneName: EndlessWater_1
+  - m_SceneName: EndlessWater_2
   - m_SceneName: EndlessCity_1
-  - m_SceneName: Endless_DiaDeLosMuertos
-  - m_SceneName: Endless_PixelArt
+  - m_SceneName: Endless_PixelArt Farm
+  - m_SceneName: Endless_PixelArt Water
   - m_SceneName: Endless_PixelArtCity
+  - m_SceneName: Endless_PixelArtCity 1
+  - m_SceneName: Endless_DiaDeLosMuertos
+  - m_SceneName: Endless_DiaDeLosMuertos 1
   loadProgress: 0
 --- !u!1001 &389845888435534682
 PrefabInstance:
