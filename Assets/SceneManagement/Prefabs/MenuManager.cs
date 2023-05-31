@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class MenuManager : MonoBehaviour
 {
@@ -16,6 +17,10 @@ public class MenuManager : MonoBehaviour
     public GameObject hangingSign;
     public GameObject pole;
 
+    [Header("Secret")]
+    public string citiesVisitedPreface = "City Highscore: ";
+    public TextMeshProUGUI citiesHighscoreText;
+
     void Start()
     {
         // Get GameManager
@@ -25,7 +30,7 @@ public class MenuManager : MonoBehaviour
         level = gameManager.currLevel;
         fullGameComplete = gameManager.fullGameComplete;
 
-        if ((level > 1 && level < 4) || (gameManager.lastGame == currGame.DRIVING))
+        if ((level > 1 && level < 4))
         {
             continueSign.SetActive(true); // Enable continue sign
             newGameSign.SetActive(false);
@@ -40,6 +45,8 @@ public class MenuManager : MonoBehaviour
 
         if (fullGameComplete)
         {
+            citiesHighscoreText.text = citiesVisitedPreface + gameManager.endlessCitiesHighscore;
+
             hangingSign.SetActive(true); // Enable hanging sign
             // Redundant; On active sign already create deploy animation
             Animator signDrop = hangingSign.GetComponent<Animator>();
@@ -68,8 +75,11 @@ public class MenuManager : MonoBehaviour
 
     public void NewGame()
     {
+
+
         gameManager.currLevel = 1;
         gameManager.LoadCutscene();
+        gameManager.GameTimerStart();
         // TBD: First cutscene audio
     }
 
@@ -87,5 +97,10 @@ public class MenuManager : MonoBehaviour
     public void Exit()
     {
         gameManager.Quit();
+    }
+
+    public void StartEndlessMode()
+    {
+        gameManager.LoadEndlessTacoMaking(true);
     }
 }

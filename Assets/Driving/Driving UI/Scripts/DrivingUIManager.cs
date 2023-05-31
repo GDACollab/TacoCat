@@ -157,12 +157,27 @@ public class DrivingUIManager : MonoBehaviour
         if (levelComplete)
         {
             endCanvas.GetComponent<UI_PopUp_Card>().SetHeader(completeDrivingHeader + cityNames[GameManager.instance.currLevel - 1] + "!!");
-            endCanvas.GetComponent<UI_PopUp_Card>().SetBody("You landed <b>" + flipTracker.totalLandedFlips + "</b> flips!" + completeDrivingBody);
+
+            if (GameManager.instance.endlessModeActive)
+            {
+                endCanvas.GetComponent<UI_PopUp_Card>().SetBody("You landed <b>" + flipTracker.totalLandedFlips + "</b> flips, and have visited <b>" + GameManager.instance.endlessCitiesVisited + "</b> cities so far!");
+            }
+            else
+            {
+                endCanvas.GetComponent<UI_PopUp_Card>().SetBody("You landed <b>" + flipTracker.totalLandedFlips + "</b> flips!" + completeDrivingBody);
+            }
         }
         else
         {
             endCanvas.GetComponent<UI_PopUp_Card>().SetHeader(failDrivingHeader);
-            endCanvas.GetComponent<UI_PopUp_Card>().SetBody(failDrivingBody + cityNames[GameManager.instance.currLevel - 1]);
+            if (GameManager.instance.endlessModeActive)
+            {
+                endCanvas.GetComponent<UI_PopUp_Card>().SetBody("You visited <b>" + GameManager.instance.endlessCitiesVisited + "</b> cities!");
+            }
+            else
+            {
+                endCanvas.GetComponent<UI_PopUp_Card>().SetBody(failDrivingBody + cityNames[GameManager.instance.currLevel - 1]);
+            }
         }
     }
 

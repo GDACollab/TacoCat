@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
     [Header(" === INIT GAME TIMER === ")]
     [Tooltip("Total duration of game in seconds")]
     public float totalGameTime_seconds = 300;
+    private float totalGameTime_startValue;
     [Tooltip("when should the clock start in 24 hours")]
     public int startTime_24hr = 8;
     [Tooltip("when should the day end in 24 hours")]
@@ -93,6 +94,9 @@ public class GameManager : MonoBehaviour
 
     [Header("Endless Mode")]
     public bool endlessModeActive;
+    public int endlessGameTimerCount = 300;
+    public int endlessCitiesVisited = 0;
+    public int endlessCitiesHighscore = 0;
     public SceneObject endlessTacoScene;
     public List<SceneObject> endlessDrivingScenes;
 
@@ -114,6 +118,7 @@ public class GameManager : MonoBehaviour
         pauseManager = GetComponentInChildren<PauseManager>();
 
         // << START GAME TIMER >>
+        totalGameTime_startValue = totalGameTime_seconds;
         GameTimerStart();
 
         StartCoroutine(SceneSetup());
@@ -182,6 +187,7 @@ public class GameManager : MonoBehaviour
             // check if all customers submitted , if so move to driving with gas amount
             if (tacoGameManager.state == TACOMAKING_STATE.END_TRANSITION && !isLoadingScene && !tacoGameManager.uiManager.camEffectManager.isFading)
             {
+                nitroCharges = tacoGameManager.nitroCharges;
 
                 if (endlessModeActive)
                 {
@@ -189,7 +195,6 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
-                    nitroCharges = tacoGameManager.nitroCharges;
                     LoadDrivingScene(currLevel);
                 }
             }
@@ -236,13 +241,18 @@ public class GameManager : MonoBehaviour
                     {
                         if (currDayCycleState == TIME_OF_DAY.MIDNIGHT)
                         {
-                            GameTimerStart(); // reset game timer
+                            LoadEndlessTacoMaking(true); // start endless taco making && reset time
+                        }
+                        else
+                        {
+                            LoadEndlessTacoMaking(false); // start endless taco making
                         }
 
-                        LoadEndlessTacoMaking(); // start endless taco making
                     }
                     else
                     {
+                        endlessCitiesHighscore = endlessCitiesVisited;
+                        endlessCitiesVisited = 0;
                         LoadMenu(true);
                     }
                 }
@@ -307,7 +317,6 @@ public class GameManager : MonoBehaviour
         if (game_reset)
         {
             currLevel = 1;    // Deletes progress
-            GameTimerStart();
         }
         StartCoroutine(ConcurrentLoadingCoroutine(menuScene));
     }
@@ -387,10 +396,15 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("BadEnding");
     }
 
-    public void LoadEndlessTacoMaking()
+    public void LoadEndlessTacoMaking(bool reset_timer)
     {
         currGame = currGame.TACO_MAKING;
         endlessModeActive = true;
+
+        if (reset_timer)
+        {
+            GameTimerStart(endlessGameTimerCount); // reset game timer
+        }
 
         StartCoroutine(ConcurrentLoadingCoroutine(endlessTacoScene));
         audioManager.PlaySong(audioManager.tacoMusicPath);
@@ -497,9 +511,21 @@ public class GameManager : MonoBehaviour
         curClockMinute = (int)(totalClockTime) % 60;
     }
 
-    public void GameTimerStart()
+    public void GameTimerStart(int manualGameTime = -1)
     {
+        if (manualGameTime == -1)
+        {
+            totalGameTime_seconds = totalGameTime_startValue;
+        }
+        else
+        {
+            totalGameTime_seconds = manualGameTime;
+        }
+
+
         timeRemaining = totalGameTime_seconds;
+        main_gameTimer = 0;
+
         if (startTime_24hr < 12)
         {
             isAM = true;

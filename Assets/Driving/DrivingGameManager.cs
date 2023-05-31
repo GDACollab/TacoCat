@@ -178,6 +178,8 @@ public class DrivingGameManager : MonoBehaviour
         StartCoroutine(vehicle.NegateVelocity(2));
         vehicle.disableInputs = true;
 
+        if (gameManager.endlessModeActive) { gameManager.endlessCitiesVisited++; }
+
         uiManager.ShowEndLevelCanvas(level_complete);
 
         completedLevel = level_complete; // for gamemanager reference
