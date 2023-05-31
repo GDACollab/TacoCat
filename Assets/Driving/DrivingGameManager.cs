@@ -29,9 +29,9 @@ public class DrivingGameManager : MonoBehaviour
     public float percentageTraveled;
 
     [Header("Stuck")]
-    public int stuckMaxVelocity;
-    public int stuckTimeoutDuration;
-    private float stuckTime = 2;
+    private int stuckMaxVelocity = 400;
+    private int stuckTimeoutDuration = 3;
+    private float stuckTime = 0;
 
     [Header("Nitro Carry")]
     public int nitroCharges = 3;
