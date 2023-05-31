@@ -112,7 +112,6 @@ public class GameManager : MonoBehaviour
         // << START GAME TIMER >>
         GameTimerStart();
 
-
         StartCoroutine(SceneSetup());
 
     }
@@ -140,6 +139,8 @@ public class GameManager : MonoBehaviour
         tacoGameManager = null;
         cutsceneManager = null;
         menuManager = null;
+
+        audioManager.LoadBanksAndBuses();
 
         // wait till music is loaded
         yield return new WaitUntil(() => audioManager.allBanksLoaded && audioManager.allBusesLoaded);
