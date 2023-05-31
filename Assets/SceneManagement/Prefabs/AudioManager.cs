@@ -454,11 +454,12 @@ public class AudioManager : MonoBehaviour {
         diaBus.setVolume(dialogueVolume);
         ambiBus.setVolume(ambianceVolume);
         
+        gameManager = GameManager.instance;
         if(gameManager!=null){
-            //Debug.Log("we made it past the game manager != null check boys");
+            Debug.Log("we made it past the game manager != null check boys");
             if (!(gameManager.currGame == currGame.CUTSCENE || gameManager.currGame == currGame.MENU)){
                 FMODUnity.RuntimeManager.StudioSystem.setParameterByName("timeOfDay", (float)gameManager.currDayCycleState);
-                //Debug.Log("THIS IS THE TIME OF DAY STATE FOR AUDIO CHECK: " + (float)gameManager.currDayCycleState);
+                Debug.Log("THIS IS THE TIME OF DAY STATE FOR AUDIO CHECK: " + (float)gameManager.currDayCycleState);
             }
         }
 
