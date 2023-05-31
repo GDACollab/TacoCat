@@ -68,6 +68,7 @@ public class MenuManager : MonoBehaviour
 
     public void NewGame()
     {
+        gameManager.currLevel = 1;
         gameManager.LoadCutscene();
         // TBD: First cutscene audio
     }
