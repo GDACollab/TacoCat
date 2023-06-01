@@ -170,7 +170,7 @@ public class CutsceneManager : MonoBehaviour
                 break;
             case 6:
                 chosenDialogue = credits;
-                audioManager.PlaySong(audioManager.sadCreditsPath);
+                //audioManager.PlaySong(audioManager.sadCreditsPath);
                 break;
             default:
                 chosenDialogue = CutsceneOneDialogue;
@@ -240,7 +240,8 @@ public class CutsceneManager : MonoBehaviour
 
             if (gameManager.currHappyEnding)
             {
-                //audioManager.currentPlaying.setParameterByName("happyEnding", gameManager.currHappyEnding? 0 : 1);
+                Debug.Log("MADE IT PAST gameManager.currHappyEnding");
+                FMODUnity.RuntimeManager.StudioSystem.setParameterByName("happyEnding", gameManager.currHappyEnding? 1:0);
             }
 
             while (elapsedTime < duration)
@@ -297,7 +298,7 @@ public class CutsceneManager : MonoBehaviour
     public void MoveBubblesUp(float amount)
     {
         amount *= scrollFactor;
-        Debug.Log("moved bubbles up by: " + amount);
+        //Debug.Log("moved bubbles up by: " + amount);
         foreach (GameObject existingBubble in currentBubbles)
         {
             existingBubble.transform.position += new Vector3(0, amount, 0);

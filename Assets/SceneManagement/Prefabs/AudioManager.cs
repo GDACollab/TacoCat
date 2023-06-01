@@ -144,7 +144,7 @@ public class AudioManager : MonoBehaviour {
     public EventInstance currentPlaying;
     protected EventInstance currentAmbience;
 
-    protected EventInstance currentRPM;
+    public EventInstance currentRPM;
 
     protected FMOD.Studio.PLAYBACK_STATE playbackState;
 

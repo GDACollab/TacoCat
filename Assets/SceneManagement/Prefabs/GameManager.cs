@@ -134,7 +134,10 @@ public class GameManager : MonoBehaviour
     public void NewSceneReset(Scene scene, LoadSceneMode mode)
     {
         Debug.Log("[[GAMEMANAGER]] New scene loaded: " + scene.name);
-
+        if(scene.name=="GoodEnding"){
+            Debug.Log("if(scene.name==GoodEnding) CHECK");
+            FMODUnity.RuntimeManager.StudioSystem.setParameterByName("happyEnding", currHappyEnding? 0:1);
+        }
         StartCoroutine(SceneSetup());
     }
 
@@ -189,6 +192,7 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
+                    Debug.Log("LOADING DRIVING FROM TACOMAKING");
                     LoadDrivingScene(currLevel);
                 }
             }
@@ -355,11 +359,16 @@ public class GameManager : MonoBehaviour
         currGame = currGame.CUTSCENE;
         StartCoroutine(ConcurrentLoadingCoroutine(cutscene));
 
-        Debug.Log("PLAYING " + audioManager.storyMusicPath);
+        
         audioManager.StopDrivingAmbience();
         audioManager.StopRPM();
         if(currLevel==4||currLevel==5){
+            Debug.Log("(currLevel == 4 or currLevel == 5) == true");
             audioManager.PlaySong(audioManager.endingAmbiencePath);
+        }else if(currLevel==6){
+            if(!currHappyEnding){
+                audioManager.PlaySong(audioManager.sadCreditsPath);
+            }
         }else{
             audioManager.PlaySong(audioManager.storyMusicPath);
         }
@@ -370,11 +379,14 @@ public class GameManager : MonoBehaviour
         currLevel = 6;
         currGame = currGame.CREDITS;
         StartCoroutine(ConcurrentLoadingCoroutine(cutscene));
-
-        Debug.Log("PLAYING " + audioManager.storyMusicPath);
-        audioManager.StopDrivingAmbience();
-        audioManager.StopRPM();
-        audioManager.PlaySong(audioManager.storyMusicPath);
+        /*
+        if(!currHappyEnding){
+            audioManager.PlaySong(audioManager.sadCreditsPath);
+        }*/
+        //Debug.Log("PLAYING " + audioManager.storyMusicPath);
+        //audioManager.StopDrivingAmbience();
+        //audioManager.StopRPM();
+        //audioManager.PlaySong(audioManager.storyMusicPath);
     }
 
     public void LoadGoodEnding()
