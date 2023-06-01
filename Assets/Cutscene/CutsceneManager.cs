@@ -170,7 +170,9 @@ public class CutsceneManager : MonoBehaviour
                 break;
             case 6:
                 chosenDialogue = credits;
-                //audioManager.PlaySong(audioManager.sadCreditsPath);
+                if(!gameManager.currHappyEnding){
+                    audioManager.PlaySong(audioManager.sadCreditsPath);
+                }
                 break;
             default:
                 chosenDialogue = CutsceneOneDialogue;
