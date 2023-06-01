@@ -109,7 +109,7 @@ public class CutsceneManager : MonoBehaviour
         // debug level 
         levelTMP.text = "" + gameManager.currLevel;
 
-        if (GameManager.instance.currLevel == 0)
+        if (GameManager.instance.currLevel == 1)
         {
             StartCoroutine(IntroPanels());
         }
@@ -124,7 +124,7 @@ public class CutsceneManager : MonoBehaviour
 
     public IEnumerator IntroPanels()
     {
-
+        Debug.Log("INTRO PANELS");
         intro_panel1.SetActive(true);
         intro_panel2.SetActive(false);
         intro_panel3.SetActive(false);
@@ -206,6 +206,7 @@ public class CutsceneManager : MonoBehaviour
         {
             if (chosenDialogue == CutsceneOneDialogue)
             {
+                //StartCoroutine(IntroPanels());
                 // << SHOW PANEL 2 >>
                 camEffectManager.StartFadeOut(2);
                 yield return new WaitUntil(() => !camEffectManager.isFading);
@@ -244,9 +245,10 @@ public class CutsceneManager : MonoBehaviour
                 Debug.Log("starting end of intro cutscene");
                 camEffectManager.StartFadeOut(0.5f);
                 endOfCutscene = true;
+            }else{
+                endOfCutscene = true;
             }
-            //
-            //endOfCutscene = true;
+            
         }
         else if (chosenDialogue == GoodEndingDialogue)
         {
@@ -286,7 +288,7 @@ public class CutsceneManager : MonoBehaviour
 
             gameManager.LoadBadEnding();
         }else{
-            endOfCutscene = true;
+            endOfCutscene =true;
         }
     }
 
