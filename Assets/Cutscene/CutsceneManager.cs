@@ -362,9 +362,10 @@ public class CutsceneManager : MonoBehaviour
         //Add each element from phone_texts to phoneText
         foreach (string l in characterText)
         {
-            
+            yield return new WaitForSeconds(unskipableDelay);
+            yield return JamieCountdown();
             //phoneText.text += l + "\n";
-
+            
             //insert instance of jamiebubble text += l + "\n"
             GameObject bubble = Instantiate(jamieMessagePrefab, messageParent);
             bubble.SetActive(false);
@@ -381,11 +382,8 @@ public class CutsceneManager : MonoBehaviour
             if(audioManager!= null){
                 audioManager.Play(audioManager.recieveTextSFX);
             }
-            
-            
-            yield return JamieCountdown();
-            yield return new WaitForSeconds(unskipableDelay);
         }
+        yield return JamieCountdown();
     }
 
     // Update is called once per frame

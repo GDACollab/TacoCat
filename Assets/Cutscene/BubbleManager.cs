@@ -101,6 +101,7 @@ public class BubbleManager : MonoBehaviour
 
                 messageText.text += c;
                 yield return alexCrawlCountdown();
+                cutsceneManager.audioManager.Play(cutsceneManager.audioManager.typingSFX);
             }
             messageText.text += " ";
             UpdateBubbleHeight();
