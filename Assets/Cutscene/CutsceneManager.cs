@@ -238,9 +238,13 @@ public class CutsceneManager : MonoBehaviour
                 camEffectManager.StartFadeIn(0.5f);
                 yield return new WaitUntil(() => !camEffectManager.isFading);
                 yield return new WaitForSeconds(2);                
-                BeginTextingRoutine(7);
+                StartCoroutine(BeginTextingRoutine(7));
+                
+            }else if(chosenDialogue == CutsceneOneAndAHalfDialogue){
+                Debug.Log("starting end of intro cutscene");
+                camEffectManager.StartFadeOut(0.5f);
+                endOfCutscene = true;
             }
-            
             //
             //endOfCutscene = true;
         }
