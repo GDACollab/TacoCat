@@ -83,7 +83,6 @@
 		<relationship name="markers">
 			<destination>{d0eccc98-2b21-45be-9072-940b3bd5eba1}</destination>
 			<destination>{2eaa7346-24c5-4c4d-b368-7af595272a8b}</destination>
-			<destination>{7c0eb291-8ab8-4914-b045-aeba6f1cbb2c}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{c6295de6-d4b7-4516-807a-9fcc53bc906b}">
@@ -199,20 +198,6 @@
 		</relationship>
 		<relationship name="transitionTimeline">
 			<destination>{4ad12899-dcc4-4b9d-80e4-0100e4b6f6d0}</destination>
-		</relationship>
-	</object>
-	<object class="NamedMarker" id="{7c0eb291-8ab8-4914-b045-aeba6f1cbb2c}">
-		<property name="position">
-			<value>40</value>
-		</property>
-		<property name="name">
-			<value>Buildup</value>
-		</property>
-		<relationship name="timeline">
-			<destination>{b86401f2-68a7-4df7-8ac9-d00e4e0bfcc4}</destination>
-		</relationship>
-		<relationship name="markerTrack">
-			<destination>{e734d47a-04f0-4a6a-b501-601b79f5a881}</destination>
 		</relationship>
 	</object>
 	<object class="Automator" id="{25847929-3fbf-41e7-af4f-88d23a2ed96f}">
