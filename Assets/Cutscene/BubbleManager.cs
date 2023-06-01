@@ -89,7 +89,12 @@ public class BubbleManager : MonoBehaviour
     //For typing out the message
     public IEnumerator TextCrawl(string s)
     {
-        skip = false;
+        if(cutsceneManager.chosenDialogue == cutsceneManager.credits){
+            skip = true;
+        }else{
+            skip = false;
+        }
+        
         string[] words = s.Split(" ");
         //float waitTime = 0.1f;
 
@@ -128,7 +133,7 @@ public class BubbleManager : MonoBehaviour
         {
                 skip = true;
                 //Debug.Log("hit space, skip value: " + skip + skipAmount);
-                cutsceneManager.audioManager.Play(cutsceneManager.audioManager.skipSFX);
+                //cutsceneManager.audioManager.Play(cutsceneManager.audioManager.skipSFX);
                 yield break;
         }
         yield return new WaitForSeconds(skipAmount);
