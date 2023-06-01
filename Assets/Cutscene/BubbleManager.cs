@@ -101,7 +101,9 @@ public class BubbleManager : MonoBehaviour
 
                 messageText.text += c;
                 yield return alexCrawlCountdown();
-                cutsceneManager.audioManager.Play(cutsceneManager.audioManager.typingSFX);
+                if(!skip){
+                    cutsceneManager.audioManager.Play(cutsceneManager.audioManager.typingSFX);
+                }
             }
             messageText.text += " ";
             UpdateBubbleHeight();
@@ -126,6 +128,7 @@ public class BubbleManager : MonoBehaviour
         {
                 skip = true;
                 //Debug.Log("hit space, skip value: " + skip + skipAmount);
+                cutsceneManager.audioManager.Play(cutsceneManager.audioManager.skipSFX);
                 yield break;
         }
         yield return new WaitForSeconds(skipAmount);

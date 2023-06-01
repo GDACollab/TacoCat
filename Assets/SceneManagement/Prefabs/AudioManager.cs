@@ -77,6 +77,7 @@ public class AudioManager : MonoBehaviour {
     public string sendTextSFX;
     [Tooltip("path of the typing event")]
     public string typingSFX;
+    public string skipSFX;
 
     
 
