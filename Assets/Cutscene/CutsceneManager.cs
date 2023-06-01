@@ -43,6 +43,7 @@ public class CutsceneManager : MonoBehaviour
     }
 
     public List<TextList> CutsceneOneDialogue;
+    public List<TextList> CutsceneOneAndAHalfDialogue;
     public GameObject intro_panel1;
     public GameObject intro_panel2;
     public GameObject intro_panel3;
@@ -117,7 +118,7 @@ public class CutsceneManager : MonoBehaviour
             intro_panel1.SetActive(false);
             intro_panel2.SetActive(false);
             intro_panel3.SetActive(false);
-            StartCoroutine(BeginTextingRoutine());
+            StartCoroutine(BeginTextingRoutine(GameManager.instance.currLevel));
         }
     }
 
@@ -140,17 +141,17 @@ public class CutsceneManager : MonoBehaviour
         intro_panel1.SetActive(false);
         yield return new WaitForSeconds(0.25f);
 
-        StartCoroutine(BeginTextingRoutine());
+        StartCoroutine(BeginTextingRoutine(GameManager.instance.currLevel));
     }
 
-    public IEnumerator BeginTextingRoutine()
+    public IEnumerator BeginTextingRoutine(int op)
     {
         camEffectManager.StartFadeIn(1);
         yield return new WaitUntil(() => !camEffectManager.isFading);
 
         yield return new WaitForSeconds(1);
 
-        switch (GameManager.instance.currLevel)
+        switch (op)
         {
             case 0:
             case 1:
@@ -173,6 +174,9 @@ public class CutsceneManager : MonoBehaviour
                 if(!gameManager.currHappyEnding){
                     audioManager.PlaySong(audioManager.sadCreditsPath);
                 }
+                break;
+            case 7:
+                chosenDialogue = CutsceneOneAndAHalfDialogue;
                 break;
             default:
                 chosenDialogue = CutsceneOneDialogue;
@@ -224,12 +228,21 @@ public class CutsceneManager : MonoBehaviour
 
                 camEffectManager.StartFadeIn(0.5f);
                 yield return new WaitUntil(() => !camEffectManager.isFading);
-
                 yield return new WaitForSeconds(3);
+                // << SHOW 2ND PART OF TEXTING CUTSCENE >>
+                              
+                camEffectManager.StartFadeOut(0.5f);
+                yield return new WaitUntil(() => !camEffectManager.isFading);
+                intro_panel3.SetActive(false);
+                yield return new WaitForSeconds(0.5f);
+                camEffectManager.StartFadeIn(0.5f);
+                yield return new WaitUntil(() => !camEffectManager.isFading);
+                yield return new WaitForSeconds(2);                
+                BeginTextingRoutine(7);
             }
-
-            camEffectManager.StartFadeOut(0.5f);
-            endOfCutscene = true;
+            
+            //
+            //endOfCutscene = true;
         }
         else if (chosenDialogue == GoodEndingDialogue)
         {
@@ -268,6 +281,8 @@ public class CutsceneManager : MonoBehaviour
             yield return new WaitUntil(() => !camEffectManager.isFading);
 
             gameManager.LoadBadEnding();
+        }else{
+            endOfCutscene = true;
         }
     }
 
