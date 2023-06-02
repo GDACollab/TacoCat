@@ -89,13 +89,15 @@ public class CutsceneManager : MonoBehaviour
 
     [Range(0.0f, 0.5f)]
     public float textSpeedJamie;*/
+    
+    private float messageDelayAlexCopy;
 
     // Start is called before the first frame update
     void Start()
     {
         gameManager = GameManager.instance;
         audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
-        
+        messageDelayAlexCopy = messageDelayAlex;
         startingPosition = 0;
 
         gameManager.cutsceneManager = GetComponent<CutsceneManager>();
@@ -150,7 +152,7 @@ public class CutsceneManager : MonoBehaviour
         yield return new WaitUntil(() => !camEffectManager.isFading);
 
         yield return new WaitForSeconds(1);
-
+        messageDelayAlex = messageDelayAlexCopy;
         switch (op)
         {
             case 0:
@@ -171,6 +173,7 @@ public class CutsceneManager : MonoBehaviour
                 break;
             case 6:
                 chosenDialogue = credits;
+                messageDelayAlex = 2f;
                 if(!gameManager.currHappyEnding){
                     audioManager.PlaySong(audioManager.sadCreditsPath);
                 }

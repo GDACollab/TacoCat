@@ -97,22 +97,28 @@ public class BubbleManager : MonoBehaviour
         
         string[] words = s.Split(" ");
         //float waitTime = 0.1f;
-
-        foreach (string word in words)
-        {
-            //Add each element from phone_texts to phoneText
-            foreach (char c in word)
-            {
-
-                messageText.text += c;
-                yield return alexCrawlCountdown();
-                if(!skip){
-                    cutsceneManager.audioManager.Play(cutsceneManager.audioManager.typingSFX);
-                }
-            }
-            messageText.text += " ";
+        if(skip){
+            messageText.text = s;
+            yield return new WaitForSeconds(0.01f);
             UpdateBubbleHeight();
-            
+        }
+        else{
+            foreach (string word in words)
+            {
+                //Add each element from phone_texts to phoneText
+                foreach (char c in word)
+                {
+
+                    messageText.text += c;
+                    yield return alexCrawlCountdown();
+                    if(!skip){
+                        cutsceneManager.audioManager.Play(cutsceneManager.audioManager.typingSFX);
+                    }
+                }
+                messageText.text += " ";
+                UpdateBubbleHeight();
+                
+            }
         }
         //waitTime = 0.1f;
         skip = false;
