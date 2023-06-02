@@ -3566,7 +3566,7 @@ PrefabInstance:
     - target: {fileID: 5300886520629518451, guid: 276c625336b0b8b4e946fe73d95a7a4b, type: 3}
       propertyPath: m_text
       value: "Make 3 perfect tacos in a row to earn a\n <color=#00A0FF><b>NITRO BOOST</b></color>.\n\nWe
-        don't have much time until Jamie leaves!\n"
+        don't have much time, Jamie leaves at midnight!\n"
       objectReference: {fileID: 0}
     - target: {fileID: 5300886520629518451, guid: 276c625336b0b8b4e946fe73d95a7a4b, type: 3}
       propertyPath: m_fontSize
@@ -3855,7 +3855,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
       propertyPath: currLevel
-      value: 1
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004250954060202134, guid: b98e17472161422409ce954e519a82b5, type: 3}
+      propertyPath: totalGameTime_seconds
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7004250954060202135, guid: b98e17472161422409ce954e519a82b5, type: 3}
       propertyPath: m_RootOrder
@@ -8560,7 +8564,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1766367129203572431, guid: 6b3e6cfc6e0e43846a3bb5f2b30bfb23, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 38.899918
+      value: 38.899902
       objectReference: {fileID: 0}
     - target: {fileID: 5410202910666737363, guid: 6b3e6cfc6e0e43846a3bb5f2b30bfb23, type: 3}
       propertyPath: m_AnchoredPosition.x

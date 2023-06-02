@@ -32,6 +32,9 @@ public class TutorialManager : MonoBehaviour {
 
 
     private void Start() {
+        TutorialManagerInfo.showGas = false;
+        TutorialManagerInfo.showRotation = false;
+
         space = transform.GetChild(0).GetComponent<Image>();
         arrowLeft = transform.GetChild(1).GetChild(0).GetComponent<Image>();
         arrowRight = transform.GetChild(1).GetChild(1).GetComponent<Image>();

@@ -255,7 +255,7 @@ public class CutsceneManager : MonoBehaviour
             // Move in ALEXXXX !!!! msg
             RectTransform rectTransform = jamieCallsAlexObject.GetComponent<RectTransform>();
             Vector3 startPosition = rectTransform.anchoredPosition3D;
-            Vector3 targetPosition = new Vector3(-360, 0, 0);
+            Vector3 targetPosition = new Vector3(-200, 0, 0);
             float duration = 0.1f;
             float elapsedTime = 0f;
 

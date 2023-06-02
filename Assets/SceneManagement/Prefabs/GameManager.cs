@@ -152,7 +152,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitUntil(() => audioManager.allBanksLoaded && audioManager.allBusesLoaded);
 
         // Start Menu Music
-        if (currGame == currGame.MENU)
+        if (currGame == currGame.MENU && !audioManager.currentPlaying.isValid())
         {
             audioManager.PlaySong(audioManager.menuMusicPath);
         }
