@@ -19,6 +19,7 @@ public class DrivingGameManager : MonoBehaviour
     public bool completedLevel;
 
     [Header("Stages")]
+    public bool allStagesGenerated;
     public StageManager foregroundStageManager;
     public StageManager playAreaStageManager; // manages the generation stages
     public StageManager backgroundStageManager; // manages the generation stages
@@ -59,6 +60,8 @@ public class DrivingGameManager : MonoBehaviour
 
     public IEnumerator Initialize()
     {
+        allStagesGenerated = false;
+
         playAreaStageManager.BeginStageGeneration();
         yield return new WaitUntil(() => playAreaStageManager.allStagesGenerated);
         yield return new WaitUntil(() => playAreaStageManager.environmentGenerator.environmentSpawned);
@@ -81,6 +84,8 @@ public class DrivingGameManager : MonoBehaviour
 
 
         yield return new WaitForSeconds(1);
+        allStagesGenerated = true;
+
         state = DRIVINGGAME_STATE.TUTORIAL;
     }
 

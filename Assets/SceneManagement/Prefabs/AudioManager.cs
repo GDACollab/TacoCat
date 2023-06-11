@@ -277,8 +277,12 @@ public class AudioManager : MonoBehaviour {
 
             foreach (FMOD.Studio.Bus bus in buses)
             {
-                // Load each bus
-                bus.lockChannelGroup();
+                // Check if the bus is already locked
+                if (!bus.isLocked)
+                {
+                    // Lock the bus
+                    bus.lockChannelGroup();
+                }
 
                 // Check if all buses are loaded
                 if (!allBusesLoaded && bus.isValid())
@@ -326,7 +330,7 @@ public class AudioManager : MonoBehaviour {
         var instance = RuntimeManager.CreateInstance(path);
         instance.start();
         instance.release();
-        Debug.Log("[Audio Manager] playing one shot: " + path);
+        //Debug.Log("[Audio Manager] playing one shot: " + path);
         return instance;
     }
 
@@ -341,7 +345,8 @@ public class AudioManager : MonoBehaviour {
         if (currentPlaying.isValid()) {
             StartCoroutine(RestOfPlaySong(path));
         }
-        else{
+        else
+        {
             EventDescription eventDescription;
             FMOD.RESULT result = RuntimeManager.StudioSystem.getEvent(path, out eventDescription);
             if (result != FMOD.RESULT.OK)
@@ -371,7 +376,10 @@ public class AudioManager : MonoBehaviour {
         if (result != FMOD.RESULT.OK)
         {
             Debug.LogWarning("[Audio Manager] FMOD SONG event path does not exist: " + path);
-        }else{
+        }
+        else
+        {
+            yield return new WaitForSeconds(1);
             EventInstance song = RuntimeManager.CreateInstance(path);
             currentPlaying = song;
             song.start();
@@ -379,11 +387,30 @@ public class AudioManager : MonoBehaviour {
         }
     }
 
+    public void StopCurrentSong()
+    {
+        StartCoroutine(StopCurrentSongRoutine());
+    }
+
+    public IEnumerator StopCurrentSongRoutine()
+    {
+        Debug.Log(currentPlaying);
+        currentPlaying.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        currentPlaying.getPlaybackState(out playbackState);
+        while (playbackState != FMOD.Studio.PLAYBACK_STATE.STOPPED)
+        {
+            currentPlaying.getPlaybackState(out playbackState);
+            yield return null;
+        }
+    }
+
     public void PlayDrivingAmbience(float value){
         if(currentAmbience.isValid()){
             currentAmbience.setParameterByName("carHeight", value);
             Debug.Log("[Audio Manager] Driving Ambience updated: " + value);
-        }else{
+        }
+        else
+        {
             EventDescription eventDescription;
             FMOD.RESULT result = RuntimeManager.StudioSystem.getEvent(drivingAmbiPath, out eventDescription);
             if (result != FMOD.RESULT.OK)
@@ -411,7 +438,8 @@ public class AudioManager : MonoBehaviour {
         if(currentRPM.isValid()){
             currentRPM.setParameterByName("RPM", value);
             //Debug.Log("[Audio Manager] RPM updated: " + value);
-        }else{
+        }
+        else{
             EventDescription eventDescription;
             FMOD.RESULT result = RuntimeManager.StudioSystem.getEvent(rpmSFX, out eventDescription);
             if (result != FMOD.RESULT.OK)

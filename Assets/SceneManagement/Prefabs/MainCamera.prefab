@@ -365,16 +365,16 @@ MonoBehaviour:
   m_ApplyToSortingLayers: 6f2489dadd5a26d99f0a1b7f95ac758add2b0e5e870215463b975ec0
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
-  m_LightOrder: 1
+  m_LightOrder: 0
   m_AlphaBlendOnOverlap: 0
   m_OverlapOperation: 0
   m_NormalMapDistance: 3
   m_NormalMapQuality: 2
   m_UseNormalMap: 0
-  m_ShadowIntensityEnabled: 1
-  m_ShadowIntensity: 0.15
+  m_ShadowIntensityEnabled: 0
+  m_ShadowIntensity: 0.001
   m_ShadowVolumeIntensityEnabled: 1
-  m_ShadowVolumeIntensity: 0.293
+  m_ShadowVolumeIntensity: 0.1
   m_Vertices:
   - position: {x: 0.9985302, y: 0.9985302, z: 0}
     color: {r: 0.70710677, g: 0.70710677, b: 0, a: 0}

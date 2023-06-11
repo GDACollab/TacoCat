@@ -67,7 +67,11 @@
 			<destination>{99641149-9628-4762-aa44-7dff3c15a200}</destination>
 		</relationship>
 	</object>
-	<object class="EventAutomatableProperties" id="{9e457b08-fdb8-4ce7-9260-24662cf9c1b2}" />
+	<object class="EventAutomatableProperties" id="{9e457b08-fdb8-4ce7-9260-24662cf9c1b2}">
+		<property name="maxVoices">
+			<value>1</value>
+		</property>
+	</object>
 	<object class="MarkerTrack" id="{61031af1-df53-45a5-9505-23de41a32319}" />
 	<object class="MarkerTrack" id="{939b7709-c5e3-4854-9b7e-1a901a20632b}" />
 	<object class="GroupTrack" id="{20d55ccf-50c3-47b1-95fd-825a0ee917c6}">

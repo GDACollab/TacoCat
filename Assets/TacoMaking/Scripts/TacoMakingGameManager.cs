@@ -105,8 +105,6 @@ public class TacoMakingGameManager : MonoBehaviour
             state = TACOMAKING_STATE.ENTER_PLAY;
         }
 
-        yield return new WaitUntil(() => uiManager.camEffectManager != null);
-
         uiManager.camEffectManager.StartFadeIn(2f);
 
     }

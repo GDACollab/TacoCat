@@ -230,7 +230,7 @@ MonoBehaviour:
       Value: 0
       HasValue: 0
     SampleRate:
-      Value: 22050
+      Value: 0
       HasValue: 1
     BuildDirectory:
       Value: 
@@ -239,17 +239,17 @@ MonoBehaviour:
       Value: 0
       HasValue: 0
     VirtualChannelCount:
-      Value: 0
-      HasValue: 0
+      Value: 64
+      HasValue: 1
     RealChannelCount:
-      Value: 0
-      HasValue: 0
+      Value: 16
+      HasValue: 1
     DSPBufferLength:
-      Value: 0
-      HasValue: 0
+      Value: 512
+      HasValue: 1
     DSPBufferCount:
-      Value: 0
-      HasValue: 0
+      Value: 2
+      HasValue: 1
     Plugins:
       Value: []
       HasValue: 0
@@ -288,7 +288,7 @@ MonoBehaviour:
   sourceBankPathUnformatted: 
   BankRefreshCooldown: 5
   ShowBankRefreshWindow: 1
-  AutomaticEventLoading: 1
+  AutomaticEventLoading: 0
   BankLoadType: 0
   AutomaticSampleLoading: 0
   EncryptionKey: 
@@ -320,7 +320,7 @@ MonoBehaviour:
   MeterChannelOrdering: 0
   StopEventsOutsideMaxDistance: 0
   BoltUnitOptionsBuildPending: 0
-  EnableErrorCallback: 0
+  EnableErrorCallback: 1
   SharedLibraryUpdateStage: 0
   SharedLibraryTimeSinceStart: 0
   CurrentVersion: 131603
@@ -812,8 +812,8 @@ MonoBehaviour:
   - 52eb9df5db46521439908db3a29a1bbb
   - b7716510a1f36934c87976f3a81dbf3d
   - 0f8eb3f400726694eb47beb1a9f94ce8
-  - 2fea114e74ecf3c4f920e1d5cc1c4c40
   - 46fbfdf3fc43db0458918377fd40293e
+  - 2fea114e74ecf3c4f920e1d5cc1c4c40
   codecChannels:
     Value: []
     HasValue: 0

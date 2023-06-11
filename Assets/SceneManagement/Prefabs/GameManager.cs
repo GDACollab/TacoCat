@@ -138,6 +138,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("if(scene.name==GoodEnding) CHECK");
             FMODUnity.RuntimeManager.StudioSystem.setParameterByName("happyEnding", currHappyEnding? 0:1);
         }
+
         StartCoroutine(SceneSetup());
     }
 
@@ -154,7 +155,7 @@ public class GameManager : MonoBehaviour
         // Start Menu Music
         if (currGame == currGame.MENU && !audioManager.currentPlaying.isValid())
         {
-            audioManager.PlaySong(audioManager.menuMusicPath);
+            PlaySong_AfterSceneSwitch(audioManager.menuMusicPath);
         }
     }
 
@@ -312,6 +313,10 @@ public class GameManager : MonoBehaviour
         lastGame = currGame;
         currGame = currGame.MENU;
         endlessModeActive = false;
+
+        audioManager.StopDrivingAmbience();
+        audioManager.StopRPM();
+
         if (game_reset)
         {
             currLevel = 1;    // Deletes progress
@@ -324,8 +329,11 @@ public class GameManager : MonoBehaviour
     {
         currGame = currGame.TACO_MAKING;
 
+        audioManager.StopDrivingAmbience();
+        audioManager.StopRPM();
+
         StartCoroutine(ConcurrentLoadingCoroutine(tacoMakingScene));
-        audioManager.PlaySong(audioManager.tacoMusicPath);
+        PlaySong_AfterSceneSwitch(audioManager.tacoMusicPath);
     }
 
     // **** LOAD DRIVING SCENES ****
@@ -348,8 +356,17 @@ public class GameManager : MonoBehaviour
             currLevel = 3;
             StartCoroutine(LoadingCoroutine(driving3));
         }
-        
-        audioManager.PlaySong(audioManager.drivingMusicPath);
+
+        PlaySong_AfterSceneSwitch(audioManager.drivingMusicPath);
+        StartCoroutine(DelayStartDrivingAmbience());
+    }
+
+    public IEnumerator DelayStartDrivingAmbience()
+    {
+        yield return new WaitUntil(() => drivingGameManager != null);
+        yield return new WaitUntil(() => drivingGameManager.allStagesGenerated);
+        yield return new WaitForSeconds(1);
+
         audioManager.PlayDrivingAmbience(0);
         audioManager.PlayRPM(0);
     }
@@ -359,18 +376,21 @@ public class GameManager : MonoBehaviour
         currGame = currGame.CUTSCENE;
         StartCoroutine(ConcurrentLoadingCoroutine(cutscene));
 
-        
         audioManager.StopDrivingAmbience();
         audioManager.StopRPM();
+
         if(currLevel==4||currLevel==5){
             Debug.Log("(currLevel == 4 or currLevel == 5) == true");
-            audioManager.PlaySong(audioManager.endingAmbiencePath);
-        }else if(currLevel==6){
+            PlaySong_AfterSceneSwitch(audioManager.endingAmbiencePath);
+        }
+        else if(currLevel==6)
+        {
             if(!currHappyEnding){
-                audioManager.PlaySong(audioManager.sadCreditsPath);
+                PlaySong_AfterSceneSwitch(audioManager.sadCreditsPath);
             }
-        }else{
-            audioManager.PlaySong(audioManager.storyMusicPath);
+        }
+        else{
+            PlaySong_AfterSceneSwitch(audioManager.storyMusicPath);
         }
     }
 
@@ -413,7 +433,7 @@ public class GameManager : MonoBehaviour
         }
 
         StartCoroutine(ConcurrentLoadingCoroutine(endlessTacoScene));
-        audioManager.PlaySong(audioManager.tacoMusicPath);
+        PlaySong_AfterSceneSwitch(audioManager.tacoMusicPath);
     }
 
     public void LoadRandomEndlessDriving()
@@ -424,7 +444,7 @@ public class GameManager : MonoBehaviour
         SceneObject randDrivingScene = endlessDrivingScenes[Random.Range(0, endlessDrivingScenes.Count)];
         StartCoroutine(LoadingCoroutine(randDrivingScene));
 
-        audioManager.PlaySong(audioManager.drivingMusicPath);
+        PlaySong_AfterSceneSwitch(audioManager.drivingMusicPath);
         audioManager.PlayDrivingAmbience(0);
         audioManager.PlayRPM(0);
     }
@@ -479,6 +499,10 @@ public class GameManager : MonoBehaviour
         Scene thisScene = SceneManager.GetActiveScene();
         currScene = scene;
 
+
+        yield return new WaitUntil(() => !audioManager.currentPlaying.isValid());
+
+
         AsyncOperation newScene = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Additive); // async load next scene
 
         //Don't let the Scene activate until you allow it to
@@ -499,6 +523,21 @@ public class GameManager : MonoBehaviour
 
         SceneManager.UnloadSceneAsync(thisScene);
         isLoadingScene = false;
+    }
+
+    public void PlaySong_AfterSceneSwitch(string path)
+    {
+        StartCoroutine(PlaySong_AfterSceneSwitchRoutine(path));
+    }
+
+    IEnumerator PlaySong_AfterSceneSwitchRoutine(string path)
+    {
+        audioManager.StopCurrentSong();
+
+        yield return new WaitUntil(() => !isLoadingScene);
+        yield return new WaitForSeconds(1);
+
+        audioManager.PlaySong(path);
     }
 
     public void CalculateTime()
